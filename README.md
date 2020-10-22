@@ -10,7 +10,7 @@ git clone https://github.com/ytchao0234/softwareEngineeringProject.git
 ```
 git checkout master
 ```
-master可以換成其他的 ytchao/water/banana/test...
+master可以換成其他的 ytchao/water/Banana/test...
 
 ## 最基本上傳指令
 ```
