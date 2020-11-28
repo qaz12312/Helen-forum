@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset = "utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>文章</title>
+    <link rel= "stylesheet" href= "../css/topnav.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	<!-- w3school的搜尋圖示 -->
+    
+    <!--
+    <link rel="icon" href="./static/icon128.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+-->
+    <link rel= "stylesheet" href= "../css/style.css">
+</head>
+
+<body>
+    <div class="topnav">
+        <div class="dropdown">
+        <button class="dropbtn" onclick="myFunction(), cross(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+        </button>
+        <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
+          <a href="#">Link 1</a>	
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+          <a href="#">+</a>
+        </div>
+        </div>
+        <div class="login">
+        <button>登入</button>
+        </div>
+        <div class="imgcontainer">
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+        <div class="search-container">
+          <input type="text" placeholder="Search.." name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+
+    <div class= "tabContent">
+        <div class="contentArea">
+            <h2>蜘蛛人3情報</h2>
+            <div class= "content">
+        <table>
+            <tr style="text-align:left; color:black;">
+                <td colspan="3" rowspan="2">
+                    <p style="height: 300px; overflow-X: hidden; overflow-y: scroll;">
+                    奇異博士已經確認演出，聽說最新消息是陶比麥奎爾與安德魯加菲爾德，也就是前兩代索尼版蜘蛛人也確認將會加入演出。<br>
+                    也就是說，粉絲將有機會看到三代蜘蛛人出現在同一部電影！<br>
+                    <br>PS:陶比版蜘蛛人真的是經典
+                    </p>
+                </td>
+                <td rowspan="3">&nbsp;&nbsp;&nbsp;</td>
+                <td style="background-color: white; width: 45%;">
+                    <table style="border: 10px white solid">
+                        <tr>
+                            <td>
+                                <a href={{ url_for('index') }}> 
+                                    <img src= "../head0.png" alt= "head" class= "head">
+                                </a>
+                            </td>
+                            <td style="width: 100%;">
+                                <input type="text" id= "account" class="textInput">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success" style="width: 50px;">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="text-align:left; color:black;">
+                <td style="overflow-X: hidden; overflow-y: scroll; vertical-align: top; background-color: white">
+                    <table style="width: 100%; border: 10px white solid">
+                        <tr>
+                            <td rowspan="2" style="vertical-align: top;">
+                                <a href={{ url_for('index') }}> 
+                                    <img src= "../imgs/head.jpg" alt= "head" class= "head">
+                                </a>
+                            </td>
+                            <td style="font-size: 15px;">&nbsp;安德魯的迷妹</td>
+                        </tr>
+                        <tr>
+                            <td>我還是最愛安德魯</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" style="vertical-align: top;">
+                                <a href={{ url_for('index') }}> 
+                                    <img src= "../imgs/head.jpg" alt= "head" class= "head">
+                                </a>
+                            </td>
+                            <td style="font-size: 15px;">&nbsp;匿名</td>
+                        </tr>
+                        <tr>
+                            <td>索尼後來發聲明說此消息「未確認」，個人是覺得挺耐人尋味的用詞。</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" style="vertical-align: top;">
+                                <a href={{ url_for('index') }}> 
+                                    <img src= "../imgs/head0.png" alt= "head" class= "head">
+                                </a>
+                            </td>
+                            <td style="font-size: 15px;">&nbsp;匿名</td>
+                        </tr>
+                        <tr>
+                            <td>索尼後來發聲明說此消息「未確認」，個人是覺得挺耐人尋味的用詞。</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><button type="button" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-heart"></span> 愛心</button>
+                </td>
+                <td><button type="button" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-star"></span> 收藏</button>
+                </td>
+                <td><button type="button" class="btn">
+                    <span class="glyphicon glyphicon-alert"></span> 檢舉</button>
+                </td>
+                <td>2020/11/05 15:36
+                </td>
+            </tr>
+        </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+    </script>
+</body>
+<script src="../js/bar.js"></script>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset = "utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理版主</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	<!-- w3school的搜尋圖示 -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel= "stylesheet" href= "../css/style.css">
+    <link rel= "stylesheet" href= "../css/topnav.css">
+</head>
+
+<body>
+    <div class="topnav">
+        <div class="dropdown">
+        <button class="dropbtn" onclick="myFunction(), cross(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+        </button>
+        <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
+          <a href="#">Link 1</a>	
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+          <a href="#">+</a>
+        </div>
+        </div>
+        <div class="login">
+        <button>登入</button>
+        </div>
+        <div class="imgcontainer">
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+        <div class="search-container">
+          <input type="text" placeholder="Search.." name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    <div class= "tabContent">
+        <h2>Helen－管理版主</h2>
+        <p>This is Admin only.</p>
+        <div class="contentArea">
+            <div class= "content">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><img class="head" src="head.png"></td>
+                        <td>00757000@mail.ntou.edu.tw</td>
+                        <td>
+                            <div class="dropdown" style="background-color: brown;">
+                                <button class="dropbtn">
+                                    資工版
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown"  style="background-color: navy;">
+                                <button class="dropbtn">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><img class="head" src="head.png"></td>
+                        <td>00757001@mail.ntou.edu.tw</td>
+                        <td>
+                            <div class="dropdown" style="background-color: brown;">
+                                <button class="dropbtn">
+                                    資工版
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                            <div class="dropdown" style="background-color: brown;">
+                                <button class="dropbtn">
+                                    電機版
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown"  style="background-color: navy;">
+                                <button class="dropbtn">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img class="head" src="head.png"></td>
+                        <td>00757010@mail.ntou.edu.tw</td>
+                        <td>
+                            <div class="dropdown" style="background-color: brown;">
+                                <button class="dropbtn">
+                                    資工版
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown"  style="background-color: navy;">
+                                <button class="dropbtn">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img class="head" src="head.png"></td>
+                        <td>00757011@mail.ntou.edu.tw</td>
+                        <td>
+                            <div class="dropdown" style="background-color: brown;">
+                                <button class="dropbtn">
+                                    資工版
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown"  style="background-color: navy;">
+                                <button class="dropbtn">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </td>
+                        <td>
+                            <input type="text" id= "account" class="textInput">
+                            @mail.ntou.edu.tw
+                        </td>
+                        <td>
+                            <div class="dropdown" style="background-color:tomato;">
+                                <button class="dropbtn">
+                                    資工版
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="#">電機版</a>
+                                    <a href="#">美食版</a>
+                                    <a href="#">企鵝版</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-ok"></span> 確認
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    </script>
+</body>
+<script src="../js/bar.js"></script>
+</html>

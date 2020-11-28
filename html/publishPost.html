@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset = "utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>發表文章</title>
+    <link rel= "stylesheet" href= "../css/topnav.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	<!-- w3school的搜尋圖示 -->
+    
+    <!--
+    <link rel="icon" href="./static/icon128.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+    <link rel= "stylesheet" href= "./static/myBookCaseMain.css">
+    -->
+    <link rel= "stylesheet" href= "../css/style.css">
+    <style>
+        .input-file-container {
+            position: relative;
+          } 
+          .js .input-file-trigger {
+            display: block;
+            padding: 10px 10px 10px 10px;
+            background: #7c838f;
+            color: whitesmoke;
+            font-size: 1em;
+            transition: all .4s;
+            cursor: pointer;
+          }
+          .js .input-file {
+            width: 10px;
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+            /*padding: 14px 0;*/
+            cursor: pointer;
+          }
+          .js .input-file:hover + .input-file-trigger,
+          .js .input-file:focus + .input-file-trigger,
+          .js .input-file-trigger:hover,
+          .js .input-file-trigger:focus {
+            background: #545871;
+            color: #e0d5d5;
+          }
+    </style>
+</head>
+
+<body>
+    <div class="topnav">
+        <div class="dropdown">
+        <button class="dropbtn" onclick="myFunction(), cross(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+        </button>
+        <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
+          <a href="#">Link 1</a>	
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+          <a href="#">+</a>
+        </div>
+        </div>
+        <div class="login">
+        <button>登入</button>
+        </div>
+        <div class="imgcontainer">
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+        <div class="search-container">
+          <input type="text" placeholder="Search.." name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    <div class= "tabContent">
+        <h2>Helen－發佈文章</h2>
+        <p>Publish your post.</p>
+        <div class="contentArea">
+            <div class= "content">
+            <table>
+            <tr>
+                <td>分類&nbsp;</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">選擇看版
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">心情版</a></li>
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">穿搭版</a></li>
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">有趣版</a></li>
+                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">漫威版</a></li>
+                        </ul>
+                      </div>
+                </td>
+            </tr>
+            <tr>
+                <td>標題&nbsp;</td>
+                <td>
+                    <input type="text" id= "postTitle" class="textInput"
+                    name= "title" placeholder="Input title" required>
+                </td>
+            </tr>
+            <tr>
+                <td>內容&nbsp;</td>
+                <td>
+                    <textarea type="text" style="height: 200px;"></textarea>
+                </td>
+            </tr>
+            </table>
+            
+            <table>
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="text-align: left; color:navy">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#台南美食 #好吃一起吃 #加糖不加價</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-file-container">  
+                            <input class="input-file" id="my-file" type="file" accept=".jpg, .jpeg, .png">
+                            <label tabindex="0" for="my-file" class="input-file-trigger"> <span class="glyphicon glyphicon-open-file"></span> 插入圖片</label>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <input type="text" placeholder="#hashtag" value="#">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn">
+                            <span class="glyphicon glyphicon-remove"></span> 取消
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success">
+                            <span class="glyphicon glyphicon-open"></span> 發佈
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        console.log("load");
+        document.querySelector("html").classList.add('js');
+
+        var fileInput  = document.querySelector( ".input-file" ),  
+            button     = document.querySelector( ".input-file-trigger" ),
+            the_return = document.querySelector( ".file-return");
+            
+        button.addEventListener( "keydown", function( event ) {  
+            if ( event.keyCode == 13 || event.keyCode == 32 ) {  
+                fileInput.focus();  
+            }  
+        });
+        button.addEventListener( "click", function( event ) {
+            fileInput.focus();
+            return false;
+        });  
+        fileInput.addEventListener( "change", function( event ) { 
+            var str= this.value;
+        });  
+
+    </script>
+</body>
+<script src="../js/bar.js"></script>
+</html>
