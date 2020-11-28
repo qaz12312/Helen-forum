@@ -11,7 +11,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel= "stylesheet" href= "../css/topnav.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!-- w3school的搜尋圖示 -->
         
         <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -21,31 +20,6 @@
         
    </head>
    <body>
-    <div class="topnav">
-        <div class="dropdown">
-        <button class="dropbtn" onclick="myFunction(), cross(this)">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-        </button>
-        <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
-          <a href="#">Link 1</a>	
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-          <a href="#">+</a>
-        </div>
-        </div>
-        <div class="login">
-        <button>登入</button>
-        </div>
-        <div class="imgcontainer">
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
-        </div>
-        <div class="search-container">
-          <input type="text" placeholder="Search.." name="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </div>
-      </div>
        <div class= "tabContent">
             <h2>Helen－登入</h2>
             <p>Welcome To Helen</p>
@@ -55,20 +29,21 @@
                 <tr>
                     <td rowspan= "4">
                         <a href={{ url_for('index') }}> 
-                            <img class= "logo" src= "../logo.png"></img>
+                            <img class= "logo" src= "../logo.png" class= "logo">
                         </a>
                     </td>
-                    <td>帳號 Account</td>
-                    <td colspan="2">
+                    <td>
                         <span class="glyphicon glyphicon-user"></span>
+                        帳號 Account</td>
+                    <td colspan="2">
                         <input type="text" id= "account" class="textInput"
                             name= "account" placeholder="account" required>
                         </td>
                 </tr>
                 <tr>
-                    <td>密碼 Password</td>
+                    <td>
+                        <span class="glyphicon glyphicon-lock"></span> 密碼 Password</td>
                     <td colspan="2">
-                        <span class="glyphicon glyphicon-lock"></span>
                         <input type="password" id= "password" class="textInput"
                         name= "password" placeholder="password" required>
                     </td>
@@ -90,13 +65,9 @@
             </table>
         </div>
         </div>
-         </div>
+    </div>
        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
        </script>
        <script src="../js/bar.js"></script>
-       <!--
-       <script src="./static/indexMain.js">
-       </script>
-        -->
     </body>
 </html>
