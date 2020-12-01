@@ -1,7 +1,5 @@
 <?php
-    require_once 'noSecurity.php'; //連線資料庫 
-	
-	{
+    require_once 'connectDB.php'; //連線資料庫 
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "reportPage";
@@ -46,14 +44,10 @@
             $rtn["data"] =$arr;
         }
         echo json_encode($rtn);
-
-    }
 ?>
 
 <?php
     require_once 'noSecurity.php'; //連線資料庫 
-	
-	{
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "deleteReport";
@@ -69,7 +63,7 @@
                 dataDB.data = ""
          */
         global $input,$conn;
-        $sql="DELETE FROM `Report` WHERE `ArticleID``='"."$input['articleID']";
+        $sql="DELETE FROM `Report` WHERE `ArticleID`='"."$input['articleID']";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
@@ -89,6 +83,4 @@
             $rtn["data"] =$row;
         }
         echo json_encode($rtn);
-
-    }
 ?>

@@ -1,31 +1,27 @@
-# 軟工專案 - Helen
+# 後端 - Helen
 
+## 頁面
++ [connectDB.php  資料庫](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
++ [logIn.php  登入](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
++ [signUp.php  註冊](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
++ [forgetPassword.php  忘記密碼](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/forgetPassword.php)
++ [moderator.php  檢舉](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/moderator.php)
++ [board.php  看版](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/board.php)
++ [home.php 首頁](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/home.php)
+    + 看板全部
++ [article.php  發文/編輯文章]()
+
++ 搜尋
++ 排序文章
+
+
+
+## 加密
 ```
-git clone https://github.com/ytchao0234/softwareEngineeringProject.git
+<?php
+$str=123; //要加密的文字
+$encodeletter = base64_encode($str); //加密
+echo $encodeletter;
+echo base64_decode($encodeletter); //解密
+?>
 ```
-
-## master branch 給最後用，前期產出到其他branch去
-
-切換branch
-```
-git checkout master
-```
-master可以換成其他的 ytchao/water/Banana/test...
-
-## 最基本上傳指令
-```
-git add .
-git commit -m "OUOUOUOUOUO"
-git push origin test
-```
-**test要換成自己所在的branch**
-
-## 學習區
-### 先學習Git Vim可用可不用 碰到問題去看看
-* [Git入門](https://backlog.com/git-tutorial/tw/)
-
-* [Vim入門](https://gitbook.tw/chapters/command-line/vim-introduction.html) 有時git命令如commit或merge會跳進vim的介面讓你輸入註釋，如果你被trapped住了，請來看這邊)
-
-### Git稍進階 軟工講義
-* [Git沒那麼難吧](https://slides.com/jimting/git/#/)
-* [對應上面，我的Lab作業](https://github.com/zxcj04/gitTest)
