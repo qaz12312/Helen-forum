@@ -10,9 +10,9 @@
     header("Content-Type:text/html; charset=utf-8");
     date_default_timezone_set("Asia/Taipei");
 
-    $conn = mysqli_connect($serverName, $userName, $password,$databaseName);
+    $conn = mysqli_connect($serverName, $userName, $password,$databaseName);// 建立資料庫連接 
 
-    if($conn->connect_error){
+    if($conn->connect_error){//無法開啟資料庫連接
         die($conn->connect_error);
     }
     mysqli_query($conn, 'SET NAMES utf8'); //避免中文字亂碼 
@@ -33,8 +33,8 @@
         case "home": // 系統首頁
             home.php
             break;
-	case "report":	//檢視檢舉
-	    admin.php
-	    break;
+        case "report":	//檢視檢舉
+            admin.php
+            break;
     }
 ?>
