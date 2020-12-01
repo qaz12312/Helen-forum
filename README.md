@@ -6,13 +6,13 @@
 
 
 ## 頁面
-+ [connectDB.php  資料庫]()
-+ [logIn.php  登入](C:\Users\88692\Documents\GitHub\softwareEngineeringProject\logIn.php)
-+ [signUp.php  登出](C:\Users\88692\Documents\GitHub\softwareEngineeringProject\signUp.php)
-+ [forgetPassword.php  忘記密碼]()
-+ [moderator.php  檢舉]()
-+ [board.php  看版]()
-+ [home.php 首頁]()
++ [connectDB.php  資料庫](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
++ [logIn.php  登入](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
++ [signUp.php  登出](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
++ [forgetPassword.php  忘記密碼](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/forgetPassword.php)
++ [moderator.php  檢舉](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/moderator.php)
++ [board.php  看版](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/board.php)
++ [home.php 首頁](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/home.php)
 
 ## 加密
 ```
