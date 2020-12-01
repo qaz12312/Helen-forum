@@ -18,7 +18,6 @@
             否則
                 dataDB.data = ""*/
 
-
         $sql="SELECT `Title`,`Name`, COUNT(`Like`),COUNT(`Keep`) FROM `Article`JOIN `Board` 
          ON Article.BlockID= Board.BlockID JOIN `Follow` ON  Article.ArticleID = Follow.ArticleID
          group by `Name` " ;
@@ -90,7 +89,7 @@ function boardList(){
         echo json_encode($rtn);
 }
 function showNotice(){
-    $sql ="SELECT `Time`,`Content` FROM `Notice` where `UserID`= ???? order by `Time`asc" ;
+    $sql ="SELECT `Time`,`Content` FROM `Notice` where `UserID`= $cmd->account order by `Time`asc" ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result){
@@ -116,11 +115,11 @@ function showNotice(){
     }
     echo json_encode($rtn);
 }
-function clickNotice( $Note){ //點通知 PRIMARY KEY ('UserID', 'Time', 'Content')
+function clickNotice( ){ //點通知 PRIMARY KEY ('UserID', 'Time', 'Content')
     /* 前端 to 後端:
-            Note["ID"] = "UserID";
-            Note["Time"] = "Time";
-            Note["detail"] = "Content";
+            cmd["UserID"] = "UserID";
+            cmd["Time"] = "Time";
+            cmd["detail"] = "Content";
         */
         /* 後端 to 前端
             dataDB.status
@@ -130,10 +129,10 @@ function clickNotice( $Note){ //點通知 PRIMARY KEY ('UserID', 'Time', 'Conten
             否則
                 dataDB.data = ""
          */
-    $sql ="DELETE FROM  `Notice` where `UserID`=$Note->ID, `Time`=$Note->Time,`Content`=$Note->detail" ;
+    $sql ="DELETE FROM  `Notice` where `UserID`=$cmd->UserID, `Time`=$cmd->Time,`Content`=$cmd->detail" ;
     global $conn;
     $result=$conn->query($sql);
-    if(!$result){
+    if(!$result or mysql_query( $sql, $conn )){
         die($conn->error);
     }
     if($result->num_rows <= 0){

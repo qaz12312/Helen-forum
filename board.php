@@ -1,5 +1,5 @@
 <?php
-    require_once 'noSecurity.php'; //連線資料庫 
+    require_once 'connectDB.php'; //連線資料庫 
 
         /* 前端 to 後端:
             let cmd = {};
@@ -12,11 +12,10 @@
             dataDB.status
             dataDB.errorCode
             若 status = true:
-                dataDB.data[0]	// BoardID
-				dataDB.data[1]	// BoardName
-				dataDB.data[2]	// UserID
-				dataDB.data[3]	// Rule
-				dataDB.data[4]	// TopArticleID
+				dataDB.data[0]	// BoardName
+				dataDB.data[1]	// UserID
+				dataDB.data[2]	// Rule
+				dataDB.data[3]	// TopArticleID
             否則
                 dataDB.data = ""
          */
@@ -59,4 +58,70 @@
             }
         }
         echo json_encode($rtn);
+?>
+<?php
+    function editMode(){
+        /* 後端 to 前端
+            dataDB.status
+            dataDB.errorCode
+            若 status = true:
+                dataDB.data[0]	// BoardID
+				dataDB.data[1]	// BoardName
+				dataDB.data[2]	// UserID
+				dataDB.data[3]	// Rule
+				dataDB.data[4]	// TopArticleID
+            否則
+                dataDB.data = ""
+         */
+        $sql="UPDATE `Board` SET Rule='".$input['rule']."'".$input['userID']."'";
+        $result=$conn->query($sql);
+            if(!$result){
+                die($conn->error);
+            }
+            if($result->num_rows <= 0){
+            $rtn = array();
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "註冊失敗，資料庫異常";
+            $rtn["data"] = "";
+        }
+        else{
+            $row=$result->fetch_row();
+            $rtn = array();
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "";
+            $rtn["data"] = $new[0];
+        }
+    }
+    function removeMode(){
+        /* 後端 to 前端
+            dataDB.status
+            dataDB.errorCode
+            若 status = true:
+				dataDB.data[0]	// BoardName
+				dataDB.data[1]	// UserID
+				dataDB.data[2]	// Rule
+				dataDB.data[3]	// TopArticleID
+            否則
+                dataDB.data = ""
+         */
+        $sql="DELETE FROM `Board` WHERE `BoardName` = $input["boardName"] , `Rule` = $input["rule"] ";
+        $result=$conn->query($sql);
+            if(!$result){
+                die($conn->error);
+            }
+            if($result->num_rows <= 0){
+            $rtn = array();
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "刪除失敗，資料庫異常";
+            $rtn["data"] = "";
+        }
+        else{
+            $row=$result->fetch_row();
+            $rtn = array();
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "";
+            $rtn["data"] = $new[0];
+        }
+    }
+
 ?>
