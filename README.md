@@ -8,11 +8,12 @@
 + [moderator.php  檢舉](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/moderator.php)
 + [board.php  看版](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/board.php)
 + [home.php 首頁](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/home.php)
+    + 看板全部
 + [article.php  發文/編輯文章]()
 
 + 搜尋
 + 排序文章
-+ 看板全部
+
 
 
 ## 加密

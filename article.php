@@ -2,7 +2,13 @@
     let cmd = {};
     cmd["act"] = "publishArticle";
     cmd["account"] = 00757003@email.ntou.edu.tw;
-    cmd["password"] = zxsss123; -->
+    cmd[""] = ;
+    cmd[""] = ;
+    cmd[""] = ;
+    cmd[""] = ;
+    cmd[""] = ;
+    cmd[""] = ;
+    -->
 
 <?php
     require_once 'connectDB.php'; //連線資料庫 
@@ -11,5 +17,5 @@
     $query = ("insert into Article values(?,?,?,?,?,?,?,?)");
     $stmt= $db->prepare($query);
     //執行SQL語法
-    $result = $stmt->execute(array($input[''],$no,$name,$club));
+    $result = $stmt->execute(array($input[''],$input[''],$input[''],$input[''],$input[''],$input[''],NOW(),$input['']));
 ?>
