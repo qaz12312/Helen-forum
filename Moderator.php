@@ -12,8 +12,11 @@
             dataDB.status
             dataDB.errorCode
             若 status = true:
-                dataDB.data[0]	// articleID
-				dataDB.data[1]	// reason
+				dataDB.data[i]
+				(
+                dataDB.data[i].articleID
+				dataDB.data[i].reason
+				)
             否則
                 dataDB.data = ""
          */
