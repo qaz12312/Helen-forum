@@ -1,23 +1,22 @@
+<!-- 前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "reportPage";
+    cmd["BoardName"] = "美食版"
+-->	
+<!-- 後端 to 前端
+    dataDB.status
+    dataDB.errorCode
+    若 status = true:
+	dataDB.data[i]
+	(
+		dataDB.data[i].articleID
+		dataDB.data[i].reason
+	)
+    否則
+	dataDB.data = ""
+-->
 <?php
     require_once 'connectDB.php'; //連線資料庫 
-        /* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "reportPage";
-			cmd["BoardName"] = "美食版"
-        */
-		
-        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				dataDB.data[i]
-				(
-                dataDB.data[i].articleID
-				dataDB.data[i].reason
-				)
-            否則
-                dataDB.data = ""
-         */
         global $input,$conn;
         $sql="SELECT `Title`,`Reason` FROM `Report` NATURAL JOIN `Article` WHERE `BlockID`='".$input['BoardName']."'";
         $result=$conn->query($sql);
