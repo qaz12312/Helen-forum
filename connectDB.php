@@ -33,8 +33,8 @@
         case "home": // 系統首頁
             home.php
             break;
-
-		case "report":	//檢視檢舉
-		  admin.php
+	case "report":	//檢視檢舉
+	    admin.php
+	    break;
     }
 ?>
