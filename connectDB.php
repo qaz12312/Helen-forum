@@ -41,20 +41,20 @@
 ?>
 
 <?php
-//連接資料庫
-$userName = "root";
-$password = "ynVdCeYKBrDJ";
-$serverName = "sql301.epizy.com";//主機名或IP位址
-$databaseName = "epiz_24878672_homework";
-try{
-    $db = new PDO("mysql:host=".$serverName.";dbname=".$databaseName.";charset=utf8",$user,$password);//MariaDB連線的物件
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//透過db連線引出連線錯誤報告以及拋出exceptions異常
-    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);//交由database Driver預處理(prepare)，除非driver不能成功預處理(prepare)，才會交由PDO模擬
+    //連接資料庫
+    $userName = "root";
+    $password = "ynVdCeYKBrDJ";
+    $serverName = "sql301.epizy.com";//主機名或IP位址
+    $databaseName = "epiz_24878672_homework";
+    try{
+        $conn = new PDO("mysql:host=".$serverName.";dbname=".$databaseName.";charset=utf8",$userName,$password);//MariaDB連線的物件
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//透過db連線引出連線錯誤報告以及拋出exceptions異常
+        $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);//交由database Driver預處理(prepare)，除非driver不能成功預處理(prepare)，才會交由PDO模擬
 
-}catch(PDOException $e){
-    Print "ERROR!:". $e->getMessage();
-    die();
-}
+    }catch(PDOException $e){
+        Print "ERROR!:". $e->getMessage();
+        die();
+    }
 
-//$db = null;➔關閉與MariaDB連線。
+    //$conn = null;//關閉與MariaDB連線
 ?>
