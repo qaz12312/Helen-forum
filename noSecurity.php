@@ -25,7 +25,8 @@
             doPwd();
             break;
         case "home": // 系統首頁
-            doHome();
+            // doHome();
+            home.php
             break;
         // case "insertLog":
         //     doInsert();
