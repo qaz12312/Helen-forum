@@ -1,14 +1,9 @@
 # 後端 - Helen
 
-
-
-
-
-
 ## 頁面
 + [connectDB.php  資料庫](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
 + [logIn.php  登入](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
-+ [signUp.php  登出](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
++ [signUp.php  註冊](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
 + [forgetPassword.php  忘記密碼](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/forgetPassword.php)
 + [moderator.php  檢舉](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/moderator.php)
 + [board.php  看版](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/board.php)
