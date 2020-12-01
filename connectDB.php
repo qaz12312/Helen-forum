@@ -1,11 +1,10 @@
-<?php//連線資料庫 
+<?php
+    //連線資料庫
     $serverName = "sql301.epizy.com";
     $userName = "epiz_24878672";
     $password = "ynVdCeYKBrDJ";
     $databaseName = "epiz_24878672_homework";
-?>
 
-<?php
     header("Access-Control-Allow-Origin: *");
     header("Content-Type:text/html; charset=utf-8");
     date_default_timezone_set("Asia/Taipei");
@@ -39,4 +38,23 @@
             admin.php
             break;
     }
+?>
+
+<?php
+//連接資料庫
+$userName = "root";
+$password = "ynVdCeYKBrDJ";
+$serverName = "sql301.epizy.com";//主機名或IP位址
+$databaseName = "epiz_24878672_homework";
+try{
+    $db = new PDO("mysql:host=".$serverName.";dbname=".$databaseName.";charset=utf8",$user,$password);//MariaDB連線的物件
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//透過db連線引出連線錯誤報告以及拋出exceptions異常
+    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);//交由database Driver預處理(prepare)，除非driver不能成功預處理(prepare)，才會交由PDO模擬
+
+}catch(PDOException $e){
+    Print "ERROR!:". $e->getMessage();
+    die();
+}
+
+//$db = null;➔關閉與MariaDB連線。
 ?>
