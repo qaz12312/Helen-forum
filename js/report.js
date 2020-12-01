@@ -1,21 +1,27 @@
+var articles = [];
+
 $( document ).ready( function() 
 {
+    initial();
+
     $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function()
     {
         console.log( $(this).text() );
 
-        location.href =  "../html/post.html";
+        location.href =  "../html/post.html" + "?id=" + articles[ $( ".tabContent tr" ).index( this.closest( "tr" ) ) ][ "ArticleID" ];
     } );
 
     $( ".tabContent button" ).on( "click", function()
     {
+        // console.log( $( ".tabContent tr" ).index( this.closest( "tr" ) ) );
+
         if( $(this).text().trim() == "刪除" )
         {
             console.log( "delete" );
 
             let cmd = {};
             cmd[ "Act" ] = "DeleteArticle";
-            cmd[ "ArticleID" ] = "";
+            cmd[ "ArticleID" ] = articles[ $( ".tabContent tr" ).index( this.closest( "tr" ) ) ][ "ArticleID" ];
 
             // $.post( ".php", cmd, function( data ){
             //     data = JSON.parse( data );
@@ -43,3 +49,73 @@ $( document ).ready( function()
     } );
 });
 
+function initial()
+{
+    let cmd = {};
+    cmd[ "Act" ] = "ReportPage";
+    cmd[ "BoardName" ] = "";
+
+    // $.post( ".php", cmd, function( data )
+    // {
+    //     data = JSON.parse( data );
+
+    //     if( data.status == false )
+    //     {
+    //         alert( data.ErrorCode );
+    //     }
+    //     else
+    //     {
+    //         let content = $( ".tabContent tbody" );
+    //         content.empty();
+
+    //         for( let i in data.data )
+    //         {
+    //             articles.push( data.data[i] );
+
+    //             let oneRow = "<tr>" + 
+    //                             "<td>" + data.data[i][ "Title" ] + "</td>" +
+    //                             "<td>" +
+    //                                 "<button type='button' class='btn'>" +
+    //                                     "<span class='glyphicon glyphicon-trash'></span> 刪除" +
+    //                                 "</button>" +
+    //                             "</td>" +
+    //                             "<td>" +
+    //                                 "<button type='button' class='btn btn-default'>" +
+    //                                     "<span class='glyphicon glyphicon-remove'></span> 取消" +
+    //                                 "</button>" +
+    //                             "</td>" +
+    //                          "</tr>";
+
+    //             content.append( oneRow );
+    //         }
+    //     }
+    // } );
+
+    let content = $( ".tabContent tbody" );
+    content.empty();
+
+    let data = {};
+    data[ "data" ] = [ { "Title": "紅燈區" }, { "Title": "大一妹妹看起來很波霸哦"}, { "Title": "看我切開兔子的肚皮" } ];
+
+    for( let i in data.data )
+    {
+        console.log( data.data[ i ] );
+        articles.push( data.data[i] );
+
+        let oneRow = "<tr>" + 
+                        "<td>" + data.data[i][ "Title" ] + "</td>" +
+                        "<td>" +
+                            "<button type='button' class='btn'>" +
+                                "<span class='glyphicon glyphicon-trash'></span> 刪除" +
+                            "</button>" +
+                        "</td>" +
+                        "<td>" +
+                            "<button type='button' class='btn btn-default'>" +
+                                "<span class='glyphicon glyphicon-remove'></span> 取消" +
+                            "</button>" +
+                        "</td>" +
+                     "</tr>";
+
+        content.append( oneRow );
+    }
+}
