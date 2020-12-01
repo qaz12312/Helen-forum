@@ -34,6 +34,8 @@
         // case "showLog":
         //     doShow();
         //     break;
+		case "report":	//檢視檢舉
+		  admin.php
     }
 
     function doLogIn(){
@@ -44,9 +46,9 @@
             cmd["password"] = zxsss123;
         */
         /* 後端 to 前端
-            dataDB.state
+            dataDB.status
             dataDB.errorCode
-            若 state = true:
+            若 status = true:
                 dataDB.data[0] // UserID
                 dataDB.data[1] // Password
                 dataDB.data[2] // Permissions
@@ -64,14 +66,14 @@
 
         if($result->num_rows <= 0){
             $rtn = array();
-            $rtn["state"] = false;
+            $rtn["status"] = false;
             $rtn["errorCode"] = "找不到會員";
             $rtn["data"] = "";
         }
         else{
             $row=$result->fetch_row();
             $rtn = array();
-            $rtn["statue"] = true;
+            $rtn["status"] = true;
             $rtn["errorCode"] = "";
             $rtn["data"] =$row;
         }
@@ -87,9 +89,9 @@
             cmd["password"] = zxsss123;
         */
         /* 後端 to 前端
-            dataDB.state
+            dataDB.status
             dataDB.errorCode
-            若 state = true:
+            若 status = true:
                 dataDB.data[0] // UserID
                 dataDB.data[1] // Password
                 dataDB.data[2] // Permissions
@@ -107,7 +109,7 @@
 
         if($result->num_rows > 0){
             $rtn = array();
-            $rtn["statue"] = false;
+            $rtn["status"] = false;
             $rtn["errorCode"] = "帳號已註冊";
             $rtn["data"] = "";
         }
@@ -124,14 +126,14 @@
             }
             if($result->num_rows <= 0){
                 $rtn = array();
-                $rtn["state"] = false;
+                $rtn["status"] = false;
                 $rtn["errorCode"] = "註冊失敗，資料庫異常";
                 $rtn["data"] = "";
             }
             else{
                 $row=$result->fetch_row();
                 $rtn = array();
-                $rtn["statue"] = true;
+                $rtn["status"] = true;
                 $rtn["errorCode"] = "";
                 $rtn["data"] = $new[0];
             }
@@ -151,9 +153,9 @@
             cmd["act"] = "forgottenPwd";
         */
         /* 後端 to 前端
-            dataDB.state
+            dataDB.status
             dataDB.errorCode
-            若 state = true:
+            若 status = true:
                 dataDB.data
             否則
                 dataDB.data = ""
@@ -167,9 +169,9 @@
             cmd["act"] = "home";
         */
         /* 後端 to 前端
-            dataDB.state
+            dataDB.status
             dataDB.errorCode
-            若 state = true:
+            若 status = true:
                 dataDB.data[i] //有i筆文章
                 (
                     dataDB.data[i].title //第i筆文章的標題
@@ -189,19 +191,19 @@
         }
         if($result->num_rows <= 0){
             $rtn = array();
-            $rtn["statue"] = false;
+            $rtn["status"] = false;
             $rtn["errorCode"] = "沒有文章";
             $rtn["data"] = "";
         }
         else{
             $arr=array();
             for($i=0;$i<$result->num_rows;$i++){
-                $row=$result->fetch_row();
+                $row=$result->fetch_row\();
                 $log=array("title"=>"$row[0]","blockName"=>"$row[1]","like"=>"$row[2]","keepID"=>"$row[3]");
                 $arr[$i]=$log;
             }
             $rtn = array();
-            $rtn["statue"] = true;
+            $rtn["status"] = true;
             $rtn["errorCode"] = "";
             $rtn["data"] =$arr;
         }
