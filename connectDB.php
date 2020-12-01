@@ -32,8 +32,8 @@
         case "home": // 系統首頁
             home.php
             break;
-        case "publishArticle":
-            article.php
+        case "publishArticle"://新增文章
+            publishArticle.php
         case "report":	//檢視檢舉
             admin.php
             break;
@@ -42,17 +42,17 @@
 
 <?php
     //連接資料庫
+    $serverName = "sql301.epizy.com";//主機名或IP位址
     $userName = "root";
     $password = "ynVdCeYKBrDJ";
-    $serverName = "sql301.epizy.com";//主機名或IP位址
     $databaseName = "epiz_24878672_homework";
     try{
-        $conn = new PDO("mysql:host=".$serverName.";dbname=".$databaseName.";charset=utf8",$userName,$password);//MariaDB連線的物件
+        $conn = new PDO("mysql:host=".$serverName.";dbname=".$databaseName,$userName,$password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));//MariaDB連線的物件
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//透過db連線引出連線錯誤報告以及拋出exceptions異常
         $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);//交由database Driver預處理(prepare)，除非driver不能成功預處理(prepare)，才會交由PDO模擬
 
     }catch(PDOException $e){
-        Print "ERROR!:". $e->getMessage();
+        echo "ERROR!:". $e->getMessage();
         die();
     }
 
