@@ -53,7 +53,7 @@
             $rtn = array();
             $rtn["status"] = true;
             $rtn["errorCode"] = "";
-            $rtn["data"] = $new[0];
+            $rtn["data"] = $row[0];
         }
     }
     echo json_encode($rtn);
