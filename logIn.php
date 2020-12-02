@@ -2,7 +2,7 @@
 前端 to 後端:
 let cmd = {};
 cmd["act"] = "logIn";
-cmd["account"] = "00857210@email.ntou.edu.tw";
+cmd["account"] = "00857210@mail.ntou.edu.tw";
 cmd["password"] = "123456789";
 
 後端 to 前端:
