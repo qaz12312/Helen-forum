@@ -8,7 +8,7 @@
 	switch($input["act"]){
         case "logIn": //登入
 	        require_once("logIn.php");
-	        doLogin($input);
+	        doLogIn($input);
 	        break;
         // case "creatAccount": //註冊
         //     signUp.php;
