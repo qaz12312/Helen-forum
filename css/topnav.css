@@ -1,0 +1,140 @@
+/*top bavigation*/
+.topnav {
+  overflow: hidden;
+  background-color: #e9e9e9;
+}
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+.topnav a.active {
+  background-color: #2196F3;
+  color: white;
+}
+
+/* 搜尋 bar */
+.topnav .search-container {
+  text-align: center;
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  border: none;
+}
+
+.topnav .search-container button {
+  text-align: center;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 50px;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+  background: #ccc;
+}
+
+/* 下拉選單的三槓+打叉 */
+.topnav .bar1 ,.bar2 ,.bar3 {
+  width: 30px;
+  height: 4px;
+  background-color: black;
+  margin: 3px 0;
+  transition: 0.4s;
+}
+
+.topnav .change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-2px, 2px) ;
+  transform: rotate(-45deg) translate(-2px, 2px) ;
+}
+
+.topnav .change .bar2 {
+  opacity: 0;
+}
+
+.topnav .change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+  transform: rotate(45deg) translate(-8px, -8px) ;
+}
+
+/*下拉選單*/
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  cursor: pointer;
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+
+/* login符號 */
+.topnav .login {
+  float: right;
+  padding-right: 20px;
+}
+.topnav .login button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 6px 5px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 8px;
+  margin-right: 16px;
+}
+
+/* 頭貼 */
+.topnav .imgcontainer {
+  float: right;
+  font-size: 30px;
+  padding: 10px;
+}
