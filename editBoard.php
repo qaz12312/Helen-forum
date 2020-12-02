@@ -2,7 +2,7 @@
        require_once 'connectDB.php'; //連線資料庫
       /*前端 to 後端:
         let cmd = {};
-        cmd["act"] = "editMode";
+        cmd["act"] = "editBoard";
         cmd["boardID"] = "BoardID"
         cmd["boardName"] = "BoardName"
         cmd["userID"] = "UserID"
@@ -29,7 +29,7 @@
     if(!$result){
         die($conn->error);
     }
-    $sql ="SELECT `BoardName` FROM `Board` WHERE `BoardID`='".$input['boardID']."' AND`BoardName`='".$input['boardName']."'AND`Rule`='".$input['rule']."'AND`TopArticleID`='".$input['topArticleID']."'" ;
+    $sql ="SELECT `BoardName` FROM `Board` NATURAL JOIN`User` ON User.UserID =Board.UserID WHERE `BoardID`='".$input['boardID']."' AND`BoardName`='".$input['boardName']."'AND`Rule`='".$input['rule']."'AND`TopArticleID`='".$input['topArticleID']."'" ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result){

@@ -32,12 +32,12 @@
         $rtn["data"] = "";
     }
     else{
-        $new="INSERT INTO  `Board`(`BoardID`,`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['BoardID']."','".$input['BoardName']."'.'".$input['UserID']."'.'".$input['Rule']."'.'".$input['TopArticleID']."')";
+        $new="INSERT INTO  `Board`(`BoardID`,`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['BoardID']."','".'admin'."'.'".$input['UserID']."'.'".$input['Rule']."'.'".$input['TopArticleID']."')";
         $resultNEW=$conn->query($new);
         if(!$resultNEW){
             die($conn->error);
         }
-        $sql="SELECT `BoardID`,`BoardName`,`UserID`,`Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['userID']."'";
+        $sql="SELECT `BoardID`,`BoardName`,`UserID`,`Rule`,`TopArticleID` FROM `Board` NATURAL JOIN`User` ON User.UserID =Board.UserID WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['userID']."'";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);

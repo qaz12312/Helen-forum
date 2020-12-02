@@ -29,7 +29,7 @@
     if(!$result){
         die($conn->error);
     }
-    $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Comment` WHERE `AuthorID`='".$input['authorID'].' AND`Floor`='".$input['floors'].";
+    $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor`,`Color` FROM `Comment`NATURAL JOIN`User` ON User.UserID =Comment.AuthorID  WHERE `AuthorID`='".$input['authorID'].' AND`Floor`='".$input['floors'].";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);

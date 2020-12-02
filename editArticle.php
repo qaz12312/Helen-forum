@@ -24,6 +24,7 @@
                 dataDB.data[4]	// Image
                 dataDB.data[5]	// HashTag
                 dataDB.data[6]	// Time
+                 dataDB.data[7]	// Usercolor
             否則
                 dataDB.data = ""
          */
@@ -32,7 +33,7 @@
         if(!$result){
             die($conn->error);
         }
-    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time` FROM `Article` NATURAL JOIN`User`AuthorID WHERE `Title`=".$input['title']."AND `Content`=".$input['content']."AND `Image`=".$input['picture']."AND `HashTag`=".$input['hashTag']."AND `Time`=".$input['timer']."";
+    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time`,`Color` FROM `Article` NATURAL JOIN`User` ON User.UserID =Article.AuthorID  WHERE `Title`=".$input['title']."AND `Content`=".$input['content']."AND `Image`=".$input['picture']."AND `HashTag`=".$input['hashTag']."AND `Time`=".$input['timer']."";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);

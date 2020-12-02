@@ -21,6 +21,7 @@
                 dataDB.data[3]	// Time
                 dataDB.data[4]	// Floor
                 dataDB.data[5]	// TagFloor
+                dataDB.data[6]	// Color
             否則
                 dataDB.data = ""
          */
@@ -31,7 +32,7 @@
     if(!$resultNEW){
         die($conn->error);
     }
-    $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Comment` WHERE `AuthorID`='".$input['articleID'].' AND`Floor`='".$input['floors'].";
+    $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor`,`Color` FROM `Comment` NATURAL JOIN`User` ON User.UserID =Comment.AuthorID WHERE `AuthorID`='".$input['articleID'].' AND`Floor`='".$input['floors'].";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);

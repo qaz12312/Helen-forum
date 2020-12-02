@@ -24,6 +24,7 @@
                 dataDB.data[4]	// Image
                 dataDB.data[5]	// HashTag
                 dataDB.data[6]	// Time
+                dataDB.data[7]	// Color
             否則
                 dataDB.data = ""
          */
@@ -35,7 +36,7 @@
         die($conn->error);
     }
     $articleID=IDENT_CURRENT(`Article`);//取得流水號
-    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time` FROM `Article` WHERE `ArticleID`=$articleID";
+    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time`,`Color` FROM `Article` NATURAL JOIN`User` ON User.UserID =Article.AuthorID WHERE `ArticleID`=$articleID";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);

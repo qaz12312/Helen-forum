@@ -20,17 +20,19 @@
             否則
                 
          */
-    $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardID` = $input['oldboardID']";
-    $result=$conn->query($updateSql);
-    if(!$result){
-        die($conn->error);
+    if($input['oldboardID']){
+        $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardID` = $input['oldboardID']";
+        $result=$conn->query($updateSql);
+        if(!$result){
+            die($conn->error);
+        }
     }
     $updateSql2="UPDATE `Board` SET `UserID`='".$input['userID']."' WHERE `BoardID` = $input['newboardID']";
     $result=$conn->query($updateSql2);
     if(!$result){
         die($conn->error);
     }
-    $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `User` NATURAL JOIN `Board`  WHERE `UserID`='".$input['userID']."'" ;
+    $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `Board`NATURAL JOIN`User` ON User.UserID =Board.UserID  WHERE `UserID`='".$input['userID']."'" ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result){

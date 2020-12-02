@@ -28,7 +28,7 @@
          */
 
 
-    $sql ="SELECT `UserID`,`UserColor` , `BoardName` FROM `Board` NATURAL JOIN`User` order by `UserID` ASC " ;
+    $sql ="SELECT `UserID`,`UserColor` , `BoardName` FROM `Board` NATURAL JOIN`User` ON User.UserID =Board.UserID order by `UserID` ASC " ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result){
