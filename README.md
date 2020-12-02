@@ -6,7 +6,7 @@
     + 個個php裡都有寫 前端to後端 、 後端to前端 的data & 取得格式
 
 ## 後端頁面
-+ [connectDB.php]()
++ [connectDB.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
     + 目前db連接有誤
 + []()
 + []()
