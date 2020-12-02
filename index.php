@@ -6,10 +6,10 @@
     require_once("connectDB.php");
 	$conn = connSql();
 	switch($input["act"]){
-        // case "logIn": //登入
-	    //     require_once("login.php");
-	    //     doLogin($input);
-	    //     break;
+        case "logIn": //登入
+	        require_once("logIn.php");
+	        doLogin($input);
+	        break;
         // case "creatAccount": //註冊
         //     signUp.php;
         //     break;
