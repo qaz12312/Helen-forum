@@ -3,6 +3,7 @@
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "home";
+            cmd["articleID"] = "ArticleID";
         */
         /* 後端 to 前端
             dataDB.state
@@ -21,7 +22,7 @@
         
         $sql2="CREATE VIEW TitleBoardNameArticleIDKeepID(`Title`,`BoardName`,`ArticleID`,`cntKeep`) AS SELECT `Title`,`BoardName`,`ArticleID`,COUNT(`KeepID`) FROM `Article`JOIN `Board`  ON  Article.BlockID= Board.BlockID JOIN `FollowKeep`  ON  Article.ArticleID= FollowKeep.ArticleID GROUP BY `ArticleID` ";
 
-        $sql3="SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM TitleBoardNameArticleIDUserID NATURAL JOIN TitleBoardNameArticleIDKeepID";
+        $sql3="SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM TitleBoardNameArticleIDUserID NATURAL JOIN TitleBoardNameArticleIDKeepID WHERE `ArticleID`=$input['articleID']";
 
         $result=$conn->query($sql3);
         if(!$result){
