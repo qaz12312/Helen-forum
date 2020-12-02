@@ -5,7 +5,7 @@
 + [logIn.php  登入](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
 + [signUp.php  註冊](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
 + [forgetPassword.php  忘記密碼](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/forgetPassword.php)
-+ [moderator.php  檢舉](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/moderator.php)
++ [report.php  檢舉](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/report.php)
 + [board.php  看版](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/board.php)
 + [home.php 首頁](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/home.php)
     + 看板全部
