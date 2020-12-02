@@ -51,6 +51,9 @@ $( document ).ready( function()
 
 function initial()
 {
+    let isValid = checkPermission();
+    if( !isValid ) return;
+
     let cmd = {};
     cmd[ "Act" ] = "ReportPage";
     cmd[ "BoardName" ] = getUrlParameter( "BoardName" );
@@ -68,12 +71,12 @@ function initial()
     //         let content = $( ".tabContent tbody" );
     //         content.empty();
 
-    //         for( let i in data.data )
+    //         for( let i in data.Data )
     //         {
-    //             articles.push( data.data[i] );
+    //             articles.push( data.Data[i] );
 
     //             let oneRow = "<tr>" + 
-    //                             "<td>" + data.data[i][ "Title" ] + "</td>" +
+    //                             "<td>" + data.Data[i][ "Title" ] + "</td>" +
     //                             "<td>" +
     //                                 "<button type='button' class='btn'>" +
     //                                     "<span class='glyphicon glyphicon-trash'></span> 刪除" +
@@ -95,15 +98,15 @@ function initial()
     content.empty();
 
     let data = {};
-    data[ "data" ] = [ { "Title": "紅燈區" }, { "Title": "大一妹妹看起來很波霸哦"}, { "Title": "看我切開兔子的肚皮" } ];
+    data[ "Data" ] = [ { "Title": "紅燈區" }, { "Title": "大一妹妹看起來很波霸哦"}, { "Title": "看我切開兔子的肚皮" } ];
 
-    for( let i in data.data )
+    for( let i in data.Data )
     {
-        console.log( data.data[ i ] );
-        articles.push( data.data[i] );
+        console.log( data.Data[ i ] );
+        articles.push( data.Data[i] );
 
         let oneRow = "<tr>" + 
-                        "<td>" + data.data[i][ "Title" ] + "</td>" +
+                        "<td>" + data.Data[i][ "Title" ] + "</td>" +
                         "<td>" +
                             "<button type='button' class='btn'>" +
                                 "<span class='glyphicon glyphicon-trash'></span> 刪除" +
@@ -120,8 +123,43 @@ function initial()
     }
 }
 
+function checkPermission()
+{
+    let cmd = {};
+    cmd[ "Act" ] = "CheckPermission";
+    cmd[ "UserID" ] = getCookie( "UserID" );
+    cmd[ "Password" ] = getCookie( "Password" );
+
+    let isValid = false;
+
+    // $.post( ".php", cmd, function( data )
+    // {
+    //     data = JSON.parse( data );
+
+    //     if( data.status == true && data.Data.Permission >= 3 )
+    //     {
+    //         isValid = true;
+    //     }
+    //     else
+    //     {
+    //         if( data.status == false )
+    //         {
+    //             alert( "ErrorCode" );
+    //         }
+    //         else if( data.Data.Permission < 2 )
+    //         {
+    //             alert( "Permission Denied" );
+    //         }
+
+    //         $( document ).empty();
+    //     }
+    // });
+
+    return isValid;
+}
+
 var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1),
+    let sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
         sParameterName,
         i;
@@ -134,3 +172,28 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+function setCookie(cname, cvalue, exdays) {
+    let d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+} 
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+
+    for( let i in ca) {
+        let c = ca[i];
+
+        while ( c.charAt(0) == ' ' ) {
+            c = c.substring(1);
+         }
+         if ( c.indexOf( name ) == 0 ) {
+            return c.substring( name.length, c.length );
+         }
+     }
+    return "";
+} 
