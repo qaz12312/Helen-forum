@@ -9,7 +9,7 @@ $( document ).ready( function()
         if( $(this).text() != "檢舉文章列表為空" )
         {
             let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
-            sessionStorage.setItem( "articleID", articles[ thisArticle ].articleID );
+            sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
             location.href =  "../html/post.html";
         }
     } );
@@ -137,7 +137,7 @@ function initial()
 
     // let cmd = {};
     // cmd[ "act" ] = "reportPage";
-    // cmd[ "boardName" ] = sessionStorage.getItem( "boardName" );
+    // cmd[ "boardName" ] = sessionStorage.getItem( "Helen-boardName" );
 
     // $.post( "../index.php", cmd, function( dataDB )
     // {
@@ -201,12 +201,12 @@ function initial()
     dataDB[ "data" ] = [ { "articleID": "123", "title": "紅燈區", "reason": "aaa" }, 
                          { "articleID": "456", "title": "大一妹妹看起來很波霸哦", "reason": "bbb" }, 
                          { "articleID": "789", "title": "看我切開兔子的肚皮", "reason": "ccc" } ];
+    articles = dataDB.data;
 
     let empty = true;
     for( let i in dataDB.data )
     {
         empty = false;
-        articles.push( dataDB.data[i] );
 
         let oneRow = "<tr>" + 
                         "<td>" + dataDB.data[i].title + "</td>" +
@@ -241,7 +241,7 @@ function initial()
 
 function checkPermission()
 {
-    // let perm = sessionStorage.getItem( "permission" );
+    // let perm = sessionStorage.getItem( "Helen-permission" );
     // console.log( perm );
 
     // if( perm ) return ( perm.valueOf() >= 2 ); 
