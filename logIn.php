@@ -2,19 +2,18 @@
 前端 to 後端:
 let cmd = {};
 cmd["act"] = "logIn";
-cmd["account"] = 00757003@email.ntou.edu.tw;
-cmd["password"] = zxsss123;
+cmd["account"] = "00857210@email.ntou.edu.tw";
+cmd["password"] = "123456789";
 
 後端 to 前端:
 dataDB = JSON.parse(data);
 dataDB.status
 若 status = true:
     dataDB.errorCode = ""
-    dataDB.data[0] // UserID
-    dataDB.data[1] // Password
-    dataDB.data[2] // Permissions
-    dataDB.data[3] // Color
-    dataDB.data[4] // Nickname
+    dataDB.data[0] // UserID:"00857210@email.ntou.edu.tw"
+    dataDB.data[1] // Permissions:1
+    dataDB.data[2] // Color:"#ffffff"
+    dataDB.data[3] // Nickname:"cook"
 否則
     dataDB.errorCode = "找不到會員"
     dataDB.data = "" 
@@ -23,7 +22,7 @@ dataDB.status
 <?php
     function doLogIn($input){
     	global $conn;
-    	$sql="SELECT `UserID`,`Password`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
+    	$sql="SELECT `UserID`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
 	    $result = $conn->query($sql);
 	    if(!$result){
 	        die($conn->error);
