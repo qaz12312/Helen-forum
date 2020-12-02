@@ -10,10 +10,10 @@
 	        require_once("logIn.php");
 	        doLogIn($input);
 	        break;
-        // case "creatAccount": //註冊
-        //     signUp.php;
-        //     break;
-
+        case "creatAccount": //註冊
+            require_once("signUp.php");
+	        doCreatAccount($input);
+            break;
         // case "forgottenPwd": //忘記密碼
         //     forgetPassword.php;
         //     break;
