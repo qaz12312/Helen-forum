@@ -11,7 +11,7 @@
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
-		dataDB.data[0] // UserID:"00857210@email.ntou.edu.tw"
+		dataDB.data[0] // UserID:"00857210@mail.ntou.edu.tw"
 		dataDB.data[1] // Permissions:1
 		dataDB.data[2] // Color:"#ffffff"
 		dataDB.data[3] // Nickname:"cook"
@@ -39,6 +39,7 @@
 	        $rtn["errorCode"] = "";
 	        $rtn["data"] =$row;
 	    }
-	    echo json_encode($rtn);
+		echo json_encode($rtn);
+		// return $rtn;
     }
 ?>

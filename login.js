@@ -33,9 +33,11 @@ $(document).ready(function () {
             cmd["act"] = "logIn";
             cmd["account"] = act;
             cmd["password"] = pw;
-            $.post("http://127.0.0.1:5504/html/index.php", cmd, function (data) {
-                console.log("onnect success")
+            $.post("./index.php", cmd, function (data) {
+                console.log("connect success");
+                console.log(data);
                 dataDB = JSON.parse(data);
+                console.log(dataDB);
                 if (dataDB.statue == false) {
                     dataDB.data = ""
                     swal({
