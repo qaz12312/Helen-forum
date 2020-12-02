@@ -28,7 +28,7 @@ CREATE TABLE Article (
 	ArticleID bigint(255) NOT NULL AUTO_INCREMENT,
 	AuthorID varchar(101) NOT NULL,
 	Title varchar(255) NOT NULL,
-	Content longtext ,
+	Content text ,
 	Image longtext ,
 	HashTag varchar(255) ,
 	Times datetime NOT NULL,
