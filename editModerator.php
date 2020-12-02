@@ -15,21 +15,19 @@
             若 state = true:
                 dataDB.data[i] //有i筆文章
                 (
-                    dataDB.data[i].BoardID 
-                    dataDB.data[i].BoardName 
                     dataDB.data[i].UserID 
-                    dataDB.data[i].Rule 
-                     dataDB.data[i].TopArticleID
+                    dataDB.data[i].UserColor 
+                    dataDB.data[i].BoardName 
                 ) 
             否則
                 
          */
-    $updateSql="UPDATE `Board` SET `BoardName`='".$input['boardName']."'','`Rule`='".$input['rule']."'','`TopArticleID`='".$input['topArticleID']."'";
+    $updateSql="UPDATE `Board` SET `UserID`='".$input['userID']."'";
     $result=$conn->query($updateSql);
     if(!$result){
         die($conn->error);
     }
-    $sql ="SELECT `BoardName` FROM `Board` WHERE `BoardID`='".$input['boardID']."' AND`BoardName`='".$input['boardName']."'AND`Rule`='".$input['rule']."'AND`TopArticleID`='".$input['topArticleID']."'" ;
+    $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `User` NATURAL JOIN `Board`  WHERE `UserID`='".$input['userID']."'" ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result){

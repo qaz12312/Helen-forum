@@ -3,7 +3,7 @@
     /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "addKeepDir";
-			cmd["userID"] = "UserID"
+			cmd["account"] = "UserID"
             cmd["dirID"] = "DirID"
             cmd["dirName"] ="我喜歡的"
 

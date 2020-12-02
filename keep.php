@@ -1,22 +1,3 @@
-<!-- 前端 to 後端:
-let cmd = {};
-cmd["act"] = "keep";
-cmd["account"] = "0123456";
-cmd["articleId"] = 540654;
-cmd["dirId"] = 4564;
-cmd["time"] = "2020-11-15 10:23:21";
-
-<!--
-後端 to 前端
-dataDB.status
-dataDB.errorCode
-若 status = true:
-dataDB.data="success"
-否則
-dataDB.data = "" -->
-
-<!--FollowKeep[ArticleID,UserID,KeepId,Time]-->
-
 <?php
 require_once 'connectDB.php'; //連線資料庫
 

@@ -4,7 +4,7 @@
             let cmd = {};
             cmd["act"] = "editArticle";
 			cmd["articleID"] = "ArticleID"
-            cmd["authorID"] = "AuthorID"
+            cmd["account"] = "AuthorID"
             cmd["blockID"] ="美食版"
             cmd["title"] = "Title"
             cmd["content"] = "Content"

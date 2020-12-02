@@ -1,7 +1,7 @@
 <?php
  //點通知 PRIMARY KEY ('UserID', 'Time', 'Content')
     /* 前端 to 後端:
-            cmd["UserID"] = "UserID";
+            cmd["account"] = "UserID";
             cmd["Time"] = "Time";
             cmd["detail"] = "Content";
         */

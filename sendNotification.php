@@ -3,7 +3,7 @@
 /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "sendNotification";
-            cmd["userID"] = "UserID"
+            cmd["account"] = "UserID"
 			cmd["timer"] = "Times"
             cmd["content"] = "Content"
         */

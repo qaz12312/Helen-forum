@@ -5,7 +5,6 @@
             cmd["act"] = "sendReport";
             cmd["reason"] = "Reason"
 			cmd["timer"] = "Times"
-            cmd["content"] = "Content"
         */
 		
         /* 後端 to 前端
@@ -13,18 +12,19 @@
             dataDB.errorCode
             若 status = true:
 				dataDB.data[0]	// ArticleID
-				dataDB.data[1]	// Reason
+                dataDB.data[1]	// Reason
+                dataDB.data[2]	// times
             否則
                 dataDB.data = ""
          */
     global $input,$conn;
-    $new="INSERT INTO  `Report`(`ArticleID`,`Reason`) 
-    VALUES('".$input['articleID']."','".$input['reason']."')";
+    $new="INSERT INTO  `Report`(`ArticleID`,`Reason`,`Times`) 
+    VALUES('".$input['articleID']."','".$input['reason']."'','".$input['timer']."')";
     $resultNew=$conn->query($new);
     if(!$resultNEW){
         die($conn->error);
     }
-    $sql="SELECT `UserID`,`Times`,`Content` FROM `Report` WHERE `ArticleID`=$input['articleID'] AND `reason`=$input['Reason'] ";
+    $sql="SELECT `ArticleID`,`Reason`,`Times` FROM `Report` WHERE `ArticleID`=$input['articleID'] AND `reason`=$input['Reason'] ";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);

@@ -4,7 +4,7 @@
         let cmd = {};
         cmd["act"] = "delFollowKeep";
         cmd["articleID"] = "ArticleID"
-        cmd["userID"] = "UserID"
+        cmd["account"] = "UserID"
         cmd["keepID"] ="KeepID"
     */
 		

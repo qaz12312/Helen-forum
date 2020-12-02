@@ -4,7 +4,7 @@
             let cmd = {};
             cmd["act"] = "newBoard";
 			cmd["boardName"] = "企鵝版"
-			cmd["userID"] "00752233"
+			cmd["account"] "00752233"
         */
 		
         /* 後端 to 前端
