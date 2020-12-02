@@ -27,10 +27,12 @@
             die($conn->error);
         }
     }
-    $updateSql2="UPDATE `Board` SET `UserID`='".$input['userID']."' WHERE `BoardID` = $input['newboardID']";
-    $result=$conn->query($updateSql2);
-    if(!$result){
-        die($conn->error);
+    if($input['newboardID']){
+        $updateSql2="UPDATE `Board` SET `UserID`='".$input['userID']."' WHERE `BoardID` = $input['newboardID']";
+        $result=$conn->query($updateSql2);
+        if(!$result){
+            die($conn->error);
+        }
     }
     $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `Board`NATURAL JOIN`User` ON User.UserID =Board.UserID  WHERE `UserID`='".$input['userID']."'" ;
     global $conn;
