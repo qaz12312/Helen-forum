@@ -4,7 +4,7 @@ $(document).ready(function () {
         let act = $("#account").val(),
             pw = $("#password").val();
         let format = Restrict();
-        
+
         if ((!act)) {
             swal({
                 title: 'Wrong',
@@ -37,11 +37,11 @@ $(document).ready(function () {
                 console.log("onnect success")
                 dataDB = JSON.parse(data);
                 if (dataDB.statue == false) {
-                    dataDB.data=""
+                    dataDB.data = ""
                     swal({
                         title: 'OOPS...',
                         type: 'error',
-                        text:'帳號或密號錯誤 \u2620',
+                        text: '帳號或密號錯誤 \u2620',
                         animation: false,
                         customClass: 'animated rotateOutUpLeft',
                         confirmButtonText: 'okay!',
@@ -68,7 +68,7 @@ $(document).ready(function () {
                 }
             });
         }
-        
+
     });
 
     $("#Sign-upBtn").click(function () {
@@ -109,9 +109,9 @@ $(document).ready(function () {
 
 function initial() {
     let cmd = {};
-    cmd["act"]="logIn";
-    cmd[ "account" ] = $("#account").val();
-    cmd[ "password" ] = $("#password").val();
+    cmd["act"] = "logIn";
+    cmd["account"] = $("#account").val();
+    cmd["password"] = $("#password").val();
     $("#account").val("");
     $("#password").val("");
 }
@@ -122,13 +122,13 @@ function Restrict() {
 
 
 
-    
 
- if (pw.length > 20 || pw.length < 3) {
+
+    if (pw.length > 20 || pw.length < 3) {
         swal({
             title: 'OOPS...',
             type: 'error',
-            html:'密碼字數只能在3~20內!!!!',
+            html: '密碼字數只能在3~20內!!!!',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#7a96a2'
         })
@@ -150,5 +150,5 @@ function Restrict() {
 function leaveUserDetails(UserID, Password) {
     sessionStorage.setItem("Helen-UserID", UserID);
     sessionStorage.setItem("Helen-Password", Password);
-   
+
 }
