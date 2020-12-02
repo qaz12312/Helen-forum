@@ -1,5 +1,5 @@
 use test;
-
+```
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
 UserID varchar(101) NOT NULL,
