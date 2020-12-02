@@ -10,7 +10,7 @@
 + [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
     + 新建中
 + [logIn.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
-+ []()
++ [signUp.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
 
 
 
