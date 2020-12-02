@@ -32,7 +32,7 @@
         if(!$result){
             die($conn->error);
         }
-    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time` FROM `Article` WHERE `Title`=".$input['title']."','`Content`=".$input['content']."AND `Image`=".$input['picture']."AND `HashTag`=".$input['hashTag']."AND `Time`=".$input['timer']."";
+    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time` FROM `Article` NATURAL JOIN`User`AuthorID WHERE `Title`=".$input['title']."AND `Content`=".$input['content']."AND `Image`=".$input['picture']."AND `HashTag`=".$input['hashTag']."AND `Time`=".$input['timer']."";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);

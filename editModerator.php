@@ -3,11 +3,9 @@
       /*前端 to 後端:
         let cmd = {};
         cmd["act"] = "editMode";
-        cmd["boardID"] = "BoardID"
-        cmd["boardName"] = "BoardName"
+        cmd["oldboardID"] = "BoardName"
+        cmd["newboardID"] = "BoardName"
         cmd["userID"] = "UserID"
-        cmd["rule"] = "Rule"
-        cmd["topArticleID"] = "TopArticleID"
     */ 
     /* 後端 to 前端
             dataDB.state
@@ -15,21 +13,24 @@
             若 state = true:
                 dataDB.data[i] //有i筆文章
                 (
-                    dataDB.data[i].BoardID 
-                    dataDB.data[i].BoardName 
                     dataDB.data[i].UserID 
-                    dataDB.data[i].Rule 
-                     dataDB.data[i].TopArticleID
+                    dataDB.data[i].UserColor 
+                    dataDB.data[i].BoardName 
                 ) 
             否則
                 
          */
-    $updateSql="UPDATE `Board` SET `BoardName`='".$input['boardName']."'','`Rule`='".$input['rule']."'','`TopArticleID`='".$input['topArticleID']."'";
+    $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardID` = $input['oldboardID']";
     $result=$conn->query($updateSql);
     if(!$result){
         die($conn->error);
     }
-    $sql ="SELECT `BoardName` FROM `Board` WHERE `BoardID`='".$input['boardID']."' AND`BoardName`='".$input['boardName']."'AND`Rule`='".$input['rule']."'AND`TopArticleID`='".$input['topArticleID']."'" ;
+    $updateSql2="UPDATE `Board` SET `UserID`='".$input['userID']."' WHERE `BoardID` = $input['newboardID']";
+    $result=$conn->query($updateSql2);
+    if(!$result){
+        die($conn->error);
+    }
+    $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `User` NATURAL JOIN `Board`  WHERE `UserID`='".$input['userID']."'" ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result){

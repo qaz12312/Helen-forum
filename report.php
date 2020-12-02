@@ -2,6 +2,7 @@
     let cmd = {};
     cmd["act"] = "reportPage";
     cmd["BoardName"] = "美食版"
+	cmd["Timer`"] = "2020-09-03"
 -->	
 <!-- 後端 to 前端
     dataDB.status
@@ -11,7 +12,8 @@
 	(
 		dataDB.data[i].articleID
 		dataDB.data[i].reason
-		dataDB.data[i].articleName
+		dataDB.data[i].title
+		dataDB.date[i].times
 	)
     否則
 	dataDB.data = ""
@@ -19,7 +21,7 @@
 <?php
     require_once 'connectDB.php'; //連線資料庫 
         global $input,$conn;
-        $sql="SELECT `Title`,`Reason` FROM `Report` NATURAL JOIN `Article` WHERE `BlockID`='".$input['BoardName']."'";
+        $sql="SELECT `Title`,`Reason`,`Times` FROM `Report` NATURAL JOIN `Article` NATURAL JOIN `Board` WHERE `BlockName`='".$input['BoardName']."'order by `Times` DESC";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);

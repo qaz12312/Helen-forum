@@ -3,7 +3,7 @@
 
         /* 前端 to 後端:
             let cmd = {};
-            cmd["act"] = "TopArticle";
+            cmd["act"] = "TopArticleChange";
 			cmd["articleID"] = "aaad94i30jdsfg3435"
         */
 		
@@ -48,7 +48,7 @@
 
         /* 前端 to 後端:
             let cmd = {};
-            cmd["act"] = "TopArticle";
+            cmd["act"] = "TopArticleDelete";
 			cmd["articleID"] = "aaad94i30jdsfg3435"
         */
 		

@@ -1,5 +1,21 @@
 <? php
     require_once 'connectDB.php'; //連線資料庫 
+        /* 前端 to 後端:
+            let cmd = {};
+            cmd["act"] = "showNotice";
+			cmd["account"] = "UserID"
+        */
+		
+        /* 後端 to 前端
+            dataDB.status
+            dataDB.errorCode
+            若 status = true:
+				dataDB.data[0]	// Time
+				dataDB.data[1]	// Content
+            否則
+                dataDB.data = ""
+         */
+
     $sql ="SELECT `Time`,`Content` FROM `Notice` where `UserID`= $input[`account`] order by `Time`asc" ;
     global $conn;
     $result=$conn->query($sql);
