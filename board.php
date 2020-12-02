@@ -73,7 +73,7 @@
             否則
                 dataDB.data = ""
          */
-        $sql="UPDATE `Board` SET Rule='".$input['rule']."'".$input['userID']."'";
+        $sql="UPDATE `Board` SET `Rule`='".$input['rule']."','"`UserID`='".$input['rule']."'";
         $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
