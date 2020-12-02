@@ -57,7 +57,7 @@ function initial()
                 let selectBlock = "<div class='input-group input-group-lg mt-3'>" +
                                         "<select class='form-control' style='background-color: brown; color: white;'>";
 
-                for( let j in dataDB.data[i].board )
+                for( let j in dataDB.data[i].options )
                 {
                     selectBlock += "<option value='" +  dataDB.data[i].options[i] + "'>" + dataDB.data[i].options[i] + "</option>";
                 }
