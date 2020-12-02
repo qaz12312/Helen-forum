@@ -1,14 +1,14 @@
 # 後端 - Helen
 
 ## 前端接口
-+ [index.php]()
++ [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
     + 裡面有cmd["act"]的值
     + 個個php裡都有寫 前端to後端 、 後端to前端 的data & 取得格式
 
 ## 後端頁面
 + [connectDB.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
     + 目前db連接有誤
-+ [index.php]()
++ [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
     + 新建中
 + []()
 + []()
