@@ -89,7 +89,7 @@ function boardList(){
         echo json_encode($rtn);
 }
 function showNotice(){
-    $sql ="SELECT `Time`,`Content` FROM `Notice` where `UserID`= $cmd->account order by `Time`asc" ;
+    $sql ="SELECT `Time`,`Content` FROM `Notice` where `UserID`= $input[`account`] order by `Time`asc" ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result){
@@ -129,7 +129,7 @@ function clickNotice( ){ //點通知 PRIMARY KEY ('UserID', 'Time', 'Content')
             否則
                 dataDB.data = ""
          */
-    $sql ="DELETE FROM  `Notice` where `UserID`=$cmd->UserID, `Time`=$cmd->Time,`Content`=$cmd->detail" ;
+    $sql ="DELETE FROM  `Notice` where `UserID`=$cmd->UserID, `Time`=$input[`Time`],`Content`=$input[`detail`]" ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result or mysql_query( $sql, $conn )){
