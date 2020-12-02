@@ -11,6 +11,7 @@
 	(
 		dataDB.data[i].articleID
 		dataDB.data[i].reason
+		dataDB.data[i].articleName
 	)
     否則
 	dataDB.data = ""
