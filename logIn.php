@@ -11,9 +11,9 @@ dataDB.status
 若 status = true:
     dataDB.errorCode = ""
     dataDB.data[0] // UserID:"00857210@email.ntou.edu.tw"
-    dataDB.data[2] // Permissions:1
-    dataDB.data[3] // Color:"#ffffff"
-    dataDB.data[4] // Nickname:"cook"
+    dataDB.data[1] // Permissions:1
+    dataDB.data[2] // Color:"#ffffff"
+    dataDB.data[3] // Nickname:"cook"
 否則
     dataDB.errorCode = "找不到會員"
     dataDB.data = "" 
