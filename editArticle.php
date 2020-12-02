@@ -1,4 +1,5 @@
 <?php
+    require_once 'connectDB.php'; //連線資料庫 
 /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "editArticle";
@@ -47,8 +48,7 @@
         $rtn = array();
         $rtn["status"] = true;
         $rtn["errorCode"] = "";
-        $rtn["data"] = $row[0];
-        $rtn["articleID"] =$articleID;
+        $rtn["data"] = $row;
     }
     echo json_encode($rtn);
 ?>

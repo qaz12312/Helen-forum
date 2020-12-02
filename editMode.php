@@ -1,4 +1,5 @@
 <?php 
+       require_once 'connectDB.php'; //連線資料庫 
     /* 後端 to 前端
             dataDB.state
             dataDB.errorCode

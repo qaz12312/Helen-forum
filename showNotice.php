@@ -1,4 +1,5 @@
 <? php
+    require_once 'connectDB.php'; //連線資料庫 
     $sql ="SELECT `Time`,`Content` FROM `Notice` where `UserID`= $input[`account`] order by `Time`asc" ;
     global $conn;
     $result=$conn->query($sql);

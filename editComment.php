@@ -1,4 +1,5 @@
 <?php
+       require_once 'connectDB.php'; //連線資料庫 
 /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "addComment";
@@ -44,7 +45,7 @@
         $rtn = array();
         $rtn["status"] = true;
         $rtn["errorCode"] = "";
-        $rtn["data"] = $new[0];
+        $rtn["data"] = $row;
     }
     echo json_encode($rtn);
 ?>

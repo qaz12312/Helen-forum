@@ -20,6 +20,7 @@ dataDB.status
 -->
 
 <?php
+    require_once 'connectDB.php'; //連線資料庫 
     function doCreatAccount($input){
     	global $conn;
     	$sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
