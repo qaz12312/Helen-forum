@@ -1,4 +1,3 @@
-console.log("load");
 document.querySelector("html").classList.add('js');
 
 var fileInput  = document.querySelector( ".input-file" ),  
@@ -18,4 +17,8 @@ fileInput.addEventListener( "change", function( event ) {
     var str= this.value;
     str= str.substring(12, str.length);
     the_return.innerHTML = str;
-});  
+});
+
+$(document).ready(function(){
+    
+})

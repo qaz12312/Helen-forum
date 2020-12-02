@@ -18,6 +18,18 @@
     -->
     <link rel= "stylesheet" href= "../css/style.css">
     <style>
+        .selectOption{
+            width: 100%;
+        }
+        .classification{
+            border: 0px;
+            width: 30%;
+            padding: 3px 7px 3px 7px;
+            margin-right: 5%;
+            margin-bottom: 2%;
+            font-size: inherit;
+          }
+
         .input-file-container {
             position: relative;
           } 
@@ -82,17 +94,17 @@
             <table>
             <tr>
                 <td>分類&nbsp;</td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">選擇看版
-                        <span class="caret"></span></button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">心情版</a></li>
-                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">穿搭版</a></li>
-                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">有趣版</a></li>
-                          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">漫威版</a></li>
-                        </ul>
-                      </div>
+                <td style="text-align: left">
+                    <div class="selectOption">
+                        <select name="" class="classification"
+                            onchange="this.form.submit();">
+                            <option value="food" selected>美食版</option>
+                            <option value="manwei">漫威版</option>
+                            <option value="name">企鵝版</option>
+                            <option value="name">廢文版</option>
+                            <option value="name">八卦版</option>
+                        </select>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -113,7 +125,7 @@
             <table>
                 <tr>
                     <td></td>
-                    <td colspan="2" style="text-align: left; color:navy">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#台南美食 #好吃一起吃 #加糖不加價</td>
+                    <td colspan="2" style="text-align: right; color:navy">#台南美食 #好吃一起吃 #加糖不加價</td>
                 </tr>
                 <tr>
                     <td>
