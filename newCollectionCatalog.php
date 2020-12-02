@@ -37,7 +37,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "新增上傳失敗";
+            $rtn["errorCode"] = "新增資料夾失敗";
             $rtn["data"] = "";
         }
         else{

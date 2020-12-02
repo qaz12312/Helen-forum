@@ -14,30 +14,36 @@
             dataDB.status
             dataDB.errorCode
             若 status = true:
-                dataDB.data[0]	// BoardID
-				dataDB.data[1]	// BoardName
-				dataDB.data[2]	// UserID
-				dataDB.data[3]	// Rule
-				dataDB.data[4]	// TopArticleID
+				dataDB.data[0]	// AuthorID
+				dataDB.data[1]	// Content
+				dataDB.data[2]	// ArticleID
+                dataDB.data[3]	// Time
+                dataDB.data[4]	// Floor
+                dataDB.data[5]	// TagFloor
             否則
                 dataDB.data = ""
          */
-        $sql="UPDATE `Board` SET Rule='".$input['rule']."'".$input['userID']."'";
-        $result=$conn->query($sql);
+        $updateSql="UPDATE `Comment` SET `Content`='".$input['detail']."'','`Time`='".$input['timer']."'','".$input['userID']."'','`TagFloor`='".$input['tagFloor']."'";
+        $result=$conn->query($updateSql);
+            if(!$result){
+                die($conn->error);
+            }
+            $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Comment` WHERE `AuthorID`='".$input['articleID'].' AND`Floor`='".$input['floors'].";
+            $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
             }
             if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "註冊失敗，資料庫異常";
-            $rtn["data"] = "";
-        }
-        else{
-            $row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = $new[0];
-        }
+                $rtn = array();
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "留言更新失敗";
+                $rtn["data"] = "";
+            }
+            else{
+                $row=$result->fetch_row();
+                $rtn = array();
+                $rtn["status"] = true;
+                $rtn["errorCode"] = "";
+                $rtn["data"] = $new[0];
+            }
 ?>

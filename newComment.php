@@ -30,7 +30,7 @@
         if(!$resultNEW){
             die($conn->error);
         }
-        $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Article` WHERE `AuthorID`='".$input['articleID'].' AND`Floor`='".$input['floors'].";
+        $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Comment` WHERE `AuthorID`='".$input['articleID'].' AND`Floor`='".$input['floors'].";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
