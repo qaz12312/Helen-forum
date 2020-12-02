@@ -33,7 +33,7 @@ $(document).ready(function () {
             cmd["act"] = "logIn";
             cmd["account"] = act;
             cmd["password"] = pw;
-            $.post("../index.php", cmd, function (data) {
+            $.post("./index.php", cmd, function (data) {
                 console.log("onnect success")
                 dataDB = JSON.parse(data);
                 if (dataDB.statue == false) {
@@ -61,7 +61,7 @@ $(document).ready(function () {
                         function () { },
                         function (dismiss) {
                             if (dismiss === 'timer') {
-                                window.location.href = "search.html";
+                                window.location.href = "./registration.html";
                             }
                         }
                     )
@@ -83,7 +83,7 @@ $(document).ready(function () {
             function () { },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    window.location.href = "../html/registration.html";
+                    window.location.href = "./registration.html";
                 }
             }
         )
@@ -100,7 +100,7 @@ $(document).ready(function () {
             function () { },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    window.location.href = "../html/forgetPassword.html";
+                    window.location.href = "./forgetPassword.html";
                 }
             }
         )
