@@ -32,3 +32,4 @@
     $result = $stmt->execute(array($input['account'],$input['title'],$input['content'],$input['image'],$input['hashTag'],$input["time"],$boardId));
     
 ?>
+
