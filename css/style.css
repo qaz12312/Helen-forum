@@ -53,15 +53,20 @@ body{
 	letter-spacing: 0px;
 }
 .postContent h5{
+	/* 屬於哪個看版 */
 	color: #fff;
 	border-radius: 10px;
-	padding: 10%;
+	padding: 10px;
 }
 .postContent button{
+	/* 愛心與收藏的按鈕 */
 	width: 75px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	margin-right: 3%;
 }
 .glyphicon-pushpin{
+	/* 置頂的圖釘 */
 	height: 30px;
 	width: 30px;
 	position: absolute;
@@ -69,7 +74,7 @@ body{
 	background-color: brown;
 	border-radius: 20px;
 	color: whitesmoke;
-	padding: 0.7%;
+	padding: 5px;
 }
 
 .textInput{
@@ -79,8 +84,15 @@ textarea{
 	width: 100%;
 }
 
+.articleTitle{
+	/* 文章列表中的文章標題 */
+	font-weight: bold;
+	font-size: 20px;
+}
+
 .card{
 	position: relative;
+	/* vertical-align: bottom; */
 }
 .card:hover{
 	background: gainsboro;
@@ -102,4 +114,16 @@ button{
 }
 .content p{
     letter-spacing: 0px;
+}
+
+.badge-pill{
+	/*  */
+	font-size: 20px;
+	background-color: #9da9be;
+}
+
+#clearHashtags{
+	color: brown; 
+	text-shadow: 2px 3px gray; 
+	cursor: pointer
 }

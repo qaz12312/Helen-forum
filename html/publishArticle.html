@@ -5,7 +5,7 @@
     <meta charset = "utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>發表文章</title>
-    <link rel= "stylesheet" href= "../css/topnav.css">
+    <!-- <link rel= "stylesheet" href= "../css/topnav.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -63,29 +63,30 @@
 <body>
     <div class="topnav">
         <div class="dropdown">
-        <button class="dropbtn" onclick="myFunction(), cross(this)">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-        </button>
-        <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
-          <a href="#">Link 1</a>	
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-          <a href="#">+</a>
-        </div>
+            <button class="dropbtn" onclick="myFunction(), cross(this)">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </button>
+            <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
+                <a href="#">Link 1</a>	
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+                <a href="#">+</a>
+            </div>
         </div>
         <div class="login">
-        <button>登入</button>
+            <button>登入</button>
         </div>
         <div class="imgcontainer">
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
         </div>
         <div class="search-container">
-          <input type="text" placeholder="Search.." name="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
         </div>
-      </div>
+    </div>
+
     <div class= "tabContent">
         <h2>Helen－發佈文章</h2>
         <p>Publish your post.</p>
@@ -96,13 +97,12 @@
                 <td>分類&nbsp;</td>
                 <td style="text-align: left">
                     <div class="selectOption">
-                        <select name="" class="classification"
-                            onchange="this.form.submit();">
+                        <select id= "chooseBoard" class="classification">
                             <option value="food" selected>美食版</option>
                             <option value="manwei">漫威版</option>
-                            <option value="name">企鵝版</option>
-                            <option value="name">廢文版</option>
-                            <option value="name">八卦版</option>
+                            <option value="penguin">企鵝版</option>
+                            <option value="trash">廢文版</option>
+                            <option value="eightGua">八卦版</option>
                         </select>
                     </div>
                 </td>
@@ -110,14 +110,14 @@
             <tr>
                 <td>標題&nbsp;</td>
                 <td>
-                    <input type="text" id= "postTitle" class="textInput"
+                    <input type="text" id= "articleTitle" class="textInput"
                     name= "title" placeholder="Input title" required>
                 </td>
             </tr>
             <tr>
                 <td>內容&nbsp;</td>
                 <td>
-                    <textarea type="text" style="height: 200px;"></textarea>
+                    <textarea type="text" id= "articleContent" style="height: 200px;"></textarea>
                 </td>
             </tr>
             </table>
@@ -125,7 +125,7 @@
             <table>
                 <tr>
                     <td></td>
-                    <td colspan="2" style="text-align: right; color:navy">#台南美食 #好吃一起吃 #加糖不加價</td>
+                    <td colspan="2" id= "hashtags" style="text-align: right; color:navy"></td>
                 </tr>
                 <tr>
                     <td>
@@ -136,18 +136,18 @@
                     </td>
                     <td class= "file-return"></td>
                     <td>
-                        <input type="text" placeholder="#hashtag" value="#">
+                        <input type="text" id= "inputHashtag" placeholder="#hashtag" value="#">
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <button type="button" class="btn">
+                        <button type="button" class="btn" id= "cancelPublish">
                             <span class="glyphicon glyphicon-remove"></span> 取消
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success">
+                        <button type="button" class="btn btn-success" id= "publishBtn">
                             <span class="glyphicon glyphicon-open"></span> 發佈
                         </button>
                     </td>
@@ -158,6 +158,6 @@
     </div>
 
     <script src="../js/publishArticle.js" type="text/javascript"></script>
-    <script src="../js/bar.js"></script>
+    <!-- <script src="../js/bar.js"></script> -->
 </body>
 </html>
