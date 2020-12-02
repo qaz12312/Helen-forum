@@ -1,11 +1,17 @@
-<?php 
-       require_once 'connectDB.php'; //連線資料庫
-      /*前端 to 後端:
+<? php
+    require_once 'connectDB.php'; //連線資料庫 
+/* 前端 to 後端:
+            let cmd = {};
+            cmd["act"] = "showModerator";
+        */
+       /*前端 to 後端:
         let cmd = {};
         cmd["act"] = "editMode";
-        cmd["oldboardID"] = "BoardName"
-        cmd["newboardID"] = "BoardName"
+        cmd["boardID"] = "BoardID"
+        cmd["boardName"] = "BoardName"
         cmd["userID"] = "UserID"
+        cmd["rule"] = "Rule"
+        cmd["topArticleID"] = "TopArticleID"
     */ 
     /* 後端 to 前端
             dataDB.state
@@ -20,17 +26,9 @@
             否則
                 
          */
-    $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardID` = $input['oldboardID']";
-    $result=$conn->query($updateSql);
-    if(!$result){
-        die($conn->error);
-    }
-    $updateSql2="UPDATE `Board` SET `UserID`='".$input['userID']."' WHERE `BoardID` = $input['newboardID']";
-    $result=$conn->query($updateSql2);
-    if(!$result){
-        die($conn->error);
-    }
-    $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `User` NATURAL JOIN `Board`  WHERE `UserID`='".$input['userID']."'" ;
+
+
+    $sql ="SELECT `UserID`,`UserColor` , `BoardName` FROM `Board` NATURAL JOIN`User` order by `UserID` ASC " ;
     global $conn;
     $result=$conn->query($sql);
     if(!$result){
@@ -39,14 +37,15 @@
     if($result->num_rows <= 0){
         $rtn = array();
         $rtn["status"] = false;
-        $rtn["errorCode"] = "沒有版";
+        $rtn["errorCode"] = "沒有";
         $rtn["data"] = "";
     }
     else{
         $arr=array();
         for($i=0;$i<$result->num_rows;$i++){
             $row=$result->fetch_row();
-            $arr[$i]=$row[0];
+            $log=array("UserID"=>"$row[0]","UserColor"=>"$row[1]","BoardName"=>"$row[1]");
+            $arr[$i]=$log;
         }
         $rtn = array();
         $rtn["status"] = true;
@@ -54,4 +53,5 @@
         $rtn["data"] =$arr;
     }
     echo json_encode($rtn);
+
 ?>
