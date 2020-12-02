@@ -2,6 +2,8 @@
 	header("Access-Control-Allow-Origin: *");
     header("Content-Type:text/html; charset=utf-8");
     date_default_timezone_set("Asia/Taipei");
+	error_reporting(1);
+	error_reporting(E_ALL);
     $input = json_decode(file_get_contents('php://input', 'r'), true); 
     require_once("connectDB.php");
 	$conn = connSql();
