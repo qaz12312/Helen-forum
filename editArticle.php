@@ -26,30 +26,29 @@
             否則
                 dataDB.data = ""
          */
-        $updateSql="UPDATE `Article` SET `Title`=".$input['title']."','`Content`=".$input['content']."','`Image`=".$input['picture']."','`HashTag`=".$input['hashTag']."','`Time`=".$input['timer']."";
-        $result=$conn->query($updateSql);
-            if(!$result){
-                die($conn->error);
-            }
-        $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time` FROM `Article` WHERE `Title`=".$input['title']."','`Content`=".$input['content']."AND `Image`=".$input['picture']."AND `HashTag`=".$input['hashTag']."AND `Time`=".$input['timer']."";
-        $result=$conn->query($sql);
+    $updateSql="UPDATE `Article` SET `Title`=".$input['title']."','`Content`=".$input['content']."','`Image`=".$input['picture']."','`HashTag`=".$input['hashTag']."','`Time`=".$input['timer']."";
+    $result=$conn->query($updateSql);
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "文章更新失敗";
-            $rtn["data"] = "";
-        }
-        else{
-            $row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = $row[0];
-            $rtn["articleID"] =$articleID;
-        }
-        echo json_encode($rtn);
+    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time` FROM `Article` WHERE `Title`=".$input['title']."','`Content`=".$input['content']."AND `Image`=".$input['picture']."AND `HashTag`=".$input['hashTag']."AND `Time`=".$input['timer']."";
+    $result=$conn->query($sql);
+    if(!$result){
+        die($conn->error);
     }
+    if($result->num_rows <= 0){
+        $rtn = array();
+        $rtn["status"] = false;
+        $rtn["errorCode"] = "文章更新失敗";
+        $rtn["data"] = "";
+    }
+    else{
+        $row=$result->fetch_row();
+        $rtn = array();
+        $rtn["status"] = true;
+        $rtn["errorCode"] = "";
+        $rtn["data"] = $row[0];
+        $rtn["articleID"] =$articleID;
+    }
+    echo json_encode($rtn);
 ?>

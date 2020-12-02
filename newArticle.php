@@ -26,32 +26,32 @@
             否則
                 dataDB.data = ""
          */
-        global $input,$conn;
-        $new="INSERT INTO  `Article`(`ArticleID`,`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`Time`) 
-        VALUES('".$input['authorID']."','".$input['title']."','".$input['content']."','".$input['picture']."','".$input['hashTag']."','".$input['timer']."')";
-        $resultNew=$conn->query($new);
-        if(!$resultNEW){
-            die($conn->error);
-        }
-        $articleID=IDENT_CURRENT(`Article`);//取得流水號
-        $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time` FROM `Article` WHERE `ArticleID`=$articleID";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "文章上傳失敗";
-            $rtn["data"] = "";
-        }
-        else{
-            $row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = $row[0];
-            $rtn["articleID"] =$articleID;
-        }
-        echo json_encode($rtn);
+    global $input,$conn;
+    $new="INSERT INTO  `Article`(`ArticleID`,`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`Time`) 
+    VALUES('".$input['authorID']."','".$input['title']."','".$input['content']."','".$input['picture']."','".$input['hashTag']."','".$input['timer']."')";
+    $resultNew=$conn->query($new);
+    if(!$resultNEW){
+        die($conn->error);
+    }
+    $articleID=IDENT_CURRENT(`Article`);//取得流水號
+    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time` FROM `Article` WHERE `ArticleID`=$articleID";
+    $result=$conn->query($sql);
+    if(!$result){
+        die($conn->error);
+    }
+    if($result->num_rows <= 0){
+        $rtn = array();
+        $rtn["status"] = false;
+        $rtn["errorCode"] = "文章上傳失敗";
+        $rtn["data"] = "";
+    }
+    else{
+        $row=$result->fetch_row();
+        $rtn = array();
+        $rtn["status"] = true;
+        $rtn["errorCode"] = "";
+        $rtn["data"] = $row[0];
+        $rtn["articleID"] =$articleID;
+    }
+    echo json_encode($rtn);
 ?>

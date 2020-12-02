@@ -23,30 +23,30 @@
             否則
                 dataDB.data = ""
          */
-        global $input,$conn;
-        $new="INSERT INTO  `Comment`(`AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor`) 
-        VALUES('".$input['authorID']."','".$input['detail']."','".$input['articleID']."','".$input['timer']."','".$input['floors']."','".$input['tagFloor']."')";
-        $resultNew=$conn->query($new);
-        if(!$resultNEW){
-            die($conn->error);
-        }
-        $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Comment` WHERE `AuthorID`='".$input['articleID'].' AND`Floor`='".$input['floors'].";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "留言上傳失敗";
-            $rtn["data"] = "";
-        }
-        else{
-            $row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = $new[0];
-        }
-        echo json_encode($rtn);
+    global $input,$conn;
+    $new="INSERT INTO  `Comment`(`AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor`) 
+    VALUES('".$input['authorID']."','".$input['detail']."','".$input['articleID']."','".$input['timer']."','".$input['floors']."','".$input['tagFloor']."')";
+    $resultNew=$conn->query($new);
+    if(!$resultNEW){
+        die($conn->error);
+    }
+    $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Comment` WHERE `AuthorID`='".$input['articleID'].' AND`Floor`='".$input['floors'].";
+    $result=$conn->query($sql);
+    if(!$result){
+        die($conn->error);
+    }
+    if($result->num_rows <= 0){
+        $rtn = array();
+        $rtn["status"] = false;
+        $rtn["errorCode"] = "留言上傳失敗";
+        $rtn["data"] = "";
+    }
+    else{
+        $row=$result->fetch_row();
+        $rtn = array();
+        $rtn["status"] = true;
+        $rtn["errorCode"] = "";
+        $rtn["data"] = $new[0];
+    }
+    echo json_encode($rtn);
 ?>

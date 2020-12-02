@@ -18,35 +18,35 @@
             否則
                 dataDB.data = ""
          */
-        global $input,$conn;
-        $total="SELECT count(distinct `DirID`)FROM `KeepDir` where `AuthorID` = $input['userID']";
-        if(!$total){
-            die($conn->error);
-        }
-        $new="INSERT INTO  `KeepDir `(`UserID`,`DirID`,`DirName`) 
-        VALUES('".$input['userID']."','".$total[0]+1."','".$input['dirName'].)";
-        $resultNew=$conn->query($new);
-        if(!$resultNEW){
-            die($conn->error);
-        }
-        $sql="SELECT `UserID`,`DirID`,`DirName` FROM `KeepDir` WHERE `UserID`=$input['userID'] AND`DirID`=$total[0]+1 AND`DirName`=$input['dirName']";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "新增資料夾失敗";
-            $rtn["data"] = "";
-        }
-        else{
-            $row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = $row[0];
-            $rtn["articleID"] =$articleID;
-        }
-        echo json_encode($rtn);
+    global $input,$conn;
+    $total="SELECT count(distinct `DirID`)FROM `KeepDir` where `AuthorID` = $input['userID']";
+    if(!$total){
+        die($conn->error);
+    }
+    $new="INSERT INTO  `KeepDir `(`UserID`,`DirID`,`DirName`) 
+    VALUES('".$input['userID']."','".$total[0]+1."','".$input['dirName'].)";
+    $resultNew=$conn->query($new);
+    if(!$resultNEW){
+        die($conn->error);
+    }
+    $sql="SELECT `UserID`,`DirID`,`DirName` FROM `KeepDir` WHERE `UserID`=$input['userID'] AND`DirID`=$total[0]+1 AND`DirName`=$input['dirName']";
+    $result=$conn->query($sql);
+    if(!$result){
+        die($conn->error);
+    }
+    if($result->num_rows <= 0){
+        $rtn = array();
+        $rtn["status"] = false;
+        $rtn["errorCode"] = "新增資料夾失敗";
+        $rtn["data"] = "";
+    }
+    else{
+        $row=$result->fetch_row();
+        $rtn = array();
+        $rtn["status"] = true;
+        $rtn["errorCode"] = "";
+        $rtn["data"] = $row[0];
+        $rtn["articleID"] =$articleID;
+    }
+    echo json_encode($rtn);
 ?>

@@ -23,27 +23,28 @@
             否則
                 dataDB.data = ""
          */
-        $updateSql="UPDATE `Comment` SET `Content`='".$input['detail']."'','`Time`='".$input['timer']."'','".$input['userID']."'','`TagFloor`='".$input['tagFloor']."'";
-        $result=$conn->query($updateSql);
-            if(!$result){
-                die($conn->error);
-            }
-            $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Comment` WHERE `AuthorID`='".$input['articleID'].' AND`Floor`='".$input['floors'].";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "留言更新失敗";
-                $rtn["data"] = "";
-            }
-            else{
-                $row=$result->fetch_row();
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = $new[0];
-            }
+    $updateSql="UPDATE `Comment` SET `Content`='".$input['detail']."'','`Time`='".$input['timer']."'','".$input['userID']."'','`TagFloor`='".$input['tagFloor']."'";
+    $result=$conn->query($updateSql);
+    if(!$result){
+        die($conn->error);
+    }
+    $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Time`,`Floor`,`TagFloor` FROM `Comment` WHERE `AuthorID`='".$input['authorID'].' AND`Floor`='".$input['floors'].";
+    $result=$conn->query($sql);
+    if(!$result){
+        die($conn->error);
+    }
+    if($result->num_rows <= 0){
+        $rtn = array();
+        $rtn["status"] = false;
+        $rtn["errorCode"] = "留言更新失敗";
+        $rtn["data"] = "";
+    }
+    else{
+        $row=$result->fetch_row();
+        $rtn = array();
+        $rtn["status"] = true;
+        $rtn["errorCode"] = "";
+        $rtn["data"] = $new[0];
+    }
+    echo json_encode($rtn);
 ?>
