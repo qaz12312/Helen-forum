@@ -33,7 +33,7 @@ $(document).ready(function () {
             cmd["act"] = "logIn";
             cmd["account"] = act;
             cmd["password"] = pw;
-            $.post("./index.php", cmd, function (data) {
+            $.post("http://127.0.0.1:5504/html/index.php", cmd, function (data) {
                 console.log("onnect success")
                 dataDB = JSON.parse(data);
                 if (dataDB.statue == false) {
