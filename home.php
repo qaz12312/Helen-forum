@@ -17,46 +17,6 @@
                 ) 
             否則
                 dataDB.data = ""*/
-                CREATE TABLE Article (
-                    ArticleID bigint(255) NOT NULL AUTO_INCREMENT,
-                    AuthorID varchar(101) NOT NULL,
-                    Title varchar(255) NOT NULL,
-                    Content longtext ,
-                    Image longtext ,
-                    HashTag varchar(255) ,
-                    Times datetime NOT NULL,
-                    BlockID tinyint(100) NOT NULL,
-                PRIMARY KEY (ArticleID),
-                FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
-                FOREIGN KEY (BlockID) REFERENCES Board (BoardID)
-                ) ;
-                CREATE TABLE Board (
-                    BoardID tinyint(100) NOT NULL AUTO_INCREMENT,
-                    BoardName varchar(255) NOT NULL,
-                    UserID varchar(101) NOT NULL,
-                    Rule mediumblob ,
-                    TopArticleID bigint(255) ,
-                    PRIMARY KEY (BoardID),
-                    FOREIGN KEY (UserID) REFERENCES Users (UserID)
-                    ) ;
-                CREATE TABLE FollowHeart (
-                ArticleID bigint(255) NOT NULL,
-                UserID varchar(101) NOT NULL,
-                PRIMARY KEY (ArticleID, UserID),
-                FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID),
-                FOREIGN KEY (UserID) REFERENCES Users (UserID)
-                ) ;
-                
-                DROP TABLE IF EXISTS FollowKeep;
-                CREATE TABLE FollowKeep (
-                ArticleID bigint(255) NOT NULL,
-                UserID varchar(101) NOT NULL,
-                KeepID tinyint(255) NOT NULL,
-                AddTime datetime NOT NULL,
-                PRIMARY KEY (ArticleID, UserID),
-                FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID),
-                FOREIGN KEY (UserID) REFERENCES Users (UserID)
-                ) ;
         $sql1="CREATE VIEW TitleBoardNameArticleIDUserID(`Title`,`BoardName`,`ArticleID`,`cntHeart`) AS SELECT `Title`,`BoardName`,`ArticleID`,COUNT(`UserID`) FROM `Article`JOIN `Board`  ON  Article.BlockID= Board.BlockID JOIN `FollowHeart`  ON  Article.ArticleID= FollowHeart.ArticleID GROUP BY `ArticleID`";
         
         $sql2="CREATE VIEW TitleBoardNameArticleIDKeepID(`Title`,`BoardName`,`ArticleID`,`cntKeep`) AS SELECT `Title`,`BoardName`,`ArticleID`,COUNT(`KeepID`) FROM `Article`JOIN `Board`  ON  Article.BlockID= Board.BlockID JOIN `FollowKeep`  ON  Article.ArticleID= FollowKeep.ArticleID GROUP BY `ArticleID` ";
