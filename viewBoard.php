@@ -13,8 +13,9 @@
                 (
                     dataDB.data[i].title //第i筆文章的標題
                     dataDB.data[i].blockName //第i筆文章的所屬看板
+                    dataDB.data[i].articleID
                     dataDB.data[i].like //第i筆文章的總愛心數
-                    dataDB.data[i].keepID//第i筆文章的總收藏數
+                    dataDB.data[i].keep//第i筆文章的總收藏數
                 ) 
             否則
                 dataDB.data = ""*/
@@ -38,7 +39,7 @@
             $arr=array();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
-                $log=array("title"=>"$row[0]","blockName"=>"$row[1]","like"=>"$row[2]","keepID"=>"$row[3]");
+                $log=array("title"=>"$row[0]","blockName"=>"$row[1]","articleID"=>"$row[2]","like"=>"$row[3]","keep"=>"$row[4]");
                 $arr[$i]=$log;
             }
             $rtn = array();

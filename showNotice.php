@@ -15,7 +15,7 @@
         $arr=array();
         for($i=0;$i<$result->num_rows;$i++){
             $row=$result->fetch_row();
-            $log=array("title"=>"$row[0]","blockName"=>"$row[1]","like"=>"$row[2]","keepID"=>"$row[3]");
+            $log=array("Time"=>"$row[0]","Content"=>"$row[1]");
             $arr[$i]=$log;
         }
         $rtn = array();
@@ -24,5 +24,5 @@
         $rtn["data"] =$arr;
     }
     echo json_encode($rtn);
-    
+
 ?>
