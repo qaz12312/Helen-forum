@@ -29,7 +29,7 @@
         if(!$resultNEW){
             die($conn->error);
         }
-        $sql="SELECT `UserID`,`DirID`,`DirName` FROM `KeepDir` WHERE `UserID`=$input['userID'],`DirID`=$total[0]+1,`DirName`=$input['dirName']";
+        $sql="SELECT `UserID`,`DirID`,`DirName` FROM `KeepDir` WHERE `UserID`=$input['userID'] AND`DirID`=$total[0]+1 AND`DirName`=$input['dirName']";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);

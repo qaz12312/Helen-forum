@@ -104,7 +104,7 @@
             否則
                 dataDB.data = ""
          */
-        $sql="DELETE FROM `Board` WHERE `BoardName` = $input["boardName"] , `Rule` = $input["rule"] ";
+        $sql="DELETE FROM `Board` WHERE `BoardName` = $input["boardName"]  AND `Rule` = $input["rule"] ";
         $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);

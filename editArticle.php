@@ -24,7 +24,7 @@
             否則
                 dataDB.data = ""
          */
-        $sql="UPDATE `Article` SET `Title`=".$input['title']."','`Content`='".$input['content']."'";
+        $sql="UPDATE `Article` SET `Title`=".$input['title']."','`Content`=".$input['content']."','`Content`=".$input['content']."";
         $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
