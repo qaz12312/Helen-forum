@@ -7,10 +7,9 @@
 
 ## 後端頁面
 + [connectDB.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
-    + 目前db連接有誤
 + [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
     + 新建中
-+ []()
++ [logIn.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
 + []()
 
 
