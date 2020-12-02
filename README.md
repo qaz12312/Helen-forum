@@ -1,18 +1,16 @@
 # 後端 - Helen
 
-## 頁面
-+ [connectDB.php  資料庫](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
-+ [logIn.php  登入](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
-+ [signUp.php  註冊](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
-+ [forgetPassword.php  忘記密碼](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/forgetPassword.php)
-+ [report.php  檢舉](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/report.php)
-+ [board.php  看版](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/board.php)
-+ [home.php 首頁](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/home.php)
-    + 看板全部
-+ [publishArticle.php  發文]()
+## 前端接口
++ [index.php]()
+    + 裡面有cmd["act"]的值
+    + 個個php裡都有寫 前端to後端 、 後端to前端 的data & 取得格式
 
-+ 搜尋
-+ 排序文章
+## 後端頁面
++ [connectDB.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
+    + 目前db連接有誤
++ []()
++ []()
++ []()
 
 
 
