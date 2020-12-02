@@ -1,4 +1,4 @@
-var articles = [];
+var articles = [ {"ArticleID": "123"} ];
 
 $( document ).ready( function() 
 {
@@ -8,7 +8,8 @@ $( document ).ready( function()
     {
         console.log( $(this).text() );
 
-        location.href =  "../html/post.html" + "?id=" + articles[ $( ".tabContent tr" ).index( this.closest( "tr" ) ) ][ "ArticleID" ];
+        if( $(this).text() != "檢舉文章列表為空" )
+            location.href =  "../html/post.html" + "?id=" + articles[ $( ".tabContent tr" ).index( this.closest( "tr" ) ) ][ "ArticleID" ];
     } );
 
     $( ".tabContent button" ).on( "click", function()
@@ -71,8 +72,10 @@ function initial()
     //         let content = $( ".tabContent tbody" );
     //         content.empty();
 
+    //         let empty = true;
     //         for( let i in data.Data )
     //         {
+    //             empty = false;
     //             articles.push( data.Data[i] );
 
     //             let oneRow = "<tr>" + 
@@ -91,6 +94,14 @@ function initial()
 
     //             content.append( oneRow );
     //         }
+
+    //         if( empty )
+    //         {
+    //             let emptyMessage = "<tr>" + 
+    //                                     "<td colspan='3'>檢舉文章列表為空</td>" +
+    //                                 "</tr>";
+    //             content.append( emptyMessage );
+    //         }
     //     }
     // } );
 
@@ -99,10 +110,12 @@ function initial()
 
     let data = {};
     data[ "Data" ] = [ { "Title": "紅燈區" }, { "Title": "大一妹妹看起來很波霸哦"}, { "Title": "看我切開兔子的肚皮" } ];
+    // data[ "Data" ] = [];
 
+    let empty = true;
     for( let i in data.Data )
     {
-        console.log( data.Data[ i ] );
+        empty = false;
         articles.push( data.Data[i] );
 
         let oneRow = "<tr>" + 
@@ -117,9 +130,17 @@ function initial()
                                 "<span class='glyphicon glyphicon-remove'></span> 取消" +
                             "</button>" +
                         "</td>" +
-                     "</tr>";
+                        "</tr>";
 
         content.append( oneRow );
+    }
+
+    if( empty )
+    {
+        let emptyMessage = "<tr>" + 
+                                "<td colspan='3'>檢舉文章列表為空</td>" +
+                            "</tr>";
+        content.append( emptyMessage );
     }
 }
 
@@ -130,7 +151,7 @@ function checkPermission()
     cmd[ "UserID" ] = getCookie( "UserID" );
     cmd[ "Password" ] = getCookie( "Password" );
 
-    let isValid = false;
+    let isValid = true;
 
     // $.post( ".php", cmd, function( data )
     // {
