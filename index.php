@@ -18,7 +18,8 @@
 	        doCreatAccount($input);
             break;
         // case "forgetPassword": //忘記密碼
-        //     forgetPassword.php;
+        //     require_once("forgetPassword.php");
+        //     doForgetPassword($input);
         //     break;
         // case "home": // 系統首頁
         //     home.php
