@@ -28,79 +28,54 @@ $( document ).ready( function()
         }
         else if( $(this).text().trim() == "刪除" )
         {
-            // let cmd = {};
-            // cmd[ "act" ] = "deleteArticle";
-            // cmd[ "articleID" ] = articles[ thisArticle ]."articleID";
+            let cmd = {};
+            cmd[ "act" ] = "deleteArticle";
+            cmd[ "articleID" ] = articles[ thisArticle ].articleID;
 
-            // $.post( "../index.php", cmd, function( dataDB ){
-            //     dataDB = JSON.parse( dataDB );
+            $.post( "../index.php", cmd, function( dataDB ){
+                dataDB = JSON.parse( dataDB );
 
-            //     swal({
-            //         title: "確定要刪除此篇文章嗎？<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
-            //         showCancelButton: true,
-            //         confirmButtonText: "確定",
-            //         cancelButtonText: "取消",
-            //         animation: false
+                swal({
+                    title: "確定要刪除此篇文章嗎？<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+                    animation: false
     
-            //         }).then(( result ) => {
-            //             if ( result ) 
-            //             {
-            //                 if( dataDB.status == false )
-            //                 {
-            //                     swal({
-            //                         title: "刪除失敗<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
-            //                         type: "error",
-            //                         text: dataDB.errorCode,
-            //                         animation: false
-            //                     })
-            //                 }
-            //                 else
-            //                 {
-            //                     swal({
-            //                         title: "已成功刪除文章！<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
-            //                         type: "success",
-            //                     })
-            //                     $(this).closest( "tr" ).remove();
-            //                     articles.splice( thisArticle, 1 );
-            //                 }
-            //             }
-            //     }, function( dismiss ) {
-            //         if ( dismiss === 'cancel' );
-            //     });
-            // });
-
-            let status = true;
-            swal({
-                title: "確定要刪除此篇文章嗎？<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
-                showCancelButton: true,
-                confirmButtonText: "確定",
-                cancelButtonText: "取消",
-                animation: false
-
-                }).then(( result ) => {
-                    if ( result ) 
-                    {
-                        if( status == false )
+                    }).then(( result ) => {
+                        if ( result ) 
                         {
-                            swal({
-                                title: "刪除失敗<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
-                                type: "error",
-                                text: dataDB.errorCode,
-                                animation: false
-                            })
+                            if( status == false )
+                            {
+                                swal({
+                                    title: "刪除失敗<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
+                                    type: "error",
+                                    text: dataDB.errorCode,
+                                    animation: false
+                                });
+                            }
+                            else
+                            {
+                                swal({
+                                    title: "已成功刪除文章！<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
+                                    type: "success",
+                                })
+                                $(this).closest( "tr" ).remove();
+                                articles.splice( thisArticle, 1 );
+    
+                                if( articles.length == 0 )
+                                {
+                                    console.log( "a" );
+                                    let emptyMessage = "<tr>" + 
+                                                            "<td colspan='4'>檢舉文章列表為空</td>" +
+                                                        "</tr>";
+                                    $( ".tabContent tbody" ).append( emptyMessage );
+                                }
+                            }
                         }
-                        else
-                        {
-                            swal({
-                                title: "已成功刪除文章！<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
-                                type: "success",
-                            })
-                            $(this).closest( "tr" ).remove();
-                            articles.splice( thisArticle, 1 );
-                        }
-                    }
-            }, function( dismiss ) {
-                if ( dismiss === 'cancel' );
+                }, function( dismiss ) {
+                    if ( dismiss === 'cancel' );
+                });
             });
         }
         else if( $(this).text().trim() == "取消" )
@@ -121,12 +96,20 @@ $( document ).ready( function()
                         })
                         $(this).closest( "tr" ).remove();
                         articles.splice( thisArticle, 1 );
+
+                        if( articles.length == 0 )
+                        {
+                            console.log( "a" );
+                            let emptyMessage = "<tr>" + 
+                                                    "<td colspan='4'>檢舉文章列表為空</td>" +
+                                                "</tr>";
+                            $( ".tabContent tbody" ).append( emptyMessage );
+                        }
                     }
             }, function( dismiss ) {
                 if ( dismiss === 'cancel' );
             });
         }
-        console.log( articles );
     });
 });
 
@@ -135,117 +118,93 @@ function initial()
     let isValid = checkPermission();
     if( !isValid ) return;
 
-    // let cmd = {};
-    // cmd[ "act" ] = "reportPage";
-    // cmd[ "boardName" ] = sessionStorage.getItem( "Helen-boardName" );
+    let cmd = {};
+    cmd[ "act" ] = "reportPage";
+    cmd[ "boardName" ] = sessionStorage.getItem( "Helen-boardName" );
 
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
 
-    //     if( dataDB.status == false )
-    //     {
-    //         swal({
-    //             title: "載入頁面失敗",
-    //             type: "error",
-    //             text: dataDB.errorCode
-    //         })
-    //     }
-    //     else
-    //     {
-    //         let content = $( ".tabContent tbody" );
-    //         content.empty();
+        if( dataDB.status == false )
+        {
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode
+            })
+        }
+        else
+        {
+            let content = $( ".tabContent tbody" );
+            content.empty();
         
-    //         let empty = true;
-    //         for( let i in dataDB.data )
-    //         {
-    //             empty = false;
-    //             articles.push( dataDB.data[i] );
+            articles = dataDB.data;
 
-    //             let oneRow = "<tr>" + 
-    //                             "<td>" + dataDB.data[i].title + "</td>" +
-    //                             "<td>" +
-    //                                 "<button type='button' class='btn btn-default btn-warning'>" +
-    //                                     "<span class='glyphicon glyphicon-book'></span> 原因" +
-    //                                 "</button>" +
-    //                             "</td>" +
-    //                             "<td>" +
-    //                                 "<button type='button' class='btn btn-danger'>" +
-    //                                     "<span class='glyphicon glyphicon-trash'></span> 刪除" +
-    //                                 "</button>" +
-    //                             "</td>" +
-    //                             "<td>" +
-    //                                 "<button type='button' class='btn'>" +
-    //                                     "<span class='glyphicon glyphicon-remove'></span> 取消" +
-    //                                 "</button>" +
-    //                             "</td>" +
-    //                             "</tr>";
+            if( articles.length == 0 )
+            {
+                let emptyMessage = "<tr>" + 
+                                        "<td colspan='4'>檢舉文章列表為空</td>" +
+                                    "</tr>";
+                content.append( emptyMessage );
 
-    //             content.append( oneRow );
-    //         }
+                return;
+            }
 
-    //         if( empty )
-    //         {
-    //             let emptyMessage = "<tr>" + 
-    //                                     "<td colspan='4'>檢舉文章列表為空</td>" +
-    //                                 "</tr>";
-    //             content.append( emptyMessage );
-    //         }
-    //     }
-    // });
+            for( let i in dataDB.data )
+            {
+                let oneRow = "<tr>" + 
+                                "<td>" + dataDB.data[i].title + "</td>" +
+                                "<td>" +
+                                    "<button type='button' class='btn btn-default btn-warning'>" +
+                                        "<span class='glyphicon glyphicon-book'></span> 原因" +
+                                    "</button>" +
+                                "</td>" +
+                                "<td>" +
+                                    "<button type='button' class='btn btn-danger'>" +
+                                        "<span class='glyphicon glyphicon-trash'></span> 刪除" +
+                                    "</button>" +
+                                "</td>" +
+                                "<td>" +
+                                    "<button type='button' class='btn'>" +
+                                        "<span class='glyphicon glyphicon-remove'></span> 取消" +
+                                    "</button>" +
+                                "</td>" +
+                                "</tr>";
 
-    let content = $( ".tabContent tbody" );
-    content.empty();
+                content.append( oneRow );
+            }
+        }
+    });
 
-    let dataDB = {};
-    dataDB[ "data" ] = [ { "articleID": "123", "title": "紅燈區", "reason": "aaa" }, 
-                         { "articleID": "456", "title": "大一妹妹看起來很波霸哦", "reason": "bbb" }, 
-                         { "articleID": "789", "title": "看我切開兔子的肚皮", "reason": "ccc" } ];
-    articles = dataDB.data;
-
-    let empty = true;
-    for( let i in dataDB.data )
-    {
-        empty = false;
-
-        let oneRow = "<tr>" + 
-                        "<td>" + dataDB.data[i].title + "</td>" +
-                        "<td>" +
-                            "<button type='button' class='btn btn-default btn-warning'>" +
-                                "<span class='glyphicon glyphicon-book'></span> 原因" +
-                            "</button>" +
-                        "</td>" +
-                        "<td>" +
-                            "<button type='button' class='btn btn-danger'>" +
-                                "<span class='glyphicon glyphicon-trash'></span> 刪除" +
-                            "</button>" +
-                        "</td>" +
-                        "<td>" +
-                            "<button type='button' class='btn'>" +
-                                "<span class='glyphicon glyphicon-remove'></span> 取消" +
-                            "</button>" +
-                        "</td>" +
-                        "</tr>";
-
-        content.append( oneRow );
-    }
-
-    if( empty )
-    {
-        let emptyMessage = "<tr>" + 
-                                "<td colspan='4'>檢舉文章列表為空</td>" +
-                            "</tr>";
-        content.append( emptyMessage );
-    }
+    // let dataDB = {};
+    // dataDB[ "data" ] = [ { "articleID": "123", "title": "紅燈區", "reason": "aaa" }, 
+    //                      { "articleID": "456", "title": "大一妹妹看起來很波霸哦", "reason": "bbb" }, 
+    //                      { "articleID": "789", "title": "看我切開兔子的肚皮", "reason": "ccc" } ];
 }
 
 function checkPermission()
 {
-    // let perm = sessionStorage.getItem( "Helen-permission" );
-    // console.log( perm );
+    let perm = sessionStorage.getItem( "Helen-permission" );
+    console.log( perm );
 
-    // if( perm ) return ( perm.valueOf() >= 2 ); 
-    // else return false;
+    if( perm && perm.valueOf() >= 2 ) return true;
 
-    return true;
+    else 
+    {
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "您沒有權限瀏覽此頁面"
+        }).then(( result ) => {
+            if ( result ) 
+            {
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
+            }
+        });
+
+        return false;
+    }
 }
