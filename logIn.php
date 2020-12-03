@@ -15,7 +15,7 @@
 		dataDB.data[2] // Color:"#ffffff"
 		dataDB.data[3] // Nickname:"cook"
 	否則
-		dataDB.errorCode = "找不到會員"
+		dataDB.errorCode = " can't find the account(00857210@mail.ntou.edu.tw)" /  " account or passward is wrong! "
 		dataDB.data = "" 
 	*/
     function doLogIn($input){
@@ -26,10 +26,22 @@
 	        die($conn->error);
 	    }
 	    if($result->num_rows <= 0){
-	        $rtn = array();
-	        $rtn["status"] = false;
-	        $rtn["errorCode"] = "找不到會員";
-	        $rtn["data"] = "";
+			$sql="SELECT `UserID`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."'";
+			$resultFindAccount = $conn->query($sql);
+			if(!$resultFindAccount){
+				die($conn->error);
+			}
+			if($resultFindAccount->num_rows <= 0){
+				$rtn = array();
+				$rtn["status"] = false;
+				$rtn["errorCode"] = " can't find the account(".$input['account'].")";
+				$rtn["data"] = "";
+			}else{
+				$rtn = array();
+				$rtn["status"] = false;
+				$rtn["errorCode"] = " account or passward is wrong! ";
+				$rtn["data"] = "";
+			}
 	    }
 	    else{
 	        $row=$result->fetch_row();
@@ -37,7 +49,7 @@
 	        $rtn["status"] = true;
 	        $rtn["errorCode"] = "";
 	        $rtn["data"] =$row;
-	    }
+        }
 		echo json_encode($rtn);
     }
 ?>
