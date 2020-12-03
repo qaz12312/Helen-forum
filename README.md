@@ -6,11 +6,12 @@
     + 個個php裡都有寫 前端to後端 、 後端to前端 的data & 取得格式
 
 ## 後端自己debug
+### 這是範例!!!所以不要改到這兩個檔
 + 放在測試資料夾
 + [test.php debug會用到](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/test.php)
 + [logIn.php 是示範](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/logIn.php)
 + 將test.php和你要測試的檔案丟到C:\xampp\htdocs下，然後開Chrome打網址http://localhost/你要測試的檔名.php
-### 這是範例!!!所以不要改到這兩個檔
+
 
 ## 加密
 ```
