@@ -18,7 +18,7 @@ dataDB.data = "fail to change the password" -->
 	require_once 'connectDB.php'; //連線資料庫
 
 	global $input,$conn;
-	$sql="SELECT `UserID` FROM `User` WHERE `UserID`='".$input['account']."'";
+	$sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
 	$result=$conn->query($sql);
 	if(!$result){
 		die($conn->error);
