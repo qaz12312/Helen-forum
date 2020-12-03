@@ -21,6 +21,9 @@
         //     require_once("forgetPassword.php");
         //     doForgetPassword($input);
         //     break;
+        case "modifyPersonalInfo": //修改個資
+            require_once("personalInfo.php");
+            break;
         // case "home": // 系統首頁
         //     home.php
         //     break;
