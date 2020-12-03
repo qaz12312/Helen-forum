@@ -9,7 +9,8 @@
 + [connectDB.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
 + [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
     + 新建cases中
-    - 登入 finish test
+    - 登入 finish
+    - 註冊 not yet test
 + [logIn.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
 + [signUp.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
 
