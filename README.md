@@ -8,7 +8,8 @@
 ## 後端頁面
 + [connectDB.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/connectDB.php)
 + [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
-    + 新建中
+    + 新建cases中
+    - 登入 finish test
 + [logIn.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/logIn.php)
 + [signUp.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/signUp.php)
 
@@ -23,3 +24,8 @@ echo $encodeletter;
 echo base64_decode($encodeletter); //解密
 ?>
 ```
+
+#### git
++ finish all 測試過了+code沒問題
++ finish: 完成的東西
+    - Description寫還剩什麼
