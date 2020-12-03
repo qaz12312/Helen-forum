@@ -1,57 +1,73 @@
 $(document).ready(function () {
-    
+    let cmd={}
     $("#SentAlert-inBtn").click(function () {
-        console.log( "send" );
-            let status = true;
-            swal({
-                title: "確定要傳送給所有人嗎？<br />" ,
-                showCancelButton: true,
-                confirmButtonText: "確定",
-                cancelButtonText: "取消",
-                animation: false
+        var comment = $.trim($("#comment").val());
+            if(comment != ""){
+            
+                
+                
+                console.log(comment);
+                cmd[ "password" ] = comment
+                
+                console.log( "send" );
+                    let status = true;
+                    swal({
+                        title: "確定要傳送給所有人嗎？<br />" ,
+                        showCancelButton: true,
+                        confirmButtonText: "確定",
+                        cancelButtonText: "取消",
+                        animation: false
 
-                }).then(( result ) => {
-                    if ( result ) 
-                    {
-                        console.log( "status " + status );
-                        if( status == false )
-                        {
-                            swal({
-                                title: "傳頌失敗<br />" ,
-                                type: "error",
-                                text: dataDB.errorCode,
-                                animation: false
-                            })
-                        }
-                        else
-                        {
-                            swal({
-                                title: "已傳送給每個人！<br />",
-                                type: "success",
-                            })
-                            //$(this).closest( "tr" ).remove();
-                        }
-                        //$(this).closest( "tr" ).remove();
-                    }
-            }, function( dismiss ) {
-                if ( dismiss === 'cancel' );
-            });
+                        }).then(( result ) => {
+                            if ( result ) 
+                            {
+                                console.log( "status " + status );
+                                if( status == false )
+                                {
+                                    swal({
+                                        title: "傳頌失敗<br />" ,
+                                        type: "error",
+                                        text: dataDB.errorCode,
+                                        animation: false
+                                    })
+                                }
+                                else
+                                {
+                                    let cmd = {};
+                                        cmd["act"] = "sendReport";
+                                        cmd["reason"] = "Reason"
+                                        cmd["timer"] = "Times"
+                                        cmd["content"] = "Content"
+                                    swal({
+                                        title: "已傳送給每個人！<br />",
+                                        type: "success",
+                                    })
+                                    //$(this).closest( "tr" ).remove();
+                                }
+                                //$(this).closest( "tr" ).remove();
+                            }
+                    }, function( dismiss ) {
+                        if ( dismiss === 'cancel' );
+                    });
+            }
         });
-        
+    
 
 });
 
 function initial() {
-    sessionStorage.clear();
-    $("#account").val("");
-    $("#password").val("");
+sessionStorage.clear();
+let cmd = {};
+cmd["act"]="SentNotice";
+cmd[ "Content" ] = $.trim($("#comment").val());
+$.trim($("#comment").val())="";
 }
 
 
-function leaveUserDetails(id, name, seat, overr, alarmm) {
-    sessionStorage.setItem("LM-UserId", id);
-
-    sessionStorage.setItem("LM-showSeat", seat);
-    sessionStorage.setItem("LM-over", overr);
-    sessionStorage.setItem("LM-alarm", alarmm);
+function leaveUserDetails(UserID, Password, Permissions, Color, Nickname) {
+sessionStorage.setItem("Helen-UserID", UserID);
+sessionStorage.setItem("Helen-Password", Password);
+sessionStorage.setItem("Helen-Permissions", Permissions);
+sessionStorage.setItem("Helen-Color", Color);
+sessionStorage.setItem("Helen-Nickname", Nickname);
 }
