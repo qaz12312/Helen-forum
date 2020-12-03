@@ -8,7 +8,7 @@
 ## 後端自己debug
 + 放在測試資料夾
 + [test.php debug會用到]()
-+ [logIn.php 是示範]
++ [logIn.php 是示範](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/logIn.php)
 
 ## 加密
 ```
