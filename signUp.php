@@ -1,26 +1,24 @@
-<!-- 
-前端 to 後端:
-let cmd = {};
-cmd["act"] = "creatAccount";
-cmd["account"] = 00757003@email.ntou.edu.tw;
-cmd["password"] = zxsss123;
-
-後端 to 前端:
-dataDB = JSON.parse(data);
-dataDB.status
-若 status = true:
-    dataDB.errorCode = ""
-    dataDB.data[0] // UserID:"00757003@email.ntou.edu.tw"
-    dataDB.data[1] // Permissions:1
-    dataDB.data[2] // Color:'#0d33ff'
-    dataDB.data[3] // Nickname:"00757003"
-否則
-    dataDB.errorCode = "帳號已註冊" / "註冊失敗，資料庫異常"
-    dataDB.data = "" 
--->
-
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+	/*
+    前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "creatAccount";
+    cmd["account"] = 00757003@email.ntou.edu.tw;
+    cmd["password"] = zxsss123;
+
+    後端 to 前端:
+    dataDB = JSON.parse(data);
+    dataDB.status
+    若 status = true:
+        dataDB.errorCode = ""
+        dataDB.data[0] // UserID:"00757003@email.ntou.edu.tw"
+        dataDB.data[1] // Permissions:1
+        dataDB.data[2] // Color:'#ffffff'
+        dataDB.data[3] // Nickname:"00757003"
+    否則
+        dataDB.errorCode = "帳號已註冊" / "註冊失敗，資料庫異常"
+        dataDB.data = "" 
+	*/
     function doCreatAccount($input){
     	global $conn;
     	$sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
@@ -36,7 +34,7 @@ dataDB.status
         }
         else{
             $nickName = explode("@",$input['account']);
-            $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Permissions`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."',1,'\#0d33ff','".$nickName[0]."')";
+            $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Permissions`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."',1,'\#ffffff','".$nickName[0]."')";
             $resultNew=$conn->query($sql);
             if(!$resultNew){
                 die($conn->error);
