@@ -4,6 +4,7 @@
         $userName = "helen";
         $password = "ynVdCeYKBrDJ";
         $databaseName = "test";
+        
         $conn = mysqli_connect($serverName, $userName, $password, $databaseName);
         mysqli_query($conn, 'SET NAMES utf8');
         if($conn->connect_error){
