@@ -8,7 +8,6 @@
     $input = $_POST;
     require_once("connectDB.php");
     $conn = connSql();
-    echo $input["act"];
 	switch($input["act"]){
         case "logIn": //登入
 	        require_once("logIn.php");
