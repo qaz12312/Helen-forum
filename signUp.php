@@ -16,7 +16,7 @@
         dataDB.data[2] // Color:'#ffffff'
         dataDB.data[3] // Nickname:"00757003"
     否則
-        dataDB.errorCode = "帳號已註冊" / "註冊失敗，資料庫異常"
+        dataDB.errorCode = "Account has already been registered" / "Registration failed, database exception"
         dataDB.data = "" 
 	*/
     function doCreatAccount($input){
@@ -29,7 +29,7 @@
         if($result->num_rows > 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "帳號已註冊";
+            $rtn["errorCode"] = "Account has already been registered";
             $rtn["data"] = "";
         }
         else{
@@ -47,7 +47,7 @@
             if($result->num_rows <= 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "註冊失敗，資料庫異常";
+                $rtn["errorCode"] = "Registration failed, database exception";
                 $rtn["data"] = "";
             }
             else{
