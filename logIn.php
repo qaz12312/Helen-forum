@@ -40,6 +40,5 @@
 	        $rtn["data"] =$row;
 	    }
 		echo json_encode($rtn);
-		// return $rtn;
     }
 ?>
