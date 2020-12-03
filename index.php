@@ -17,7 +17,7 @@
             require_once("signUp.php");
 	        doCreatAccount($input);
             break;
-        // case "forgottenPwd": //忘記密碼
+        // case "forgetPassword": //忘記密碼
         //     forgetPassword.php;
         //     break;
         // case "home": // 系統首頁
