@@ -15,7 +15,7 @@
 		dataDB.data[2] // Color:"#ffffff"
 		dataDB.data[3] // Nickname:"cook"
 	否則
-		dataDB.errorCode = " can't find the account(00857210@mail.ntou.edu.tw)" /  " account or passward is wrong! "
+		dataDB.errorCode = "This account(00857210@mail.ntou.edu.tw) does not exist" /  "Incorrect account or password"
 		dataDB.data = "" 
 	*/
     function doLogIn($input){
@@ -34,12 +34,12 @@
 			if($resultFindAccount->num_rows <= 0){
 				$rtn = array();
 				$rtn["status"] = false;
-				$rtn["errorCode"] = " can't find the account(".$input['account'].")";
+				$rtn["errorCode"] = "The account(".$input['account'].") does not exist";
 				$rtn["data"] = "";
 			}else{
 				$rtn = array();
 				$rtn["status"] = false;
-				$rtn["errorCode"] = " account or passward is wrong! ";
+				$rtn["errorCode"] = "Incorrect account or password";
 				$rtn["data"] = "";
 			}
 	    }
