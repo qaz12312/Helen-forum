@@ -4,13 +4,14 @@
     date_default_timezone_set("Asia/Taipei");
 	error_reporting(1);
 	error_reporting(E_ALL);
-    $input = json_decode(file_get_contents('php://input', 'r'), true); 
+    // $input = json_decode(file_get_contents('php://input', 'r'), true); 
+    $input = $_POST;
     require_once("connectDB.php");
-	$conn = connSql();
+    $conn = connSql();
 	switch($input["act"]){
         case "logIn": //登入
 	        require_once("logIn.php");
-	        doLogIn($input);
+            doLogIn($input);
 	        break;
         case "creatAccount": //註冊
             require_once("signUp.php");
