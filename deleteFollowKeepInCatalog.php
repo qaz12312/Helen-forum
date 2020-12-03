@@ -16,15 +16,6 @@
         否則
             dataDB.data = ""
      */
-    CREATE TABLE FollowKeep (
-        ArticleID bigint(255) NOT NULL,
-        UserID varchar(101) NOT NULL,
-        KeepID tinyint(255) NOT NULL,
-        AddTime datetime NOT NULL,
-        PRIMARY KEY (ArticleID, UserID),
-        FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID),
-        FOREIGN KEY (UserID) REFERENCES Users (UserID)
-        ) ;
 
     $del="DELETE FROM `FollowKeep` WHERE  `KeepID`='".$input['keepID'].' AND`UserID`='".$input['userID']. "'AND`ArticleID`='".$input['articleID'].";
     $result=$conn->query($del);
