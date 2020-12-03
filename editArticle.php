@@ -12,7 +12,7 @@
             cmd["hashTag"] ="HashTag"
             cmd["timer"] ="Time"
         */
-		
+
        /* 後端 to 前端
             dataDB.status
             dataDB.errorCode
@@ -24,11 +24,11 @@
                 dataDB.data[4]	// Image
                 dataDB.data[5]	// HashTag
                 dataDB.data[6]	// Time
-                 dataDB.data[7]	// Usercolor
+                dataDB.data[7]	// Usercolor
             否則
                 dataDB.data = ""
          */
-    $updateSql="UPDATE `Article` SET `Title`=".$input['title']."','`Content`=".$input['content']."','`Image`=".$input['picture']."','`HashTag`=".$input['hashTag']."','`Time`=".$input['timer']."";
+    $updateSql="UPDATE `Article` SET `Title`=".$input['title']."','`Content`=".$input['content']."','`Image`=".$input['picture']."','`HashTag`=".$input['hashTag']."','`Time`=".$input['timer']."'";
     $result=$conn->query($updateSql);
         if(!$result){
             die($conn->error);
@@ -45,11 +45,11 @@
         $rtn["data"] = "";
     }
     else{
-        $row=$result->fetch_row();
+
         $rtn = array();
         $rtn["status"] = true;
         $rtn["errorCode"] = "";
-        $rtn["data"] = $row;
+        $rtn["data"] = "";
     }
     echo json_encode($rtn);
 ?>

@@ -11,8 +11,8 @@
             cmd["picture"] = "Image"
             cmd["hashTag"] ="HashTag"
             cmd["timer"] ="Time"
+
         */
-		
         /* 後端 to 前端
             dataDB.status
             dataDB.errorCode
@@ -29,8 +29,8 @@
                 dataDB.data = ""
          */
     global $input,$conn;
-    $new="INSERT INTO  `Article`(`ArticleID`,`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`Time`) 
-    VALUES('".$input['authorID']."','".$input['title']."','".$input['content']."','".$input['picture']."','".$input['hashTag']."','".$input['timer']."')";
+    $new="INSERT INTO  `Article`(`ArticleID`,`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`Time`,`BlockID`) 
+    VALUES('".$input['authorID']."','".$input['title']."','".$input['content']."','".$input['picture']."','".$input['hashTag']."','".$input['timer']."','".$input['blockID']."')";
     $resultNew=$conn->query($new);
     if(!$resultNEW){
         die($conn->error);

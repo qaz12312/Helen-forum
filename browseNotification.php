@@ -12,9 +12,8 @@
             dataDB.status
             dataDB.errorCode
             若 status = true:
-				dataDB.data[0]	// UserID
-				dataDB.data[1]	// Times
-				dataDB.data[2]	// Content
+				dataDB.data[0]	// Times
+				dataDB.data[1]	// Content
             否則
                 dataDB.data = ""
          */

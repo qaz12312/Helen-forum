@@ -36,11 +36,10 @@
         $rtn["data"] = "";
     }
     else{
-        $row=$result->fetch_row();
         $rtn = array();
         $rtn["status"] = true;
         $rtn["errorCode"] = "";
-        $rtn["data"] = $row;
+        $rtn["data"] = "";
     }
     echo json_encode($rtn);
 

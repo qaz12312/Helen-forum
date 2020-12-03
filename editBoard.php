@@ -42,15 +42,10 @@
         $rtn["data"] = "";
     }
     else{
-        $arr=array();
-        for($i=0;$i<$result->num_rows;$i++){
-            $row=$result->fetch_row();
-            $arr[$i]=$row[0];
-        }
         $rtn = array();
         $rtn["status"] = true;
         $rtn["errorCode"] = "";
-        $rtn["data"] =$arr;
+        $rtn["data"] = "";
     }
     echo json_encode($rtn);
 ?>
