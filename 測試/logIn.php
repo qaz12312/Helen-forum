@@ -21,7 +21,7 @@
 		// 改 ////////////////////////////////////////////
         require_once("test.php");
 		// global $input, $conn;
-		//////////////////////////////////////////////
+		/////////////////////////////////////////////////
     	$sql="SELECT `UserID`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
 	    $result = $conn->query($sql);
 	    if(!$result){
