@@ -34,20 +34,23 @@ $(document).ready(function () {
             cmd["account"] = act;
             cmd["password"] = pw;
             $.post("./index.php", cmd, function (data) {
+                //console.log("connect success");
+                //console.log(data);
                 dataDB = JSON.parse(data);
                 if (dataDB.statue == false) {
-                    dataDB.data=""
+                    dataDB.data = ""
                     swal({
                         title: 'OOPS...',
                         type: 'error',
-                        text:'帳號或密號錯誤 \u2620',
+                        text: '帳號或密號錯誤 \u2620',
                         animation: false,
                         customClass: 'animated rotateOutUpLeft',
                         confirmButtonText: 'okay!',
                         confirmButtonColor: '#eda2b6'
                     })
                 }
-                else {
+                else {//登入成功
+                    //console.log("log in sucess")
                     leaveUserDetails(dataDB.data[0], dataDB.data[1], dataDB.data[2], dataDB.data[3], dataDB.data[4]);
                     swal({
                         title: 'Welcome To Helen',
@@ -59,14 +62,14 @@ $(document).ready(function () {
                         function () { },
                         function (dismiss) {
                             if (dismiss === 'timer') {
-                                window.location.href = "search.html";
+                                window.location.href = "./registration.html";
                             }
                         }
                     )
                 }
             });
         }
-        
+
     });
 
     $("#Sign-upBtn").click(function () {
@@ -81,7 +84,7 @@ $(document).ready(function () {
             function () { },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    window.location.href = "../html/registration.html";
+                    window.location.href = "./registration.html";
                 }
             }
         )
@@ -98,7 +101,7 @@ $(document).ready(function () {
             function () { },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    window.location.href = "../html/forgetPassword.html";
+                    window.location.href = "./forgetPassword.html";
                 }
             }
         )
@@ -106,7 +109,10 @@ $(document).ready(function () {
 });
 
 function initial() {
-    sessionStorage.clear();
+    let cmd = {};
+    cmd["act"] = "logIn";
+    cmd["account"] = $("#account").val();
+    cmd["password"] = $("#password").val();
     $("#account").val("");
     $("#password").val("");
 }
@@ -117,19 +123,19 @@ function Restrict() {
 
 
 
-    
 
- if (pw.length > 20 || pw.length < 3) {
+
+    if (pw.length > 20 || pw.length < 3) {
         swal({
             title: 'OOPS...',
             type: 'error',
-            html:'密碼字數只能在3~20內!!!!',
+            html: '密碼字數只能在3~20內!!!!',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#7a96a2'
         })
         return false;
     }
-    else if (okPassword) {
+    /*else if (okPassword) {
         swal({
             title: 'OOPS...',
             type: 'error',
@@ -138,14 +144,12 @@ function Restrict() {
             confirmButtonColor: '#252621'
         })
         return false;
-    }
+    }*/
     return true;
 }
 
-function leaveUserDetails(UserID, Password, Permissions, Color, Nickname) {
+function leaveUserDetails(UserID, Password) {
     sessionStorage.setItem("Helen-UserID", UserID);
     sessionStorage.setItem("Helen-Password", Password);
-    sessionStorage.setItem("Helen-Permissions", Permissions);
-    sessionStorage.setItem("Helen-Color", Color);
-    sessionStorage.setItem("Helen-Nickname", Nickname);
+
 }
