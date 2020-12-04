@@ -25,9 +25,6 @@
     + 整合成doChangeInfo()
 
 ### 💎git上去，Summary寫的資訊:
-+ finish all 測試過了+code沒問題
-+ finish: 完成的東西
-    - Description寫還剩什麼
 + ok: test什麼功能
 
 ## 加密
