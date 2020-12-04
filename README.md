@@ -12,6 +12,9 @@
 + [logIn.php 是示範](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/logIn.php)
 + 將test.php和你要測試的檔案丟到C:\xampp\htdocs下，然後開Chrome打網址http://localhost/你要測試的檔名.php
 
+## 相同動作:整合在一起
++ 可參考 [changeNickname.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%95%B4%E5%90%88%E5%9C%A8%E4%B8%80%E8%B5%B7%E4%BA%86/changeNickname.php)、[changePassword.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%95%B4%E5%90%88%E5%9C%A8%E4%B8%80%E8%B5%B7%E4%BA%86/changePassword.php) 👉 合成[personalInfo.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/personalInfo.php)
+    + 整合成doChangeInfo()
 
 ## 加密
 ```
