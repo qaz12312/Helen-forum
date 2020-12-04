@@ -18,11 +18,10 @@
 		dataDB.errorCode = "找不到會員"
 		dataDB.data = "" 
     */
-
-    // 要print array:print_r($arr)
-    // 要print other:print "........"
+		// 改 ////////////////////////////////////////////
         require_once("test.php");
-    	// global $input, $conn;
+		// global $input, $conn;
+		//////////////////////////////////////////////
     	$sql="SELECT `UserID`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
 	    $result = $conn->query($sql);
 	    if(!$result){
@@ -41,6 +40,5 @@
 	        $rtn["errorCode"] = "";
 	        $rtn["data"] =$row;
         }
-		// echo json_encode($rtn); 改成
-        print_r($rtn);
+		echo json_encode($rtn);
 ?>
