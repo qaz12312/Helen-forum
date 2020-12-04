@@ -10,7 +10,7 @@
 + 放在測試資料夾
 + [test.php debug會用到](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/test.php)
 + [logIn.php 是示範](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/logIn.php)
-+ [personalInfo.php 是示範(若有整合成一個function)]()
++ [personalInfo.php 是示範(若有整合成一個function)](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/personalInfo.php)
 + 將test.php和你要測試的檔案丟到C:\xampp\htdocs下，然後開Chrome打網址`http://localhost/你要測試的檔名.php`
 
 ## 💎相同動作:整合在一起
