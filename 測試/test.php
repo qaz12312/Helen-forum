@@ -13,9 +13,15 @@
     if($conn->connect_error){
         die($conn->connect_error);
     }
+    // 改--自己放測試資料 ////////////////////////////////////////////
     $input = array();
-    // 自己放測試資料
-    $input["act"] = "logIn";
-	$input["account"] = "admin";
-    $input["password"] = "admin";
+    // $input["act"] = "logIn";
+	// $input["account"] = "admin";
+    // $input["password"] = "admin";
+
+    $input["act"] = "modifyPersonalInfo";
+    $input["account"] = "00857210@mail.ntou.edu.tw";
+    $input["option"] = /*"password" /*/ "nickname" /*/ "color"*/;
+    $input["new"] = /*"123456789" /*/ "beauty cook~" /*/ "\#028d5f"*/;
+    /////////////////////////////////////////////////////////////////
 ?>
