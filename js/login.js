@@ -84,7 +84,7 @@ $(document).ready(function () {
             function () { },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    window.location.href = "../html/registration.html";
+                    window.location.href = "./registration.html";
                 }
             }
         )
@@ -101,7 +101,7 @@ $(document).ready(function () {
             function () { },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    window.location.href = "../html/forgetPassword.html";
+                    window.location.href = "./forgetPassword.html";
                 }
             }
         )
