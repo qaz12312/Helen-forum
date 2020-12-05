@@ -27,6 +27,21 @@
 ### 💎git上去，Summary寫的資訊:
 + ok: test什麼功能
 
+## 💎可能會需要
++ 資料庫(型態、有無預設值、是否為唯一)
+    + `ai` (auto increment):保證遞增，但不保證是連續的
+    + 把很常用的欄位建立index
+        + `create index userID_Idx on Users(UserID)`
+    + `varchar`:適合文字量少，可以有預設值
+    + `text`:適合文字量多，不可以有預設值
+    + 查詢速度：
+        + `char` 最快， `varchar` 次之，`text` 最慢
+        + 能用 varchar 的时候就不用 text
+    + 日期 datetime
+預設值改成 current timestamp
++  若有用到`delete`，注意是否是比較重要的欄位，如果是的話，可以建一個 is_deleted 欄位，放boolean值，如果要刪除他就把此欄位設成 1
+    + 所以要篩選資料的時候，where會將上條件 ： `where is_deleted = 0`
+
 ## 加密
 ```
 <?php
