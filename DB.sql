@@ -1,5 +1,5 @@
 use test;
-```
+
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
 UserID varchar(101) NOT NULL,
@@ -95,4 +95,3 @@ DirName varchar(255) NOT NULL,
 PRIMARY KEY (UserID, DirID),
 FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) ;
-```
