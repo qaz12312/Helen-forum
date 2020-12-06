@@ -27,7 +27,7 @@
 ### 💎git上去，Summary寫的資訊:
 + ok: test什麼功能
 
-### 有問題可以先上[Trello](https://trello.com/b/2amh64r0/helen)的`問題集`看~
+### 有問題可以先上[Trello](https://trello.com/b/2amh64r0/helen)相關連結的`問題集`看~
 
 ## 加密
 ```
