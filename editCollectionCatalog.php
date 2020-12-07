@@ -1,11 +1,11 @@
 <?php
-       require_once 'connectDB.php'; //連線資料庫 
+       require_once 'test.php'; //連線資料庫 
     /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "addKeepDir";
             cmd["account"] = "UserID"
-            cmd["dirID"] = "DirID"
-            cmd["dirName"] ="我喜歡的"
+            cmd["oldDirName"] ="我喜歡的"
+            cmd["newDirName"] ="我不喜歡的"
 
         */
 		
@@ -19,27 +19,40 @@
             否則
                 dataDB.data = ""
          */
-    $updateSql="UPDATE `KeepDir` SET `DirName`='".$input['dirName']."'";
-    $result=$conn->query($sql);
+    $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['oldDirName']."' AND `UserID`='".$input['account']."' ";  
+    $result=$conn->query($sqlcheck);
     if(!$result){
         die($conn->error);
-    }
-    $sql="SELECT `UserID`,`DirID`,`DirName` FROM `KeepDir` WHERE `UserID`=$input['userID'] AND`DirID`=['dirID'] AND`DirName`=$input['dirName']";
-    $result=$conn->query($sql);
-    if(!$result){
-        die($conn->error);
-    }
+    } 
     if($result->num_rows <= 0){
         $rtn = array();
         $rtn["status"] = false;
-        $rtn["errorCode"] = "修改失敗";
+        $rtn["errorCode"] = "無權限修改";
         $rtn["data"] = "";
     }
     else{
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
-        $rtn["data"] = "";
+        $updateSql="UPDATE `KeepDir` SET `DirName`='".$input['newDirName']."'";
+        $result=$conn->query($updateSql);
+        if(!$result){
+            die($conn->error);
+        }
+        $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."'  AND`DirName`='".$input['newDirName']."'";
+        $result=$conn->query($sql);
+        if(!$result){
+            die($conn->error);
+        }
+        if($result->num_rows <= 0){
+            $rtn = array();
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "修改失敗";
+            $rtn["data"] = "";
+        }
+        else{
+            $rtn = array();
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "";
+            $rtn["data"] = "";
+        }
     }
     echo json_encode($rtn);
 

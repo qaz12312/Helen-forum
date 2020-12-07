@@ -29,7 +29,7 @@
         if(!$result){
             die($conn->error);
         }
-        $sql3="SELECT `Title`,`Rule`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM TitleBoardNameArticleIDUserID NATURAL JOIN TitleBoardNameArticleIDKeepID WHERE `BoardName`=$input['boardName']";
+        $sql3="SELECT `Title`,`Rule`,`ArticleID` ,`cntHeart` ,`cntKeep`,`TopArticleID` FROM TitleBoardNameArticleIDUserID NATURAL JOIN TitleBoardNameArticleIDKeepID WHERE `BoardName`=$input['boardName']";
 
         $result=$conn->query($sql3);
         if(!$result){
@@ -43,12 +43,14 @@
         }
         else{
             $arr=array();
+            $row=array();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
                 $log=array("title"=>"$row[0]","articleID"=>"$row[2]","like"=>"$row[3]","keep"=>"$row[4]");
                 $rtn["data"]["articleList"][$i]=$row;
             }
             $rtn["data"]["articleList"] = $arr;
+            $rtn["data"]["topArticleID"] = $row[5];
             $rtn["data"]["rule"] =$row[1];
             $rtn["statue"] = true;
             $rtn["errorCode"] = "";

@@ -1,20 +1,21 @@
 <?php
-    require_once 'test.php'; //連線資料庫 
-    /* 前端 to 後端:
-        let cmd = {};
-         cmd["act"] = "deleteArticle";
-		cmd["account"] = "AuthorID"
-        cmd["articleID"] ="ArticleID"
-    */
+    require_once 'test.php';
+    /* 
+    前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "deleteArticle";
+	cmd["account"] = "AuthorID"
+    cmd["articleID"] ="ArticleID"
 		
-    /* 後端 to 前端
-        dataDB.status
-        dataDB.errorCode
-        若 status = true:
-            
-        否則
-            dataDB.data = ""
-        */
+    後端 to 前端
+    dataDB.status
+    若 status = true:
+        dataDB.errorCode = ""    
+        dataDB.data = ""
+    否則
+        dataDB.errorCode = ""
+        dataDB.data = ""
+    */
     $sqlcheck="SELECT `ArticleID` FROM `Article` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' ";  
     $result=$conn->query($sqlcheck);
     if(!$result){
