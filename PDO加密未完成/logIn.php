@@ -5,6 +5,7 @@
 	cmd["act"] = "logIn";
 	cmd["account"] = "00857210";
 	cmd["password"] = "00857210";
+	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status
