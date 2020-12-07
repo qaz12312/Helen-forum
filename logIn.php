@@ -13,9 +13,9 @@
 		dataDB.data[0] // UserID:"00757007"
 		dataDB.data[1] // Permissions:1
 		dataDB.data[2] // Color:"#ffffff"
-		dataDB.data[3] // Nickname:"00757003"
+		dataDB.data[3] // Nickname:"00757007"
 	否則
-		dataDB.errorCode = "This account(00757003) does not exist" /  "Incorrect account or password"
+		dataDB.errorCode = "This account(00757007) does not exist" /  "Incorrect account or password"
 		dataDB.data = "" 
 	*/
     function doLogIn($input){
