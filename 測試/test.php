@@ -29,7 +29,7 @@
         $input["timer"] ="2020-12-06 02:55:05";
 			
     $input["act"] = "modifyPersonalInfo";
-    $input["account"] = "00857210@mail.ntou.edu.tw";
+    $input["account"] = "00857210";
     $input["option"] = /*"password" /*/ "nickname" /*/ "color"*/;
     $input["new"] = /*"123456789" /*/ "beauty cook~" /*/ "\#028d5f"*/;
     /////////////////////////////////////////////////////////////////

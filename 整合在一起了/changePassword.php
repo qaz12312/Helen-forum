@@ -30,7 +30,7 @@ dataDB.data = "fail to change the password" -->
 		$rtn["data"] = "";
 	}
 		else{	//更改用戶密碼
-			$keepsql="Update `User` SET `Password` = '".$input['password']."' WHERE `UserID` ='".$input['account']."'";
+			$keepsql="UPDATE `User` SET `Password` = '".$input['password']."' WHERE `UserID` ='".$input['account']."'";
 			$keepresult = $conn->query($keepsql);
 			if(!$keepresult){
 			die($conn->error);

@@ -1,11 +1,11 @@
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+    require_once 'test.php'; //連線資料庫 
     /* 前端 to 後端:
         let cmd = {};
-        cmd["act"] = "editArticle";
+        cmd["act"] = "deleteArticle";
         cmd["articleID"] = "ArticleID"
         cmd["account"] = "AuthorID"
-        cmd["blockID"] ="美食版"
+        cmd["blockName"] ="美食版"
         cmd["title"] = "Title"
         cmd["content"] = "Content"
         cmd["picture"] = "Image"
@@ -21,12 +21,12 @@
         否則
             dataDB.data = ""
         */
-    $del="DELETE FROM `Article` WHERE `ArticleID` = $input['articleID'] AND  AuthorID = $input['account']";
+    $del="DELETE FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' AND  `AuthorID` = '".$input['account']."'";
     $result=$conn->query($del);
     if(!$result){
         die($conn->error);
     }
-    $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` = $input['articleID'] ";
+    $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' ";
         $result=$conn->query($sql);
         if($result->num_rows > 0){
         $rtn = array();

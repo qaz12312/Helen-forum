@@ -1,11 +1,11 @@
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+    require_once 'test.php'; //連線資料庫 
 /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "editArticle";
 			cmd["articleID"] = "ArticleID"
             cmd["authorID"] = "AuthorID"
-            cmd["blockID"] ="美食版"
+            cmd["blockName"] ="美食版"
             cmd["title"] = "Title"
             cmd["content"] = "Content"
             cmd["picture"] = "Image"
@@ -28,12 +28,13 @@
             否則
                 dataDB.data = ""
          */
-    $updateSql="UPDATE `Article` SET `Title`=".$input['title']."','`Content`=".$input['content']."','`Image`=".$input['picture']."','`HashTag`=".$input['hashTag']."','`Time`=".$input['timer']."'";
+        //$sql="UPDATE `Users` SET `".$optionAttr."`='".$input['new']."' WHERE `UserID` ='".$input['account']."'";
+    $updateSql="UPDATE `Article` SET `Title`='".$input['title']."',`Content`='".$input['content']."',`Image`='".$input['picture']."',`HashTag`='".$input['hashTag']."',`BlockName`='".$input['blockName']."' WHERE `ArticleID` = '".$input['articleID']."'";
     $result=$conn->query($updateSql);
-        if(!$result){
-            die($conn->error);
-        }
-    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Time`,`Color` FROM `Article` NATURAL JOIN`User` ON User.UserID =Article.AuthorID  WHERE `Title`=".$input['title']."AND `Content`=".$input['content']."AND `Image`=".$input['picture']."AND `HashTag`=".$input['hashTag']."AND `Time`=".$input['timer']."";
+    if(!$result){
+        die($conn->error);
+    }
+    $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color`,`BlockName` FROM `Article` NATURAL JOIN`Users`  WHERE `Title`='".$input['title']."'AND `Content`='".$input['content']."'AND `Image`='".$input['picture']."'AND `HashTag`='".$input['hashTag']."'";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);
@@ -45,11 +46,11 @@
         $rtn["data"] = "";
     }
     else{
-
+        $row=$result->fetch_row();
         $rtn = array();
         $rtn["status"] = true;
         $rtn["errorCode"] = "";
-        $rtn["data"] = "";
+        $rtn["data"] =$row;
     }
     echo json_encode($rtn);
 ?>
