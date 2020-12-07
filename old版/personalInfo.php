@@ -5,7 +5,7 @@
     cmd["act"] = "modifyPersonalInfo";
     cmd["option"] = "password" / "nickname" / "color";
     cmd["account"] = "00857210";
-    cmd["new"] = "987654321" / "beauty cook" / "\#028d5f";
+    cmd["new"] = "00857210" / "beauty cook" / "\#028d5f";
 
     後端 to 前端:
     dataDB = JSON.parse(data);

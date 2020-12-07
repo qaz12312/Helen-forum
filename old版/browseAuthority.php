@@ -4,6 +4,7 @@
 	let cmd = {};
 	cmd["act"] = "browseAuthority";
 	cmd["account"] = "00857210";
+	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status
