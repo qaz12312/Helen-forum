@@ -35,7 +35,7 @@
 			$row=$result->fetch_row();
 			$str = $row[0]."helen";
             $token=md5($str);
-			$_SESSION[$token] = array("account"=>$row[0],"permissions"=>$row[1]);
+			$_SESSION[$token] = array("account"=>$row[0],"permission"=>$row[1]);
 	        $rtn = array();
 	        $rtn["status"] = true;
 	        $rtn["errorCode"] = "";

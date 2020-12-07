@@ -21,21 +21,21 @@
 		dataDB.errorCode = "You don't have permission to do this action."
 		dataDB.data = "" 
 	*/
-    function doBrowseAuthority($inputJS){
+    function doBrowseAuthority($input){
         global $conn;
-        $token =$inputJS['token'];
+        $token =$input['token'];
         if(!isset($_SESSION[$token])){
            $rtn = array();
             $rtn["status"] = false;
             $rtn["errorCode"] = "You don't have permission to do this action.";
             $rtn["data"] = "";
         }else{
-            $input = $_SESSION[$token];
+            $userInfo = $_SESSION[$token];
             $rtn = array();
             $rtn["status"] = true;
             $rtn["errorCode"] = "";
-            $rtn["data"]["permission"] =$input['permission'];
-            $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$input['account']."'";
+            $rtn["data"]["permission"] =$userInfo['permission'];
+            $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$userInfo['account']."'";
             $result = $conn->query($sql);
             if(!$result){
                 die($conn->error);
