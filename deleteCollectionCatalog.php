@@ -1,21 +1,21 @@
 <?php
-    require_once 'test.php'; //連線資料庫 
-    /* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "addKeepDir";
-            cmd["account"] = "UserID"
-            cmd["dirName"] ="我喜歡的"
+    /* 
+    前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "addKeepDir";
+    cmd["account"] = "UserID"
+    cmd["dirName"] ="我喜歡的"
 
-        */
-		
-         /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				
-            否則
-                dataDB.data = ""
-         */
+    後端 to 前端
+    dataDB.status
+    若 status = true:
+        dataDB.errorCode = ""
+        dataDB.data = ""
+    否則
+        dataDB.errorCode = ""
+        dataDB.data = ""
+    */
+    require_once 'test.php'; //連線資料庫 
     $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['dirName']."' AND `UserID`='".$input['account']."' ";  
     $result=$conn->query($sqlcheck);
     if(!$result){
@@ -56,5 +56,4 @@
         }
     }
     echo json_encode($rtn);
-
 ?>
