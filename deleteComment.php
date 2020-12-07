@@ -1,21 +1,20 @@
 <?php
-    require_once 'test.php'; //連線資料庫 
-/* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "deleteComment";
-			cmd["account"] = "AuthorID"
-            cmd["articleID"] ="ArticleID"
-            cmd["floors"] = "Floor"
-        */
-		
-        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				
-            否則
-                dataDB.data = ""
-         */
+    /* 
+    前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "deleteComment";
+    cmd["account"] = "AuthorID"
+    cmd["articleID"] ="ArticleID"
+    cmd["floors"] = "Floor"
+
+    後端 to 前端
+    dataDB.status
+    dataDB.errorCode
+    若 status = true:
+        
+    否則
+        dataDB.data = ""
+    */
     $sqlcheck="SELECT `ArticleID` FROM `Comments` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";  
     $result=$conn->query($sqlcheck);
     if(!$result){
