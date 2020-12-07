@@ -61,7 +61,7 @@
                     $rtn["data"] = "成功刪除此文章";
                 }
             }
-            echo json_encode($rtn);
         }
+        echo json_encode($rtn);
     }
 ?>
