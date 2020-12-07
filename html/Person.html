@@ -50,8 +50,8 @@
     </div>
   </div>
  
-    <button class="tablink" onclick="openPage('PersonalProfile', this, 'rgb(224, 174, 98)')">個人資料</button>
-    <button class="tablink" onclick="openPage('CollectionCatalog', this, 'rgb(224, 174, 98)')" id="defaultOpen">收藏目錄</button>
+    <button class="tablink" onclick="openPage('PersonalProfile', this, 'rgb(224, 174, 98)')"id="defaultOpen">個人資料</button>
+    <button class="tablink" onclick="openPage('CollectionCatalog', this, 'rgb(224, 174, 98)')" >收藏目錄</button>
     <button class="tablink" onclick="openPage('PostingRecord', this, 'rgb(224, 174, 98)')">發文紀錄</button>
 
   
@@ -119,12 +119,21 @@
               <span id="pwMsg" disabled=false></span>
             </div>
           </div>
+          <div class="InputWrap2" id="InputWrap2"" style="display: none;">
+            <div row>
+              <input type="text" id="validatePW"  >
+              <span id="checkPw" disabled=false></span>
+            </div>
+          </div>
+          <!--
           <div class="InputWrap">
+            <label for="password">確認密碼:</label>
             <div row>
             <input type="text" id="validatePW"   style="display: none;" >
             <span id="checkPw" disabled=false></span>
             </div>
           </div>
+          -->
           </div>
           <br>
         

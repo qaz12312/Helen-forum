@@ -1,156 +1,222 @@
 <html>
-    <head>
-        <meta charset = "utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>首頁</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	<!-- w3school的搜尋圖示 -->
-        
-        <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!--
-        <link rel="icon" href="./static/icon128.ico" type="image/x-icon">
-        <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
-        <link rel= "stylesheet" href= "./static/myBookCaseMain.css">
-        -->
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel= "stylesheet" href= "../css/topnav.css">
-  </head>
-  <body>
-    <div class="topnav">
-        <div class="dropdown">
-        <button class="dropbtn" onclick="myFunction(), cross(this)">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-        </button>
-        <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
-          <a href="#">Link 1</a>	
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
-          <a href="#">+</a>
-        </div>
-        </div>
-        <div class="login">
-        <button>登入</button>
-        </div>
-        <div class="imgcontainer">
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
-        </div>
-        <div class="search-container">
-          <input type="text" placeholder="Search.." name="search">
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </div>
-      </div>
+<head>
+    <meta charset = "utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Helen</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script><!--heart-->
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	<!-- w3school的搜尋圖示 -->
+    
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--
+    <link rel="icon" href="./static/icon128.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+    <link rel= "stylesheet" href= "./static/myBookCaseMain.css">
+    -->
+    
+<link rel="stylesheet" href="../css/style.css">
+<link rel= "stylesheet" href= "../css/topnav.css">
+</head>
+<body>
+    
+<div class="topnav">
+    <div class="dropdown">
+    <button class="dropbtn" onclick="myFunction(), cross(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+    </button>
+    <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
+        <a href="#">Link 1</a>	
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+        <a href="#">+</a>
+    </div>
+    </div>
+    <div class="login">
+    <button>登入</button>
+    </div>
+    <div class="imgcontainer">
+        <i class="fa fa-user-circle" aria-hidden="true"></i>
+    </div>
+    <div class="search-container">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </div>
+    </div>
 
-  <div class="tab">
-    <button class="tablinks" onclick="openCity(event, '熱門')" id="defaultOpen">熱門</button>
-    <button class="tablinks" onclick="openCity(event, '收藏')">收藏</button>
-    <button class="tablinks" onclick="openCity(event, '最新')">最新</button>
-  </div>
+    <button class="tablink" onclick="openPage('popularPage', this, 'rgb(224, 174, 98)')"id="defaultOpen">個人資料</button>
+    <button class="tablink" onclick="openPage('newPage', this, 'rgb(224, 174, 98)')" >收藏目錄</button>
 
-  
-  <div class= "tabContent">
-    <div class="contentArea">
-      <h3> 熱門</h3>
-        <div class= "content">
-            <div class= "postContent">
-              <table class="table table-borderless">
-                <tr>
-                    <td>
-                        <div class="card">
-                            <div class="card-body row">
-                                <span class="col-md-2">
-                                    <h5 style="background-color: brown; display:inline-block"> 美食版 </h5>
-                                </span>
-                                <span class="col-md-6">
-                                    <span class= "articleTitle">海大附近有甚麼推薦的美食嗎？</span>
-                                </span>
-                                <span class="col-md-4">
-                                    <button type="button" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-heart"></span> 愛心</button>
-                                    <button type="button" class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-star"></span> 收藏</button>
-                                </span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
 
-                <tr>
-                    <td>
-                        <div class="card">
-                            <div class="card-body row">
-                                <span class="col-md-2">
-                                  <h5 style="background-color: brown; display:inline-block">美食版</h5>
+<div id="popularPage" class= "tabContent">
+<div class="contentArea">
+    <h3> 熱門</h3>
+    <div class= "content">
+        <div class= "postContent">
+            <table class="table table-borderless">
+            <tr>
+                <td>
+                    <div class="card">
+                        <div class="card-body row">
+                            <span class="col-md-2">
+                                <h5 style="background-color: brown; display:inline-block"> 美食版 </h5>
+                            </span>
+                            <span class="col-md-6">
+                                <div class="postTitle">
+                                <span>海大附近有甚麼推薦的美食嗎？</span>
+                                </div>
+                            </span>
+                            <span class="col-md-2">
+                            <div class="heart-btn">
+                                <div class="heartContent">
+                                    <span class="heart"></span>
+                                    <span class="heartText">Like</span>
+                                    <span class="numb"></span>
+                                </div>
+                            
+                                </div>
+                            </span>
+                            <span class="col-md-2">
+                                <div class="star-btn">
+                                    <div class="starContent">
+                                        <span class="star"></span>
+                                        <span class="starText">collect</span>
+                                        <span class="starnumb"></span>
+                                    </div>
+                                    </div>
                                 </span>
-                                <span class="col-md-6">
-                                    <span class= "articleTitle">學餐評價</span>
-                                </span>
-                                <span class="col-md-4">
-                                    <button type="button" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-heart"></span> 愛心</button>
-                                    <button type="button" class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-star"></span> 收藏</button>
-                                </span>
-                            </div>
+                            
                         </div>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>
-                        <div class="card">
-                            <div class="card-body row">
-                                <span class="col-md-2">
-                                    <h5 style="background-color: navy; display:inline-block">廢文版</h5>
-                                </span>
-                                <span class="col-md-6">
-                                    <span class= "articleTitle">求海大沒有下雨的天數</span>
-                                </span>
-                                <span class="col-md-4">
-                                    <button type="button" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-heart"></span> 愛心</button>
-                                    <button type="button" class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-star"></span> 收藏</button>
-                                </span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                    </div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>
-                        <div class="card">
-                            <div class="card-body row">
+            <tr>
+                <td>
+                    <div class="card">
+                        <div class="card-body row">
+                            <span class="col-md-2">
+                                <h5 style="background-color: brown; display:inline-block">美食版</h5>
+                            </span>
+                            <span class="col-md-6">
+                                <div class="postTitle">
+                                <span>學餐評價</span>
+                                </div>
+                            </span>
+                            <span class="col-md-2">
+                                <div class="heart-btn">
+                                    <div class="heartContent">
+                                        <span class="heart"></span>
+                                        <span class="heartText">Like</span>
+                                        <span class="numb"></span>
+                                    </div>
+                                
+                                    </div>
+                                </span>
                                 <span class="col-md-2">
-                                    <h5 style="background-color: cadetblue; display:inline-block"> 課程版 </h5>
-                                </span>
-                                <span class="col-md-6">
-                                    <span class= "articleTitle">通識涼課報你知隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻</span>
-                                </span>
-                                <span class="col-md-4">
-                                    <button type="button" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-heart"></span> 愛心</button>
-                                    <button type="button" class="btn btn-warning">
-                                        <span class="glyphicon glyphicon-star"></span> 收藏</button>
-                                </span>
-                            </div>
+                                    <div class="star-btn">
+                                        <div class="starContent">
+                                            <span class="star"></span>
+                                            <span class="starText">collect</span>
+                                            <span class="starnumb"></span>
+                                        </div>
+                                        </div>
+                                    </span>
                         </div>
-                    </td>
-                </tr>
-            </table>
-            </div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <div class="card">
+                        <div class="card-body row">
+                            <span class="col-md-2">
+                                <h5 style="background-color: navy; display:inline-block">廢文版</h5>
+                            </span>
+                            <span class="col-md-6">
+                                <div class="postTitle">
+                                <span>求海大沒有下雨的天數</span>
+                            </div>
+                            </span>
+                            <span class="col-md-2">
+                                <div class="heart-btn">
+                                    <div class="heartContent">
+                                        <span class="heart"></span>
+                                        <span class="heartText">Like</span>
+                                        <span class="numb"></span>
+                                    </div>
+                                
+                                    </div>
+                                </span>
+                                <span class="col-md-2">
+                                    <div class="star-btn">
+                                        <div class="starContent">
+                                            <span class="star"></span>
+                                            <span class="starText">collect</span>
+                                            <span class="starnumb"></span>
+                                        </div>
+                                        </div>
+                                    </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="card">
+                        <div class="card-body row">
+                            <span class="col-md-2">
+                                <h5 style="background-color: rgb(4, 85, 31); display:inline-block">課程版</h5>
+                            </span>
+                            <span class="col-md-6">
+                                <div class="postTitle">
+                                <span>通識涼課報你知隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻</span>
+                            </div>
+                            </span>
+                            <span class="col-md-2">
+                                <div class="heart-btn">
+                                    <div class="heartContent">
+                                        <span class="heart"></span>
+                                        <span class="heartText">Like</span>
+                                        <span class="numb"></span>
+                                    </div>
+                                
+                                    </div>
+                                </span>
+                                <span class="col-md-2">
+                                    <div class="star-btn">
+                                        <div class="starContent">
+                                            <span class="star"></span>
+                                            <span class="starText">collect</span>
+                                            <span class="starnumb"></span>
+                                        </div>
+                                        </div>
+                                    </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
         </div>
     </div>
+</div>
 </div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
 </script>
 <script src="../js/bar.js">
 </script>
+<script src="../js/tab.js"></script>
+<script src="../js/home.js"></script>
 </body>
 
 </html>
