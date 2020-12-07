@@ -72,7 +72,6 @@ DROP TABLE IF EXISTS FollowKeep;
 CREATE TABLE FollowKeep (
 ArticleID bigint(255) NOT NULL,
 UserID varchar(101) NOT NULL,
-KeepID int(255) NOT NULL,
 AddTime datetime DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (ArticleID, UserID),
 FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID),
