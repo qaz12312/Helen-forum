@@ -1,8 +1,8 @@
 <?php 
-    require_once 'connectDB.php'; //連線資料庫 
+    require_once 'test.php'; //連線資料庫 
     /* 前端 to 後端:
             let cmd = {};
-            cmd["act"] = "addKeepDir";
+            cmd["act"] = "newCollectionCatalog";
 			cmd["account"] = "UserID"
             cmd["dirID"] = "DirID"
             cmd["dirName"] ="我喜歡的"
@@ -19,18 +19,14 @@
             否則
                 dataDB.data = ""
          */
-    global $input,$conn;
-    $total="SELECT count(distinct `DirID`)FROM `KeepDir` where `AuthorID` = $input['userID']";
-    if(!$total){
-        die($conn->error);
-    }
-    $new="INSERT INTO  `KeepDir `(`UserID`,`DirID`,`DirName`) 
-    VALUES('".$input['userID']."','".$total[0]+1."','".$input['dirName'].)";
+    
+    $new="INSERT INTO  `KeepDir`(`UserID`,`DirName`) 
+    VALUES('".$input['account']."','".$input['dirName']."')";
     $resultNew=$conn->query($new);
-    if(!$resultNEW){
+    if(!$resultNew){
         die($conn->error);
     }
-    $sql="SELECT `UserID`,`DirID`,`DirName` FROM `KeepDir` WHERE `UserID`=$input['userID'] AND`DirID`=$total[0]+1 AND`DirName`=$input['dirName']";
+    $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."' AND`DirName`='".$input['dirName']."'";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);
@@ -47,7 +43,7 @@
         $rtn["status"] = true;
         $rtn["errorCode"] = "";
         $rtn["data"] = $row[0];
-        $rtn["articleID"] =$articleID;
+        $rtn["articleID"] =$row;
     }
     echo json_encode($rtn);
 ?>
