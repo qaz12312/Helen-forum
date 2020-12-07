@@ -1,5 +1,9 @@
 <?php
     require_once 'connectDB.php'; //連線資料庫 
+    /* 前端 to 後端:
+        let cmd = {};
+       cmd["act"] = "deleteComment";
+    */
 /* 後端 to 前端
             dataDB.status
             dataDB.errorCode

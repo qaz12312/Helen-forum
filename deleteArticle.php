@@ -2,15 +2,9 @@
     require_once 'test.php'; //連線資料庫 
     /* 前端 to 後端:
         let cmd = {};
-        cmd["act"] = "deleteArticle";
-        cmd["articleID"] = "ArticleID"
-        cmd["account"] = "AuthorID"
-        cmd["blockName"] ="美食版"
-        cmd["title"] = "Title"
-        cmd["content"] = "Content"
-        cmd["picture"] = "Image"
-        cmd["hashTag"] ="HashTag"
-        cmd["timer"] ="Time"
+         cmd["act"] = "deleteArticle";
+		cmd["account"] = "AuthorID"
+        cmd["articleID"] ="ArticleID"
     */
 		
     /* 後端 to 前端
@@ -21,23 +15,36 @@
         否則
             dataDB.data = ""
         */
-    $del="DELETE FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' AND  `AuthorID` = '".$input['account']."'";
-    $result=$conn->query($del);
+    $sqlcheck="SELECT `ArticleID` FROM `Article` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' ";  
+    $result=$conn->query($sqlcheck);
     if(!$result){
         die($conn->error);
-    }
-    $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' ";
-        $result=$conn->query($sql);
-        if($result->num_rows > 0){
+    } 
+    if($result->num_rows <= 0){
         $rtn = array();
         $rtn["status"] = false;
-        $rtn["errorCode"] = "刪除失敗，資料庫異常";
+        $rtn["errorCode"] = "無權限刪除";
         $rtn["data"] = "";
     }
     else{
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
+        $del="DELETE FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' AND  `AuthorID` = '".$input['account']."'";
+        $result=$conn->query($del);
+        if(!$result){
+            die($conn->error);
+        }
+        $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' ";
+            $result=$conn->query($sql);
+            if($result->num_rows > 0){
+            $rtn = array();
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "刪除失敗，資料庫異常";
+            $rtn["data"] = "";
+        }
+        else{
+            $rtn = array();
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "";
+        }
     }
     echo json_encode($rtn);
 ?>
