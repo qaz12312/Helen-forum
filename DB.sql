@@ -19,7 +19,7 @@ Rule mediumtext ,
 TopArticleID bigint(255) ,
 # PRIMARY KEY (BoardID),
 PRIMARY KEY (BoardName),
-FOREIGN KEY (UserID) REFERENCES Users (UserID)
+FOREIGN KEY (UserID) REFERENCES Users (UserID) 
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Article;
@@ -34,7 +34,7 @@ CREATE TABLE Article (
 	BlockName varchar(255) NOT NULL,
 PRIMARY KEY (ArticleID),
 FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
-FOREIGN KEY (BlockName) REFERENCES Board (BoardName)
+FOREIGN KEY (BlockName) REFERENCES Board (BoardName) ON UPDATE CASCADE  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Report;
@@ -43,7 +43,7 @@ ArticleID bigint(255) NOT NULL,
 Reason varchar(255) NOT NULL,
 Times datetime DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (ArticleID, Reason),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)
+FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID) ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Comments;
@@ -56,7 +56,7 @@ CREATE TABLE Comments (
 	TagFloor int(255),
 	PRIMARY KEY (AuthorID, Floor),
 FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)
+FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS FollowHeart;
@@ -64,7 +64,7 @@ CREATE TABLE FollowHeart (
 ArticleID bigint(255) NOT NULL,
 UserID varchar(101) NOT NULL,
 PRIMARY KEY (ArticleID, UserID),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID),
+FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE,
 FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
@@ -72,11 +72,11 @@ DROP TABLE IF EXISTS FollowKeep;
 CREATE TABLE FollowKeep (
 ArticleID bigint(255) NOT NULL,
 UserID varchar(101) NOT NULL,
-KeepID int(255) NOT NULL,
+DirName varchar(255) NOT NULL,
 AddTime datetime DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (ArticleID, UserID),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID),
-FOREIGN KEY (UserID) REFERENCES Users (UserID)
+FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)   ON DELETE CASCADE,
+FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Notice;

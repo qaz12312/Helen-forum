@@ -32,12 +32,12 @@
             $rtn["data"] = "";
         }
         else{
-            $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Permissions`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."',1,'\#ffffff','".$input['account']."')";
+            $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Permission`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."',1,'\#ffffff','".$input['account']."')";
             $resultNew=$conn->query($sql);
             if(!$resultNew){
                 die($conn->error);
             }
-            $sql="SELECT `UserID`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
+            $sql="SELECT `UserID`,`Permission`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
             $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
@@ -52,7 +52,7 @@
                 $row=$result->fetch_row();
                 $str = $row[0]."helen";
                 $token=md5($str);
-                $_SESSION[$token] = array("account"=>$row[0],"permissions"=>$row[1]);
+                $_SESSION[$token] = array("account"=>$row[0],"permission"=>$row[1]);
                 $rtn = array();
                 $rtn["status"] = true;
                 $rtn["errorCode"] = "";

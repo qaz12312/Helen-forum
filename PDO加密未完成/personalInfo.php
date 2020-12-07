@@ -35,17 +35,17 @@
 ?>
 
 <?php
-    function doChangeInfo($inputJS,$optionChinese,$optionAttr){
+    function doChangeInfo($input,$optionChinese,$optionAttr){
         global $conn;
-        $token =$inputJS['token'];
+        $token =$input['token'];
         if(!isset($_SESSION[$token])){
            $rtn = array();
             $rtn["status"] = false;
             $rtn["errorCode"] = "You don't have permission to do this action.";
             $rtn["data"] = "";
         }else{
-            $input = $_SESSION[$token];
-            $sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
+            $userInfo = $_SESSION[$token];
+            $sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$userInfo['account']."'";
             $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
@@ -57,7 +57,7 @@
                 $rtn["data"] = "";
             }
             else{
-                $sql="UPDATE `Users` SET `".$optionAttr."`='".$input['new']."' WHERE `UserID` ='".$input['account']."'";
+                $sql="UPDATE `Users` SET `".$optionAttr."`='".$input['new']."' WHERE `UserID` ='".$userInfo['account']."'";
                 $result=$conn->query($sql);
                 if(!$result){
                     $rtn = array();
@@ -72,7 +72,7 @@
                     $rtn["data"] = "success to change the ".$input["option"];
                 }
             }
-            echo json_encode($rtn);
         }
+        echo json_encode($rtn);
     }
 ?>

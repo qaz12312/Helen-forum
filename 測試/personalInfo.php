@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "modifyPersonalInfo";
     cmd["option"] = "password" / "nickname" / "color";
-    cmd["account"] = "00857210@mail.ntou.edu.tw";
+    cmd["account"] = "00857210";
     cmd["new"] = "987654321" / "beauty cook" / "\#028d5f";
 
     後端 to 前端:
@@ -17,11 +17,6 @@
         dataDB.errorCode = "找不到用戶，(密碼/暱稱/頭貼)更改失敗，需重新登入系統" / "資料庫異常，(密碼/暱稱/頭貼)更改失敗，需重新登入系統"
         dataDB.data = "" 
     */
-    
-    // 改 ////////////////////////////////////////////
-    require_once("test.php");
-    /////////////////////////////////////////////////
-
     switch($input["option"]){
         case "password": // 修改密碼
             $optionChinese = "密碼";

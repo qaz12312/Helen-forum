@@ -8,25 +8,30 @@
     
     後端 to 前端
     dataDB.status
-    dataDB.errorCode
     若 status = true:
-        dataDB.data[0]	// Times
-        dataDB.data[1]	// Content
+        dataDB.errorCode = ""
+        dataDB.data // 通知
+        (
+            dataDB.data[0].Time    // 第1筆通知的時間
+            dataDB.data[0].Content // 第1筆通知的內文
+            ...
+        )
     否則
+        dataDB.errorCode = "目前無任何通知"
         dataDB.data = ""
     */
     require_once 'connectDB.php'; //連線資料庫 
     global $input,$conn;
+    
     $sql="SELECT `Times`,`Content` FROM  `Notice` WHERE `UserID`='".$input['account']."' ORDER BY `Times` DESC";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);
     }
-
     if($result->num_rows <= 0){
         $rtn = array();
         $rtn["status"] = false;
-        $rtn["errorCode"] = "無通知";
+        $rtn["errorCode"] = "目前無任何通知";
         $rtn["data"] = "";
     }
     else{

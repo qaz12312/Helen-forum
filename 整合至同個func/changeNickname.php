@@ -1,22 +1,18 @@
-<!-- 前端 to 後端:
-let cmd = {};
-cmd["act"] = "changeNickname";
-cmd["account"] = "0123456";
-cmd["nickname"] = "poo poo";
-<!--
-後端 to 前端
-dataDB.status
-dataDB.errorCode
-若 status = true:
-dataDB.data="success to change the Nickname"
-否則
-dataDB.data = "no user had found" -->
-
-<!--User[UserID,Password,Permissions,Color,Nickname]-->
-
 <?php
-	require_once 'connectDB.php'; //連線資料庫
+	/*前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "changeNickname";
+	cmd["account"] = "0123456";
+	cmd["nickname"] = "poo poo";
 
+	後端 to 前端
+	dataDB.status
+	dataDB.errorCode
+	若 status = true:
+	dataDB.data="success to change the Nickname"
+	否則
+	dataDB.data = "no user had found"*/
+	require_once 'connectDB.php'; //連線資料庫
 	global $input,$conn;
 	$sql="SELECT `UserID` FROM `User` WHERE `UserID`='".$input['account']."'";
 	$result=$conn->query($sql);
