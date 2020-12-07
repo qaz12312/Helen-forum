@@ -11,7 +11,7 @@
 	若 status = true:
 		dataDB.errorCode = ""
 		dataDB.data.permission // permission:1
-		dataDB.data.boardName // boardName
+		dataDB.data.boardName // boardName OR 空array
 		(
 			dataDB.data.boardName[0] //旅遊
 			dataDB.data.boardName[1] //星座
