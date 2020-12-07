@@ -90,9 +90,8 @@ FOREIGN KEY (UserID) REFERENCES Users (UserID)
 
 DROP TABLE IF EXISTS KeepDir;
 CREATE TABLE KeepDir (
-DirID int(255) NOT NULL,
 UserID varchar(101) NOT NULL,
 DirName varchar(255) NOT NULL,
-PRIMARY KEY (UserID, DirID),
+PRIMARY KEY (UserID, DirName),
 FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
