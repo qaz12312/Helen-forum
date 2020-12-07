@@ -24,7 +24,7 @@
 	*/
     function doBrowseAuthority($input){
         global $conn;
-    	$sql="SELECT `Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."'";
+    	$sql="SELECT `Permission`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."'";
 	    $result = $conn->query($sql);
 	    if(!$result){
 	        die($conn->error);
@@ -40,22 +40,25 @@
 	        $rtn = array();
 	        $rtn["status"] = true;
 			$rtn["errorCode"] = "";
-			$rtn["data"]["permissions"] =$row[0]["Permissions"];
-			$rtn["data"]["color"] =$row[0]["Color"];
-			$rtn["data"]["nickname"] =$row[0]["Nickname"];
+			$rtn["data"]["permission"] =$row[0];
+			$rtn["data"]["color"] =$row[1];
+			$rtn["data"]["nickname"] =$row[2];
 
 			$sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$input['account']."'";
 			$result = $conn->query($sql);
-				if(!$result){
+			if(!$result){
 				die($conn->error);
 			}
-			$row = array();
-			
-			for($i=0;$i<$result->num_rows;$i++){
-				$row=$result->fetch_row();
-				print_r($row);
-                $rtn["data"]["boardName"][$i]=$row[0];
-            }
+			if($result->num_rows <= 0){
+				$rtn["data"]["boardName"] = array();
+			}
+			else{
+				$row = array();
+				for($i=0;$i<$result->num_rows;$i++){
+					$row=$result->fetch_row();
+					$rtn["data"]["boardName"][$i]=$row[0];
+				}
+			}
         }
 		echo json_encode($rtn);
     }
