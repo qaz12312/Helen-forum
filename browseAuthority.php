@@ -14,7 +14,8 @@
 		dataDB.data.Nickname // NickName:"00857210"
 		dataDB.data.BoardName // BoardName
 		(
-            dataDB.data.BoardName[0]
+			dataDB.data.BoardName[0]
+			dataDB.data.BoardName[1]
             .....
         )
 	否則
