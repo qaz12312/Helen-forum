@@ -2,7 +2,7 @@
        require_once 'test.php'; //連線資料庫 
     /* 前端 to 後端:
             let cmd = {};
-            cmd["act"] = "editCollectionCatalog";
+            cmd["act"] = "addKeepDir";
             cmd["account"] = "UserID"
             cmd["oldDirName"] ="我喜歡的"
             cmd["newDirName"] ="我不喜歡的"
