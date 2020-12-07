@@ -50,8 +50,7 @@ $( document ).ready( function()
                                 swal({
                                     title: "刪除失敗<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
                                     type: "error",
-                                    text: dataDB.errorCode,
-                                    animation: false
+                                    text: dataDB.errorCode
                                 });
                             }
                             else
@@ -188,7 +187,10 @@ function checkPermission()
     let perm = sessionStorage.getItem( "Helen-permission" );
     console.log( perm );
 
-    if( perm && perm.valueOf() >= 2 ) return true;
+    if( perm && perm.valueOf() >= 2 )
+    {
+        cmd[ "act" ]
+    }
 
     else 
     {

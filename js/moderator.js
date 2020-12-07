@@ -29,17 +29,57 @@ $( document ).ready( function()
 
             console.log( cmd );
 
-            $.post( "../index.php", cmd, function( dataDB ) 
+            // $.post( "../index.php", cmd, function( dataDB ) 
+            // {
+            //     dataDB = JSON.parse( dataDB );
+
+            //     if( dataDB.status == false )
+            //     {
+            //         swal({
+            //             title: "更改看板失敗<br /><small>&lt;" + cmd.userID + ", " + previous + "<i class='fa fa-long-arrow-right'></i>" + $(this).val() +"&gt;</small>",
+            //             type: "error",
+            //             text: dataDB.errorCode,
+            //         });
+            //         $(this).val( previous );
+            //     }
+            //     else
+            //     {
+            //         swal({
+            //             title: "更改看板成功<br /><small>&lt;" + cmd.userID + ", " + previous + "<i class='fa fa-long-arrow-right'></i>" + $(this).val() +"&gt;</small>",
+            //             type: "success"
+    
+            //         }).then(( result ) => {
+            //             if ( result ) 
+            //             {
+            //                 location.reload();
+            //             }
+            //         });
+            //     }
+            // });
+
+            let status = true;
+            if( status == false )
             {
-                dataDB = JSON.parse( dataDB );
+                swal({
+                    title: "更改看板失敗<br /><small>&lt;" + cmd.userID + ", " + previous + "<i class='fa fa-long-arrow-right'></i>" + $(this).val() +"&gt;</small>",
+                    type: "error",
+                    text: "dataDB.errorCode",
+                });
+                $(this).val( previous );
+            }
+            else
+            {
+                swal({
+                    title: "更改看板成功<br /><small>&lt;" + cmd.userID + ", " + previous + "<i class='fa fa-long-arrow-right'></i>" + $(this).val() +"&gt;</small>",
+                    type: "success"
 
-                if( dataDB.status == false )
-                {
-                    
-                }
-            });
-
-            // location.reload();
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        location.reload();
+                    }
+                });
+            }
         });
     })();
 
@@ -52,7 +92,55 @@ $( document ).ready( function()
 
         console.log( cmd );
 
-        // location.reload();
+        // $.post( "../index.php", cmd, function( dataDB ) 
+        // {
+        //     dataDB = JSON.parse( dataDB );
+
+        //     if( dataDB.status == false )
+        //     {
+        //         swal({
+        //             title: "新增看板失敗<br /><small>&lt;" + cmd.userID + ", " + $(this).text() +"&gt;</small>",
+        //             type: "error",
+        //             text: dataDB.errorCode
+        //         });
+        //     }
+        //     else
+        //     {
+        //         swal({
+        //             title: "新增看板成功<br /><small>&lt;" + cmd.userID + ", " + $(this).text() +"&gt;</small>",
+        //             type: "success"
+
+        //         }).then(( result ) => {
+        //             if ( result ) 
+        //             {
+        //                 location.reload();
+        //             }
+        //         });
+        //     }
+        // });
+
+        let status = true;
+        if( status == false )
+        {
+            swal({
+                title: "新增看板失敗<br /><small>&lt;" + cmd.userID + ", " + $(this).text() +"&gt;</small>",
+                type: "error",
+                text: "dataDB.errorCode"
+            });
+        }
+        else
+        {
+            swal({
+                title: "新增看板成功<br /><small>&lt;" + cmd.userID + ", " + $(this).text() +"&gt;</small>",
+                type: "success"
+
+            }).then(( result ) => {
+                if ( result ) 
+                {
+                    location.reload();
+                }
+            });
+        }
     });
 
     $( ".btn-danger" ).click( function()
@@ -64,7 +152,55 @@ $( document ).ready( function()
 
         console.log( cmd );
 
-        // location.reload();
+        // $.post( "../index.php", cmd, function( dataDB ) 
+        // {
+        //     dataDB = JSON.parse( dataDB );
+
+        //     if( dataDB.status == false )
+        //     {
+        //         swal({
+        //             title: "刪除看板失敗<br /><small>&lt;" + cmd.userID + ", " + $(this).closest( "td" ).prev().find( "div:last-child select" ).val() +"&gt;</small>",
+        //             type: "error",
+        //             text: dataDB.errorCode
+        //         });
+        //     }
+        //     else
+        //     {
+        //         swal({
+        //             title: "刪除看板成功<br /><small>&lt;" + cmd.userID + ", " + $(this).closest( "td" ).prev().find( "div:last-child select" ).val() +"&gt;</small>",
+        //             type: "success"
+
+        //         }).then(( result ) => {
+        //             if ( result ) 
+        //             {
+        //                 location.reload();
+        //             }
+        //         });
+        //     }
+        // });
+
+        let status = true;
+        if( status == false )
+        {
+            swal({
+                title: "刪除看板失敗<br /><small>&lt;" + cmd.userID + ", " + $(this).closest( "td" ).prev().find( "div:last-child select" ).val() +"&gt;</small>",
+                type: "error",
+                text: "dataDB.errorCode"
+            });
+        }
+        else
+        {
+            swal({
+                title: "刪除看板成功<br /><small>&lt;" + cmd.userID + ", " + $(this).closest( "td" ).prev().find( "div:last-child select" ).val() +"&gt;</small>",
+                type: "success"
+
+            }).then(( result ) => {
+                if ( result ) 
+                {
+                    location.reload();
+                }
+            });
+        }
     });
 
     $( ".btn-success" ).click( function()
@@ -76,7 +212,55 @@ $( document ).ready( function()
 
         console.log( cmd );
 
-        // location.reload();
+        // $.post( "../index.php", cmd, function( dataDB ) 
+        // {
+        //     dataDB = JSON.parse( dataDB );
+
+        //     if( dataDB.status == false )
+        //     {
+        //         swal({
+        //             title: "新增版主失敗<br /><small>&lt;" + cmd.userID + ", " + $(this).closest( "td" ).prev().find( "select" ).val() +"&gt;</small>",
+        //             type: "error",
+        //             text: dataDB.errorCode
+        //         });
+        //     }
+        //     else
+        //     {
+        //         swal({
+        //             title: "新增版主成功<br /><small>&lt;" + cmd.userID + ", " + $(this).closest( "td" ).prev().find( "select" ).val() +"&gt;</small>",
+        //             type: "success"
+
+        //         }).then(( result ) => {
+        //             if ( result ) 
+        //             {
+        //                 location.reload();
+        //             }
+        //         });
+        //     }
+        // });
+
+        let status = true;
+        if( status == false )
+        {
+            swal({
+                title: "新增版主失敗<br /><small>&lt;" + cmd.userID + ", " + $(this).closest( "td" ).prev().find( "select" ).val() +"&gt;</small>",
+                type: "error",
+                text: "dataDB.errorCode"
+            });
+        }
+        else
+        {
+            swal({
+                title: "新增版主成功<br /><small>&lt;" + cmd.userID + ", " + $(this).closest( "td" ).prev().find( "select" ).val() +"&gt;</small>",
+                type: "success"
+
+            }).then(( result ) => {
+                if ( result ) 
+                {
+                    location.reload();
+                }
+            });
+        }
     });
 });
 
@@ -240,7 +424,7 @@ function initial()
     for( let j in validBoards )
     {
         validOptions += "<option value='" + validBoards[j] + "'>" + validBoards[j] + "</option>";
-        validlis += "<li><a href='#''>" + validBoards[j] + "</a></li>";
+        validlis += "<li><a>" + validBoards[j] + "</a></li>";
     }
 
     for( let i in dataDB.data )
