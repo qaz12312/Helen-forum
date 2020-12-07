@@ -10,11 +10,11 @@
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
-		dataDB.data.permission // permission:1
-		dataDB.data.boardName // boardName OR 空array
+		dataDB.data[0] // permission:1
+		dataDB.data[1] // boardName OR 空array
 		(
-			dataDB.data.boardName[0] //旅遊
-			dataDB.data.boardName[1] //星座
+			dataDB.data[1][0] //旅遊
+			dataDB.data[1][1] //星座
             .....
         )
 	否則
@@ -34,14 +34,14 @@
             $rtn = array();
             $rtn["status"] = true;
             $rtn["errorCode"] = "";
-            $rtn["data"]["permission"] =$userInfo['permission'];
+            $rtn["data"][0] =$userInfo['permission'];
             $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$userInfo['account']."'";
             $result = $conn->query($sql);
             if(!$result){
                 die($conn->error);
             }
             if($result->num_rows <= 0){
-                $rtn["data"]["boardName"] = array();
+                $rtn["data"][1] = array();
             }
             else{
                 $row = array();
