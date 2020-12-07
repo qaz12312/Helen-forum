@@ -3,26 +3,24 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "logIn";
-	cmd["account"] = "00857210@mail.ntou.edu.tw";
+	cmd["account"] = "00857210";
 	cmd["password"] = "123456789";
 	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
-		dataDB.data[0] // UserID:"00857210@mail.ntou.edu.tw"
-		dataDB.data[1] // Permissions:1
+		dataDB.data[0] // UserID:"00857210"
+		dataDB.data[1] // Permission:1
 		dataDB.data[2] // Color:"#ffffff"
 		dataDB.data[3] // Nickname:"cook"
 	否則
 		dataDB.errorCode = "找不到會員"
 		dataDB.data = "" 
     */
-		// 改 ////////////////////////////////////////////
-        require_once("test.php");
-		// global $input, $conn;
-		/////////////////////////////////////////////////
-    	$sql="SELECT `UserID`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
+	function doLogIn($input){
+    	global $conn;
+    	$sql="SELECT `UserID`,`Permission`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
 	    $result = $conn->query($sql);
 	    if(!$result){
 	        die($conn->error);
@@ -41,4 +39,5 @@
 	        $rtn["data"] =$row;
         }
 		echo json_encode($rtn);
+	}
 ?>
