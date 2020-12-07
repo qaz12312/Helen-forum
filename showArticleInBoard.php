@@ -2,8 +2,8 @@
     require_once 'connectDB.php'; //連線資料庫 
         /* 前端 to 後端:
             let cmd = {};
-            cmd["act"] = "home";
-            cmd["articleID"] = "ArticleID";
+            cmd["act"] = "showArticleInBoard";
+            cmd["boardName"] = "BoardName";
         */
         /* 後端 to 前端
             dataDB.state
@@ -29,7 +29,7 @@
         if(!$result){
             die($conn->error);
         }
-        $sql3="SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM TitleBoardNameArticleIDUserID NATURAL JOIN TitleBoardNameArticleIDKeepID WHERE `ArticleID`=$input['articleID']";
+        $sql3="SELECT `Title`,`Rule`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM TitleBoardNameArticleIDUserID NATURAL JOIN TitleBoardNameArticleIDKeepID WHERE `BoardName`=$input['boardName']";
 
         $result=$conn->query($sql3);
         if(!$result){
@@ -45,13 +45,13 @@
             $arr=array();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
-                $log=array("title"=>"$row[0]","blockName"=>"$row[1]","articleID"=>"$row[2]","like"=>"$row[3]","keep"=>"$row[4]");
-                $arr[$i]=$log;
+                $log=array("title"=>"$row[0]","articleID"=>"$row[2]","like"=>"$row[3]","keep"=>"$row[4]");
+                $rtn["data"]["articleList"][$i]=$row;
             }
-            $rtn = array();
+            $rtn["data"]["articleList"] = $arr;
+            $rtn["data"]["rule"] =$row[1];
             $rtn["statue"] = true;
             $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
         }
         echo json_encode($rtn);
 ?>
