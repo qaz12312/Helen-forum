@@ -1,24 +1,23 @@
-<!-- 前端 to 後端:
+<?php
+    /*前端 to 後端:
     let cmd = {};
     cmd["act"] = "reportPage";
     cmd["title"] = "Title"
     cmd["reason"] = "Reason"
     cmd["timer"] = "Times"
--->	
-<!-- 後端 to 前端
-    dataDB.status
-    dataDB.errorCode
-    若 status = true:
-	dataDB.data[i]
-	(
-		dataDB.data[i].articleID
-		dataDB.data[i].reason
-		dataDB.data[i].articleName
-	)
-    否則
-	dataDB.data = ""
--->
-<?php
+
+    後端 to 前端
+        dataDB.status
+        dataDB.errorCode
+        若 status = true:
+        dataDB.data[i]
+        (
+            dataDB.data[i].articleID
+            dataDB.data[i].reason
+            dataDB.data[i].articleName
+        )
+        否則
+        dataDB.data = ""*/
     require_once 'connectDB.php'; //連線資料庫 
         global $input,$conn;
         $sql="SELECT `Title`,`Reason`,`Times` FROM `Report` NATURAL JOIN `Article` WHERE `BlockID`='".$input['boardName']."'ORDER BY `Times` DESC ";
