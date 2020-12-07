@@ -41,7 +41,7 @@ $( document ).ready( function()
             //         confirmButtonText: "確定",
             //         cancelButtonText: "取消",
             //         animation: false
-    
+
             //         }).then(( result ) => {
             //             if ( result ) 
             //             {
@@ -115,8 +115,7 @@ $( document ).ready( function()
 
 function initial()
 {
-    let isValid = checkPermission();
-    if( !isValid ) return;
+    checkPermission();
 
     let cmd = {};
     cmd[ "act" ] = "reportPage";
@@ -187,12 +186,14 @@ function checkPermission()
 {
     let cmd = {};
     cmd[ "act" ] = "browseAuthority";
-    cmd[ "userID" ] = "admin"; // sessionStorage.getItem( "userID" );
+    cmd[ "account" ] = sessionStorage.getItem( "account" );
 
-    let permission, color, nickname, boardName;
+    let permission, color, nickname, boardName = [];
+    let thisBoardName = sessionStorage.getItem( "boardName" );
 
     $.post( "../index.php", cmd, function( dataDB )
     {
+        console.log( dataDB );
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
@@ -201,6 +202,13 @@ function checkPermission()
                 title: "載入頁面失敗",
                 type: "error",
                 text: dataDB.errorCode
+            }).then(( result ) => {
+                if ( result ) 
+                {
+                    $( "body" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                    $( "body" ).append( httpStatus );
+                }
             });
         }
         else
@@ -209,30 +217,22 @@ function checkPermission()
             color = dataDB.data.color;
             nickname = dataDB.data.nickname;
             boardName = dataDB.data.boardName;
-
-            console.log( permission );
-            console.log( color );
-            console.log( nickname );
-            console.log( boardName )
-            console.log( sessionStorage.getItem( "boardName" ));
+            
+            if( permission < 2 || boardName.indexOf( thisBoardName ) == -1 )
+            {
+                swal({
+                    title: "載入頁面失敗",
+                    type: "error",
+                    text: "您沒有權限瀏覽此頁面"
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        $( "body" ).empty();
+                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                        $( "body" ).append( httpStatus );
+                    }
+                });
+            }
         }
     });
-
-    if( permission < 2 || boardName.indexOf( sessionStorage.getItem( "boardName" ) == -1 ) )
-    {
-        swal({
-            title: "載入頁面失敗",
-            type: "error",
-            text: "您沒有權限瀏覽此頁面"
-        }).then(( result ) => {
-            if ( result ) 
-            {
-                $( "body" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
-            }
-        });
-
-        return false;
-    }
 }
