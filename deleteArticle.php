@@ -33,12 +33,15 @@
             die($conn->error);
         }
         $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' ";
-            $result=$conn->query($sql);
-            if($result->num_rows > 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "刪除失敗，資料庫異常";
-            $rtn["data"] = "";
+        $result=$conn->query($sql);
+        if(!$result){
+            die($conn->error);
+        }
+        if($result->num_rows > 0){
+        $rtn = array();
+        $rtn["status"] = false;
+        $rtn["errorCode"] = "刪除失敗，資料庫異常";
+        $rtn["data"] = "";
         }
         else{
             $rtn = array();

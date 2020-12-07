@@ -3,9 +3,8 @@
       /*前端 to 後端:
         let cmd = {};
         cmd["act"] = "editBoard";
-        cmd["boardID"] = "BoardID"
         cmd["boardName"] = "BoardName"
-        cmd["userID"] = "UserID"
+        cmd["account"] = "UserID"
         cmd["rule"] = "Rule"
         cmd["topArticleID"] = "TopArticleID"
     */ 

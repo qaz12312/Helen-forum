@@ -1,10 +1,11 @@
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+    require_once 'test.php'; //連線資料庫 
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "newBoard";
 			cmd["boardName"] = "企鵝版"
-			cmd["account"] "00752233"
+            cmd["account"] "00752233"
+            cmd ["rule"]=Rule
         */
 		
         /* 後端 to 前端
@@ -18,8 +19,7 @@
             否則
                 dataDB.data = ""
          */
-    global $input,$conn;
-    $sql="SELECT `boardName`, `UserID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'".$input['userID']."'";
+    $sql="SELECT `boardName`, `UserID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'";
     $result=$conn->query($sql);
     if(!$result){
         die($conn->error);
@@ -32,12 +32,13 @@
         $rtn["data"] = "";
     }
     else{
-        $new="INSERT INTO  `Board`(`BoardID`,`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['BoardID']."','".'admin'."'.'".$input['UserID']."'.'".$input['Rule']."'.'".$input['TopArticleID']."')";
-        $resultNEW=$conn->query($new);
-        if(!$resultNEW){
+        $admin="admin";
+        $new="INSERT INTO  `Board`(`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['boardName']."','admin','".$input['rule']."',NULL)";
+        $resultNew=$conn->query($new);
+        if(!$resultNew){
             die($conn->error);
         }
-        $sql="SELECT `BoardID`,`BoardName`,`UserID`,`Rule`,`TopArticleID` FROM `Board` NATURAL JOIN`User` ON User.UserID =Board.UserID WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['userID']."'";
+        $sql="SELECT `BoardName`,`Rule`,`TopArticleID` FROM `Board`  JOIN`Users` ON Users.UserID =Board.UserID WHERE `BoardName`='".$input['boardName']."' AND Users.UserID='".$admin."'";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
