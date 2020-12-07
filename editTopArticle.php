@@ -6,6 +6,7 @@
             cmd["act"] = "TopArticleChange";
 			cmd["articleID"] = "1"
 			cmd["boardName"] = "美食"
+			cmd["account"] = "admin";
         */
 		
         /* 後端 to 前端
