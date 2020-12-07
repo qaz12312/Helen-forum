@@ -11,7 +11,7 @@
 	若 status = true:
 		dataDB.errorCode = ""
 		dataDB.data[0] // UserID:"00757007"
-		dataDB.data[1] // Permissions:1
+		dataDB.data[1] // Permissios:1
 		dataDB.data[2] // Color:"#ffffff"
 		dataDB.data[3] // Nickname:"00757007"
 	否則
@@ -20,13 +20,13 @@
 	*/
     function doLogIn($input){
     	global $conn;
-    	$sql="SELECT `UserID`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
+    	$sql="SELECT `UserID`,`Permission`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
 	    $result = $conn->query($sql);
 	    if(!$result){
 	        die($conn->error);
 	    }
 	    if($result->num_rows <= 0){
-			$sql="SELECT `UserID`,`Permissions`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."'";
+			$sql="SELECT `UserID`,`Permission`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."'";
 			$resultFindAccount = $conn->query($sql);
 			if(!$resultFindAccount){
 				die($conn->error);

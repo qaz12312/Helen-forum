@@ -9,7 +9,7 @@
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
-		dataDB.data.permissions // Permission:1
+		dataDB.data.permission // Permission:1
 		dataDB.data.color // Color:"#ffffff"
 		dataDB.data.nickname // NickName:"00857210"
 		dataDB.data.boardName // BoardName
@@ -19,7 +19,7 @@
             .....
         )
 	否則
-		dataDB.errorCode = "This account(00857210@mail.ntou.edu.tw) does not exist" 
+		dataDB.errorCode = "This account(00857210) does not exist" 
 		dataDB.data = "" 
 	*/
     function doBrowseAuthority($input){

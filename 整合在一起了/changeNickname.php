@@ -12,7 +12,7 @@ dataDB.data="success to change the Nickname"
 否則
 dataDB.data = "no user had found" -->
 
-<!--User[UserID,Password,Permissions,Color,Nickname]-->
+<!--User[UserID,Password,Permission,Color,Nickname]-->
 
 <?php
 	require_once 'connectDB.php'; //連線資料庫

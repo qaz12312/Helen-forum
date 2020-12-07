@@ -20,7 +20,7 @@
         CREATE TABLE Users (
             UserID varchar(101) NOT NULL,
             Password varchar(9) NOT NULL,
-            Permissions numeric (1,0) NOT NULL,
+            Permission numeric (1,0) NOT NULL,
             Color varchar(10) NOT NULL,
             Nickname varchar(21) ,
             PRIMARY KEY (UserID)

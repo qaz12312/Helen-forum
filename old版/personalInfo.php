@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "modifyPersonalInfo";
     cmd["option"] = "password" / "nickname" / "color";
-    cmd["account"] = "00857210@mail.ntou.edu.tw";
+    cmd["account"] = "00857210";
     cmd["new"] = "987654321" / "beauty cook" / "\#028d5f";
 
     後端 to 前端:
