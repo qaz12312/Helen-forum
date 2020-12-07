@@ -20,7 +20,7 @@
     $result=$conn->query($sqlcheck);
     if(!$result){
         die($conn->error);
-    } 
+    }
     if($result->num_rows <= 0){
         $rtn = array();
         $rtn["status"] = false;
