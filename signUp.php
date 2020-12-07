@@ -3,15 +3,15 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "creatAccount";
-    cmd["account"] = 00757003@email.ntou.edu.tw;
-    cmd["password"] = zxsss123;
+    cmd["account"] = 00757003;
+    cmd["password"] = 00757003;
 
     後端 to 前端:
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
         dataDB.errorCode = ""
-        dataDB.data[0] // UserID:"00757003@email.ntou.edu.tw"
+        dataDB.data[0] // UserID:"00757003"
         dataDB.data[1] // Permissions:1
         dataDB.data[2] // Color:'#ffffff'
         dataDB.data[3] // Nickname:"00757003"
@@ -33,8 +33,7 @@
             $rtn["data"] = "";
         }
         else{
-            $nickName = explode("@",$input['account']);
-            $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Permissions`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."',1,'\#ffffff','".$nickName[0]."')";
+            $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Permissions`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."',1,'\#ffffff','".$input['account']."')";
             $resultNew=$conn->query($sql);
             if(!$resultNew){
                 die($conn->error);
