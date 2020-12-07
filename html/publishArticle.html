@@ -70,60 +70,63 @@
             </div>
         </div>
         
-        <div id="navbar9" class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse">
             <!-- 靠左 -->
             <ul class="nav navbar-nav navbar-left">
-            <li>
-                <div id="menuToggle">
-                <input type="checkbox" />
-                <span></span>
-                <span></span>
-                <span></span>
-                
-                <ul id="menu">
-                    <a href="#"><li>Home</li></a>
-                    <a href="#"><li>About</li></a>
-                    <a href="#"><li>Info</li></a>
-                    <a href="#"><li>Contact</li></a>
-                </ul>
-                
-                </div>
+                <li>
+                    <div id="menuToggle">
+                        <input type="checkbox" />
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <ul id="menu">
+                            <a href="#"><li>美食版</li></a>
+                            <a href="#"><li>廢文版</li></a>
+                            <a href="#"><li>企鵝版</li></a>
+                            <a href="#"><li>漫威版</li></a>
+                            <a href="#">
+                                <li><h3 class="glyphicon glyphicon-plus"> __EDIT__ </h3></li>
+                            </a>
+                        </ul>
+                    </div>
                 </li>
-            <li>    
-                <a class="navbar-brand" href="http://disputebills.com">
-                <!-- <img style="margin-right: 10px; padding: 0;" src="logo.png" alt="Helen"> -->
-                Helen
-                </a>
-            </li>
-            <li><a href="#">About</a></li>
+                <li>&emsp;</li>
+                <li>    
+                    <a href="#">
+                    <!-- <img style="margin-right: 10px; padding: 0;" src="logo.png" alt="Helen"> -->
+                    Helen
+                    </a>
+                </li>
             </ul>
             <!-- 靠右 -->
             <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    Dropdown <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                </ul>
+                <li>
+                   <button type="button" class="btn btn-primary" id="Log-inBtn">
+                        <span class="glyphicon glyphicon-log-in"></span> 登入
+                    </button>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span id= "head">&emsp;</span>
+                        <span class= "glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class= "glyphicon glyphicon-user"> 00757015</li>
+                        <li class="divider"></li>
+                        <li class= "glyphicon glyphicon-edit"><a href="#"> 個人資料</a></li>
+                        <li class= "glyphicon glyphicon-pencil"><a href="#"> 發佈新文章</a></li>
+                        <li class= "glyphicon glyphicon-star-empty"><a href="#"> 我的收藏</a></li>
+                        <li class= "glyphicon glyphicon-time"><a href="#"> 發文紀錄</a></li>
+                        <li class= "glyphicon glyphicon-th-list"><a href="#"> 管理看版</a></li>
+                        <li class= "glyphicon glyphicon-king"><a href="#"> 管理版主</a></li>
+                        <li class= "glyphicon glyphicon-alert"><a href="#"> 檢舉區</a></li>
+                        <li class= "glyphicon glyphicon-bullhorn"><a href="#"> 發送通知</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
       </div>
             
-    <div class="topnav">
-        <a class="active" href="#">熱門</a>
-        <a href="#">最新</a>
-    </div>
-
     <div class= "tabContent">
         <h2>Helen－發佈文章</h2>
         <p>Publish your post.</p>
@@ -195,7 +198,7 @@
     </div>
 
     <script src="../js/publishArticle.js" type="text/javascript"></script>
-    <!-- <script src="../js/bar.js"></script> -->
+    <script src="../js/bar.js"></script>
     
 </body>
 </html>

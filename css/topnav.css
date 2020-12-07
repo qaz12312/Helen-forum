@@ -27,21 +27,58 @@
   font-weight: bold;
 }
 
+.topMenu {
+  display: block;
+  padding: 16px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  background-color: #3c537c;
+}
+.topMenu a{
+  color: #ccc;
+}
+.topMenu a:hover{
+  background-color: darkgray;
+  border-radius: 25px;
+}
+.topMenu a:focus{
+  background-color: darkgray;
+  border-radius: 25px;
+}
+
+.topMenu button{
+  font-size: 18px;
+  width: 90px;
+  margin-top: 5px;
+  margin-right: 8px;
+  padding: 10px;
+}
+
+#head{
+  font-size: 40px;
+  padding: 3px 8px 10px 8px;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  /* 頭像顏色 */
+  background-color: #9da9be;
+}
 /* .search-container {
   float: right;
 } */
 
 .search-container input[type=text] {
-  padding: 6px;
-  margin-top: 8px;
+  padding: 10px;
+  margin-top: 20px;
+  /* margin-right: 8px; */
   font-size: 17px;
   border: none;
 }
 
 .search-container button {
   float: right;
-  padding: 6px 10px;
-  margin-top: 8px;
+  padding: 10px 10px;
+  margin-top: 20px;
   margin-right: 16px;
   background: #ddd;
   font-size: 17px;
@@ -51,6 +88,14 @@
 
 .search-container button:hover {
   background: #ccc;
+}
+
+.dropdown-menu li:hover .sub-menu {visibility: visible;}
+.dropdown:hover .dropdown-menu {display: block;}
+
+.topMenu .dropdown-menu{
+  text-align: center;
+  font-size: 20px;
 }
 
 @media screen and (max-width: 600px) {
@@ -94,7 +139,7 @@
  
  #menuToggle a:hover
  {
-   color: tomato;
+   color: #3c537c;
  }
  
  
@@ -199,15 +244,6 @@
    transform: none;
  }
 
-/* top nav */
- .navbar-brand {
-  padding: 0px;
-}
-.navbar-brand>img {
-  height: 100%;
-  padding: 15px;
-  width: auto;
-}
 /* EXAMPLE 9 - Center with Flexbox and Text*/
 .brand-centered {
   display: flex;
@@ -216,31 +252,4 @@
   width: 100%;
   left: 0;
   top: 0;
-}
-.brand-centered .navbar-brand {
-  display: flex;
-  align-items: center;
-}
-.navbar-toggle {
-    z-index: 1;
-}
-/* CSS Transform Align Navbar Brand Text ... This could also be achieved with table / table-cells */
-.navbar-alignit .navbar-header {
-	  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  height: 50px;
-}
-.navbar-alignit .navbar-brand {
-	top: 50%;
-	display: block;
-	position: relative;
-	height: auto;
-	transform: translate(0,-50%);
-	margin-right: 15px;
-  margin-left: 15px;
-}
-
-.navbar-nav>li>.dropdown-menu {
-	z-index: 9999;
 }
