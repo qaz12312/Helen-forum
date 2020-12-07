@@ -1,10 +1,9 @@
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+    require_once 'test.php'; //連線資料庫 
     /* 前端 to 後端:
             let cmd = {};
-            cmd["act"] = "delKeepDir";
+            cmd["act"] = "addKeepDir";
             cmd["account"] = "UserID"
-            cmd["dirID"] = "DirID"
             cmd["dirName"] ="我喜歡的"
 
         */
@@ -17,29 +16,34 @@
             否則
                 dataDB.data = ""
          */
-    $delkeep="DELETE FROM `FollowKeep` WHERE `KeepID` = $input["dirID"] AND  `UserID` = $input["userID"]";
-    $result=$conn->query($delkeep);
+    $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['dirName']."' AND `UserID`='".$input['account']."' ";  
+    $result=$conn->query($sqlcheck);
     if(!$result){
-            die($conn->error);
-    }
-    if($result->num_rows >= 0){
+        die($conn->error);
+    } 
+    if($result->num_rows <= 0){
         $rtn = array();
-        $rtn["statue"] = false;
-        $rtn["errorCode"] = "刪除失敗";
+        $rtn["status"] = false;
+        $rtn["errorCode"] = "無權限修改";
         $rtn["data"] = "";
     }
     else{
-        $del="DELETE FROM `KeepDir` WHERE `DirID` = $input["dirID"] AND  `UserID` = $input["userID"]";
+        $delkeep="DELETE FROM `KeepDir` WHERE `DirName`='".$input['dirName']."' AND `UserID`='".$input['account']."'";
+        $result=$conn->query($delkeep);
+        if(!$result){
+                die($conn->error);
+        }
+        $del="DELETE FROM `KeepDir` WHERE `DirName`='".$input['dirName']."' AND `UserID`='".$input['account']."'";
         $result=$conn->query($del);
             if(!$result){
                 die($conn->error);
             }
-        $sql="SELECT `UserID`,`DirID`,`DirName` FROM `KeepDir` WHERE `UserID`=$input['userID'] AND`DirID`=['dirID'] AND`DirName`=$input['dirName']";
+        $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `DirName`='".$input['dirName']."' AND `UserID`='".$input['account']."'";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows >= 0){
+        if($result->num_rows > 0){
             $rtn = array();
             $rtn["status"] = false;
             $rtn["errorCode"] = "刪除資料夾失敗";
