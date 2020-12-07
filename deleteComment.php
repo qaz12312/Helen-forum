@@ -24,7 +24,7 @@
     if($result->num_rows <= 0){
         $rtn = array();
         $rtn["status"] = false;
-        $rtn["errorCode"] = "無權限更新";
+        $rtn["errorCode"] = "無權限刪除";
         $rtn["data"] = "";
     }
     else{    
