@@ -27,18 +27,18 @@
   font-weight: bold;
 }
 
-.topnav .search-container {
+/* .search-container {
   float: right;
-}
+} */
 
-.topnav input[type=text] {
+.search-container input[type=text] {
   padding: 6px;
   margin-top: 8px;
   font-size: 17px;
   border: none;
 }
 
-.topnav .search-container button {
+.search-container button {
   float: right;
   padding: 6px 10px;
   margin-top: 8px;
@@ -49,7 +49,7 @@
   cursor: pointer;
 }
 
-.topnav .search-container button:hover {
+.search-container button:hover {
   background: #ccc;
 }
 
@@ -70,17 +70,13 @@
   }
 }
 
-.navigation{
-  background-color: #415c8b ;
-  float: left;
-}
-
+/* ham menu bar */
  #menuToggle
  {
    display: block;
    position: relative;
-   top: 30px;
-   left: 30px;
+   top: 15px;
+   /* left: 10px; */
    
    z-index: 1;
    
@@ -202,3 +198,49 @@
  {
    transform: none;
  }
+
+/* top nav */
+ .navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+/* EXAMPLE 9 - Center with Flexbox and Text*/
+.brand-centered {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+.brand-centered .navbar-brand {
+  display: flex;
+  align-items: center;
+}
+.navbar-toggle {
+    z-index: 1;
+}
+/* CSS Transform Align Navbar Brand Text ... This could also be achieved with table / table-cells */
+.navbar-alignit .navbar-header {
+	  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  height: 50px;
+}
+.navbar-alignit .navbar-brand {
+	top: 50%;
+	display: block;
+	position: relative;
+	height: auto;
+	transform: translate(0,-50%);
+	margin-right: 15px;
+  margin-left: 15px;
+}
+
+.navbar-nav>li>.dropdown-menu {
+	z-index: 9999;
+}

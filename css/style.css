@@ -106,6 +106,9 @@ table{
 td{
 	height: 50px;
 }
+td:hover{
+	cursor: pointer;
+}
 
 button{
 	width: 125px;

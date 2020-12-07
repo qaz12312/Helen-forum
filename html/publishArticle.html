@@ -61,34 +61,67 @@
 </head>
 
 <body>
-    <nav class="navigation">
-        <div id="menuToggle">
-        <input type="checkbox" />
-        <span></span>
-        <span></span>
-        <span></span>
-        
-        <ul id="menu">
-            <a href="#"><li>Home</li></a>
-            <a href="#"><li>About</li></a>
-            <a href="#"><li>Info</li></a>
-            <a href="#"><li>Contact</li></a>
-            <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a>
-        </ul>
-        
+    <div class= "topMenu">
+        <!-- 中間 -->
+        <div class="brand-centered">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." name="search">
+                <button type="submit"><span class="glyphicon glyphicon-search"></span></i></button>
+            </div>
         </div>
-    </nav>
-
-    <div></div>
-
+        
+        <div id="navbar9" class="navbar-collapse collapse">
+            <!-- 靠左 -->
+            <ul class="nav navbar-nav navbar-left">
+            <li>
+                <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                
+                <ul id="menu">
+                    <a href="#"><li>Home</li></a>
+                    <a href="#"><li>About</li></a>
+                    <a href="#"><li>Info</li></a>
+                    <a href="#"><li>Contact</li></a>
+                </ul>
+                
+                </div>
+                </li>
+            <li>    
+                <a class="navbar-brand" href="http://disputebills.com">
+                <!-- <img style="margin-right: 10px; padding: 0;" src="logo.png" alt="Helen"> -->
+                Helen
+                </a>
+            </li>
+            <li><a href="#">About</a></li>
+            </ul>
+            <!-- 靠右 -->
+            <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    Dropdown <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                </ul>
+                </li>
+            </ul>
+        </div>
+      </div>
+            
     <div class="topnav">
         <a class="active" href="#">熱門</a>
         <a href="#">最新</a>
-        
-        <!-- <div class="search-container">
-            <input type="text" placeholder="Search..." name="search">
-            <button type="submit"><span class="glyphicon glyphicon-search"></span></i></button>
-        </div> -->
     </div>
 
     <div class= "tabContent">
