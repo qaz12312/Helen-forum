@@ -13,9 +13,24 @@
     if($conn->connect_error){
         die($conn->connect_error);
     }
+    // 改--自己放測試資料 ////////////////////////////////////////////
     $input = array();
-    // 自己放測試資料
-    $input["act"] = "logIn";
-	$input["account"] = "admin";
-    $input["password"] = "admin";
+    // $input["act"] = "logIn";
+	// $input["account"] = "admin";
+    // $input["password"] = "admin";
+		$input["act"] = "addArticle";
+		$input["articleID"] = "ArticleID";
+        $input["authorID"] = "AuthorID";
+        $input["blockID"] ="美食版";
+        $input["title"] = "Title";
+        $input["content"] = "Content";
+        $input["picture "] = "Image";
+        $input["hashTag"] ="HashTag";
+        $input["timer"] ="2020-12-06 02:55:05";
+			
+    $input["act"] = "modifyPersonalInfo";
+    $input["account"] = "00857210@mail.ntou.edu.tw";
+    $input["option"] = /*"password" /*/ "nickname" /*/ "color"*/;
+    $input["new"] = /*"123456789" /*/ "beauty cook~" /*/ "\#028d5f"*/;
+    /////////////////////////////////////////////////////////////////
 ?>

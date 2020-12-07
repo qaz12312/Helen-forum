@@ -2,7 +2,7 @@
     require_once 'connectDB.php'; //連線資料庫
     /*前端 to 後端:
     let cmd = {};
-    cmd["act"] = "editMode";
+    cmd["act"] = "editModerator";
     cmd["oldboardID"] = "BoardName"
     cmd["newboardID"] = "BoardName"
     cmd["userID"] = "UserID"

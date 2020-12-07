@@ -12,14 +12,23 @@
         case "logIn": //登入
 	        require_once("logIn.php");
             doLogIn($input);
-	        break;
+            break;
+        case "browseAuthority": //獲得權限+所管理的版
+            require_once("browseAuthority.php");
+            doBrowseAuthority($input);
+            break;
         case "creatAccount": //註冊
             require_once("signUp.php");
 	        doCreatAccount($input);
             break;
-        // case "forgottenPwd": //忘記密碼
-        //     forgetPassword.php;
+        // case "forgetPassword": //忘記密碼
+        //     require_once("forgetPassword.php");
+        //     doForgetPassword($input);
         //     break;
+        case "modifyPersonalInfo": //修改個資
+            require_once("personalInfo.php");
+            break;
+        
         // case "home": // 系統首頁
         //     home.php
         //     break;
