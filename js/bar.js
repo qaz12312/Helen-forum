@@ -1,32 +1,25 @@
+let boards= [];// boardName
+let userData= {};
 
-// 下拉選單，toggle切換
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+$(document).ready(function(){
+    initial();
+})
+
+function initial(){
+    let dataDB= {}
+    // $.post( "../index.php", cmd, function(dataDB){
+    //     dataDB = JSON.parse( dataDB );
+
+    //     if( dataDB.status == false )
+    //     {
+    //         swal({
+    //             title: "載入頁面失敗",
+    //             type: "error",
+    //             text: dataDB.errorCode
+    //         })
+    //     }
+        // else{
+            s
+        // }
+    // });
 }
-
-// 關閉下拉選單
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var myDropdown = document.getElementById("myDropdown");
-    if (myDropdown.classList.contains('show')) {
-      myDropdown.classList.remove('show');
-    }
-  }
-}
-
-function cross(x) {
-  x.classList.toggle("change");
-}
-
-// 關閉叉叉，但是目前有問題
-
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var cross = document.getElementById("cross");
-    if (cross.classList.contains('change')) {
-      cross.classList.remove('change');
-    }
-  }
-}
-
-

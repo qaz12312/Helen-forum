@@ -32,6 +32,7 @@ body{
 	border-radius: 10px;
 	background: #545871;
 	color:  #c0c6cc;
+	letter-spacing: 5px;
 	padding: 5%;
 }
 
@@ -104,6 +105,9 @@ table{
 }
 td{
 	height: 50px;
+}
+td:hover{
+	cursor: pointer;
 }
 
 button{

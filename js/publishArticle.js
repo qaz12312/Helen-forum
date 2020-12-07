@@ -46,11 +46,19 @@ $("#publishBtn").on("click", function(){
         
         $.post("../index.php", cmd, function(){
             var dataDB= JSON.parse(dataDB);
-            if(dataDB.status== false){
-
-            }else{
-
-            }
+            // if(dataDB.status== false){
+            //     swal({
+            //         title: "發佈文章失敗，請稍後重試！",
+            //         type: "error",
+            //         text: dataDB.errorCode,
+            //         animation: false
+            //     });
+            // }
+            // else{
+                sessionStorage.setItem("act", "home");
+                sessionStorage.setItem("sort", "time");
+                location.href =  "../html/home.html";
+            // }
         })
     }
 })
