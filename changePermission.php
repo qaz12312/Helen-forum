@@ -3,33 +3,30 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "EditPermission";
-    cmd["UserID"] = "00757000"
-    cmd["Permission"] = "1"
+    cmd["UserID"] = "00857210";
+    cmd["Permission"] = 1;
     
     
     後端 to 前端
+    dataDB = JSON.parse(data);
     dataDB.status
-    dataDB.errorCode
     若 status = true:
-        dataDB.data[0]	// 
-        dataDB.data[1]	// BoardName
-        dataDB.data[2]	// UserID
+        dataDB.errorCode = ""
+        dataDB.data = "變更成功"
     否則
+        dataDB.errorCode = "變更失敗"
         dataDB.data = ""
-    */
-    require_once 'noSecurity.php'; //連線資料庫 
-	function EditPermission(){
-        global $input,$conn;	// 置頂
+    */ 
+	function EditPermission($input){ //變成版主or 一般使用者
+        global $conn;
 		$sql="UPDATE `Users` SET `Permission` = CASE WHEN `Permission` = 1 THEN `Permission` = 2 WHEN `Permission` = 2 THEN `Permission` = 1";
         $result=$conn->query($sql);
         if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows > 0){
             $rtn = array();
             $rtn["status"] = false;
             $rtn["errorCode"] = "變更失敗";
             $rtn["data"] = "";
+            die($conn->error);
         }
         else{
             $row=$result->fetch_row();
