@@ -8,7 +8,6 @@
 
     後端 to 前端
     dataDB.status
-    
     若 status = true:
         dataDB.errorCode = ""
         dataDB.data= "成功刪除此版塊"
