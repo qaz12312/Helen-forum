@@ -11,6 +11,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel= "stylesheet" href= "../css/style.css">
     <link rel= "stylesheet" href= "../css/topnav.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+
+    <style>
+        .glyphicon-pushpin{ background-color: gray; }
+        .glyphicon-pushpin.top { background-color: brown;}
+    </style>
     <script src="../js/sticky.js"></script>
 </head>
 
@@ -47,7 +54,7 @@
                 <span class="glyphicon glyphicon-pencil"> 編輯</span>
             </button>
         </h2>
-        <p>版規：嚴禁發表與美食無關的文章<br/>手做或美食推薦皆可</p>
+        <p id="rule">版規：嚴禁發表與美食無關的文章<br/>手做或美食推薦皆可</p>
 
         <div class="contentArea">
             <div class= "content">
@@ -57,16 +64,16 @@
                             <td>
                                 <div class="card">
                                     <div class="card-body row">
-                                        <span class="glyphicon glyphicon-pushpin"></span>
+                                        <span class="glyphicon glyphicon-pushpin top"></span>
                                         <span class="col-md-2"></span>
                                         <span class="col-md-6">
-                                            <span>海大附近有甚麼推薦的美食嗎？</span>
+                                            <span class="articleTitle">海大附近有甚麼推薦的美食嗎？</span>
                                         </span>
                                         <span class="col-md-4">
-                                            <button type="button" class="btn btn-danger">
-                                                <span class="glyphicon glyphicon-heart"></span> 愛心</button>
-                                            <button type="button" class="btn btn-warning">
-                                                <span class="glyphicon glyphicon-star"></span> 收藏</button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <span class="glyphicon glyphicon-heart text-danger"></span><span class="text-danger"> 愛心</span></button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <span class="glyphicon glyphicon-star text-warning"></span><span class="text-warning"> 收藏</span></button>
                                         </span>
                                     </div>
                                 </div>
@@ -80,13 +87,13 @@
                                         <span class="glyphicon glyphicon-pushpin"></span>
                                         <span class="col-md-2"></span>
                                         <span class="col-md-6">
-                                            <span>學餐評價</span>
+                                            <span class="articleTitle">學餐評價</span>
                                         </span>
                                         <span class="col-md-4">
-                                            <button type="button" class="btn btn-danger">
-                                                <span class="glyphicon glyphicon-heart"></span> 愛心</button>
-                                            <button type="button" class="btn btn-warning">
-                                                <span class="glyphicon glyphicon-star"></span> 收藏</button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <span class="glyphicon glyphicon-heart text-danger"></span><span class="text-danger"> 愛心</span></button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <span class="glyphicon glyphicon-star text-warning"></span><span class="text-warning"> 收藏</span></button>
                                         </span>
                                     </div>
                                 </div>
@@ -100,13 +107,13 @@
                                         <span class="glyphicon glyphicon-pushpin"></span>
                                         <span class="col-md-2"></span>
                                         <span class="col-md-6">
-                                            <span>求海大沒有下雨的天數</span>
+                                            <span class="articleTitle">求海大沒有下雨的天數</span>
                                         </span>
                                         <span class="col-md-4">
-                                            <button type="button" class="btn btn-danger">
-                                                <span class="glyphicon glyphicon-heart"></span> 愛心</button>
-                                            <button type="button" class="btn btn-warning">
-                                                <span class="glyphicon glyphicon-star"></span> 收藏</button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <span class="glyphicon glyphicon-heart text-danger"></span><span class="text-danger"> 愛心</span></button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <span class="glyphicon glyphicon-star text-warning"></span><span class="text-warning"> 收藏</span></button>
                                         </span>
                                     </div>
                                 </div>
@@ -120,13 +127,13 @@
                                         <span class="glyphicon glyphicon-pushpin"></span>
                                         <span class="col-md-2"></span>
                                         <span class="col-md-6">
-                                            <span>通識涼課報你知隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻</span>
+                                            <span class="articleTitle">通識涼課報你知隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻</span>
                                         </span>
                                         <span class="col-md-4">
-                                            <button type="button" class="btn btn-danger">
-                                                <span class="glyphicon glyphicon-heart"></span> 愛心</button>
-                                            <button type="button" class="btn btn-warning">
-                                                <span class="glyphicon glyphicon-star"></span> 收藏</button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <span class="glyphicon glyphicon-heart text-danger"></span><span class="text-danger"> 愛心</span></button>
+                                            <button type="button" class="btn btn-secondary">
+                                                <span class="glyphicon glyphicon-star text-warning"></span><span class="text-warning"> 收藏</span></button>
                                         </span>
                                     </div>
                                 </div>

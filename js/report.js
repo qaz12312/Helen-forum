@@ -184,6 +184,25 @@ function initial()
 
 function checkPermission()
 {
+    if( !sessionStorage.getItem( "account" ) )
+    {
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "您沒有權限瀏覽此頁面"
+            
+        }).then(( result ) => {
+            if ( result ) 
+            {
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
+            }
+        });
+
+        return;
+    }
+
     let cmd = {};
     cmd[ "act" ] = "browseAuthority";
     cmd[ "account" ] = sessionStorage.getItem( "account" );
