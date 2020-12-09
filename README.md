@@ -18,7 +18,7 @@
     /////////////////////////////////////////////////////////////////
     ```
 + 檔案改完之後，將**index.php**和你**要測試的檔案**丟到C:\xampp\htdocs下，然後開Chrome打網址`http://localhost`
-+ 如果測試都成功了，記得git上去的時候Summary寫:`ok: test all`，要傳正確的檔案哦❗❗❗(把測試時改的code恢復原狀)
++ 如果測試都成功了，記得git上去的時候Summary寫:`ok: test all`，要傳正確的檔案哦❗❗❗
 
 ## 💎相同動作:整合在一起
 + 可參考 changeNickname.php、changePassword.php 👉 整合成[personalInfo.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/PDO%E5%8A%A0%E5%AF%86%E6%9C%AA%E5%AE%8C%E6%88%90/personalInfo.php)
