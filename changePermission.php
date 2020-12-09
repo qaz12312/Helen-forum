@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "EditPermission";
-    cmd["UserID"] = "00857210";
+    cmd["account"] = "00857210";
     cmd["Permission"] = 1;
     
     
@@ -19,7 +19,7 @@
     */ 
 	function EditPermission($input){ //變成版主or 一般使用者
         global $conn;
-		$sql="UPDATE `Users` SET `Permission` = CASE WHEN `Permission` = 1 THEN `Permission` = 2 WHEN `Permission` = 2 THEN `Permission` = 1";
+		$sql="UPDATE `Users` SET `Permission` = ( CASE WHEN `Permission` = 1 THEN '2' WHEN `Permission` = 2 THEN '1' END ) WHERE `UserID`='".$input['account']."'";
         $result=$conn->query($sql);
         if(!$result){
             $rtn = array();
@@ -29,11 +29,10 @@
             die($conn->error);
         }
         else{
-            $row=$result->fetch_row();
             $rtn = array();
             $rtn["status"] = true;
             $rtn["errorCode"] = "變更成功";
-            $rtn["data"] =$row;
+            $rtn["data"] = "success change";
         }
         echo json_encode($rtn);
 	}
