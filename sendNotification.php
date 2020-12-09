@@ -1,5 +1,5 @@
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+    //require_once 'connectDB.php'; //連線資料庫 
 /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "sendNotification";
@@ -18,30 +18,31 @@
             否則
                 dataDB.data = ""
          */
-    global $input,$conn;
-    $new="INSERT INTO  `Notice`(`UserID`,`Times`,`Content`) 
-    VALUES('".$input['userID']."','".$input['timer']."','".$input['content']."')";
-    $resultNew=$conn->query($new);
-    if(!$resultNEW){
-        die($conn->error);
+    function doSendNotification($input){
+        global $conn;
+        $new="INSERT INTO  `Notice`(`UserID`,`Content`)VALUES('".$input['account']."','".$input['content']."')";
+        $resultNew=$conn->query($new);
+        if(!$resultNew){
+            die($conn->error);
+        }
+        $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`='".$input['account']."' AND`Content`='".$input['content']."' ";
+        $result=$conn->query($sql);
+        if(!$result){
+            die($conn->error);
+        }
+        if($result->num_rows <= 0){
+            $rtn = array();
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "傳送通知失敗";
+            $rtn["data"] = "";
+        }
+        else{
+            $row=$result->fetch_row();
+            $rtn = array();
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "";
+            $rtn["data"] = $row;
+        }
+        echo json_encode($rtn);
     }
-    $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`=$input['userID'] AND `Times`=$input['timer'] AND`Content`=$input['content'] ";
-    $result=$conn->query($sql);
-    if(!$result){
-        die($conn->error);
-    }
-    if($result->num_rows <= 0){
-        $rtn = array();
-        $rtn["status"] = false;
-        $rtn["errorCode"] = "傳送通知失敗";
-        $rtn["data"] = "";
-    }
-    else{
-        $row=$result->fetch_row();
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
-        $rtn["data"] = $row;
-    }
-    echo json_encode($rtn);
 ?>
