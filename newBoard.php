@@ -1,5 +1,5 @@
 <?php
-    require_once 'test.php'; //連線資料庫 
+    //require_once 'test.php'; //連線資料庫 
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "newBoard";
@@ -19,43 +19,46 @@
             否則
                 dataDB.data = ""
          */
-    $sql="SELECT `boardName`, `UserID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'";
-    $result=$conn->query($sql);
-    if(!$result){
-        die($conn->error);
-    }
-
-    if($result->num_rows > 0){
-        $rtn = array();
-        $rtn["status"] = false;
-        $rtn["errorCode"] = "版面已新增";
-        $rtn["data"] = "";
-    }
-    else{
-        $admin="admin";
-        $new="INSERT INTO  `Board`(`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['boardName']."','admin','".$input['rule']."',NULL)";
-        $resultNew=$conn->query($new);
-        if(!$resultNew){
-            die($conn->error);
-        }
-        $sql="SELECT `BoardName`,`Rule`,`TopArticleID` FROM `Board`  JOIN`Users` ON Users.UserID =Board.UserID WHERE `BoardName`='".$input['boardName']."' AND Users.UserID='".$admin."'";
+    function doNewBoard($input){
+        global $conn;
+        $sql="SELECT `boardName`, `UserID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows <= 0){
+
+        if($result->num_rows > 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "註冊失敗，資料庫異常";
+            $rtn["errorCode"] = "版面已新增";
             $rtn["data"] = "";
         }
         else{
-            $row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = $row;
+            $admin="admin";
+            $new="INSERT INTO  `Board`(`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['boardName']."','admin','".$input['rule']."',NULL)";
+            $resultNew=$conn->query($new);
+            if(!$resultNew){
+                die($conn->error);
+            }
+            $sql="SELECT `BoardName`,`Rule`,`TopArticleID` FROM `Board`  JOIN`Users` ON Users.UserID =Board.UserID WHERE `BoardName`='".$input['boardName']."' AND Users.UserID='".$admin."'";
+            $result=$conn->query($sql);
+            if(!$result){
+                die($conn->error);
+            }
+            if($result->num_rows <= 0){
+                $rtn = array();
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "註冊失敗，資料庫異常";
+                $rtn["data"] = "";
+            }
+            else{
+                $row=$result->fetch_row();
+                $rtn = array();
+                $rtn["status"] = true;
+                $rtn["errorCode"] = "";
+                $rtn["data"] = $row;
+            }
         }
+        echo json_encode($rtn);
     }
-    echo json_encode($rtn);
 ?>

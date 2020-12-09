@@ -19,41 +19,43 @@
             否則
                 dataDB.data = ""
          */
-    $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['oldDirName']."' AND `UserID`='".$input['account']."' ";  
-    $result=$conn->query($sqlcheck);
-    if(!$result){
-        die($conn->error);
-    } 
-    if($result->num_rows <= 0){
-        $rtn = array();
-        $rtn["status"] = false;
-        $rtn["errorCode"] = "無權限修改";
-        $rtn["data"] = "";
-    }
-    else{
-        $updateSql="UPDATE `KeepDir` SET `DirName`='".$input['newDirName']."'";
-        $result=$conn->query($updateSql);
+        function doEditCollectionCatalog($input){
+            global $conn;
+        $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['oldDirName']."' AND `UserID`='".$input['account']."' ";  
+        $result=$conn->query($sqlcheck);
         if(!$result){
             die($conn->error);
-        }
-        $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."'  AND`DirName`='".$input['newDirName']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        } 
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "修改失敗";
+            $rtn["errorCode"] = "無權限修改";
             $rtn["data"] = "";
         }
         else{
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = "";
+            $updateSql="UPDATE `KeepDir` SET `DirName`='".$input['newDirName']."'";
+            $result=$conn->query($updateSql);
+            if(!$result){
+                die($conn->error);
+            }
+            $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."'  AND`DirName`='".$input['newDirName']."'";
+            $result=$conn->query($sql);
+            if(!$result){
+                die($conn->error);
+            }
+            if($result->num_rows <= 0){
+                $rtn = array();
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "修改失敗";
+                $rtn["data"] = "";
+            }
+            else{
+                $rtn = array();
+                $rtn["status"] = true;
+                $rtn["errorCode"] = "";
+                $rtn["data"] = "";
+            }
         }
+        echo json_encode($rtn);
     }
-    echo json_encode($rtn);
-
 ?>

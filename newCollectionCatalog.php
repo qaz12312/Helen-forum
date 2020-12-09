@@ -1,5 +1,5 @@
 <?php 
-    require_once 'test.php'; //連線資料庫 
+    //require_once 'test.php'; //連線資料庫 
     /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "newCollectionCatalog";
@@ -19,31 +19,33 @@
             否則
                 dataDB.data = ""
          */
-    
-    $new="INSERT INTO  `KeepDir`(`UserID`,`DirName`) 
-    VALUES('".$input['account']."','".$input['dirName']."')";
-    $resultNew=$conn->query($new);
-    if(!$resultNew){
-        die($conn->error);
+    function doNewCollectionCatalog($input){
+         global $conn;
+        $new="INSERT INTO  `KeepDir`(`UserID`,`DirName`) 
+        VALUES('".$input['account']."','".$input['dirName']."')";
+        $resultNew=$conn->query($new);
+        if(!$resultNew){
+            die($conn->error);
+        }
+        $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."' AND`DirName`='".$input['dirName']."'";
+        $result=$conn->query($sql);
+        if(!$result){
+            die($conn->error);
+        }
+        if($result->num_rows <= 0){
+            $rtn = array();
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "新增資料夾失敗";
+            $rtn["data"] = "";
+        }
+        else{
+            $row=$result->fetch_row();
+            $rtn = array();
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "";
+            $rtn["data"] = $row[0];
+            $rtn["articleID"] =$row;
+        }
+        echo json_encode($rtn);
     }
-    $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."' AND`DirName`='".$input['dirName']."'";
-    $result=$conn->query($sql);
-    if(!$result){
-        die($conn->error);
-    }
-    if($result->num_rows <= 0){
-        $rtn = array();
-        $rtn["status"] = false;
-        $rtn["errorCode"] = "新增資料夾失敗";
-        $rtn["data"] = "";
-    }
-    else{
-        $row=$result->fetch_row();
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
-        $rtn["data"] = $row[0];
-        $rtn["articleID"] =$row;
-    }
-    echo json_encode($rtn);
 ?>
