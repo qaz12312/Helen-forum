@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "deleteDir";
     cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
-    cmd["dirName"] ="我喜歡的"
+    cmd["dirName"] ="我喜歡的";
 
     後端 to 前端
     dataDB.status

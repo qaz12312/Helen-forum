@@ -3,8 +3,8 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "logIn";
-	cmd["account"] = "00857210";
-	cmd["password"] = "00857210";
+	cmd["account"] = "00757007";
+	cmd["password"] = "00757007";
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);

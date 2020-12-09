@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "logOut";
-	cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51"
+	cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
