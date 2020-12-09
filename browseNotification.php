@@ -39,7 +39,7 @@
             $arr=array();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
-                $log=array("time"=>"$row[0]","content"=>"$row[1]";
+                $log=array("time"=>"$row[0]","content"=>"$row[1]");
                 $arr[$i]=$log;
             }
             $rtn = array();
