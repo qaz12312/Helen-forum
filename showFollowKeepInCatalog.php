@@ -1,5 +1,5 @@
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+    //require_once 'connectDB.php'; //連線資料庫 
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "home";
@@ -20,9 +20,9 @@
                 ) 
             否則
                 dataDB.data = ""*/
-
-        $sql="SELECT `Title`,`ArticleID`  FROM `KeepDir` NATURAL JOIN  `FollowKeep` ON　FollowKeep.UserID=KeepDir.UserID 　NATURAL JOIN`Article` ON　FollowKeep.ArticleID=Article.ArticleID WHERE UserID='".$input['account']."'";
-
+    function doShowFollowKeepInCatalog($input){
+        global $conn;
+        $sql="SELECT `Title`,`ArticleID`  FROM `KeepDir` NATURAL JOIN `FollowKeep` NATURAL JOIN`Article` WHERE `UserID`='".$input['account']."'AND`DirName`='".$input['collectionCatalog']."'";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
@@ -46,4 +46,5 @@
             $rtn["data"] =$arr;
         }
         echo json_encode($rtn);
+    }
 ?>

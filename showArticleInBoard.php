@@ -1,5 +1,5 @@
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+   // require_once 'connectDB.php'; //連線資料庫 
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "showArticleInBoard";
@@ -19,23 +19,19 @@
                 ) 
             否則
                 dataDB.data = ""*/
-        $sql1="CREATE VIEW TitleBoardNameArticleIDUserID(`Title`,`BoardName`,`ArticleID`,`cntHeart`) AS SELECT `Title`,`BoardName`,`ArticleID`,COUNT(`UserID`) FROM `Article`JOIN `Board`  ON  Article.BlockID= Board.BlockID JOIN `FollowHeart`  ON  Article.ArticleID= FollowHeart.ArticleID GROUP BY `ArticleID`";
-        $result=$conn->query($sql1);
+    function doShowArticleInBoard($input){
+        global $conn;
+        $sql="SELECT `Title`,`ArticleID` ,`cntHeart`,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName`='".$input['boardName']."'";
+        $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
         }
-        $sql2="CREATE VIEW TitleBoardNameArticleIDKeepID(`Title`,`BoardName`,`ArticleID`,`cntKeep`) AS SELECT `Title`,`BoardName`,`ArticleID`,COUNT(`KeepID`) FROM `Article`JOIN `Board`  ON  Article.BlockID= Board.BlockID JOIN `FollowKeep`  ON  Article.ArticleID= FollowKeep.ArticleID GROUP BY `ArticleID` ";
-        $result=$conn->query($sql2);
-        if(!$result){
+        $rule="SELECT `Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'";
+        $result2=$conn->query($rule);
+        if(!$result2 || !$result2){
             die($conn->error);
         }
-        $sql3="SELECT `Title`,`Rule`,`ArticleID` ,`cntHeart` ,`cntKeep`,`TopArticleID` FROM TitleBoardNameArticleIDUserID NATURAL JOIN TitleBoardNameArticleIDKeepID WHERE `BoardName`=$input['boardName']";
-
-        $result=$conn->query($sql3);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
+        if($result->num_rows <= 0 ){
             $rtn = array();
             $rtn["statue"] = false;
             $rtn["errorCode"] = "沒有文章";
@@ -43,17 +39,17 @@
         }
         else{
             $arr=array();
-            $row=array();
+            $row2=$result->fetch_row();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
-                $log=array("title"=>"$row[0]","articleID"=>"$row[2]","like"=>"$row[3]","keep"=>"$row[4]");
+                $log=array("title"=>"$row[0]","articleID"=>"$row[1]","like"=>"$row[2]","keep"=>"$row[3]");
                 $rtn["data"]["articleList"][$i]=$row;
             }
-            $rtn["data"]["articleList"] = $arr;
-            $rtn["data"]["topArticleID"] = $row[5];
-            $rtn["data"]["rule"] =$row[1];
+            $rtn["data"]["topArticleID"] =$row2[1];
+            $rtn["data"]["rule"] =$row2[0];
             $rtn["statue"] = true;
             $rtn["errorCode"] = "";
-        }
+         }
         echo json_encode($rtn);
+    }
 ?>
