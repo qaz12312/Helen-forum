@@ -1,5 +1,5 @@
 # 後端 - Helen
-
+You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BoardName='告白'' at line 1
 ## 前端接口
 + [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
     + 裡面有cmd["act"]的值
