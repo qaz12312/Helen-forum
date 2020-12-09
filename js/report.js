@@ -60,7 +60,7 @@ $( document ).ready( function()
             //                         title: "已成功刪除文章！<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
             //                         type: "success",
             //                     })
-            //                     $(this).closest( "tr" ).remove();
+            //                    $(this).closest( "tr" ).remove();
             //                     articles.splice( thisArticle, 1 );
     
             //                     if( articles.length == 0 )
@@ -184,6 +184,8 @@ function initial()
 
 function checkPermission()
 {
+    console.log(sessionStorage.getItem( "account" ))
+
     if( !sessionStorage.getItem( "account" ) )
     {
         swal({

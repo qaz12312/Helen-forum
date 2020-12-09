@@ -18,6 +18,16 @@ body{
 	border-color: rgb(230, 184, 36);
 	border-radius: 10%;
   }
+  #addPost {
+		width: 130px;
+		height: 40px;
+		font-size: 16px;
+		background-color: rgb(192, 142, 109);
+		color: white;
+		color: rgb(240, 234, 227);
+		border: none;
+		margin: 20px;
+	}
   /*star*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
 .star-btn{

@@ -50,11 +50,13 @@
     </div>
     </div>
 
-    <button class="tablink" onclick="openPage('popularPage', this, 'rgb(224, 174, 98)')"id="defaultOpen">個人資料</button>
-    <button class="tablink" onclick="openPage('newPage', this, 'rgb(224, 174, 98)')" >收藏目錄</button>
+    <button class="tablink" onclick="openPage('popularPage', this, 'rgb(224, 174, 98)')"id="defaultOpen">熱門</button>
+    <button class="tablink" onclick="openPage('newPage', this, 'rgb(224, 174, 98)')" >最新</button>
 
 
 <div id="popularPage" class= "tabContent">
+    <button class="addPost" id="addPost">+ 發文</button>
+
 <div class="contentArea">
     <h3> 熱門</h3>
     <div class= "content">
@@ -63,23 +65,22 @@
             <tr>
                 <td>
                     <div class="card">
-                        <div class="card-body row">
+                        <div class="card-body row"></div>
                             <span class="col-md-2">
                                 <h5 style="background-color: brown; display:inline-block"> 美食版 </h5>
-                            </span>
-                            <span class="col-md-6">
-                                <div class="postTitle">
-                                <span>海大附近有甚麼推薦的美食嗎？</span>
-                                </div>
-                            </span>
-                            <span class="col-md-2">
-                            <div class="heart-btn">
-                                <div class="heartContent">
-                                    <span class="heart"></span>
-                                    <span class="heartText">Like</span>
-                                    <span class="numb"></span>
-                                </div>
-                            
+                                </span>
+                                <span class="col-md-6">
+                                    <div class="postTitle">
+                                        <span>海大附近有甚麼推薦的美食嗎？</span>
+                                    </div>
+                                </span>
+                                <span class="col-md-2">
+                                <div class="heart-btn">
+                                    <div class="heartContent">
+                                        <span class="heart"></span>
+                                        <span class="heartText">Like</span>
+                                        <span class="numb"></span>
+                                    </div>
                                 </div>
                             </span>
                             <span class="col-md-2">
@@ -212,8 +213,6 @@
 </div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
-</script>
-<script src="../js/bar.js">
 </script>
 <script src="../js/tab.js"></script>
 <script src="../js/home.js"></script>

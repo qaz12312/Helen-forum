@@ -6,6 +6,8 @@
           console.log( $(this))
           $(this).toggleClass("heart-active")
           $(this).children('span').toggleClass("heart-active")
+          $(this).children('span.numb').css("Text",55)
+          
           //$('.heartContent').toggleClass("heart-active")
           //$('.heartTtext').toggleClass("heart-active")
           //$('.numb').toggleClass("heart-active")
@@ -18,5 +20,8 @@
           });
         $('.postTitle').click(function(){
           window.location.href = "../html/post.html";
+        });
+        $('.addPost').click(function(){
+          window.location.href = "../html/publishArticle.html";
         });
       });

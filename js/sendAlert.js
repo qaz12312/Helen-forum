@@ -10,11 +10,7 @@ $(document).ready(function () {
 
         var comment = $.trim($("#comment").val());
             if(comment != ""){
-            
                 
-                
-                console.log(comment);
-                cmd[ "password" ] = comment
                 
                 console.log( "send" );
                     let status = true;
@@ -41,10 +37,9 @@ $(document).ready(function () {
                                 else
                                 {
                                     let cmd = {};
-                                        cmd["act"] = "sendReport";
-                                        cmd["reason"] = "Reason"
-                                        cmd["timer"] = "Times"
-                                        cmd["content"] = "Content"
+                                    cmd["act"] = "toAllNotification";
+                                    cmd["content"] = comment;
+                                    cmd["timer"] = "Times";
                                     swal({
                                         title: "已傳送給每個人！<br />",
                                         type: "success",
@@ -95,10 +90,10 @@ $(document).ready(function () {
                                         else
                                         {
                                             let cmd = {};
-                                                cmd["act"] = "sendReport";
-                                                cmd["reason"] = "Reason"
-                                                cmd["timer"] = "Times"
-                                                cmd["content"] = "Content"
+                                            cmd["act"] = "sendNotification";
+                                            cmd["account"] = value;
+                                            cmd["timer"] = "Times";
+                                            cmd["content"] = comment;
                                             swal({
                                                 title: "已傳送給"+value+"<br />" ,
                                                 type: "success",
@@ -121,18 +116,87 @@ $("#chgtxt").text($("#txt1").val());
 }
 
 function initial() {
-sessionStorage.clear();
-let cmd = {};
-cmd["act"]="SentNotice";
-cmd[ "Content" ] = $.trim($("#comment").val());
-$.trim($("#comment").val())="";
+    //checkPermission();
+    sessionStorage.clear();
+    let cmd = {};
+    cmd["act"] = "sendReport";
+    cmd["account"] = "sendNotification";
+
+}
+function checkPermission()
+{
+    console.log(sessionStorage.getItem( "account" ))
+
+    if( !sessionStorage.getItem( "account" ) )
+    {
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "您沒有權限瀏覽此頁面"
+            
+        }).then(( result ) => {
+            if ( result ) 
+            {
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
+            }
+        });
+
+        return;
+    }
+
+    let cmd = {};
+    cmd[ "act" ] = "browseAuthority";
+    cmd[ "account" ] = sessionStorage.getItem( "account" );
+
+    let permission, color, nickname, boardName = [];
+    let thisBoardName = sessionStorage.getItem( "boardName" );
+
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        console.log( dataDB );
+        dataDB = JSON.parse( dataDB );
+
+        if( dataDB.status == false )
+        {
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode
+            }).then(( result ) => {
+                if ( result ) 
+                {
+                    $( "body" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                    $( "body" ).append( httpStatus );
+                }
+            });
+        }
+        else
+        {
+            permission = dataDB.data.permission;
+            color = dataDB.data.color;
+            nickname = dataDB.data.nickname;
+            boardName = dataDB.data.boardName;
+            
+            if( permission < 2 || boardName.indexOf( thisBoardName ) == -1 )
+            {
+                swal({
+                    title: "載入頁面失敗",
+                    type: "error",
+                    text: "您沒有權限瀏覽此頁面"
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        $( "body" ).empty();
+                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                        $( "body" ).append( httpStatus );
+                    }
+                });
+            }
+        }
+    });
 }
 
 
-function leaveUserDetails(UserID, Password, Permissions, Color, Nickname) {
-sessionStorage.setItem("Helen-UserID", UserID);
-sessionStorage.setItem("Helen-Password", Password);
-sessionStorage.setItem("Helen-Permissions", Permissions);
-sessionStorage.setItem("Helen-Color", Color);
-sessionStorage.setItem("Helen-Nickname", Nickname);
-}
