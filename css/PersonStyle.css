@@ -208,6 +208,16 @@ body{
 	/*收藏目錄*/
 	
 	/*每個板*/
+	.more{
+		width: 130px;
+		height: 40px;
+		font-size: 16px;
+		background-color: #e0d4bc;
+		color: white;
+		color: white;
+		border: none;
+		margin: 20px;
+	}
 	.Page {
 		margin: 20px;
 		padding-bottom: 25px;

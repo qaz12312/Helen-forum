@@ -118,11 +118,11 @@ $( document ).ready( function()
                 
                 });
             });
-        function funName1(id) {
-            $("#chgtxt").text($("#txt1").val());
-        }
-        function initial()
-        {
+function funName1(id) {
+    $("#chgtxt").text($("#txt1").val());
+}
+function initial()
+{
             let isValid = checkPermission();
             if( !isValid ) return;
         
@@ -133,67 +133,67 @@ $( document ).ready( function()
             dirNames = sessionStorage.getItem( "Helen-dirNames" );
             dirNames = JSON.parse( dirNames );
 
-            $.post( "../index.php", cmd, function( dataDB )
-            {   
-                dataDB = JSON.parse( dataDB );
+            // $.post( "../index.php", cmd, function( dataDB )
+            // {   
+            //     dataDB = JSON.parse( dataDB );
 
-                if( dataDB.status == false )
-                {
-                    swal({
-                        title: "載入頁面失敗",
-                        type: "error",
-                        text: dataDB.errorCode
-                    })
-                }
-                else
-                {
-                    let content = $( ".tabContent row" );
-                    content.empty();
+            //     if( dataDB.status == false )
+            //     {
+            //         swal({
+            //             title: "載入頁面失敗",
+            //             type: "error",
+            //             text: dataDB.errorCode
+            //         })
+            //     }
+            //     else
+            //     {
+            //         let content = $( ".tabContent row" );
+            //         content.empty();
 
-                    //CollectionCatalog = dataDB.data;
-                    for( let i in dataDB.data )
-                    {
-                        validDir = arrayRemove( validBoardsvalidDir, dataDB.data[i].dirName);
-                    }
+            //         //CollectionCatalog = dataDB.data;
+            //         for( let i in dataDB.data )
+            //         {
+            //             validDir = arrayRemove( validBoardsvalidDir, dataDB.data[i].dirName);
+            //         }
 
-                    let empty = true;
-                    if( empty )
-                    {
-                        let emptyMessage = "<tr>" + 
-                                                "<td colspan='4'>目前沒有收藏目錄</td>" +
-                                            "</tr>";
-                        content.append( emptyMessage );
-                    }
-                    for( let i in dataDB.data )
-                  {
-                     const div = document.createElement('div');
+            //         let empty = true;
+            //         if( empty )
+            //         {
+            //             let emptyMessage = "<tr>" + 
+            //                                     "<td colspan='4'>目前沒有收藏目錄</td>" +
+            //                                 "</tr>";
+            //             content.append( emptyMessage );
+            //         }
+            //         for( let i in dataDB.data )
+            //       {
+            //          const div = document.createElement('div');
                         
-                        div.classList.add('Page');
+            //             div.classList.add('Page');
                         
-                        div.innerHTML = `
-                        <div class="PageName">
-                                    <div class="value"> 
+            //             div.innerHTML = `
+            //             <div class="PageName">
+            //                         <div class="value"> 
                                         
                                     
-                                        <span class="currency"><span class="WhichPage" id="cjgtxt">`+dataDB.data[i].DirName+ `</span>
+            //                             <span class="currency"><span class="WhichPage" id="cjgtxt">`+dataDB.data[i].DirName+ `</span>
                                 
-                                        </div>
-                                </div>
-                                <ul class="deals">
-                                    <li>:):)</li>
-                                    </ul>
+            //                             </div>
+            //                     </div>
+            //                     <ul class="deals">
+            //                         <li>:):)</li>
+            //                         </ul>
                                 
-                                        <button class="more">more</button>
+            //                             <button class="more">more</button>
                                 
-                                </div>
+            //                     </div>
                                 
                                 
-                        `;
+            //             `;
                         
-                            document.querySelector('.row').appendChild(div)
-                    }
-                }
-            });
+            //                 document.querySelector('.row').appendChild(div)
+            //         }
+            //     }
+            // });
 
             let content = $( ".tabContent row" );
             content.empty();
@@ -213,7 +213,7 @@ $( document ).ready( function()
 
            
                 
-                }
+}
 function checkPermission()
 {
     // let perm = sessionStorage.getItem( "Helen-permission" );

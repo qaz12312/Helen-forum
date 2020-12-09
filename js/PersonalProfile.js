@@ -138,32 +138,32 @@ function initial()
 
     let permission, color, nickname;
 
-    $.post( "../index.php", cmd, function( dataDB )
-    {
-        dataDB = JSON.parse( dataDB );
+    // $.post( "../index.php", cmd, function( dataDB )
+    // {
+    //     dataDB = JSON.parse( dataDB );
 
-        if( dataDB.status == false )
-        {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: dataDB.errorCode
-            })
-        }
-        else
-        {
-            permission = dataDB.data.permission;
-            color = dataDB.data.color;
-            nickname = dataDB.data.nickname;
-            password = dataDB.data.password;
-            if(sessionStorage.getItem("Helen-act")== "modifyPersonalInfo"){
+        // if( dataDB.status == false )
+        // {
+        //     swal({
+        //         title: "載入頁面失敗",
+        //         type: "error",
+        //         text: dataDB.errorCode
+        //     })
+        // }
+        // else
+        // {
+        //     permission = dataDB.data.permission;
+        //     color = dataDB.data.color;
+        //     nickname = dataDB.data.nickname;
+        //     password = dataDB.data.password;
+        //     if(sessionStorage.getItem("Helen-act")== "modifyPersonalInfo"){
                 
-                $(el).css('border-color','#'+color);//??
-                $(".InputWrap").find("fname").placeholder(nickname);
-                $(".InputWrap").find("password").placeholder(password);
-            }
-        }
-    });
+        //         $(el).css('border-color','#'+color);//??
+        //         $(".InputWrap").find("fname").placeholder(nickname);
+        //         $(".InputWrap").find("password").placeholder(password);
+        //     }
+        // }
+    //});
 }
     
 

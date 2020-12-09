@@ -1,6 +1,8 @@
 //PostingRecord
-var articles = [ { "articleID": "123", "reason": "hahaha" }, { "articleID": "456", "reason": "hahaha" }, { "articleID": "789", "reason": "hahaha" } ];
+var articles = [];
 
+let dataDB = {};
+ dataDB["data"] = [ { "title": "美國隊長好帥!!!", "blockName": "漫威版", "articleID": "123"} ];
 $( document ).ready( function() 
 {
     initial();
@@ -36,54 +38,56 @@ $( document ).ready( function()
                 //     dataDB = JSON.parse( dataDB );
 
             
-                    // swal({
-                    //     title: "確定要刪除此篇文章嗎？<br /><small>&lt;" 
-                    //     //+ articles[ thisArticle ].title
-                    //     +"&gt;</small>",
-                    //     showCancelButton: true,
-                    //     confirmButtonText: "確定",
-                    //     cancelButtonText: "取消",
-                    //     animation: false
+                    swal({
+                        title: "確定要刪除此篇文章嗎？<br /><small>&lt;" 
+                        //+ articles[ thisArticle ].title
+                        +"&gt;</small>",
+                        showCancelButton: true,
+                        confirmButtonText: "確定",
+                        cancelButtonText: "取消",
+                        animation: false
 
-                    //     }).then(( result ) => {
-                    //         if ( result ) 
-                    //         {
-                    //             //console.log( "status " + status );
-                    //             if( status == false )
-                    //             {
-                    //                 swal({
-                    //                     title: "刪除失敗<br />" + articles[ thisArticle ].title//  + articles[ thisArticle ].title
-                    //                     + "&gt;</small>",
-                    //                     type: "error",
-                    //                     text: dataDB.errorCode,
-                    //                     animation: false
-                    //                 })
-                    //             }
-                    //             else
-                    //             {
-                    //                 swal({
-                    //                     title: "已成功刪除文章！<br />" + articles[ thisArticle ].title//  + articles[ thisArticle ].title
-                    //                     + "&gt;</small>",
-                    //                     type: "success",
-                    //                 })
-                    //                 $(this).closest( "tr" ).remove();
+                        }).then(( result ) => {
+                            if ( result ) 
+                            {
+                                //console.log( "status " + status );
+                                if( status == false )
+                                {
+                                    swal({
+                                        title: "刪除失敗<br />" 
+                                        //+ articles[ thisArticle ].title// 
+                                        + "&gt;</small>",
+                                        type: "error",
+                                        text: dataDB.errorCode,
+                                        animation: false
+                                    })
+                                }
+                                else
+                                {
+                                    swal({
+                                        title: "已成功刪除文章！<br />" 
+                                        //+ articles[ thisArticle ].title//  
+                                        + "&gt;</small>",
+                                        type: "success",
+                                    })
+                                    $(this).closest( "tr" ).remove();
                 
-                    //                 articles.splice( thisArticle, 1 );
-                    //                 if( articles.length == 0 )
-                    //                     {
-                    //                         console.log( "length==0" );
-                    //                         let emptyMessage = "<tr>" + 
-                    //                                                 "<td colspan='2'>沒發文紀錄喔！</td>" +
-                    //                                             "</tr>";
-                    //                         $( ".tabContent tbody" ).append( emptyMessage );
-                    //                     }
-                    //             }
+                                    articles.splice( thisArticle, 1 );
+                                    if( articles.length == 0 )
+                                        {
+                                            console.log( "length==0" );
+                                            let emptyMessage = "<tr>" + 
+                                                                    "<td colspan='2'>沒發文紀錄喔！</td>" +
+                                                                "</tr>";
+                                            $( ".tabContent tbody" ).append( emptyMessage );
+                                        }
+                                }
                                 
-                    //         }
-                    //     }, function( dismiss ) {
-                    //         if ( dismiss === 'cancel' );
-                    //     });
-                    // // });
+                            }
+                        }, function( dismiss ) {
+                            if ( dismiss === 'cancel' );
+                        });
+                    // });
                 
             }
                 else if( $(this).text().trim() == "編輯" )
@@ -139,49 +143,47 @@ function initial()
     //     }
     //     else
     //     {
-    //         let content = $( ".tabContent tbody" );
-    //         content.empty();
+            let content = $( ".postContent tbody" );
+            content.empty();
         
-    //         articles = dataDB.data;
-
-    //         if( articles.length == 0 )
-    //         {
-    //             let emptyMessage = "<tr>" + 
-    //                                     "<td colspan='4'>檢舉文章列表為空</td>" +
-    //                                 "</tr>";
-    //             content.append( emptyMessage );
-
-    //             return;
-    //         }
-
-            // for( let i in dataDB.data )
-            // {
+            articles = dataDB.data;
             
-            //         let oneRow = "<tr>" + 
-            //                         "<td>" + dataDB.data[i].blockName + "</td>" +
-            //                         "<td>" + dataDB.data[i].title + "</td>" +
-            //                         "<td>" +
-            //                             "<button type='button' class='btn btn-default'>" +
-            //                                 "<span class='glyphicon glyphicon-book'></span> 編輯" +
-            //                             "</button>" +
-            //                         "</td>" +
-            //                         "<td>" +
-            //                             "<button type='button' class='btn'>" +
-            //                                 "<span class='glyphicon glyphicon-trash'></span> 刪除" +
-            //                             "</button>" +
-            //                         "</td>" +
-     
-            //                         "</tr>";
-            
-            //         content.append( oneRow );
-            //     }     
-    //             
-    //     }
-    // } );
+            if( articles.length == 0 )
+            {
+                let emptyMessage = "<tr>" + 
+                                        "<td colspan='4'>檢舉文章列表為空</td>" +
+                                    "</tr>";
+                content.append( emptyMessage );
 
-// let dataDB = {};
-// dataDB[ "data" ] = [ { "title": "美國隊長好帥!!!", "blockName": "漫威版", "articleID": "aaa", "like": "87", "keep": "45" } 
-//                  ];
+                return;
+            }
+
+            for( let i in dataDB.data )
+            {
+            
+                let oneRow = "<tr>" + 
+                                "<td>" + dataDB.data[i].blockName + "</td>" +
+                                "<td>" + dataDB.data[i].title + "</td>" +
+                                "<td>" +
+                                    "<button type='button' class='btn btn-default'>" +
+                                        "<span class='glyphicon glyphicon-book'></span> 編輯" +
+                                    "</button>" +
+                                "</td>" +
+                                "<td>" +
+                                    "<button type='button' class='btn'>" +
+                                        "<span class='glyphicon glyphicon-trash'></span> 刪除" +
+                                    "</button>" +
+                                "</td>" +
+    
+                                "</tr>";
+        
+                content.append( oneRow );
+            }     
+                
+        //}
+    //} );
+
+
 }
     function checkPermission()
     {
