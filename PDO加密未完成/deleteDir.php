@@ -15,45 +15,44 @@
         dataDB.errorCode = "You don't have permission to do this action." / "此版塊不存在" / "刪除失敗，資料庫異常"
         dataDB.data = ""
     */
-     function doDeleteDir($input){
+    function doDeleteDir($input)
+    {
         global $conn;
-        $token =$input['token'];
-        if(!isset($_SESSION[$token])){
-           $rtn = array();
+        $token = $input['token'];
+        if (!isset($_SESSION[$token])) {
+            $rtn = array();
             $rtn["status"] = false;
             $rtn["errorCode"] = "You don't have permission to do this action.";
             $rtn["data"] = "";
-        }else{
+        } else {
             $userInfo = $_SESSION[$token];
-            $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['dirName']."' AND `UserID`='".$userInfo['account']."' ";  
-            $result=$conn->query($sqlcheck);
-            if(!$result){
+            $sqlcheck = "SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $userInfo['account'] . "' ";
+            $result = $conn->query($sqlcheck);
+            if (!$result) {
                 die($conn->error);
             }
-            if($result->num_rows <= 0){
+            if ($result->num_rows <= 0) {
                 $rtn = array();
                 $rtn["status"] = false;
                 $rtn["errorCode"] = "此資料夾不存在";
                 $rtn["data"] = "";
-            }
-            else{
-                $delkeep="DELETE FROM `KeepDir` WHERE `DirName`='".$input['dirName']."' AND `UserID`='".$userInfo['account']."'";
-                $result=$conn->query($delkeep);
-                if(!$result){
-                        die($conn->error);
-                }
-                $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `DirName`='".$input['dirName']."' AND `UserID`='".$userInfo['account']."'";
-                $result=$conn->query($sql);
-                if(!$result){
+            } else {
+                $delkeep = "DELETE FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $userInfo['account'] . "'";
+                $result = $conn->query($delkeep);
+                if (!$result) {
                     die($conn->error);
                 }
-                if($result->num_rows > 0){
+                $sql = "SELECT `DirName` FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $userInfo['account'] . "'";
+                $result = $conn->query($sql);
+                if (!$result) {
+                    die($conn->error);
+                }
+                if ($result->num_rows > 0) {
                     $rtn = array();
                     $rtn["status"] = false;
                     $rtn["errorCode"] = "刪除失敗，資料庫異常";
                     $rtn["data"] = "";
-                }
-                else{
+                } else {
                     $rtn = array();
                     $rtn["status"] = true;
                     $rtn["errorCode"] = "成功刪除此資料夾";
