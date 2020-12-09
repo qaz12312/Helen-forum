@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
 UserID varchar(101) NOT NULL,
 Password varchar(12) NOT NULL,
-Permission numeric (1,0) NOT NULL,
+IsAdmin boolean default false,
 Color varchar(10) NOT NULL,
 Nickname varchar(21) ,
 PRIMARY KEY (UserID)
@@ -39,10 +39,11 @@ FOREIGN KEY (BlockName) REFERENCES Board (BoardName) ON UPDATE CASCADE  ON DELET
 
 DROP TABLE IF EXISTS Report;
 CREATE TABLE Report (
+UserID varchar(101) NOT NULL,
 ArticleID bigint(255) NOT NULL,
 Reason varchar(255) NOT NULL,
 Times datetime DEFAULT CURRENT_TIMESTAMP,
-PRIMARY KEY (ArticleID, Reason),
+PRIMARY KEY (UserID, ArticleID),
 FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID) ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 

@@ -11,16 +11,15 @@
 	若 status = true:
 		dataDB.errorCode = ""
 		dataDB.data[0] // UserID:"00857210"
-		dataDB.data[1] // Permission:1
-		dataDB.data[2] // Color:"#ffffff"
-		dataDB.data[3] // Nickname:"cook"
+		dataDB.data[1] // Color:"#ffffff"
+		dataDB.data[2] // Nickname:"cook"
 	否則
 		dataDB.errorCode = "找不到會員"
 		dataDB.data = "" 
     */
 	function doLogIn($input){
     	global $conn;
-    	$sql="SELECT `UserID`,`Permission`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
+    	$sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
 	    $result = $conn->query($sql);
 	    if(!$result){
 	        die($conn->error);

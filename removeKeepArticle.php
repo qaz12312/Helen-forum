@@ -4,8 +4,8 @@
     let cmd = {};
     cmd["act"] = "removeKeepArticle";
     cmd["account"] = "00857210";
-    cmd["articleID"] = "ArticleID";
-    cmd["dirName"] ="美食";
+    cmd["articleID"] = "1";
+    cmd["dirName"] ="旅遊景點";
 		
     後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -19,12 +19,12 @@
      */
     function doRemoveKeepArticle($input){ // 將文章從收藏資料夾移除
     	global $conn;
-        $del="DELETE FROM `FollowKeep` WHERE  `DirName`='".$input['dirName'].' AND`UserID`='".$input['account']. "'AND`ArticleID`='".$input['articleID'].";
+        $del="DELETE FROM `FollowKeep` WHERE  `DirName`='".$input['dirName']."' AND`UserID`='".$input['account']. "'AND`ArticleID`='".$input['articleID']."'";
         $result=$conn->query($del);
             if(!$result){
                 die($conn->error);
             }
-        $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`='".$input['articleID'].' AND`UserID`='".$input['account']."'AND`DirName`='".$input['dirName']."'";
+        $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`='".$input['articleID']."' AND`UserID`='".$input['account']."'AND`DirName`='".$input['dirName']."'";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
@@ -39,6 +39,7 @@
             $rtn = array();
             $rtn["status"] = true;
             $rtn["errorCode"] = "已從資料夾中移除文章";
+			$rtn["data"] = "";
         }
         echo json_encode($rtn);
     }
