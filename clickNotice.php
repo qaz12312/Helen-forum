@@ -4,7 +4,6 @@
     let cmd = {};
 	cmd["act"] = "clickNotice";
     cmd["account"] = "00757033";
-    cmd["timer"] = "2020-12-08 23:59:59";
     cmd["detail"] = "Content";
         
     後端 to 前端
@@ -19,22 +18,35 @@
     */
     function doClickNotice($input){ //user點通知->刪除此則通知
         global $conn;
-        $sql ="DELETE FROM  `Notice` where `UserID`=$input['account'], `Time`=$input['timer'],`Content`=$input['detail']" ;
-        global $conn;
-        $result=$conn->query($sql);
+        $sqlcheck="SELECT `Times` FROM `Notice`   Where `UserID`='".$input['account']."'AND `Content`='".$input['detail']."'";  
+        $result=$conn->query($sqlcheck);
         if(!$result){
             die($conn->error);
-        }
+        } 
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "沒有";
+            $rtn["errorCode"] = "無權限更新";
             $rtn["data"] = "";
         }
         else{
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
+            $sql ="DELETE FROM  `Notice` Where `UserID`='".$input['account']."'AND`Content`='".$input['detail']."'" ;
+            global $conn;
+            $result=$conn->query($sql);
+            if(!$result){
+                die($conn->error);
+            }
+            if($result->num_rows > 0){
+                $rtn = array();
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "沒有";
+                $rtn["data"] = "";
+            }
+            else{
+                $rtn = array();
+                $rtn["status"] = true;
+                $rtn["errorCode"] = "";
+            }
         }
         echo json_encode($rtn);
     }
