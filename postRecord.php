@@ -1,5 +1,5 @@
 <?php
-    require_once 'connectDB.php'; //連線資料庫 
+    //require_once 'connectDB.php'; //連線資料庫 
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "home";
@@ -19,24 +19,9 @@
                 ) 
             否則
                 dataDB.data = ""*/
-                DROP TABLE IF EXISTS Article;
-                CREATE TABLE Article (
-                    ArticleID bigint(255) NOT NULL AUTO_INCREMENT,
-                    AuthorID varchar(101) NOT NULL,
-                    Title varchar(255) NOT NULL,
-                    Content text ,
-                    Image longblob ,
-                    HashTag varchar(255) ,
-                    Times datetime DEFAULT CURRENT_TIMESTAMP,
-                    BlockName varchar(255) NOT NULL,
-                PRIMARY KEY (ArticleID),
-                FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
-                FOREIGN KEY (BlockName) REFERENCES Board (BoardName)
-                ) CHARSET=utf8mb4 ;
-
-
-        $sql="SELECT `Title`,`ArticleID`,`BlockName` FROM `Article`  WHERE `AuthorID`='".$input['account']."'";
-
+    function doPostRecord($input){
+        global $conn;
+        $sql="SELECT `BlockName`,`Title`,`ArticleID` FROM `Article`  WHERE `AuthorID`='".$input['account']."'order by `Times` DESC";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
@@ -51,7 +36,7 @@
             $arr=array();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
-                $log=array("title"=>"$row[0]","articleID"=>"$row[1]","blockName"=>"$row[2]");
+                $log=array("blockName"=>"$row[0]","title"=>"$row[1]","articleID"=>"$row[2]");
                 $arr[$i]=$log;
             }
             $rtn = array();
@@ -60,4 +45,5 @@
             $rtn["data"] =$arr;
         }
         echo json_encode($rtn);
+    }
 ?>
