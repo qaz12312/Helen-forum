@@ -1,5 +1,5 @@
 # 後端 - Helen
-
+Notice: Undefined index: boardName in C:\xampp\htdocs\helen\browseReport.php on line 41
 ## 前端接口
 + [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
     + 裡面有cmd["act"]的值
