@@ -3,8 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "removeTopArticle";
-	cmd["account"] = "admin";
-	cmd["boardName"] = "美食";
+	cmd["boardName"] = "旅遊";
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -24,7 +23,6 @@
 			die($conn->error);
 		}
 		else{
-			$row=$result->fetch_row();
 			$rtn = array();
 			$rtn["status"] = true;
 			$rtn["errorCode"] = "";

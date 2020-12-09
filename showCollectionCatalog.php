@@ -9,8 +9,7 @@
             dataDB.errorCode
             若 status = true:
 				dataDB.data[0]	// UserID
-				dataDB.data[1]	// DirID
-				dataDB.data[2]	// DirName
+				dataDB.data[1]	// DirName
             否則
                 dataDB.data = ""
          */

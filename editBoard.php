@@ -22,40 +22,43 @@
             否則
                 
          */
-    $sqlcheck="SELECT `BoardName` FROM `Board` WHERE `BoardName`='".$input['oldboardName']."' AND `UserID`='".$input['account']."' ";  
-    $result=$conn->query($sqlcheck);
-    if(!$result){
-        die($conn->error);
-    } 
-    if($result->num_rows <= 0){
-        $rtn = array();
-        $rtn["status"] = false;
-        $rtn["errorCode"] = "無權限刪除";
-        $rtn["data"] = "";
-    }
-    else{
-        $updateSql="UPDATE `Board` SET `BoardName`='".$input['newboardName']."',`Rule`='".$input['rule']."'where `BoardName`='".$input['oldboardName']."'";
-        $result=$conn->query($updateSql);
+    function doEditBoard($input){
+        global $conn;
+        $sqlcheck="SELECT `BoardName` FROM `Board` WHERE `BoardName`='".$input['oldboardName']."' AND `UserID`='".$input['account']."' ";  
+        $result=$conn->query($sqlcheck);
         if(!$result){
             die($conn->error);
-        }
-        $sql ="SELECT `BoardName` FROM `Board` NATURAL JOIN`Users` WHERE `BoardName`='".$input['newboardName']."'AND`Rule`='".$input['rule']."'AND`UserID`='".$input['account']."'" ;
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        } 
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "沒有版";
+            $rtn["errorCode"] = "無權限刪除";
             $rtn["data"] = "";
         }
         else{
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = "";
+            $updateSql="UPDATE `Board` SET `BoardName`='".$input['newboardName']."',`Rule`='".$input['rule']."'where `BoardName`='".$input['oldboardName']."'";
+            $result=$conn->query($updateSql);
+            if(!$result){
+                die($conn->error);
+            }
+            $sql ="SELECT `BoardName` FROM `Board` NATURAL JOIN`Users` WHERE `BoardName`='".$input['newboardName']."'AND`Rule`='".$input['rule']."'AND`UserID`='".$input['account']."'" ;
+            $result=$conn->query($sql);
+            if(!$result){
+                die($conn->error);
+            }
+            if($result->num_rows <= 0){
+                $rtn = array();
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "沒有版";
+                $rtn["data"] = "";
+            }
+            else{
+                $rtn = array();
+                $rtn["status"] = true;
+                $rtn["errorCode"] = "";
+                $rtn["data"] = "";
+            }
         }
+        echo json_encode($rtn);
     }
-    echo json_encode($rtn);
 ?>
