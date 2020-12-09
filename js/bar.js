@@ -2,10 +2,10 @@ let boards= [];// boardName
 let userData= {};
 
 $(document).ready(function(){
-    initial();
+    barInitial();
 })
 
-function initial(){
+function barInitial(){
     let dataDB= {}
     // $.post( "../index.php", cmd, function(dataDB){
     //     dataDB = JSON.parse( dataDB );
@@ -19,7 +19,7 @@ function initial(){
     //         })
     //     }
         // else{
-            s
+            
         // }
     // });
 }

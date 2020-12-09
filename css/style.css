@@ -231,11 +231,11 @@ body{
 	height: 30px;
 	width: 30px;
 	position: absolute;
-	left: 3%;
+	left: 3px;
 	background-color: brown;
 	border-radius: 20px;
 	color: whitesmoke;
-	padding: 0.7%;
+	padding: 3px;
 }
 
 .textInput{
