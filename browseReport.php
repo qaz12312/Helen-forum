@@ -3,9 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "browseReport";
-    cmd["title"] = "title1~~~";
-    cmd["reason"] = "reason1~~~";
-    cmd["timer"] = "2020-12-08 23:59:59";
+    cmd["boardName"] = "企鵝";
 
     後端 to 前端
     dataDB.status
@@ -24,7 +22,7 @@
     */
     function doBrowseReport($input){ //查看board底下的文章檢舉
     	global $conn;
-        $sql="SELECT `Title`,`Reason`,`Times` FROM `Report` NATURAL JOIN `Article` WHERE `BlockID`='".$input['boardName']."'ORDER BY `Times` DESC ";
+        $sql="SELECT `Title`,`Reason`,Report.Times FROM `Report` JOIN `Article`  ON Article.ArticleID = Report.ArticleID  WHERE  `BlockName`='".$input['boardName']."'ORDER BY `Times` DESC ";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
@@ -39,7 +37,7 @@
             $arr=array();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
-                $log=array("title"=>"$row[0]","reason"=>"$row[1]";
+                $log=array("title"=>"$row[0]","reason"=>"$row[1]","times"=>"$row[2]");
                 $arr[$i]=$log;
             }
             $rtn = array();
