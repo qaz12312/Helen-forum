@@ -1,11 +1,11 @@
 <?php 
-    require_once 'connectDB.php'; //連線資料庫
+    //require_once 'connectDB.php'; //連線資料庫
     /*前端 to 後端:
     let cmd = {};
     cmd["act"] = "editModerator";
     cmd["oldboardID"] = "BoardName"
     cmd["newboardID"] = "BoardName"
-    cmd["userID"] = "UserID"
+    cmd["account"] = "UserID"
 */ 
 /* 後端 to 前端
         dataDB.state
@@ -20,52 +20,53 @@
         否則
             
         */
-    $check= true;
-    if($input['oldboardID']){
-        $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardID` = $input['oldboardID']";
-        $result=$conn->query($updateSql);
-        if(!$result){
-            die($conn->error);
-        }
-        $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `Board`NATURAL JOIN`User` ON User.UserID =Board.UserID  WHERE `BoardID` = $input['oldboardID'] AND`UserID`='admin' " ;
+    function doEditModerator($input){
         global $conn;
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
+        $check= true;
+        if($input['oldboardID']){
+            $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardID` = $input['oldboardID']";
+            $result=$conn->query($updateSql);
+            if(!$result){
+                die($conn->error);
+            }
+            $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `Board`NATURAL JOIN`User`   WHERE `BoardID` = '"$input['oldboardID']."' AND`UserID`='admin' " ;
+            $result=$conn->query($sql);
+            if(!$result){
+                die($conn->error);
+            }
+            if($result->num_rows <= 0){
+                $rtn = array();
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "修改oldboardID失敗";
+                $rtn["data"] = "";
+                $check= false;
+            }
         }
-        if($result->num_rows <= 0){
+        if($input['newboardID']){
+            $updateSql2="UPDATE `Board` SET `UserID`='".$input['account']."' WHERE `BoardID` = '".$input['newboardID']."'";
+            $result=$conn->query($updateSql2);
+            if(!$result){
+                die($conn->error);
+            }
+            $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `Board`NATURAL JOIN`Users`  WHERE `BoardID` = '".$input['oldboardID']."' AND`UserID`='admin' " ;
+            $result=$conn->query($sql);
+            if(!$result){
+                die($conn->error);
+            }
+            if($result->num_rows <= 0){
+                $rtn = array();
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "修改oldboardID失敗";
+                $rtn["data"] = "";
+                $check= false;
+            }
+        }
+        if($check){
             $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "修改oldboardID失敗";
-            $rtn["data"] = "";
-            $check= false;
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "";
+            $rtn["data"] ="";
         }
+        echo json_encode($rtn);
     }
-    if($input['newboardID']){
-        $updateSql2="UPDATE `Board` SET `UserID`='".$input['userID']."' WHERE `BoardID` = $input['newboardID']";
-        $result=$conn->query($updateSql2);
-        if(!$result){
-            die($conn->error);
-        }
-        sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `Board`NATURAL JOIN`User` ON User.UserID =Board.UserID  WHERE `BoardID` = $input['oldboardID'] AND`UserID`='admin' " ;
-        global $conn;
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "修改oldboardID失敗";
-            $rtn["data"] = "";
-            $check= false;
-        }
-    }
-    if($check){
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
-        $rtn["data"] ="";
-    }
-    echo json_encode($rtn);
 ?>

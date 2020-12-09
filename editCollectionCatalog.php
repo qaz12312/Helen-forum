@@ -19,8 +19,8 @@
             否則
                 dataDB.data = ""
          */
-        function doEditCollectionCatalog($input){
-            global $conn;
+    function doEditCollectionCatalog($input){
+        global $conn;
         $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['oldDirName']."' AND `UserID`='".$input['account']."' ";  
         $result=$conn->query($sqlcheck);
         if(!$result){
