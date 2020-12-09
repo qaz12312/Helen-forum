@@ -73,22 +73,48 @@ $( document ).ready( function()
 
     $( ".glyphicon-pushpin" ).click( function()
     {
-        $( ".glyphicon-pushpin" ).removeClass( "top" );
-        $( this ).addClass( "top" );
+        var tempTr = this.closest( "tr" );
+        var tempTbody = this.closest( "tbody" );
 
-        let tempTr = this.closest( "tr" );
-        let tempTbody = this.closest( "tbody" );
+        let status = true;
+        if( status == false )
+        {
+            swal({
+                title: "置頂失敗",
+                type: "error",
+                text: "dataDB.errorCode"
 
-        tempTr.remove();
-        tempTbody.prepend( tempTr );
+            }).then(( result ) => {}
+            , function( dismiss )
+            {
+                if( dismiss === "cancel" );
+            });
+        }
+        else
+        {
+            swal({
+                title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
+                type: "success"
+    
+            }).then((result) => 
+            {
+                $( ".glyphicon-pushpin" ).removeClass( "top" );
+                $( this ).addClass( "top" );
 
-        let title = $( tempTr ).find( ".articleTitle" ).text();
+                tempTr.remove();
+                tempTbody.prepend( tempTr );
+            }
+            , function( dismiss )
+            {
+                if( dismiss === 'cancel' );
+            });
+        }
         
-        let cmd = {};
-        cmd[ "act" ] = "TopArticleChange";
-        cmd[ "account" ] = sessionStorage.getItem( "account" );
-        cmd[ "articleID" ] = articles.find( (element) => element.title == title ).articleID;
-        cmd[ "boardName" ] = thisBoardName;
+        // let cmd = {};
+        // cmd[ "act" ] = "TopArticleChange";
+        // cmd[ "account" ] = sessionStorage.getItem( "account" );
+        // cmd[ "articleID" ] = articles.find( (element) => element.title == title ).articleID;
+        // cmd[ "boardName" ] = thisBoardName;
 
         // $.post( "../index.php", cmd, function( dateDB )
         // {
@@ -101,7 +127,14 @@ $( document ).ready( function()
         //             type: "error",
         //             text: dataDB.errorCode
 
-        //         }).then(( result ) => {}
+        //         }).then(( result ) => 
+        //         {
+        //             let tempTr = this.closest( "tr" );
+        //             let tempTbody = this.closest( "tbody" );
+
+        //             tempTr.remove();
+        //             tempTbody.prepend( tempTr );
+        //         }
         //         , function( dismiss )
         //         {
         //             if( dismiss === "cancel" );
@@ -297,7 +330,7 @@ function initial()
                                         "</span>" +
                                         "<span class='col-md-4'>" +
                                             "<button type='button' class='btn btn-secondary'>" +
-                                                "<span class='glyphicon glyphicon-heart text-danger'></span><span class='text-danger heart'> " 
+                                                "<span class='glyphicon glyphicon-heart text-danger'></span><span class='text-danger heartaa'> " 
                                                     + articles[i].like + "</span></button>" +
                                             "<button type='button' class='btn btn-secondary'>" +
                                                 "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning keep'> " +
@@ -375,10 +408,10 @@ function initial()
     //                                         "</span>"
     //                                         "<span class='col-md-4'>" +
     //                                             "<button type='button' class='btn btn-secondary'>" +
-    //                                                 "<span class='glyphicon glyphicon-heart text-danger'></span><span class='text-danger'>" 
+    //                                                 "<span class='glyphicon glyphicon-heart text-danger'></span><span class='text-danger heartaa'>" 
     //                                                     + articles.like + "</span></button>" +
     //                                             "<button type='button' class='btn btn-secondary'>" +
-    //                                                 "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning'>" +
+    //                                                 "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning keep'>" +
     //                                                     + articles.keep + "</span></button>" +
     //                                         "</span>" +
     //                                     "</div>" +
