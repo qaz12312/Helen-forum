@@ -1,26 +1,27 @@
 <?php
-    /* 前端 to 後端:
+    /* 
+    前端 to 後端:
     let cmd = {};
     cmd["act"] = "board_sort";
     cmd["sort"] = "time/hot";
     cmd["boardName"] = "美食"
-    */
-    /* 後端 to 前端
+    
+    後端 to 前端:
     dataDB.state
-    dataDB.errorCode
     若 state = true:
     dataDB.data[i] //有i筆文章
     (
-    dataDB.data[i].title //第i筆文章的標題
-    dataDB.data[i].articleID
-    dataDB.data[i].like //第i筆文章的總愛心數
-    dataDB.data[i].keep//第i筆文章的總收藏數
-    dataDB.data[i].time//第i筆文章的時間
+        dataDB.errorCode
+        dataDB.data[i].title //第i筆文章的標題
+        dataDB.data[i].articleID
+        dataDB.data[i].like //第i筆文章的總愛心數
+        dataDB.data[i].keep//第i筆文章的總收藏數
+        dataDB.data[i].time//第i筆文章的時間
     )
     否則
-    dataDB.data = ""*/
-
-    //View: HomeHeart,HomeKeep  
+        dataDB.errorCode = "sort input wrong" / "沒有文章"
+        dataDB.data = ""
+    */
     function doSortBoard($input)
     {
         global $conn;
@@ -31,16 +32,13 @@
                 if (!$result) {
                     die($conn->error);
                 }
-
             } else if ($input['sort'] == "hot") {
                 $sql1 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = '" . $input['boardName'] . "'ORDER BY `cntHeart` DESC";
                 $result = $conn->query($sql1);
                 if (!$result) {
                     die($conn->error);
                 }
-    
             }
-            
             if ($result->num_rows <= 0) {
                 $rtn = array();
                 $rtn["statue"] = false;
