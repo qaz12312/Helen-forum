@@ -1,5 +1,5 @@
-<? php
-    require_once 'connectDB.php'; //連線資料庫 
+<?php
+    //require_once 'connectDB.php'; //連線資料庫 
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "showNotice";
@@ -15,31 +15,32 @@
             否則
                 dataDB.data = ""
          */
-
-    $sql ="SELECT `Time`,`Content` FROM `Notice` where `UserID`= $input[`account`] order by `Time`asc" ;
-    global $conn;
-    $result=$conn->query($sql);
-    if(!$result){
-        die($conn->error);
-    }
-    if($result->num_rows <= 0){
-        $rtn = array();
-        $rtn["status"] = false;
-        $rtn["errorCode"] = "沒有";
-        $rtn["data"] = "";
-    }
-    else{
-        $arr=array();
-        for($i=0;$i<$result->num_rows;$i++){
-            $row=$result->fetch_row();
-            $log=array("Time"=>"$row[0]","Content"=>"$row[1]");
-            $arr[$i]=$log;
+    function doShowNotification($input){
+        global $conn;
+        $sql="SELECT `Times`,`Content`,`UserID` FROM `Notice` WHERE `UserID`='".$input['account']."' order by `Times`DESC ";
+        $result=$conn->query($sql);
+        if(!$result){
+            die($conn->error);
         }
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
-        $rtn["data"] =$arr;
+        if($result->num_rows <= 0){
+            $rtn = array();
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "沒有通知";
+            $rtn["data"] = "";
+        }
+        else{
+            $arr=array();
+            for($i=0;$i<$result->num_rows;$i++){
+                $row=$result->fetch_row();
+                $log=array("Times"=>"$row[0]","Content"=>"$row[1]","userid"=>"$row[2]");
+                $arr[$i]=$log;
+            }
+            $rtn = array();
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "";
+            $rtn["data"] =$arr;
+        }
+        echo json_encode($rtn);
     }
-    echo json_encode($rtn);
 
 ?>

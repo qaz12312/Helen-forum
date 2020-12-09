@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "deleteReport";
     cmd["isPass"] = true / false; (通過審核/審核不通過)
-    cmd["articleID"] = "aas987dslk0980983234";
+    cmd["articleID"] = "1";
 
     後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -27,7 +27,7 @@
             if($result->num_rows <= 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "查詢失敗，無此文章";
+                $rtn["errorCode"] = "can't find this article";
                 $rtn["data"] = "";
             }
             else{
@@ -44,35 +44,41 @@
                 if($result->num_rows > 0){
                     $rtn = array();
                     $rtn["status"] = false;
-                    $rtn["errorCode"] = "刪除失敗，資料庫異常";
+                    $rtn["errorCode"] = "delete report, DB error";
                     $rtn["data"] = "";
                 }
                 else{
                     $rtn = array();
                     $rtn["status"] = true;
                     $rtn["errorCode"] = "";
-                    $rtn["data"] = "成功刪除此文章";
+                    $rtn["data"] = "success delete report";
                 }
             }
         }
-        $sql="DELETE FROM `Report` WHERE `ArticleID`='"."$input['articleID']";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "刪除檢舉失敗";
-            $rtn["data"] = "";
-        }
-        else{
-            $row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "刪除檢舉成功";
-            $rtn["data"] =$row;
-        }
+        else {
+			$sql="DELETE FROM `Report` WHERE `ArticleID`='".$input['articleID']."'";
+			$result=$conn->query($sql);
+			if(!$result){
+				die($conn->error);
+			}
+			$success="SELECT `ArticleID` FROM `Report` WHERE `ArticleID` = '".$input['articleID']."'";
+			$result=$conn->query($success);
+			if(!$result){
+				die($conn->error);
+			}
+			if($result->num_rows > 0){
+				$rtn = array();
+				$rtn["status"] = false;
+				$rtn["errorCode"] = "cancel report fail";
+				$rtn["data"] = "";
+			}
+			else{
+				$rtn = array();
+				$rtn["status"] = true;
+				$rtn["errorCode"] = "";
+				$rtn["data"] = "cancel report success";
+			}
+		}
         echo json_encode($rtn);
     }
 ?>
