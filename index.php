@@ -21,10 +21,6 @@
             require_once("signUp.php");
             doCreatAccount($input);
             break;
-            // case "forgetPassword": //忘記密碼
-            //     require_once("forgetPassword.php");
-            //     doForgetPassword($input);
-            //     break;
         case "modifyPersonalInfo": //修改個資
             require_once("personalInfo.php");
             break;
