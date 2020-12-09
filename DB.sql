@@ -76,7 +76,7 @@ DirName varchar(255) NOT NULL,
 AddTime datetime DEFAULT CURRENT_TIMESTAMP,
 PRIMARY KEY (ArticleID, UserID),
 FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)   ON DELETE CASCADE,
-FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)
+FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Notice;
@@ -95,3 +95,15 @@ DirName varchar(255) NOT NULL,
 PRIMARY KEY (UserID, DirName),
 FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
+
+DROP VIEW IF EXISTS HomeHeart;
+CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`cntHeart`,`Times`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,COUNT(FollowHeart.UserID),`Times`
+FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName JOIN `FollowHeart` ON Article.ArticleID = FollowHeart.ArticleID 
+GROUP BY `ArticleID` ;
+
+DROP VIEW IF EXISTS HomeKeep;
+CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`cntKeep`,`Times`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,COUNT(FollowKeep.UserID),`Times`
+FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
+GROUP BY `ArticleID` ;
