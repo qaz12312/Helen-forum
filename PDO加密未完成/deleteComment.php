@@ -4,8 +4,8 @@
     let cmd = {};
     cmd["act"] = "deleteComment";
     cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
-    cmd["articleID"] ="ArticleID"
-    cmd["floors"] = "Floor"
+    cmd["articleID"] =ArticleID
+    cmd["floors"] = Floor
 
     後端 to 前端
     dataDB.status
