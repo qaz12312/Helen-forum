@@ -154,34 +154,34 @@ function initial()
     //             return;
     //         }
 
-    //         for( let i in dataDB.data )
-    //         {
+            // for( let i in dataDB.data )
+            // {
             
-    //                 let oneRow = "<tr>" + 
-    //                                 "<td>" + dataDB.data[i][ "Title" ] + "</td>" +
-    //                                 "<td>" +
-    //                                     "<button type='button' class='btn btn-default'>" +
-    //                                         "<span class='glyphicon glyphicon-book'></span> 編輯" +
-    //                                     "</button>" +
-    //                                 "</td>" +
-    //                                 "<td>" +
-    //                                     "<button type='button' class='btn'>" +
-    //                                         "<span class='glyphicon glyphicon-trash'></span> 刪除" +
-    //                                     "</button>" +
-    //                                 "</td>" +
-    //  
-    //                                 "</tr>";
+            //         let oneRow = "<tr>" + 
+            //                         "<td>" + dataDB.data[i].blockName + "</td>" +
+            //                         "<td>" + dataDB.data[i].title + "</td>" +
+            //                         "<td>" +
+            //                             "<button type='button' class='btn btn-default'>" +
+            //                                 "<span class='glyphicon glyphicon-book'></span> 編輯" +
+            //                             "</button>" +
+            //                         "</td>" +
+            //                         "<td>" +
+            //                             "<button type='button' class='btn'>" +
+            //                                 "<span class='glyphicon glyphicon-trash'></span> 刪除" +
+            //                             "</button>" +
+            //                         "</td>" +
+     
+            //                         "</tr>";
             
-    //                 content.append( oneRow );
-    //             }     
+            //         content.append( oneRow );
+            //     }     
     //             
     //     }
     // } );
 
 // let dataDB = {};
-// dataDB[ "reason" ] = "hahaha";
-// dataDB[ "data" ] = [ { "Title": "美國隊長好帥!!!" }, { "Title": "求女籃正妹ig" }, { "Title": "#詢問資工課程"} ];
-// dataDB[ "cate" ] = [ { "Title": "漫威版" }, { "Title": "告白版" }, { "Title": "課程版"} ];
+// dataDB[ "data" ] = [ { "title": "美國隊長好帥!!!", "blockName": "漫威版", "articleID": "aaa", "like": "87", "keep": "45" } 
+//                  ];
 }
     function checkPermission()
     {

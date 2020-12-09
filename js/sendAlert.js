@@ -1,6 +1,6 @@
 $(document).ready(function () {
         
-
+    initial();
     let cmd={}
     $("#SentAlert-inBtn").click(function () {
         var value = $('#who').val();
@@ -54,17 +54,10 @@ $(document).ready(function () {
             }
         }
         else{
-            
 
-            
                 var comment = $.trim($("#comment").val());
                     if(comment != ""){
-                    
-                        
-                        
                         console.log(comment);
-                        cmd[ "password" ] = comment
-                        
                         console.log( "send" );
                             let status = true;
                             swal({
@@ -115,14 +108,7 @@ function funName1(id) {
 $("#chgtxt").text($("#txt1").val());
 }
 
-function initial() {
-    //checkPermission();
-    sessionStorage.clear();
-    let cmd = {};
-    cmd["act"] = "sendReport";
-    cmd["account"] = "sendNotification";
 
-}
 function checkPermission()
 {
     console.log(sessionStorage.getItem( "account" ))
@@ -150,37 +136,32 @@ function checkPermission()
     cmd[ "act" ] = "browseAuthority";
     cmd[ "account" ] = sessionStorage.getItem( "account" );
 
-    let permission, color, nickname, boardName = [];
-    let thisBoardName = sessionStorage.getItem( "boardName" );
+    let permission;
 
     $.post( "../index.php", cmd, function( dataDB )
     {
-        console.log( dataDB );
-        dataDB = JSON.parse( dataDB );
-
-        if( dataDB.status == false )
-        {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: dataDB.errorCode
-            }).then(( result ) => {
-                if ( result ) 
-                {
-                    $( "body" ).empty();
-                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                    $( "body" ).append( httpStatus );
-                }
-            });
-        }
+            console.log( dataDB );
+            dataDB = JSON.parse( dataDB );
+            
+            if( dataDB.status == false )
+            {
+                swal({
+                    title: "載入頁面失敗",
+                    type: "error",
+                    text: dataDB.errorCode
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        $( "body" ).empty();
+                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                        $( "body" ).append( httpStatus );
+                    }
+                });
+            }
         else
         {
             permission = dataDB.data.permission;
-            color = dataDB.data.color;
-            nickname = dataDB.data.nickname;
-            boardName = dataDB.data.boardName;
-            
-            if( permission < 2 || boardName.indexOf( thisBoardName ) == -1 )
+            if( permission != 2 )
             {
                 swal({
                     title: "載入頁面失敗",
@@ -194,9 +175,34 @@ function checkPermission()
                         $( "body" ).append( httpStatus );
                     }
                 });
+                
             }
+            
         }
+        
     });
 }
+function initial(){
+    checkPermission();
+    
+    if(sessionStorage.getItem("Helen-act")== "toAllNotification"){
+        $(".tabContent").find("h2").text("Helen－發送通知");
+        $(".tabContent").find("p").text("This is Admin only.");
+    }
+    if(sessionStorage.getItem("Helen-act")== "sendNotification"){
+        $(".tabContent").find("h2").text("Helen－發送通知");
+        $(".tabContent").find("p").text("This is Admin only.");
+        
+    }
+}
 
+function checkPermission()
+{
+    // let perm = sessionStorage.getItem( "Helen-permission" );
+    // console.log( perm );
 
+    // if( perm ) return ( perm.valueOf() >= 3 ); 
+    // else return false;
+
+    return true;
+}

@@ -15,9 +15,11 @@ function () {
         }
     else{
         let cmd = {};
-        cmd[ "act" ] = "changeNickname";
+        cmd["act"] = "modifyPersonalInfo";
+        cmd["option"] = "nickname";
         cmd[ "account" ] =sessionStorage.getItem("UserID");
-        cmd[ "nickname" ] =document.getElementById("name").value;
+        //cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
+        cmd[ "new" ] =document.getElementById("name").value;
         console.log(document.getElementById("name").value)
         document.getElementById('name').disabled = !document.getElementById('name').disabled;
         document.getElementById("edit").value = 'Edit'
@@ -49,9 +51,11 @@ if(document.getElementById('password').disabled == true){
 }
 else{
     let cmd = {};
-        cmd[ "Act" ] = "changePassword";
+        cmd["act"] = "modifyPersonalInfo";
         cmd[ "account" ] =sessionStorage.getItem("UserID");
-        cmd[ "password" ] =document.getElementById("password").value;
+        cmd["option"] = "password" ;
+        //cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
+        cmd["new"] = document.getElementById("password").value;
         console.log(document.getElementById("password").value)
     document.getElementById('password').disabled = !document.getElementById('password').disabled;
     document.getElementById('InputWrap2').style.display='none'
@@ -122,4 +126,69 @@ document.getElementById("email").setAttribute("onClict",value);
 　document.getElementById('name').disabled=true;　// 變更欄位為禁用
 
 　}
+}
+
+
+function initial()
+{
+    //checkPermission()
+    let cmd = {};
+    cmd[ "act" ] = "modifyPersonalInfo";
+    cmd[ "account" ] = sessionStorage.getItem( "account" );
+
+    let permission, color, nickname;
+
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
+
+        if( dataDB.status == false )
+        {
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode
+            })
+        }
+        else
+        {
+            permission = dataDB.data.permission;
+            color = dataDB.data.color;
+            nickname = dataDB.data.nickname;
+            password = dataDB.data.password;
+            if(sessionStorage.getItem("Helen-act")== "modifyPersonalInfo"){
+                
+                $(el).css('border-color','#'+color);//??
+                $(".InputWrap").find("fname").placeholder(nickname);
+                $(".InputWrap").find("password").placeholder(password);
+            }
+        }
+    });
+}
+    
+
+function checkPermission()
+{
+    let perm = sessionStorage.getItem( "Helen-permission" );
+    console.log( "Permission:　"+ perm );
+
+    if( perm && perm.valueOf() >= 1 ) return true;
+
+    else 
+    {
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {
+            if ( result ) 
+            {
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
+            }
+        });
+
+        return false;
+    }
 }

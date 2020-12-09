@@ -128,128 +128,72 @@ $( document ).ready( function()
         
             let cmd = {};
             cmd[ "act" ] = "newCollectionCatalog";
-            // dirIDs = sessionStorage.getItem( "Helen-dirIDs" );
-            // dirIDs = JSON.parse( boardIDs );
-            // dirNames = sessionStorage.getItem( "Helen-dirNames" );
-            // dirNames = JSON.parse( dirNames );
+            dirIDs = sessionStorage.getItem( "Helen-dirIDs" );
+            dirIDs = JSON.parse( boardIDs );
+            dirNames = sessionStorage.getItem( "Helen-dirNames" );
+            dirNames = JSON.parse( dirNames );
 
-            // $.post( "../index.php", cmd, function( dataDB )
-            // {   
-            //     dataDB = JSON.parse( dataDB );
+            $.post( "../index.php", cmd, function( dataDB )
+            {   
+                dataDB = JSON.parse( dataDB );
 
-            //     if( dataDB.status == false )
-            //     {
-            //         swal({
-            //             title: "載入頁面失敗",
-            //             type: "error",
-            //             text: dataDB.errorCode
-            //         })
-            //     }
-            //     else
-            //     {
-            //         let content = $( ".tabContent row" );
-            //         content.empty();
+                if( dataDB.status == false )
+                {
+                    swal({
+                        title: "載入頁面失敗",
+                        type: "error",
+                        text: dataDB.errorCode
+                    })
+                }
+                else
+                {
+                    let content = $( ".tabContent row" );
+                    content.empty();
 
-            //         CollectionCatalog = dataDB.data;
+                    //CollectionCatalog = dataDB.data;
+                    for( let i in dataDB.data )
+                    {
+                        validDir = arrayRemove( validBoardsvalidDir, dataDB.data[i].dirName);
+                    }
 
-            //         let validDir = dirNames;
-            //         for( let i in dataDB.data )
-            //         {
-            //             validDir = arrayRemove( validBoardsvalidDir, dataDB.data[i].dirName);
-            //         }
-
-            //         let empty = true;
-            //         let oneRow = "";
-            //         let selectBlock = "";
-            //         let buttonBlock = "";
-
-            //         let validOptions = "";
-            //         let validlis = "";
-            //         for( let j in validBoards )
-            //         {
-            //             validOptions += "<option value='" + validBoards[j] + "'>" + validBoards[j] + "</option>";
-            //             validlis += "<li><a href='#''>" + validBoards[j] + "</a></li>";
-            //         }
-
-            //         for( let i in dataDB.data )
-            //         {
-            //             empty = false;
-
-            //             if( dataDB.data[parseInt(i) - 1] === undefined || dataDB.data[i].userID != dataDB.data[parseInt(i) - 1].userID )
-            //             {
-            //                 oneRow = "<tr>" + 
-            //                             "<td><img class='head' src='" + dataDB.data[i].color + ".png' alt='" + dataDB.data[i].color + "'></td>" +
-            //                             "<td>" + dataDB.data[i].userID + "@mail.ntou.edu.tw</td>" +
-            //                             "<td>";
-            //             }
-
-            //             selectBlock = "<div class='input-group input-group-lg mt-3'>" +
-            //                                 "<select class='form-control' style='background-color: brown; color: white;'>" +
-            //                                     "<option value='" + dataDB.data[i].boardName + "' selected>" + dataDB.data[i].boardName + "</option>" +
-            //                                     validOptions + 
-            //                                 "</select>" +
-            //                         "</div>";
-
-            //             oneRow += selectBlock;
-
-            //             if( dataDB.data[parseInt(i) + 1] === undefined || dataDB.data[i].userID != dataDB.data[parseInt(i) + 1].userID )
-            //             {
-            //                 oneRow += "</td><td>";
-
-            //                 buttonBlock = "<div class='input-group input-group-lg mt-3'>" +
-            //                                 "<div class='dropdown'>" +
-            //                                     "<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' style='width: 40px !important;'>" +
-            //                                         "<i class='fa fa-plus'></i>" +
-            //                                     "</button>&nbsp;" +
-            //                                     "<button class='btn btn-danger' type='button' style='width: 40px !important;'>" +
-            //                                         "<i class='fa fa-minus'></i>" +
-            //                                     "</button>" +
-            //                                     "<ul class='dropdown-menu'>" +
-            //                                         validlis +
-            //                                     "</ul>" +
-            //                                 "</div>" +
-            //                             "</div>";
-
-            //                 oneRow += buttonBlock + "</td></tr>";
-
-            //                 content.append( oneRow );
-            //             }
-            //         }
-
-            //         if( empty )
-            //         {
-            //             let emptyMessage = "<tr>" + 
-            //                                     "<td colspan='4'>目前沒有收藏目錄</td>" +
-            //                                 "</tr>";
-            //             content.append( emptyMessage );
-            //         }
-            // const div = document.createElement('div');
+                    let empty = true;
+                    if( empty )
+                    {
+                        let emptyMessage = "<tr>" + 
+                                                "<td colspan='4'>目前沒有收藏目錄</td>" +
+                                            "</tr>";
+                        content.append( emptyMessage );
+                    }
+                    for( let i in dataDB.data )
+                  {
+                     const div = document.createElement('div');
                         
-            //             div.classList.add('Page');
+                        div.classList.add('Page');
                         
-            //             div.innerHTML = `
-            //             <div class="PageName">
-            //                         <div class="value"> 
+                        div.innerHTML = `
+                        <div class="PageName">
+                                    <div class="value"> 
                                         
                                     
-            //                             <span class="currency"><span class="WhichPage" id="cjgtxt">`+ document.getElementById('input2').value+ `</span>
+                                        <span class="currency"><span class="WhichPage" id="cjgtxt">`+dataDB.data[i].DirName+ `</span>
                                 
-            //                             </div>
-            //                     </div>
-            //                     <ul class="deals">
-            //                         <li>:):)</li>
-            //                         </ul>
+                                        </div>
+                                </div>
+                                <ul class="deals">
+                                    <li>:):)</li>
+                                    </ul>
                                 
-            //                             <button class="more">more</button>
+                                        <button class="more">more</button>
                                 
-            //                     </div>
+                                </div>
                                 
                                 
-            //             `;
+                        `;
                         
-            //                 document.querySelector('.row').appendChild(div)
-            //     }
-            // });
+                            document.querySelector('.row').appendChild(div)
+                    }
+                }
+            });
 
             let content = $( ".tabContent row" );
             content.empty();
@@ -258,18 +202,7 @@ $( document ).ready( function()
             dataDB[ "data" ] = [ { "UserID": "00757000", "DirID": "1", "DirName": "最愛" }];
 
             CollectionCatalog = dataDB.data;
-
-            let validBoards = boards;
-
             let empty = true;
-            let oneRow = "";
-            let selectBlock = "";
-            let buttonBlock = "";
-
-            let validOptions = "";
-            let validlis = "";
-           
-
             if( empty )
             {
                 let emptyMessage = "<tr>" + 

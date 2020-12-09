@@ -78,10 +78,11 @@
                colorScheme:'dark',
                onChange:function(hsb,hex,rgb,el,bySetColor){
                 let cmd = {};
-                cmd[ "Act" ] = "Updateinfo";
-                cmd[ "UserID" ] =sessionStorage.getItem("UserID");
-                cmd[ "Item" ] ="Color";
-                cmd[ "Data" ] =hex;
+                cmd["act"] = "modifyPersonalInfo";
+                cmd[ "account" ] =sessionStorage.getItem("UserID");
+                cmd["option"] = "color";
+                //cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
+                cmd["new"] = hex;
                 console.log(hex)
                 $(el).css('border-color','#'+hex);
                 //if(!bySetColor) $(el).val(hex);
@@ -201,8 +202,11 @@
             <hr width="100%">
             <table class="table table-hover">
                 <tbody>
-                <!-- <tr>
+                  <!--
+                <tr>
+
                     <td>紅燈區</td>
+                    <td>美國隊長好帥!!!</td>
                     <td>
                         <button type="button" class="btn">
                             <span class="glyphicon glyphicon-trash"></span> 刪除
@@ -214,6 +218,7 @@
                         </button>
                     </td>
                 </tr>
+                
                 <tr>
                     <td>漫威版</td>
                     <td>美國隊長好帥!!!</td>

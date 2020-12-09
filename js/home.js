@@ -6,7 +6,7 @@
           console.log( $(this))
           $(this).toggleClass("heart-active")
           $(this).children('span').toggleClass("heart-active")
-          $(this).children('span.numb').css("Text",55)
+          $(this).children('span.numb').toggleClass("heart-active").css("content","red")
           
           //$('.heartContent').toggleClass("heart-active")
           //$('.heartTtext').toggleClass("heart-active")
