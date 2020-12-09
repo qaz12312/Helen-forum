@@ -96,14 +96,16 @@ PRIMARY KEY (UserID, DirName),
 FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
+# 總愛心數
 DROP VIEW IF EXISTS HomeHeart;
-CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`cntHeart`,`Times`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,COUNT(FollowHeart.UserID),`Times`
-FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName JOIN `FollowHeart` ON Article.ArticleID = FollowHeart.ArticleID 
+CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`cntHeart`,`Times`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowHeart.UserID),`Times`
+FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowHeart` ON Article.ArticleID = FollowHeart.ArticleID
 GROUP BY `ArticleID` ;
 
+# 總收藏數
 DROP VIEW IF EXISTS HomeKeep;
-CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`cntKeep`,`Times`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,COUNT(FollowKeep.UserID),`Times`
-FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
+CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`cntKeep`,`Times`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowKeep.UserID),`Times`
+FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
 GROUP BY `ArticleID` ;
