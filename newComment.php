@@ -1,5 +1,4 @@
 <?php
-    require_once 'test.php'; //連線資料庫 
 /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "newComment";
@@ -24,30 +23,32 @@
             否則
                 dataDB.data = ""
          */
-
-    $new="INSERT INTO  `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`,`TagFloor`) 
-    VALUES('".$input['account']."','".$input['detail']."','".$input['articleID']."','".$input['floors']."','".$input['tagFloor']."')";
-    $resultNew=$conn->query($new);
-    if(!$resultNew){
-        die($conn->error);
-    }
-    $sql="SELECT `AuthorID`,`Content`,`Times`,`Floor`,`TagFloor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID WHERE `ArticleID`='".$input['articleID']."' AND`Floor`='".$input['floors']."'";
-    $result=$conn->query($sql);
-    if(!$result){
-        die($conn->error);
-    }
-    if($result->num_rows <= 0){
-        $rtn = array();
-        $rtn["status"] = false;
-        $rtn["errorCode"] = "留言上傳失敗";
-        $rtn["data"] = "";
-    }
-    else{
-        $row=$result->fetch_row();
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
-        $rtn["data"] = $row;
-    }
+	function doNewComment($input){ 
+		global $conn;
+		$new="INSERT INTO  `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`,`TagFloor`) 
+		VALUES('".$input['account']."','".$input['detail']."','".$input['articleID']."','".$input['floors']."','".$input['tagFloor']."')";
+		$resultNew=$conn->query($new);
+		if(!$resultNew){
+			die($conn->error);
+		}
+		$sql="SELECT `AuthorID`,`Content`,`Times`,`Floor`,`TagFloor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID WHERE `ArticleID`='".$input['articleID']."' AND`Floor`='".$input['floors']."'";
+		$result=$conn->query($sql);
+		if(!$result){
+			die($conn->error);
+		}
+		if($result->num_rows <= 0){
+			$rtn = array();
+			$rtn["status"] = false;
+			$rtn["errorCode"] = "留言上傳失敗";
+		$rtn["data"] = "";
+		}
+		else{
+			$row=$result->fetch_row();
+			$rtn = array();
+			$rtn["status"] = true;
+			$rtn["errorCode"] = "";
+			$rtn["data"] = $row;
+		}
+	}
     echo json_encode($rtn);
 ?>
