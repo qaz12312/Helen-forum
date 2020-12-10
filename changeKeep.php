@@ -1,18 +1,19 @@
 <?php
-/* 前端 to 後端:
-let cmd = {};
-cmd["act"] = "keep";
-cmd["account"] = "0123456";
-cmd["articleId"] = 540654;
-cmd["dirId"] = 4564;
+	/* 前端 to 後端:
+		let cmd = {};
+		cmd["act"] = "keep";
+		cmd["account"] = "00857210";
+		cmd["articleId"] = "2";
+		cmd["dirName"] = "旅遊景點";
 
-後端 to 前端
-dataDB.status
-dataDB.errorCode
-若 status = true:
-dataDB.data="success"
-否則
-dataDB.data = "" */
+	  後端 to 前端
+		dataDB.status
+		dataDB.errorCode
+		若 status = true:
+			dataDB.data="success to keep the article / success to delete the article"
+		否則
+			dataDB.data = "" */
+
 function doAddDeleteKeep($input)
 {
 	global $conn;
@@ -23,7 +24,7 @@ function doAddDeleteKeep($input)
 	}
 	//KEEP
 	if ($result->num_rows <= 0) {	//收藏文章
-		$keepsql = "INSERT INTO `FollowKeep`(`ArticleID`,`UserID`,`DirName`) VALUES(" . $input['articleId'] . ", '" . $input['account'] . "', '" . $input['dirId'] . "')";
+		$keepsql = "INSERT INTO `FollowKeep`(`ArticleID`,`UserID`,`DirName`) VALUES(" . $input['articleId'] . ", '" . $input['account'] . "', '" . $input['dirName'] . "')";
 		$keepresult = $conn->query($keepsql);
 		if (!$keepresult) {
 			die($conn->error);
