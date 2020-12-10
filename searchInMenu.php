@@ -3,6 +3,7 @@
 let cmd = {};
 cmd["act"] = "searchMenu";
 cmd["searchWord"] = "美食";
+cmd["account"]="00757033"
 cmd["sort"] = "time/hot";
 後端 to 前端
 dataDB.status
@@ -15,6 +16,8 @@ dataDB.errorCode
 	 dataDB.data[i].articleID //第i筆文章的id
      dataDB.data[i].like //第i筆文章的總愛心數
      dataDB.data[i].keep //第i筆文章的總收藏數
+     dataDB.data[i].hasHeart//第i筆文章的是否按過愛心
+     dataDB.data[i].hasKeep//第i筆文章的是否收藏
     ) 
 否則
     dataDB.data = "沒有文章"*/
@@ -47,7 +50,17 @@ function doSearchMenu($input)
             $arr = array();
             for ($i = 0; $i < $result->num_rows; $i++) {    //回傳找到的文章(包含關鍵字)
                 $row = $result->fetch_row();
-                $log = array("title" => "$row[0]", "blockName" => "$row[1]", "articleID" => "$row[2]", "like" => "$row[3]", "keep" => "$row[4]");
+                $sqlHeart ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
+                $heart = $conn->query($sqlHeart);
+                if (!$heart) {
+                    die($conn->error);
+                }
+                $sqlKeep ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
+                $keep = $conn->query($sqlKeep);
+                if (!$keep) {
+                    die($conn->error);
+                }
+                $log = array("title" => "$row[0]",  "boardName" => "$row[1]", "like" => "$row[2]", "keep" => "$row[3]", "hasHeart" => ( $heart->num_rows>0 ? 1 : 0), "hasKeep" => ($keep->num_rows>0 ? 1 : 0 ));
                 $arr[$i] = $log;
             }
             $rtn = array();
