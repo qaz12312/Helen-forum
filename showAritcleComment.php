@@ -1,12 +1,12 @@
 <?php
-    //require_once 'connectDB.php'; //連線資料庫 
-        /* 前端 to 後端:
+        /* 
+        前端 to 後端:
             let cmd = {};
             cmd["act"] = "showAritcleComment";
             cmd["articleID"] = "ArticleID";
             cmd["account"] = "00757033";
-        */
-        /* 後端 to 前端
+        
+        後端 to 前端
             dataDB.state
             dataDB.errorCode
             若 state = true:
@@ -19,8 +19,9 @@
                     dataDB.data[i].keep//第i筆文章的總收藏數
                 ) 
             否則
-                dataDB.data = ""*/
-        function doShowAritcleComment($input){ //查看user的通知
+                dataDB.data = ""
+                */
+        function doShowAritcleComment($input){
             global $conn;
             $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `ArticleID`='".$input['articleID']."'";
             $result=$conn->query($sql);
