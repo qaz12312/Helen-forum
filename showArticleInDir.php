@@ -17,7 +17,7 @@ dataDB.data[i].articleID
 dataDB.data[i].title //第i筆文章的標題
 ) 
 否則
-dataDB.errorCode = ""
+dataDB.errorCode = "沒有文章在【dirName】資料夾下"
 dataDB.data = ""
 */
     function doShowArticleInDir($input){
