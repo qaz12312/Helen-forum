@@ -8,18 +8,13 @@
         cmd["rule"] = "Rule"
     */ 
     /* 後端 to 前端
-            dataDB.state
-            dataDB.errorCode
-            若 state = true:
-                dataDB.data[i] //有i筆文章
-                (
-                    dataDB.data[i].BoardName 
-                    dataDB.data[i].UserID 
-                    dataDB.data[i].Rule 
-                     dataDB.data[i].TopArticleID
-                ) 
+            
+            若 status = true:
+                dataDB.data = 更新後的版
+               dataDB.status = true:
             否則
-                
+                dataDB.data = ""
+               dataDB.errorCode = 沒有版/無權限刪除 
          */
     function doEditBoard($input){
         global $conn;
@@ -52,10 +47,11 @@
                 $rtn["data"] = "";
             }
             else{
+                $row=$result->fetch_row();
                 $rtn = array();
                 $rtn["status"] = true;
                 $rtn["errorCode"] = "";
-                $rtn["data"] = "";
+                $rtn["data"] = $row;
             }
         }
         echo json_encode($rtn);

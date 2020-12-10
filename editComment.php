@@ -2,7 +2,7 @@
        //require_once 'test.php'; //連線資料庫 
 /* 前端 to 後端:
             let cmd = {};
-            cmd["act"] = "editComment";
+            cmd["act"] = "editComment"
 			cmd["account"] = "AuthorID"
             cmd["detail"] = "Content"
             cmd["articleID"] ="ArticleID"
@@ -11,17 +11,12 @@
         */
 		
         /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
             若 status = true:
-				dataDB.data[0]	// AuthorID
-				dataDB.data[1]	// Content
-				dataDB.data[2]	// ArticleID
-                dataDB.data[3]	// Time
-                dataDB.data[4]	// Floor
-                dataDB.data[5]	// TagFloor
+                dataDB.data = 更新後的留言
+				dataDB.status = true:
             否則
                 dataDB.data = ""
+                dataDB.errorCode = 無權限更新/留言更新失敗
          */
     function doEditComment($input){
         global $conn;
@@ -55,9 +50,10 @@
             }
             else{
                 $rtn = array();
+                $row=$result->fetch_row();
                 $rtn["status"] = true;
                 $rtn["errorCode"] = "";
-                $rtn["data"] = "";
+                $rtn["data"] = $row;
             }
         }
         echo json_encode($rtn);

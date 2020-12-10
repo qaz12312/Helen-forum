@@ -10,14 +10,13 @@
         */
 		
          /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
+            
             若 status = true:
-				dataDB.data[0]	// UserID
-				dataDB.data[1]	// DirID
-				dataDB.data[2]	// DirName
+                dataDB.data=更新後的資料夾名稱
+				dataDB.status = true:
             否則
-                dataDB.data = ""
+                dataDB.data=""
+                dataDB.errorCode = 無權限修改 / 修改失敗
          */
     function doEditDir($input){
         global $conn;
@@ -50,10 +49,11 @@
                 $rtn["data"] = "";
             }
             else{
+                $row=$result->fetch_row();
                 $rtn = array();
                 $rtn["status"] = true;
                 $rtn["errorCode"] = "";
-                $rtn["data"] = "";
+                $rtn["data"] = $row;
             }
         }
         echo json_encode($rtn);

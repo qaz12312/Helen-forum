@@ -3,34 +3,25 @@
             let cmd = {};
             cmd["act"] = "editArticle";
 			cmd["articleID"] = "ArticleID"
-            cmd["authorID"] = "AuthorID"
-            cmd["blockName"] ="美食版"
+            cmd["account"] = "AuthorID"
+            cmd["newBlockName"] ="美食版"
             cmd["title"] = "Title"
             cmd["content"] = "Content"
             cmd["picture"] = "Image"
             cmd["hashTag"] ="HashTag"
-            cmd["timer"] ="Time"
         */
 
        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				dataDB.data[0]	// ArticleID
-				dataDB.data[1]	// AuthorID
-				dataDB.data[2]	// Title
-                dataDB.data[3]	// Content
-                dataDB.data[4]	// Image
-                dataDB.data[5]	// HashTag
-                dataDB.data[6]	// Time
-                dataDB.data[7]	// Usercolor
-            否則
-                dataDB.data = ""
+			若 status = true:
+				dataDB.data = 更新後的文章
+				 dataDB.status = true:
+			否則
+				dataDB.data = ""
+                dataDB.errorCode = "無權限更新"/"文章更新失敗";
          */
-        //$sql="UPDATE `Users` SET `".$optionAttr."`='".$input['new']."' WHERE `UserID` ='".$input['account']."'";
     function doEditArticle($input){ 
 		global $conn;    
-		$sqlcheck="SELECT `ArticleID` FROM `Article` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['authorID']."' ";  
+		$sqlcheck="SELECT `ArticleID` FROM `Article` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' ";  
 		$result=$conn->query($sqlcheck);
 		if(!$result){
 			die($conn->error);
@@ -42,7 +33,7 @@
 			$rtn["data"] = "";
 		}
 		else{
-			$updateSql="UPDATE `Article` SET `Title`='".$input['title']."',`Content`='".$input['content']."',`Image`='".$input['picture']."',`HashTag`='".$input['hashTag']."',`BlockName`='".$input['blockName']."' WHERE `ArticleID` = '".$input['articleID']."'";
+			$updateSql="UPDATE `Article` SET `Title`='".$input['title']."',`Content`='".$input['content']."',`Image`='".$input['picture']."',`HashTag`='".$input['hashTag']."',`BlockName`='".$input['newBlockName']."' WHERE `ArticleID` = '".$input['articleID']."'AND `AuthorID`='".$input['account']."' ";
 			$result=$conn->query($updateSql);
 			if(!$result){
 				die($conn->error);
