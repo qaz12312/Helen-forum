@@ -2,10 +2,10 @@
     /* 
     前端 to 後端:
     let cmd = {};
-    cmd["act"] = "sortInBoard";
+    cmd["act"] = "board_sort";
     cmd["sort"] = "time/hot";
     cmd["boardName"] = "美食"
-    
+    cmd["account"]="00757033"
     後端 to 前端:
     dataDB.state
     若 state = true:
@@ -33,7 +33,7 @@
                     die($conn->error);
                 }
             } else if ($input['sort'] == "hot") {
-                $sql1 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = '" . $input['boardName'] . "'ORDER BY `cntHeart` DESC";
+                $sql1 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = '".$input['boardName']."'ORDER BY `cntHeart` DESC";
                 $result = $conn->query($sql1);
                 if (!$result) {
                     die($conn->error);
@@ -48,7 +48,17 @@
                 $arr = array();
                 for ($i = 0; $i < $result->num_rows; $i++) {
                     $row = $result->fetch_row();
-                    $log = array("title" => "$row[0]", "articleID" => "$row[1]", "like" => "$row[2]", "keep" => "$row[3]", "time" => "$row[4]");
+                    $sqlHeart ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
+                    $heart = $conn->query($sqlHeart);
+                    if (!$heart) {
+                        die($conn->error);
+                    }
+                    $sqlKeep ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
+                    $keep = $conn->query($sqlKeep);
+                    if (!$keep) {
+                        die($conn->error);
+                    }
+                    $log = array("title" => "$row[0]", "articleID" => "$row[1]", "like" => "$row[2]", "keep" => "$row[3]", "hasHeart" => ( $heart->num_rows>0 ? 1 : 0), "hasKeep" => ($keep->num_rows>0 ? 1 : 0 ));
                     $arr[$i] = $log;
                 }
                 $rtn = array();

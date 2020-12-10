@@ -3,60 +3,59 @@
     /*前端 to 後端:
     let cmd = {};
     cmd["act"] = "editModerator";
-    cmd["oldboardID"] = "BoardName"
-    cmd["newboardID"] = "BoardName"
+    cmd["oldBoardName"] = "BoardName"
+    cmd["newBoardName"] = "BoardName"
     cmd["account"] = "UserID"
 */ 
 /* 後端 to 前端
-        dataDB.state
+        dataDB.status
         dataDB.errorCode
-        若 state = true:
-            dataDB.data[i] //有i筆文章
-            (
-                dataDB.data[i].UserID 
-                dataDB.data[i].UserColor 
-                dataDB.data[i].BoardName 
-            ) 
+        若 status = true:
+            dataDB.data="" 
         否則
-            
+              dataDB.errorCode= 刪除版主失敗 /任命版主失敗
         */
     function doEditModerator($input){
         global $conn;
         $check= true;
-        if($input['oldboardID']){
-            $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardID` = $input['oldboardID']";
+        if(isset($input['oldBoardName'])){
+            $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = '".$input['oldBoardName']."'";
             $result=$conn->query($updateSql);
             if(!$result){
                 die($conn->error);
+                $check= false;
             }
-            $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `Board`NATURAL JOIN`User`   WHERE `BoardID` = '"$input['oldboardID']."' AND`UserID`='admin' " ;
+            $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`WHERE `BoardName`='".$input['oldBoardName']."' AND`UserID`='admin' " ;
             $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
+                $check= false;
             }
             if($result->num_rows <= 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "修改oldboardID失敗";
+                $rtn["errorCode"] = "刪除版主失敗";
                 $rtn["data"] = "";
                 $check= false;
             }
         }
-        if($input['newboardID']){
-            $updateSql2="UPDATE `Board` SET `UserID`='".$input['account']."' WHERE `BoardID` = '".$input['newboardID']."'";
+        if(isset($input['newBoardName'])){
+            $updateSql2="UPDATE `Board` SET `UserID`='".$input['account']."' WHERE `BoardName` = '".$input['newBoardName']."'";
             $result=$conn->query($updateSql2);
             if(!$result){
                 die($conn->error);
+                $check= false;
             }
-            $sql ="SELECT `UserID`,`UserColor`,`BoardName` FROM `Board`NATURAL JOIN`Users`  WHERE `BoardID` = '".$input['oldboardID']."' AND`UserID`='admin' " ;
+            $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`  WHERE `BoardName` = '".$input['newBoardName']."' AND`UserID`='".$input['account']."' " ;
             $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
+                $check= false;
             }
             if($result->num_rows <= 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "修改oldboardID失敗";
+                $rtn["errorCode"] = "任命版主失敗";
                 $rtn["data"] = "";
                 $check= false;
             }
