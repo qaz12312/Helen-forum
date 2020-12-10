@@ -2,7 +2,7 @@
     /* 
     前端 to 後端:
     let cmd = {};
-    cmd["act"] = "board_sort";
+    cmd["act"] = "sortInBoard";
     cmd["sort"] = "time/hot";
     cmd["boardName"] = "美食"
     
