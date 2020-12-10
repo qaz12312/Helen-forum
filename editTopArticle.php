@@ -1,24 +1,23 @@
 <?php
-    require_once("test.php"); //連線資料庫 
-
-        /* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "TopArticleChange";
-			cmd["articleID"] = "1"
-			cmd["boardName"] = "美食"
-			cmd["account"] = "admin";
-        */
-		
-        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				dataDB.data[0]	// TopArticleID
-				dataDB.data[1]  // title
-            否則
-                dataDB.data = ""
+        /* 
+	前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "TopArticleChange";
+	cmd["articleID"] = "1"
+	cmd["boardName"] = "美食"
+	cmd["account"] = "admin";
+	
+        後端 to 前端
+	dataDB.status
+	dataDB.errorCode
+	若 status = true:
+		dataDB.data[0]	// TopArticleID
+		dataDB.data[1]  // title
+	否則
+	dataDB.data = ""
          */
-        // global $input,$conn;	// 置頂
+        function doEditTopArticle($input){
+		global $conn;
         $sqlcheck="SELECT `BoardName` FROM `Board` WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."' ";  
 		$result=$conn->query($sqlcheck);
 		if(!$result){
@@ -56,5 +55,6 @@
           }
 		}
         echo json_encode($rtn);
+	}
 ?>
 

@@ -1,24 +1,25 @@
 <?php
-   // require_once 'connectDB.php'; //連線資料庫 
-        /* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "showArticleInBoard";
-            cmd["boardName"] = "BoardName";
-        */
-        /* 後端 to 前端
-            dataDB.state
-            dataDB.errorCode
-            若 state = true:
-                dataDB.data[i] //有i筆文章
-                (
-                    dataDB.data[i].title //第i筆文章的標題
-                    dataDB.data[i].blockName //第i筆文章的所屬看板
-                    dataDB.data[i].articleID
-                    dataDB.data[i].like //第i筆文章的總愛心數
-                    dataDB.data[i].keep//第i筆文章的總收藏數
-                ) 
-            否則
-                dataDB.data = ""*/
+   /* 
+   前端 to 後端:
+   let cmd = {};
+   cmd["act"] = "showArticleInBoard";
+   cmd["boardName"] = "BoardName";
+
+   後端 to 前端
+   dataDB.state
+   dataDB.errorCode
+   若 state = true:
+   dataDB.data[i] //有i筆文章
+   (
+     dataDB.data[i].title //第i筆文章的標題
+     dataDB.data[i].blockName //第i筆文章的所屬看板
+     dataDB.data[i].articleID
+     dataDB.data[i].like //第i筆文章的總愛心數
+     dataDB.data[i].keep//第i筆文章的總收藏數
+   ) 
+   否則
+   dataDB.data = ""
+   */
     function doShowArticleInBoard($input){
         global $conn;
         $sql="SELECT `Title`,`ArticleID` ,`cntHeart`,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName`='".$input['boardName']."'";

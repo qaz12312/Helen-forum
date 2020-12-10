@@ -3,7 +3,6 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "deleteBoard";
-    cmd["account"] = "00757007";
     cmd["boardName"] =  "BoardName";
 
     後端 to 前端
@@ -18,7 +17,7 @@
     function doDeleteBoard($input)
     {
         global $conn;
-        $sqlcheck = "SELECT `BoardName` FROM `Board` NATURAL JOIN `Users`  WHERE `BoardName`='" . $input['boardName'] . "' AND `UserID`='" . $input['account'] . "'";
+        $sqlcheck = "SELECT `BoardName` FROM `Board` NATURAL JOIN `Users`  WHERE `BoardName`='" . $input['boardName'] . "'";
         $result = $conn->query($sqlcheck);
         if (!$result) {
             die($conn->error);
@@ -29,12 +28,12 @@
             $rtn["errorCode"] = "此版塊不存在";
             $rtn["data"] = "";
         } else {
-            $sql = "DELETE FROM `Board`  WHERE `BoardName`='" . $input['boardName'] . "' AND `UserID`='" . $input['account'] . "'  ";
+            $sql = "DELETE FROM `Board`  WHERE `BoardName`='" . $input['boardName'] ."'";
             $result = $conn->query($sql);
             if (!$result) {
                 die($conn->error);
             }
-            $sql = "SELECT `BoardName` FROM `Board` WHERE `BoardName` = '" . $input['boardName'] . "' ";
+            $sql = "SELECT `BoardName` FROM `Board` WHERE `BoardName` = '" . $input['boardName'] . "'";
             $result = $conn->query($sql);
             if (!$result) {
                 die($conn->error);

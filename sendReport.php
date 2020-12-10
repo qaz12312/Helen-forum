@@ -1,21 +1,21 @@
 <?php
-    //require_once 'connectDB.php'; //連線資料庫 
-/* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "sendReport";
-            cmd["reason"] = "Reason"
-			cmd["account"] = "userid"
-        */
-		
-        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				dataDB.data[0]	// ArticleID
-                dataDB.data[1]	// Reason
-                dataDB.data[2]	// times
-            否則
-                dataDB.data = ""
+	/* 
+	前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "sendReport";
+	cmd["account"] = "00757007";
+	cmd["reason"] = "Reason";
+	cmd["articleID"] = articleID;	
+	
+        後端 to 前端
+	dataDB.status
+	dataDB.errorCode
+	若 status = true:
+		dataDB.data[0]	// ArticleID
+		dataDB.data[1]	// Reason
+		dataDB.data[2]	// times
+	否則
+		dataDB.data = ""
          */
     function doSendReport($input){
         global $conn;
