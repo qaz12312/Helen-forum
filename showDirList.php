@@ -1,19 +1,24 @@
 <?php
-/* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "addKeepDir";
-        */
-		
-        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				dataDB.data[0]	// UserID
-				dataDB.data[1]	// DirName
-            否則
-                dataDB.data = ""
-         */
-    function doShowCollectionCatalog($input){
+	/* 
+	前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "showDirList";
+
+	後端 to 前端:
+	dataDB.status
+	若 status = true:
+		dataDB.errorCode = ""
+		dataDB.data[i]	// 資料夾名稱
+		(
+			dataDB.data[0]
+			dataDB.data[1]
+			...
+		)
+	否則
+		dataDB.errorCode = "使用者沒有建立資料夾";
+		dataDB.data = ""
+	*/
+    function doShowDirList($input){
         global $conn;
         $sql="SELECT `DirName` FROM `KeepDir` where `UserID` = '".$input['account']."'";
         $result=$conn->query($sql);
@@ -23,15 +28,14 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "資料夾為空";
+            $rtn["errorCode"] = "使用者沒有建立資料夾";
             $rtn["data"] = "";
         }
         else{
             $arr=array();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
-                $log=array("DirName"=>"$row[0]");
-                $arr[$i]=$log;
+                $arr[$i]=$row[0];
             }
             $rtn = array();
             $rtn["statue"] = true;
