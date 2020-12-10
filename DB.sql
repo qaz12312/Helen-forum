@@ -2,24 +2,24 @@ use test;
 
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
-UserID varchar(101) NOT NULL,
-Password varchar(12) NOT NULL,
-IsAdmin boolean default false,
-Color varchar(10) NOT NULL,
-Nickname varchar(21) ,
-PRIMARY KEY (UserID)
+	UserID varchar(101) NOT NULL,
+	Password varchar(12) NOT NULL,
+	IsAdmin boolean default false,
+	Color varchar(10) NOT NULL,
+	Nickname varchar(21) ,
+	PRIMARY KEY (UserID)
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Board;
 CREATE TABLE Board (
-# BoardID tinyint(100) NOT NULL AUTO_INCREMENT,
-BoardName varchar(255) NOT NULL UNIQUE,
-UserID varchar(101) NOT NULL,
-Rule mediumtext ,
-TopArticleID bigint(255) ,
-# PRIMARY KEY (BoardID),
-PRIMARY KEY (BoardName),
-FOREIGN KEY (UserID) REFERENCES Users (UserID) 
+	# BoardID tinyint(100) NOT NULL AUTO_INCREMENT,
+	BoardName varchar(255) NOT NULL UNIQUE,
+	UserID varchar(101) NOT NULL,
+	Rule mediumtext ,
+	TopArticleID bigint(255) ,
+	# PRIMARY KEY (BoardID),
+	PRIMARY KEY (BoardName),
+	FOREIGN KEY (UserID) REFERENCES Users (UserID) 
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Article;
@@ -39,12 +39,12 @@ FOREIGN KEY (BlockName) REFERENCES Board (BoardName) ON UPDATE CASCADE  ON DELET
 
 DROP TABLE IF EXISTS Report;
 CREATE TABLE Report (
-UserID varchar(101) NOT NULL,
-ArticleID bigint(255) NOT NULL,
-Reason varchar(255) NOT NULL,
-Times datetime DEFAULT CURRENT_TIMESTAMP,
-PRIMARY KEY (UserID, ArticleID),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID) ON DELETE CASCADE
+	UserID varchar(101) NOT NULL,
+	ArticleID bigint(255) NOT NULL,
+	Reason varchar(255) NOT NULL,
+	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (UserID, ArticleID),
+	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID) ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Comments;
@@ -62,39 +62,39 @@ FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
 
 DROP TABLE IF EXISTS FollowHeart;
 CREATE TABLE FollowHeart (
-ArticleID bigint(255) NOT NULL,
-UserID varchar(101) NOT NULL,
-PRIMARY KEY (ArticleID, UserID),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE,
-FOREIGN KEY (UserID) REFERENCES Users (UserID)
+	ArticleID bigint(255) NOT NULL,
+	UserID varchar(101) NOT NULL,
+	PRIMARY KEY (ArticleID, UserID),
+	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE,
+	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS FollowKeep;
 CREATE TABLE FollowKeep (
-ArticleID bigint(255) NOT NULL,
-UserID varchar(101) NOT NULL,
-DirName varchar(255) NOT NULL,
-AddTime datetime DEFAULT CURRENT_TIMESTAMP,
-PRIMARY KEY (ArticleID, UserID),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)   ON DELETE CASCADE,
-FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON DELETE CASCADE
+	ArticleID bigint(255) NOT NULL,
+	UserID varchar(101) NOT NULL,
+	DirName varchar(255) NOT NULL,
+	AddTime datetime DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (ArticleID, UserID),
+	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)   ON DELETE CASCADE,
+	FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Notice;
 CREATE TABLE Notice (
-UserID varchar(101) NOT NULL,
-Times datetime DEFAULT CURRENT_TIMESTAMP,
-Content varchar(255) NOT NULL,
-PRIMARY KEY (UserID, Times, Content),
-FOREIGN KEY (UserID) REFERENCES Users (UserID)
+	UserID varchar(101) NOT NULL,
+	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Content varchar(255) NOT NULL,
+	PRIMARY KEY (UserID, Times, Content),
+	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS KeepDir;
 CREATE TABLE KeepDir (
-UserID varchar(101) NOT NULL,
-DirName varchar(255) NOT NULL,
-PRIMARY KEY (UserID, DirName),
-FOREIGN KEY (UserID) REFERENCES Users (UserID)
+	UserID varchar(101) NOT NULL,
+	DirName varchar(255) NOT NULL,
+	PRIMARY KEY (UserID, DirName),
+	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
 # 總愛心數
