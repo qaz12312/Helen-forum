@@ -3,22 +3,15 @@
         /* 前端 to 後端:
             let cmd = {};
             cmd["act"] = "boardList";
-            cmd["account"] = "userid";
         */
         /* 後端 to 前端
-            dataDB.state
+            dataDB.status
             dataDB.errorCode
-            若 state = true:
-                dataDB.data[i] //有i筆文章
-                (
-                    dataDB.data[i].title //第i筆文章的標題
-                    dataDB.data[i].blockName //第i筆文章的所屬看板
-                    dataDB.data[i].articleID
-                    dataDB.data[i].like //第i筆文章的總愛心數
-                    dataDB.data[i].keep//第i筆文章的總收藏數
-                ) 
+            若 status = true:
+                dataDB.data[i] //有i筆boardName
             否則
-                dataDB.data = ""*/
+                dataDB.data = "沒有文章"
+		*/
     function doBoardList($input){
         global $conn;
         $sql="SELECT `BoardName` FROM `Board` ";

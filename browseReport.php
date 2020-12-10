@@ -3,7 +3,6 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "browseReport";
-    cmd["account"] = "00757007";
     cmd["boardName"] = "企鵝";
 
     後端 to 前端
