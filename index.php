@@ -9,168 +9,165 @@
     $conn = connSql();
     // session_start();
     switch ($input["act"]) {
-         case "boardList": //【訪客】主頁的顯示所有board -----劉
-            require_once("boardList.php");
-            doBoardList($input);
-            break;
-         case "browseAuthority": //【前端頁面】查看權限(若為版主，則是所屬看板) -----劉
+        // 獨立出去了，忘記密碼&註冊 : 轅
+        case "browseAuthority": //【前端頁面(即系統)】查看權限(若為版主，則是所屬看板) -----劉
             require_once("browseAuthority.php");
             doBrowseAuthority($input);
             break;
-         case "browseNotification": //【user】查看user的通知 -----劉
-            require_once("browseNotification.php");
-            doBrowseNotification($input); 
+        case "logIn": //登入 -----鈞
+            require_once("logIn.php");
+            doLogIn($input);
             break;
-         case "browseReport": //【版主】查看board底下的文章檢舉 -----劉
-            require_once("browseReport.php");
-            doBrowseReport($input);
+        case "logOut": //登出 -----鈞
+            require_once("logOut.php");
+            doLogOut($input);
+            break;   
+        case "modifyPersonalInfo": // 【user】修改個人資料(密碼/暱稱/顏色) -----鈞
+            require_once("personalInfo.php");
             break;
-         case "heart": //【user】點擊愛心&取消 -----轅
-            require_once("changeHeart.php");
-            doAddDeleteHeart($input);
+        case "boardList": //【訪客】主頁的顯示所有board -----劉
+            require_once("boardList.php");
+            doBoardList($input);
             break;
-         case "keep": //【user】點擊收藏&取消 -----轅
-            require_once("changeKeep.php");
-            doAddDeleteKeep($input);
+        case "showArticleInBoard": //【訪客】檢視版內文章列表 -----劉
+            require_once("showArticleInBoard.php");
+            doShowArticleInBoard($input);
             break;
-         case "clickNotice"://【user】點通知->刪除此則通知 -----劉
+        case "showNotice": //【user】查看user的通知 -----劉
+            require_once("showNotification.php");
+            doShowNotification($input);
+            break;
+        case "clickNotice"://【user】點通知->刪除此則通知 -----劉
             require_once("clickNotice.php");
             doClickNotice($input);
             break;
-         case "deleteArticle"://【user】刪除他發過的文章 -----劉
+        case "sendNotification": // 【系統】發送通知給某個user -----劉
+            require_once("sendNotification.php");
+            doSendNotification($input);
+            break;
+        case "toAllNotification": // 【admin、系統】寄通知給所有人 -----劉
+            require_once("toAllNotification.php");
+            doToAllNotification($input);
+            break;
+        case "searchBoard": //【訪客】看板內搜尋 -----轅+劉
+            require_once("searchInBoard.php");
+            doSearchBoard($input);
+            break;
+        case "sortInBoard": // 【系統】版內排序 -----轅+劉
+            require_once("sortInBoard.php");
+            doSortBoard($input);
+            break;
+        case "searchMenu": //【訪客】主頁搜尋 -----轅+劉
+            require_once("searchInMenu.php");
+            doSearchMenu($input);
+            break;
+        case "sortInMenu": // 【系統】首頁排序 -----轅+劉
+            require_once("sortInMenu.php");
+            doSortMenu($input);
+            break;
+        case "showAritcleComment": //【訪客】檢視文章&留言 -----劉
+            require_once("showAritcleComment.php");
+            doShowAritcleComment($input);
+            break;
+        case "heart": //【user】點擊愛心&取消 -----轅
+            require_once("changeHeart.php");
+            doAddDeleteHeart($input);
+            break;
+        case "keep": //【user】點擊收藏&取消 -----轅
+            require_once("changeKeep.php");
+            doAddDeleteKeep($input);
+            break;
+        case "newArticle": //【user】新增文章 -----劉
+            require_once("newArticle.php");
+            doNewArticle($input);
+            break; 
+        case "deleteArticle"://【user】刪除他發過的文章 -----劉
             require_once("deleteArticle.php");
             doDeleteArticle($input);
             break;
-         case "deleteBoard": //【admin】刪除board -----劉
-            require_once("deleteBoard.php");
-            doDeleteBoard($input);
-            break;
-         case "deleteComment": // 【user】刪除他留過的留言 -----劉
-            require_once("deleteComment.php");
-            doDeleteComment($input);
-            break;
-         case "deleteDir": // 【user】刪除他的收藏資料夾 -----劉
-            require_once("deleteDir.php");
-            doDeleteDir($input);
-            break;
-         case "deleteReport": // 【版主】審核被檢舉文章 -----伶
-            require_once("deleteReport.php");
-            doDeleteReport($input);
-            break;
-         case "editArticle": // 【user】修改自己發過的文章 -----劉
+        case "editArticle": // 【user】修改自己發過的文章 -----劉
             require_once("editArticle.php");
             doEditArticle($input);
             break;
-         case "editBoard": // 【版主】更改board的名字 + 版規 -----劉--------------------------------版主是否可以自己更動版名?
-            require_once("editBoard.php");
-            doEditBoard($input);
+        case "showPostRecord": // 【user】查看自己發文記錄列表 -----劉
+            require_once("showPostRecord.php");
+            doShowPostRecord($input);
+            break;
+        case "newComment": //【user】留言 -----劉
+            require_once("newComment.php");
+            doNewComment($input);
+            break;
+        case "deleteComment": // 【user】刪除他留過的留言 -----劉
+            require_once("deleteComment.php");
+            doDeleteComment($input);
             break;
         case "editComment": // 【user】編輯自己留過的留言 -----劉
             require_once("editComment.php");
             doEditComment($input);
             break;
-         case "editDir": //【user】修改收藏資料夾名稱 -----劉
-            require_once("editDir.php");
-            doEditDir($input);
-            break;
-         case "editModerator": //【admin】更改版主 -----劉
-            require_once("editModerator.php");
-            doEditModerator($input);
-            break;
-         case "editTopArticle": //【版主】選擇置頂一篇文章 -----伶
-            require_once("editTopArticle.php");
-            doEditTopArticle($input);
-            break;
-         case "logIn": //登入 -----鈞
-            require_once("logIn.php");
-            doLogIn($input);
-            break;
-         case "logOut": //登出 -----鈞
-            require_once("logOut.php");
-            doLogOut($input);
-            break;   
-         case "newArticle": //【user】新增文章 -----劉
-            require_once("newArticle.php");
-            doNewArticle($input);
-            break;
-         case "newBoard": //【admin】新增board -----劉
-            require_once("newBoard.php");
-            doNewBoard($input);
-            break;
-         case "newComment": //【user】留言 -----劉
-            require_once("newComment.php");
-            doNewComment($input);
-            break;
-         case "newDir": //【user】新增收藏資料夾 -----劉
+        case "newDir": //【user】新增收藏資料夾 -----劉
             require_once("newDir.php");
             doNewDir($input);
             break;
-         case "modifyPersonalInfo": // 【user】修改個人資料(密碼/暱稱/顏色) -----鈞
-            require_once("personalInfo.php");
+        case "deleteDir": // 【user】刪除他的收藏資料夾 -----劉
+            require_once("deleteDir.php");
+            doDeleteDir($input);
             break;
-         case "showPostRecord": // 【user】的發文記錄列表 -----劉
-            require_once("showPostRecord.php");
-            doShowPostRecord($input);
+        case "editDir": //【user】修改收藏資料夾名稱 -----劉
+            require_once("editDir.php");
+            doEditDir($input);
             break;
-         case "removeKeepArticle":// 【user】將文章從收藏資料夾移除 -----伶
-            require_once("removeKeepArticle.php");
-            doRemoveKeepArticle($input);
-            break;
-         case "removeTopArticle": //【版主】移除置頂文章 -----伶
-            require_once("removeTopArticle.php");
-            doRemoveTopArticle($input);
-            break;
-         case "searchBoard": //【訪客】看板內搜尋 -----轅+劉
-            require_once("searchInBoard.php");
-            doSearchBoard($input);
-            break;
-         case "searchMenu": //【訪客】主頁搜尋 -----轅+劉
-            require_once("searchInMenu.php");
-            doSearchMenu($input);
-            break;
-         case "sendNotification": // 【系統】發送通知給某個user -----劉
-            require_once("sendNotification.php");
-            doSendNotification($input);
-            break;
-         case "sendReport": // 【user】檢舉某篇文章 -----伶
-            require_once("sendReport.php");
-            doSendReport($input);
-            break;
-         case "showAritcleComment": //【訪客】檢視文章&留言 -----劉
-            require_once("showAritcleComment.php");
-            doShowAritcleComment($input);
-            break;
-         case "showArticleInBoard": //【訪客】檢視版內文章列表 -----劉
-            require_once("showArticleInBoard.php");
-            doShowArticleInBoard($input);
-            break;
-         case "showArticleInDir": //【user】顯示某收藏資料夾下的文章列表 -----劉
-            require_once("showArticleInDir.php");
-            doShowArticleInDir($input);
-            break;
-         case "showDirList": //【user】顯示收藏資料夾列表 -----劉
+        case "showDirList": //【user】顯示收藏資料夾列表 -----劉
             require_once("showDirList.php");
             doShowDirList($input);
             break;
-         case "showModerator": //【admin】檢視版主列表 -----劉
+        case "showArticleInDir": //【user】顯示某收藏資料夾下的文章列表 -----劉
+            require_once("showArticleInDir.php");
+            doShowArticleInDir($input);
+            break;
+        case "removeKeepArticle":// 【user】將文章從收藏資料夾移除 -----伶
+            require_once("removeKeepArticle.php");
+            doRemoveKeepArticle($input);
+            break;
+        case "sendReport": // 【user】檢舉某篇文章 -----伶
+            require_once("sendReport.php");
+            doSendReport($input);
+            break;
+        case "browseReport": //【版主】查看board底下的文章檢舉 -----劉
+            require_once("browseReport.php");
+            doBrowseReport($input);
+            break;
+        case "deleteReport": // 【版主】審核被檢舉文章 -----伶
+            require_once("deleteReport.php");
+            doDeleteReport($input);
+            break;
+        case "newBoard": //【admin】新增board -----劉
+            require_once("newBoard.php");
+            doNewBoard($input);
+            break;
+        case "deleteBoard": //【admin】刪除board -----劉
+            require_once("deleteBoard.php");
+            doDeleteBoard($input);
+            break;
+        case "showModerator": //【admin】檢視版主列表 -----劉
             require_once("showModerator.php");
             doShowModerator($input);
             break;
-         case "showNotice": //【user】檢視通知 -----劉
-            require_once("showNotification.php");
-            doShowNotification($input);
+        case "editBoard": // 【版主】更改board的名字 + 版規 -----劉--------------------------------版主是否可以自己更動版名?
+            require_once("editBoard.php");
+            doEditBoard($input);
             break;
-         case "sortInBoard": // 【系統】版內排序 -----轅+劉
-            require_once("sortInBoard.php");
-            doSortBoard($input);
+        case "editModerator": //【admin】更改版主 -----劉
+            require_once("editModerator.php");
+            doEditModerator($input);
             break;
-         case "sortInMenu": // 【系統】首頁排序 -----轅+劉
-            require_once("sortInMenu.php");
-            doSortMenu($input);
+        case "editTopArticle": //【版主】選擇置頂一篇文章 -----伶
+            require_once("editTopArticle.php");
+            doEditTopArticle($input);
             break;
-         case "toAllNotification": // 【admin、系統】寄通知給所有人 -----劉
-            require_once("toAllNotification.php");
-            doToAllNotification($input);
+        case "removeTopArticle": //【版主】移除置頂文章 -----伶
+            require_once("removeTopArticle.php");
+            doRemoveTopArticle($input);
             break;
     }
 ?>
