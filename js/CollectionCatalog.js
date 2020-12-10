@@ -47,71 +47,95 @@ $( document ).ready( function()
                             type: "error",
                             text: "dataDB.errorCode",
                         });
-                    }
-                    else
-                    {
-                        var value = $('#input2').val();
-                        console.log(value)
-                        
-                        if(value!="")
-                        {
-                            values.push(value);
-                        swal({
-                            title: "增加收藏成功" ,
-                            type: "success"
-
-                        })
-                        
-                        const div = document.createElement('div');
-                        
-                        div.classList.add('Page');
-                        
-                        div.innerHTML = `
-                        <div class="PageName">
-                                    <div class="value"> 
-                                        
-                                    
-                                        <span class="currency"><span class="WhichPage" id="cjgtxt">`+ document.getElementById('input2').value+ `</span>
-                                
-                                        </div>
-                                </div>
-                                <ul class="deals">
-                                    <li>:):)</li>
-                                    </ul>
-                                
-                                        <button class="more">more</button>
-                                
-                                </div>
-                                
-                                
-                        `;
-                        
-                            document.querySelector('.row').appendChild(div)
-                       
-                        $('#getValues').click(function(){
-                            alert("你擁有的收藏目錄:  "+values);
-                        });
-                        $(document).on('click','.more',function(){
-                            console.log("more2")
-                            swal({
-                            title: '歡迎',
-                            type: 'info',
-                            text: '本訊息1秒後自動關閉',
-                            width: 400,
-                            showConfirmButton: false,
-                            timer: 1000,
-                        }).then(
-                            function () { },
-                            function (dismiss) {
-                                if (dismiss === 'timer') {
-                                    sessionStorage.setItem("Helen-act", "newCollectionCatalog");
-                                    //我不會//sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
-                                    window.location.href = "../html/sub.html";
-                                }
                             }
-                        )
-                    });
-                }
+                            else
+                            {
+                                var value = $('#input2').val();
+                                console.log(value)
+                                // if(value==/\s+/g){
+                                //     alert("465")
+                                // }
+                                if(value!="")
+                                {
+                                    
+                                    if(values.includes(value)==false)
+                                    {
+                                        values.push(value);
+                                    
+                                    
+                                
+
+                                        swal({
+                                            title: "增加收藏成功" ,
+                                            type: "success"
+
+                                        })
+                                        
+                                        const div = document.createElement('div');
+                                        
+                                        div.classList.add('Page');
+                                        
+                                        div.innerHTML = `
+                                        <div class="PageName">
+                                                    <div class="value"> 
+                                                        
+                                                    
+                                                        <span class="currency"><span class="WhichPage" id="cjgtxt">`+ document.getElementById('input2').value+ `</span>
+                                                
+                                                        </div>
+                                                </div>
+                                                <ul class="deals">
+                                                    <li>:):)</li>
+                                                    </ul>
+                                                
+                                                        <button class="more">more</button>
+                                                
+                                                </div>
+                                                
+                                                
+                                        `;
+                                        
+                                            document.querySelector('.row').appendChild(div)
+                                    
+                                        $('#getValues').click(function(){
+                                            alert("你擁有的收藏目錄:  "+values);
+                                        });
+                                        $(document).on('click','.more',function(){
+                                            console.log("more2")
+                                            swal({
+                                            title: '歡迎',
+                                            type: 'info',
+                                            text: '本訊息1秒後自動關閉',
+                                            width: 400,
+                                            showConfirmButton: false,
+                                            timer: 1000,
+                                        }).then(
+                                            function () { },
+                                            function (dismiss) {
+                                                if (dismiss === 'timer') {
+                                                    sessionStorage.setItem("Helen-act", "newCollectionCatalog");
+                                                    //我不會//sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
+                                                    window.location.href = "../html/sub.html";
+                                                }
+                                            }
+                                        )
+                                    });
+                                }
+                                else{
+                                    swal({
+                                        title: "收藏目錄已存在",
+                                        type: "error",
+                                        text: ":)",
+                                    });
+                                }
+                        }
+                        else{
+                            swal({
+                                title: "請輸入收藏目錄名稱",
+                                type: "error",
+                                text: ":)",
+                            });
+                        }
 
 
                     }
