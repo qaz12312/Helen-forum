@@ -1,7 +1,10 @@
 var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 }, 
                 { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 }];
 
-var thisBoardName = sessionStorage.getItem( "boardName" );
+var thisAccount = sessionStorage.getItem( "Helen-account" );
+var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
+
+var keepMenu;
 
 $( document ).ready( function()
 {
@@ -29,13 +32,12 @@ $( document ).ready( function()
             }).then(( result ) => {
                 let topArticleName = $( ".card" ).has( ".glyphicon-pushpin.top" ).find( ".articleTitle" ).eq( 0 ).text();
 
-                let cmd = {};
-                cmd[ "act" ] = "editBoard";
-                cmd[ "boardID" ] = sessionStorage.getItem( "boardID" );
-                cmd[ "boardName" ] = sessionStorage.getItem( "boardName" );
-                cmd[ "account" ] = sessionStorage.getItem( "account" );
-                cmd[ "rule" ] = result;
-                cmd[ "topArticleID" ] = articles.find( oneArticle => oneArticle.title == topArticleName ).articleID;
+                // let cmd = {};
+                // cmd[ "act" ] = "editBoard";
+                // cmd[ "account" ] = thisAccount;
+                // cmd[ "oldBoardName" ] = thisBoardName;
+                // cmd[ "newBoardName" ] = "";
+                // cmd[ "rule" ] = result;
 
                 // $.post( "../index.php", cmd, function( dataDB )
                 // {
@@ -47,38 +49,46 @@ $( document ).ready( function()
                 //             title: "修改版規失敗",
                 //             type: "error",
                 //             text: dataDB.errorCode
-                //         });
+                //         }.then(( result ) => {}, ( dismiss ) => {} );
                 //     }
                 //     else
                 //     {
                 //         swal({
                 //             title: "已成功修改版規",
                 //             type: "success",
-                //             timer: 800,
-                //         });
-
-                //         $( "#rule" ).html( "版規：" + result.split("\n").join("<br/>") );
+                //             showConfirmButton: false,
+                //             timer: 1000,
+                
+                //         }).then(( result ) => {
+                //             if ( result ) 
+                //             {
+                //                 $( "#rule" ).html( "版規：" + escapeHtml(result).split("\n").join("<br/>") );
+                //             }
+                //             else
+                //             {
+                //                 $( "#rule" ).html( "版規： 無");
+                //             }
+                //         }, ( dismiss ) => {} );
                 //     }
                 // });
 
                 swal({
                     title: "已成功修改版規",
                     type: "success",
-                    timer: 800,
-                });
-
-                if ( result ) 
-                {
-                    $( "#rule" ).html( "版規：" + escapeHtml(result).split("\n").join("<br/>") );
-                }
-                else
-                {
-                    $( "#rule" ).html( "版規： 無");
-                }
-
-            }, function( dismiss ) {
-                if ( dismiss === 'cancel' );
-        });
+                    showConfirmButton: false,
+                    timer: 1000,
+        
+                }).then(( result ) => {}, ( dismiss ) => {
+                    if ( result ) 
+                    {
+                        $( "#rule" ).html( "版規：" + escapeHtml(result).split("\n").join("<br/>") );
+                    }
+                    else
+                    {
+                        $( "#rule" ).html( "版規： 無");
+                    }
+                } );
+            }, ( dismiss ) => {} );
     });
 
     $( ".glyphicon-pushpin" ).click( function()
@@ -94,36 +104,32 @@ $( document ).ready( function()
                 type: "error",
                 text: "dataDB.errorCode"
 
-            }).then(( result ) => {}
-            , function( dismiss )
-            {
-                if( dismiss === "cancel" );
-            });
+            }).then(( result ) => {}, ( dismiss ) => {} );
         }
         else
         {
             swal({
                 title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
                 type: "success",
-                timer: 800,
+                showConfirmButton: false,
+                timer: 1000,
     
-            }).then((result) => 
+            }).then(( result ) => {}, ( dismiss ) =>
             {
-                $( ".glyphicon-pushpin" ).removeClass( "top" );
-                $( this ).addClass( "top" );
+                if( dismiss )
+                {
+                    $( ".glyphicon-pushpin" ).removeClass( "top" );
+                    $( this ).addClass( "top" );
 
-                tempTr.remove();
-                tempTbody.prepend( tempTr );
-            }
-            , function( dismiss )
-            {
-                if( dismiss === 'cancel' );
+                    tempTr.remove();
+                    tempTbody.prepend( tempTr );
+                }
             });
         }
         
         // let cmd = {};
         // cmd[ "act" ] = "TopArticleChange";
-        // cmd[ "account" ] = sessionStorage.getItem( "account" );
+        // cmd[ "account" ] = thisAccount;
         // cmd[ "articleID" ] = articles.find( (element) => element.title == title ).articleID;
         // cmd[ "boardName" ] = thisBoardName;
 
@@ -133,36 +139,32 @@ $( document ).ready( function()
 
         //     if( dataDB.status == false )
         //     {
-        //         swal({
-        //             title: "置頂失敗",
-        //             type: "error",
-        //             text: dataDB.errorCode
+                // swal({
+                //     title: "置頂失敗",
+                //     type: "error",
+                //     text: dataDB.errorCode
 
-        //         }).then(( result ) => 
-        //         {
-        //             let tempTr = this.closest( "tr" );
-        //             let tempTbody = this.closest( "tbody" );
-
-        //             tempTr.remove();
-        //             tempTbody.prepend( tempTr );
-        //         }
-        //         , function( dismiss )
-        //         {
-        //             if( dismiss === "cancel" );
-        //         });
+                // }).then(( result ) => {}, ( dismiss ) => {} );
         //     }
         //     else
-        //     {
-        //         swal({
-        //             title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
-        //             type: "success",
-        //             timer: 800,
+            // {
+            //     swal({
+            //         title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
+            //         type: "success",
+            //         showConfirmButton: false,
+            //         timer: 1000,
         
-        //         }).then((result) => {}
-        //         , function( dismiss )
-        //         {
-        //             if( dismiss === 'cancel' );
-        //         });
+            //     }).then(( result ) => {}, ( dismiss ) =>
+            //     {
+            //         if( dismiss )
+            //         {
+            //             $( ".glyphicon-pushpin" ).removeClass( "top" );
+            //             $( this ).addClass( "top" );
+    
+            //             tempTr.remove();
+            //             tempTbody.prepend( tempTr );
+            //         }
+            //     });
         //     }
         // });
     });
@@ -175,25 +177,21 @@ $( document ).ready( function()
 
         // let cmd = {};
         // cmd[ "act" ] = "heart";
-        // cmd[ "accout" ] = sessionStorage.getItem( "account" );
+        // cmd[ "accout" ] = thisAccount;
         // cmd[ "articleID" ] = thisArticle.articleID;
 
         // $.post( "../index.php", cmd, function( dataDB )
         // {
         //     dataDB = JSON.parse( dataDB );
 
-        //     if( dataDB.status == false )
-        //     {
-        //         swal({
-        //             title: "錯誤！",
-        //             type: "error",
-        //             text: "dataDB.errorCode"
+            // if( dataDB.status == false )
+            // {
+            //     swal({
+            //         title: "錯誤！",
+            //         type: "error",
+            //         text: "dataDB.errorCode"
         
-        //         }).then((result) => {}
-        //         , function( dismiss )
-        //         {
-        //             if( dismiss === 'cancel' );
-        //         });
+            //     }).then(( result ) => {}, ( dismiss ) => {} );
         //     }
         //     else
         //     {
@@ -244,10 +242,90 @@ $( document ).ready( function()
         let title = $( this ).closest( "tr" ).find( ".articleTitle" ).text();
         let thisArticle = articles.find( (element) => element.title == title );
 
-        // let keepMenu = getKeepMenu();
-        let keepMenu = ["最愛", "漫威", "小說"];
-        let chooseKeepMenu = "";
+        if( keepMenu === undefined ) keepMenu = getKeepMenu();
+        
+        // if( $( chosen ).hasClass( "text-warning" ) )
+        // {
+        //     swal({
+        //         title: "選擇收藏目錄",
+        //         input: 'select',
+        //         inputOptions: keepMenu,
+        //         showCancelButton: true,
 
+        //     }).then((result) => {
+
+        //         let cmd = {};
+        //         cmd[ "act" ] = "keep";
+        //         cmd[ "accout" ] = thisAccount;
+        //         cmd[ "articleID" ] = thisArticle.articleID;
+        //         cmd[ "dirName" ] = keepMenu[result];
+
+        //         $.post( "../index.php", cmd, function( dataDB )
+        //         {
+        //             dataDB = JSON.parse( dataDB );
+
+                    // if( dataDB.status == false )
+                    // {
+                    //     swal({
+                    //         title: "錯誤！",
+                    //         type: "error",
+                    //         text: dataDB.errorCode,
+                
+                    //     }).then(( result ) => {}, ( dismiss ) => {} );
+        //             }
+                    // else
+                    // {
+                    //     swal({
+                    //         title: "收藏成功<br/><small>&lt;" + keepMenu[result] + "&gt;</small>",
+                    //         type: "success",
+                    //         showConfirmButton: false,
+                    //         timer: 1000,
+                
+                    //     }).then(( result ) => {}, ( dismiss ) => {});
+                        
+        //                 $( chosen ).removeClass( "text-warning" );
+        //                 $( chosen ).addClass( "text-light" );
+        //                 $( this ).addClass( "btn-warning" );
+
+        //                 thisArticle.keep = parseInt( thisArticle.keep ) + 1;
+        //             }
+        //         });
+
+        //     }, ( dismiss ) => {});
+        // }
+        // else
+        // {
+        //     let cmd = {};
+        //     cmd[ "act" ] = "keep";
+        //     cmd[ "accout" ] = thisAccount;
+        //     cmd[ "articleID" ] = thisArticle.articleID;
+        //     cmd[ "dirName" ] = "";
+
+        //     $.post( "../index.php", cmd, function( dataDB )
+        //     {
+        //         dataDB = JSON.parse( dataDB );
+
+                // if( dataDB.status == false )
+                // {
+                //     swal({
+                //         title: "錯誤！",
+                //         type: "error",
+                //         text: dataDB.errorCode,
+            
+                //     }).then(( result ) => {}, ( dismiss ) => {} );
+        //         }
+        //         else
+        //         {
+        //             $( this ).removeClass( "btn-warning" );
+        //             $( chosen ).addClass( "text-warning" );
+        //             $( chosen ).removeClass( "text-light" );
+
+        //             thisArticle.keep = parseInt( thisArticle.keep ) - 1;
+        //         }
+        //     });
+        // }
+
+        // $( chosen ).eq(1).html( thisArticle.keep );
         
         if( $( chosen ).hasClass( "text-warning" ) )
         {
@@ -258,87 +336,59 @@ $( document ).ready( function()
                 showCancelButton: true,
 
             }).then((result) => {
-
-                let cmd = {};
-                cmd[ "act" ] = "keep";
-                cmd[ "accout" ] = sessionStorage.getItem( "account" );
-                cmd[ "articleID" ] = thisArticle.articleID;
-                cmd[ "dirName" ] = keepMenu[result];
-
-                $.post( "../index.php", cmd, function( dataDB )
+                //
+                let status = true;
+                //
+                if( status == false )
                 {
-                    dataDB = JSON.parse( dataDB );
-
-                    if( dataDB.status == false )
-                    {
-                        swal({
-                            title: "錯誤！",
-                            type: "error",
-                            text: "dataDB.errorCode"
+                    swal({
+                        title: "錯誤！",
+                        type: "error",
+                        text: "dataDB.errorCode"
+            
+                    }).then(( result ) => {}, ( dismiss ) => {} );
+                }
+                else
+                {
+                    swal({
+                        title: "收藏成功<br/><small>&lt;" + keepMenu[result] + "&gt;</small>",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 1000,
                 
-                        }).then((result) => {}
-                        , function( dismiss )
-                        {
-                            if( dismiss === 'cancel' );
-                        });
-                    }
-                    else
-                    {
-                        swal({
-                            title: "收藏成功<br/><small>&lt;" + keepMenu[result] + "&gt;</small>",
-                            type: "success",
-                            timer: 800,
+                    }).then(( result ) => {}, ( dismiss ) => {});
+                    
+                    $( chosen ).removeClass( "text-warning" );
+                    $( chosen ).addClass( "text-light" );
+                    $( this ).addClass( "btn-warning" );
 
-                        }).then((result) => {
-                        }, function( dismiss )
-                        {
-                            if ( dismiss === 'cancel' );
-                        });
-                        
-                        if( $( chosen ).hasClass( "text-warning" ) )
-                        {
-                            $( chosen ).removeClass( "text-warning" );
-                            $( chosen ).addClass( "text-light" );
-                            $( this ).addClass( "btn-warning" );
+                    thisArticle.keep = parseInt( thisArticle.keep ) + 1;
+                }
 
-                            thisArticle.keep = parseInt(thisArticle.keep) + 1;
-                        }
-                        else
-                        {
-                            $( this ).removeClass( "btn-warning" );
-                            $( chosen ).addClass( "text-warning" );
-                            $( chosen ).removeClass( "text-light" );
-
-                            thisArticle.keep = parseInt(thisArticle.keep) - 1;
-                        }
-
-                        $( chosen ).eq(1).html( thisArticle.keep );
-                    }
-                });
-
-            }, function( dismiss )
-            {
-                if ( dismiss === 'cancel' );
-            });
-        }
-
-        
-        
-        if( $( chosen ).hasClass( "text-warning" ) )
-        {
-            $( chosen ).removeClass( "text-warning" );
-            $( chosen ).addClass( "text-light" );
-            $( this ).addClass( "btn-warning" );
-
-            thisArticle.keep = parseInt(thisArticle.keep) + 1;
+            }, ( dismiss ) => {} );
         }
         else
         {
-            $( this ).removeClass( "btn-warning" );
-            $( chosen ).addClass( "text-warning" );
-            $( chosen ).removeClass( "text-light" );
+            //
+            let status = true;
+            //
+            if( status == false )
+            {
+                swal({
+                    title: "錯誤！",
+                    type: "error",
+                    text: "dataDB.errorCode",
+        
+                }).then(( result ) => {}, ( dismiss ) => {} );
+            }
+            else
+            {
+                $( this ).removeClass( "btn-warning" );
+                $( chosen ).addClass( "text-warning" );
+                $( chosen ).removeClass( "text-light" );
 
-            thisArticle.keep = parseInt(thisArticle.keep) - 1;
+                thisArticle.keep = parseInt( thisArticle.keep ) - 1;
+            }
         }
 
         $( chosen ).eq(1).html( thisArticle.keep );
@@ -372,7 +422,7 @@ $( document ).ready( function()
 function initial()
 {
     $( ".tabContent h2" ).html( 
-        thisBoardName + "版" + 
+        "&emsp;&emsp;" + thisBoardName + "版" + 
             "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
                 "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
             "</button>" 
@@ -388,11 +438,7 @@ function initial()
             type: "error",
             text: "dataDB.errorCode"
             
-        }).then((result) => {}
-        , function( dismiss )
-        {
-            if( dismiss === 'cancel' );
-        });
+        }).then(( result ) => {}, ( dismiss ) => {} );
     }
     else
     {
@@ -458,10 +504,10 @@ function initial()
         $( ".tabContent tbody" ).append( isEmpty );
     }
 
-    let cmd = {};
-    cmd[ "act" ] = "boardSort";
-    cmd[ "boardName" ] = thisBoardName;
-    cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
+    // let cmd = {};
+    // cmd[ "act" ] = "boardSort";
+    // cmd[ "boardName" ] = thisBoardName;
+    // cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
 
     // $.post( "../index.php", cmd, function( dataDB )
     // {
@@ -473,11 +519,7 @@ function initial()
         //         title: "載入頁面失敗",
         //         type: "error",
         //         text: dataDB.errorCode
-        //     }).then((result) => {}
-        //     , function( dismiss )
-        //     {
-        //         if( dismiss === 'cancel' );
-        //     });
+        //     }).then(( result ) => {}, ( dismiss ) => {} );
         // }
     //     else
     //     {
@@ -551,7 +593,7 @@ function initial()
 
 function checkPermission()
 {
-    if( !sessionStorage.getItem( "account" ) )
+    if( thisAccount == null )
     {
         $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
         $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
@@ -584,7 +626,7 @@ function checkPermission()
 
     // let cmd = {};
     // cmd[ "act" ] = "browseAuthority";
-    // cmd[ "account" ] = sessionStorage.getItem( "account" );
+    // cmd[ "account" ] = thisAccount;
 
     // let permission, color, nickname, boardName = [];
 
@@ -615,6 +657,12 @@ function checkPermission()
     // });
 }
 
-function escapeHtml(str) {
+function getKeepMenu()
+{
+    return ["最愛", "漫威", "小說"];
+}
+
+function escapeHtml(str)
+{
     return $('<div/>').text(str).html();
 }

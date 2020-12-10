@@ -1,5 +1,6 @@
 var articles = [];
-var thisBoardName = sessionStorage.getItem( 'boardName' );
+var thisBoardName = sessionStorage.getItem( 'Helen-boardName' );
+var thisUser = sessionStorage.getItem( 'Helen-userInfo' );
 
 $( document ).ready( function() 
 {
@@ -23,7 +24,7 @@ $( document ).ready( function()
         {
             swal({
                 title: "檢舉原因<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
-                text: articles[ thisArticle ].reason,
+                html: escapeHtml(articles[ thisArticle ].reason).split( "\n" ).join( "<br/>" ),
                 animation: false
             }).then((result) => {}
             , function( dismiss )
@@ -242,7 +243,7 @@ function initial()
 
     // let cmd = {};
     // cmd[ "act" ] = "reportPage";
-    // cmd[ "boardName" ] = sessionStorage.getItem( "Helen-boardName" );
+    // cmd[ "boardName" ] = thisBoardName;
 
     // $.post( "../index.php", cmd, function( dataDB )
     // {
@@ -307,8 +308,9 @@ function initial()
     let dataDB = {};
     dataDB[ "data" ] = [ { "articleID": "123", "title": "紅燈區", "reason": "aaa" }, 
                          { "articleID": "456", "title": "大一妹妹看起來很波霸哦", "reason": "bbb" }, 
-                         { "articleID": "789", "title": "看我切開兔子的肚皮", "reason": "ccc" } ];
+                         { "articleID": "789", "title": "看我切開兔子的肚皮", "reason": "ccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\nccc\n" } ];
 
+    $( ".tabContent h2" ).html( thisBoardName + "版－檢舉區" );
     let content = $( ".tabContent tbody" );
     content.empty();
 
@@ -351,7 +353,7 @@ function initial()
 
 function checkPermission()
 {
-    if( !sessionStorage.getItem( "account" ) )
+    if( thisUser == null )
     {
         swal({
             title: "載入頁面失敗",
@@ -404,11 +406,9 @@ function checkPermission()
     else
     {
         permission = "2";
-        color = "#000000";
-        nickname = "haha";
         boardName = ["美食"];
         
-        if( permission < 2 || boardName.indexOf( thisBoardName ) == -1 )
+        if( boardName.indexOf( thisBoardName ) == -1 )
         {
             swal({
                 title: "載入頁面失敗",
@@ -434,10 +434,10 @@ function checkPermission()
 
     // let cmd = {};
     // cmd[ "act" ] = "browseAuthority";
-    // cmd[ "account" ] = sessionStorage.getItem( "account" );
+    // cmd[ "account" ] = thisUser.account;
 
     // let permission, color, nickname, boardName = [];
-    // let thisBoardName = sessionStorage.getItem( "boardName" );
+    // let thisBoardName = thisBoardName;
 
     // $.post( "../index.php", cmd, function( dataDB )
     // {
@@ -498,4 +498,9 @@ function checkPermission()
     //         }
     //     }
     // });
+}
+
+function escapeHtml(str)
+{
+    return $('<div/>').text(str).html();
 }
