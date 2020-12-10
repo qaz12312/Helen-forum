@@ -13,14 +13,13 @@
 		dataDB.data[i].articleID
 		dataDB.data[i].reason
 		dataDB.data[i].title
-		dataDB.date[i].times
 	)
     否則
 	dataDB.data = ""
 	*/
 	function doShowReport($input){
         global $conn;
-        $sql="SELECT `Title`,`Reason`FROM `Report` JOIN `Article` ON Article.ArticleID = Report.ArticleID order by Report.Times ASC";
+        $sql="SELECT `ArticleID`,`Title`,`Reason` FROM `Report` JOIN `Article` ON Article.ArticleID = Report.ArticleID order by Report.Times ASC";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
