@@ -2,7 +2,7 @@
     //require_once 'test.php'; //連線資料庫 
     /* 前端 to 後端:
             let cmd = {};
-            cmd["act"] = "newCollectionCatalog";
+            cmd["act"] = "newDir";
 			cmd["account"] = "UserID"
             cmd["dirID"] = "DirID"
             cmd["dirName"] ="我喜歡的"
@@ -19,7 +19,7 @@
             否則
                 dataDB.data = ""
          */
-    function doNewCollectionCatalog($input){
+    function doNewDir($input){
          global $conn;
         $new="INSERT INTO  `KeepDir`(`UserID`,`DirName`) 
         VALUES('".$input['account']."','".$input['dirName']."')";
