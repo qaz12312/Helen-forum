@@ -1,6 +1,12 @@
 var fileStr;
 var hashtags= [];
 
+//this is test data
+let articleData= {boardName: "美食版", 
+                articleTitle: "測試文章標題",
+                content: "測試測試測試測試測試測試測試測試測試測試測試測試", 
+                hashtag: ["過", "聒聒", "00123"]}
+
 document.querySelector("html").classList.add('js');
 
 var fileInput  = document.querySelector( ".input-file" ),  
@@ -31,10 +37,34 @@ $("#publishBtn").on("click", function(){
     var titleStr= $("#articleTitle").val().trim();
     var contentStr= $("#articleContent").val().trim();
     let cmd= {};
-    if(titleStr.length< 1|| titleStr.length> 127){
-        console.log("(Title) Too short or Too long.")
-    }else if(contentStr.length< 10|| contentStr.length> 20000){
-        console.log("(Content) Too short or Too long.")
+    if(titleStr.length< 1){
+        console.log("(Title) Too short.")
+        swal({
+            title: "文章標題太短嘍！",
+            type: "warning",
+            // text: dataDB.errorCode
+        });
+    }else if(titleStr.length> 127){
+        console.log("(Title) Too long.")
+        swal({
+            title: "文章標題太長嘍！",
+            type: "warning",
+            // text: dataDB.errorCode
+        });
+    }else if(contentStr.length< 10){
+        console.log("(Content) Too shor.")
+        swal({
+            title: "文章內容太少嘍！",
+            type: "warning",
+            // text: dataDB.errorCode
+        });
+    }else if(contentStr.length> 20000){
+        console.log("(Content) Too long.")
+        swal({
+            title: "文章標題太多嘍！",
+            type: "warning",
+            // text: dataDB.errorCode
+        });
     }else{
         cmd["act"]= "addArticle";
         cmd["userID"]= sessionStorage.getItem("Helen-userID")
@@ -44,7 +74,7 @@ $("#publishBtn").on("click", function(){
         cmd["hashtag"]= hashtags;
         console.log(hashtags);
         
-        $.post("../index.php", cmd, function(){
+        // $.post("../index.php", cmd, function(){
             var dataDB= JSON.parse(dataDB);
             // if(dataDB.status== false){
             //     swal({
@@ -59,12 +89,13 @@ $("#publishBtn").on("click", function(){
                 sessionStorage.setItem("sort", "time");
                 location.href =  "../html/home.html";
             // }
-        })
+        // })
     }
 })
 
 $("#cancelPublish").on("click", function(){
     console.log("Back To HOME Page.")
+    location.href =  "../html/home.html";
 })
 
 $("#inputHashtag").keypress(function (event){
@@ -107,14 +138,33 @@ function printHashtag(){
 }
 
 function initial(){
+    //selector 載入所有看版
     if(sessionStorage.getItem("Helen-act")== "editArticle"){
-        $(".tabContent").find("h2").text("Helen－編輯文章");
-        $(".tabContent").find("p").text("Edit your post.");
-        //從後端拿資料
-        // $("#chooseBoard :selected")
-        // $("#articleTitle").val()
-        // $("#articleContent").val()
-        // hashtags
-        printHashtag()
+        let cmd= {};
+        cmd["act"]= "aditArticle";
+
+        // $.post("../index.php", cmd, function(dataDB){
+        //     dataDB= JSON.parse(dataDB);
+
+        //     if(dataDB.status == false){
+        //         swal({
+        //             title: "載入頁面失敗",
+        //             type: "error",
+        //             text: dataDB.errorCode
+        //         });
+        //     }
+        //     else{
+                articleData= dataDB.data
+                $(".tabContent").find("h2").text("Helen－編輯文章");
+                $(".tabContent").find("p").text("Edit your post.");
+                //從後端拿資料
+                $("#chooseBoard").find("option[text= '" + articleData.boardName+ "版']").attr("selected", true);
+                //依 text 為"看版名(美食版)"的項選中
+                $("#articleTitle").val()= articleData.articleTitle;
+                $("#articleContent").val()= articleData.content;
+                hashtags= articleData.hashtag;
+                printHashtag();
+        //     }
+        // })
     }
 }

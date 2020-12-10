@@ -93,33 +93,29 @@ $( document ).ready( function()
 function initial()
 {
     // let isValid = checkPermission();
-    // if( !isValid ) return;
+    // if(!isValid) return;
 
     let cmd = {};
     cmd[ "act" ] = "KeepPage";//收藏頁面
     cmd[ "keepClassification" ] = sessionStorage.getItem( "Helen-keepClassification" );//收藏分類
 
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
+    // $.post( "../index.php", cmd, function(dataDB){
+    //     dataDB= JSON.parse(dataDB);
 
-    //     if( dataDB.status == false )
-    //     {
+    //     if(dataDB.status== false){
     //         swal({
     //             title: "載入頁面失敗",
     //             type: "error",
     //             text: dataDB.errorCode
     //         })
     //     }
-    //     else
-    //     {
+    //     else{
             let content = $( ".tabContent tbody" );
             content.empty();
         
             articles = dataDB.data;
 
-            if( articles.length == 0 )
-            {
+            if( articles.length == 0 ){
                 let emptyMessage = "<tr>" + 
                                         "<td colspan='2'>還沒有收藏文章呦！</td>" +
                                     "</tr>";
@@ -127,8 +123,7 @@ function initial()
                 return;
             }
 
-            for( let i in dataDB.data )
-            {
+            for( let i in dataDB.data ){
                 let oneRow = "<tr>" + 
                                 "<td>" + dataDB.data[i].title + "</td>" +
                                 "<td>" +
@@ -138,28 +133,25 @@ function initial()
                                 "</td>" +
                             "</tr>";
 
-                content.append( oneRow );
+                content.append(oneRow);
             }
     //     }
     // });
 }
 
-function checkPermission()
-{
+function checkPermission(){
     let perm = sessionStorage.getItem( "Helen-permission" );
     console.log( "Permission:　"+ perm );
 
     if( perm && perm.valueOf() >= 1 ) return true;
 
-    else 
-    {
+    else{
         swal({
             title: "載入頁面失敗",
             type: "error",
             text: "請先登入！"
         }).then(( result ) => {
-            if ( result ) 
-            {
+            if ( result ){
                 $( "body" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
                 $( "body" ).append( httpStatus );
