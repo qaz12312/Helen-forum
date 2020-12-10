@@ -5,35 +5,29 @@ let dataDB= {};
     dataDB["data"]= [{"articleID": "123", "title": "美國隊長也太帥了吧!"}, 
                     {"articleID": "456", "title": "求校隊女籃ig"}, 
                     {"articleID": "789", "title": "#詢問 大一資工課程"}];
+// test End
 
-$( document ).ready( function() 
-{
+$(document).ready( function(){
     initial();
 
-    $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function()
-    {
-        if( $(this).text() != "還沒有收藏文章呦！" )
-        {
-            let articleIndex = $( ".tabContent tr" ).index( this.closest( "tr" ) );
-            sessionStorage.setItem( "Helen-articleID", articles[ articleIndex ].articleID );
-            sessionStorage.setItem( "Helen-act", "postPage" );
+    $(".tabContent tr").find("td:first-child").on( "click", function(){
+        if($(this).text() != "還沒有收藏文章呦！"){
+            let articleIndex = $(".tabContent tr").index(this.closest("tr"));
+            sessionStorage.setItem("Helen-articleID", articles[articleIndex].articleID);
+            sessionStorage.setItem("Helen-act", "postPage");
             location.href =  "../html/post.html";
         }
-    } );
+    });
 
-    $("#setBtn").on("click", function(){
-        sessionStorage.setItem( "Helen-keepClassification", "newClassification");
-    })
+    $(".tabContent button").on( "click", function(){
+        let articleIndex = $(".tabContent tr").index(this.closest("tr"));
 
-    $( ".tabContent button" ).on( "click", function()
-    {
-        let articleIndex = $( ".tabContent tr" ).index( this.closest( "tr" ) );
-
-        if( $(this).text().trim() == "刪除" )
-        {
-            // let cmd = {};
-            // cmd[ "act" ] = "deleteKeepArticle";
-            // cmd[ "articleID" ] = articles[ articleIndex ].articleID;
+        if( $(this).text().trim() == "刪除"){
+            let cmd= {};
+            cmd["act"] = "removeKeepArticle";
+            cmd["account"] = sessionStorage.getItem("Helen-userID");
+            cmd["articleID"] = articles[articleIndex].articleID;
+            cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
 
             // $.post( "../index.php", cmd, function( dataDB ){
             //     dataDB = JSON.parse( dataDB );
@@ -90,14 +84,19 @@ $( document ).ready( function()
     });
 });
 
-function initial()
-{
-    // let isValid = checkPermission();
-    // if(!isValid) return;
+function initial(){
+    // no Front Text
+    sessionStorage.setItem("Helen-keepDir", "尬意");
+    // test End
+
+    var keepDir= sessionStorage.getItem("Helen-keepDir");
+    $(".tabContent").find("h2").text(keepDir);
+    $(".tabContent").find("p").text("收藏目錄 > "+ keepDir);
 
     let cmd = {};
-    cmd[ "act" ] = "KeepPage";//收藏頁面
-    cmd[ "keepClassification" ] = sessionStorage.getItem( "Helen-keepClassification" );//收藏分類
+    cmd["act"] = "showArticleInDir";
+    cmd["account"] = sessionStorage.getItem("Helen-userID");
+    cmd["dirName"] = keepDir;
 
     // $.post( "../index.php", cmd, function(dataDB){
     //     dataDB= JSON.parse(dataDB);
@@ -123,9 +122,9 @@ function initial()
                 return;
             }
 
-            for( let i in dataDB.data ){
+            for( let i in articles ){
                 let oneRow = "<tr>" + 
-                                "<td>" + dataDB.data[i].title + "</td>" +
+                                "<td>" + articles[i].title + "</td>" +
                                 "<td>" +
                                     "<button type='button' class='btn btn-default'>" +
                                         "<span class='glyphicon glyphicon-remove'></span> 刪除" +

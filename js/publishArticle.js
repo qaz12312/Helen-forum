@@ -1,11 +1,13 @@
-var fileStr;
+var fileStr; // add picture
+var borads= [];
 var hashtags= [];
 
 //this is test data
 let articleData= {boardName: "美食版", 
                 articleTitle: "測試文章標題",
                 content: "測試測試測試測試測試測試測試測試測試測試測試測試", 
-                hashtag: ["過", "聒聒", "00123"]}
+                hashtag: ["過", "聒聒", "00123"]};
+//test End
 
 document.querySelector("html").classList.add('js');
 
@@ -36,7 +38,7 @@ $("#publishBtn").on("click", function(){
     console.log("I want publish.");
     var titleStr= $("#articleTitle").val().trim();
     var contentStr= $("#articleContent").val().trim();
-    let cmd= {};
+
     if(titleStr.length< 1){
         console.log("(Title) Too short.")
         swal({
@@ -61,21 +63,21 @@ $("#publishBtn").on("click", function(){
     }else if(contentStr.length> 20000){
         console.log("(Content) Too long.")
         swal({
-            title: "文章標題太多嘍！",
+            title: "文章內容太多嘍！",
             type: "warning",
             // text: dataDB.errorCode
         });
     }else{
+        let cmd= {};
         cmd["act"]= "addArticle";
         cmd["userID"]= sessionStorage.getItem("Helen-userID")
         cmd["articleTitle"]= titleStr;
         cmd["boardName"]= $("#chooseBoard :selected").val();//text()
         cmd["content"]= contentStr;
         cmd["hashtag"]= hashtags;
-        console.log(hashtags);
         
         // $.post("../index.php", cmd, function(){
-            var dataDB= JSON.parse(dataDB);
+            // var dataDB= JSON.parse(dataDB);
             // if(dataDB.status== false){
             //     swal({
             //         title: "發佈文章失敗，請稍後重試！",
@@ -85,8 +87,9 @@ $("#publishBtn").on("click", function(){
             //     });
             // }
             // else{
-                sessionStorage.setItem("act", "home");
-                sessionStorage.setItem("sort", "time");
+                // ?依最新排序的首頁
+                sessionStorage.setItem("Helen-act", "home");
+                sessionStorage.setItem("Helen-sort", "time");
                 location.href =  "../html/home.html";
             // }
         // })
@@ -138,10 +141,25 @@ function printHashtag(){
 }
 
 function initial(){
-    //selector 載入所有看版
+    //selector 載入所有看版(從 session)
+    let boardData= sessionStorage.getItem("Helen-boards");
+    boards= JSON.parse(boardData);
+
+    console.log(boards);
+    $("#chooseBoard").empty();
+    for(var i= 0; i< boards.length; i++){
+        $("#chooseBoard").append(new Option(boards[i].boardName+ "版"), i, false);
+    }
+
+    //編輯文章
+    //前 -> 後：{動作:編輯文章, 文章ID: 201}
+    // !要取得文章ID!
+    //後 -> 前：{"文章所屬看版", "文章標題", "文章內容", [文章的hastags], ?圖片?}
     if(sessionStorage.getItem("Helen-act")== "editArticle"){
         let cmd= {};
-        cmd["act"]= "aditArticle";
+        cmd["act"]= "editArticle";
+        cmd["userID"]= sessionStorage.getItem("Helen-userID");
+        cmd["articleID"]= sessionStorage.getItem("Helen-articleID");
 
         // $.post("../index.php", cmd, function(dataDB){
         //     dataDB= JSON.parse(dataDB);

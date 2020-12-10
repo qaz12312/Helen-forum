@@ -5,7 +5,7 @@
     <meta charset = "utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>發表文章</title>
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -121,16 +121,25 @@
                         <span class= "glyphicon glyphicon-chevron-down"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li class= "glyphicon glyphicon-user"> 00757015</li>
+                        <li class= "glyphicon glyphicon-user">
+                            <span> 00757015</span></li>
                         <li class="divider"></li>
-                        <li class= "glyphicon glyphicon-edit"><a href="#"> 個人資料</a></li>
-                        <li class= "glyphicon glyphicon-pencil"><a href="#"> 發佈新文章</a></li>
-                        <li class= "glyphicon glyphicon-star-empty"><a href="#"> 我的收藏</a></li>
-                        <li class= "glyphicon glyphicon-time"><a href="#"> 發文紀錄</a></li>
-                        <li class= "glyphicon glyphicon-th-list"><a href="#"> 管理看版</a></li>
-                        <li class= "glyphicon glyphicon-king"><a href="#"> 管理版主</a></li>
-                        <li class= "glyphicon glyphicon-alert"><a href="#"> 檢舉區</a></li>
-                        <li class= "glyphicon glyphicon-bullhorn"><a href="#"> 發送通知</a></li>
+                        <li class= "glyphicon glyphicon-edit">
+                            <a href="../html/Person.html"> 個人資料</a></li>
+                        <li class= "glyphicon glyphicon-pencil">
+                            <a href="../html/publishArticle.html"> 發佈新文章</a></li>
+                        <li class= "glyphicon glyphicon-star-empty">
+                            <a href="../html/Person.html"> 我的收藏</a></li>
+                        <li class= "glyphicon glyphicon-time">
+                            <a href="../html/Person.html"> 發文紀錄</a></li>
+                        <li class= "glyphicon glyphicon-th-list">
+                            <a href="../html/manageBoard.html"> 管理看版</a></li>
+                        <li class= "glyphicon glyphicon-king">
+                            <a href="../html/moderator.html"> 管理版主</a></li>
+                        <li class= "glyphicon glyphicon-alert">
+                            <a href="../html/report.html"> 檢舉區</a></li>
+                        <li class= "glyphicon glyphicon-bullhorn">
+                            <a href="../html/sendAlert.html"> 發送通知</a></li>
                     </ul>
                 </li>
             </ul>
@@ -148,11 +157,11 @@
                 <td style="text-align: left">
                     <div class="selectOption">
                         <select id= "chooseBoard" class="classification">
-                            <option value="food" selected>美食版</option>
+                            <!-- <option value="food" selected>美食版</option>
                             <option value="manwei">漫威版</option>
                             <option value="penguin">企鵝版</option>
                             <option value="trash">廢文版</option>
-                            <option value="eightGua">八卦版</option>
+                            <option value="eightGua">八卦版</option> -->
                         </select>
                     </div>
                 </td>
