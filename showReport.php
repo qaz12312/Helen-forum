@@ -15,6 +15,7 @@
 		dataDB.data[i].title
 	)
     否則
+	dataDB.errorCode = "檢舉文章為空"
 	dataDB.data = ""
 	*/
 	function doShowReport($input){

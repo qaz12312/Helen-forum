@@ -11,8 +11,8 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = ""
-		dataDB.data = "已從資料夾中移除文章"
+		dataDB.errorCode = "已從資料夾中移除文章"
+		dataDB.data = ""
 	否則
 		dataDB.errorCode = "收藏文章移除失敗"
 		dataDB.data = "" 
