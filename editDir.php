@@ -1,8 +1,8 @@
 <?php
-       require_once 'test.php'; //連線資料庫 
-    /* 前端 to 後端:
+    /* 
+    前端 to 後端:
             let cmd = {};
-            cmd["act"] = "addKeepDir";
+            cmd["act"] = "editDir";
             cmd["account"] = "UserID"
             cmd["oldDirName"] ="我喜歡的"
             cmd["newDirName"] ="我不喜歡的"
@@ -19,7 +19,7 @@
             否則
                 dataDB.data = ""
          */
-    function doEditCollectionCatalog($input){
+    function doEditDir($input){
         global $conn;
         $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['oldDirName']."' AND `UserID`='".$input['account']."' ";  
         $result=$conn->query($sqlcheck);
