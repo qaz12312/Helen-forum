@@ -3,7 +3,7 @@
             let cmd = {};
             cmd["act"] = "newComment";
             cmd["account"] = "00857210";
-            cmd["detail"] = "Content";
+            cmd["content"] = "Content";
             cmd["floors"] = 1;
             cmd["tagFloor"] = NULL;
             cmd["articleID"] = 1;
@@ -26,7 +26,7 @@
 	function doNewComment($input){ 
 		global $conn;
 		$new="INSERT INTO  `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`,`TagFloor`) 
-		VALUES('".$input['account']."','".$input['detail']."','".$input['articleID']."','".$input['floors']."','".$input['tagFloor']."')";
+		VALUES('".$input['account']."','".$input['content']."','".$input['articleID']."','".$input['floors']."','".$input['tagFloor']."')";
 		$resultNew=$conn->query($new);
 		if(!$resultNew){
 			die($conn->error);
