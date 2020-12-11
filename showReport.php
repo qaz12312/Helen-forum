@@ -21,7 +21,7 @@
         dataDB.errorCode = "無檢舉文章"
         dataDB.data = ""
     */
-function doBrowseReport($input){ //查看board底下的文章檢舉
+function doShowReport($input){ //查看board底下的文章檢舉
     global $conn;
     $sql = "SELECT `Title`,`Reason`,Report.Times FROM `Report` JOIN `Article`  ON Article.ArticleID = Report.ArticleID  WHERE  `BlockName`='" . $input['boardName'] . "'ORDER BY `Times` DESC ";
     $result = $conn->query($sql);

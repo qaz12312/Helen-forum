@@ -2,16 +2,16 @@
 	/* 
 	前端 to 後端:
 	let cmd = {};
-	cmd["act"] = "boardList";
+	cmd["act"] = "showBoardList";
 	
-	後端 to 前端
+	後端 to 前端:
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
 		dataDB.data[i] //有i筆boardName
 	否則
-		dataDB.errorCode =
-		dataDB.data = 
+		dataDB.errorCode = ????? 
+		dataDB.data = ""
 	*/
     function doBoardList($input){
         global $conn;
@@ -30,8 +30,7 @@
             $arr=array();
             for($i=0;$i<$result->num_rows;$i++){
                 $row=$result->fetch_row();
-                $log=array("boardName"=>"$row[0]");
-                $arr[$i]=$log;
+                $arr[$i]=$row[0];
             }
             $rtn = array();
             $rtn["statue"] = true;

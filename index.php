@@ -10,9 +10,9 @@
     // session_start();
     switch ($input["act"]) {
         // 獨立出去了，忘記密碼&註冊 : 轅
-        case "browseAuthority": //【前端頁面(即系統)】查看權限(若為版主，則是所屬看板) -----劉
-            require_once("browseAuthority.php");
-            doBrowseAuthority($input);
+        case "showAuthority": //【前端頁面(即系統)】查看權限(若為版主，則是所屬看板) -----劉
+            require_once("showAuthority.php");
+            doShowAuthority($input);
             break;
         case "logIn": //登入 -----鈞
             require_once("logIn.php");
@@ -25,8 +25,8 @@
         case "modifyPersonalInfo": // 【user】修改個人資料(密碼/暱稱/顏色) -----鈞
             require_once("personalInfo.php");
             break;
-        case "boardList": //【訪客】主頁的顯示所有board -----劉
-            require_once("boardList.php");
+        case "showBoardList": //【訪客】主頁的顯示所有board -----劉
+            require_once("showBoardList.php");
             doBoardList($input);
             break;
         case "showArticleInBoard": //【訪客】檢視版內文章列表 -----劉
@@ -133,9 +133,9 @@
             require_once("sendReport.php");
             doSendReport($input);
             break;
-        case "browseReport": //【版主】查看board底下的文章檢舉 -----劉
-            require_once("browseReport.php");
-            doBrowseReport($input);
+        case "showReport": //【版主】查看board底下的文章檢舉 -----劉
+            require_once("showReport.php");
+            doShowReport($input);
             break;
         case "deleteReport": // 【版主】審核被檢舉文章 -----伶
             require_once("deleteReport.php");

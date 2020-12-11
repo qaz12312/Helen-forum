@@ -2,7 +2,7 @@
 	/*
 	前端 to 後端:
 	let cmd = {};
-    cmd["act"] = "browseAuthority";
+    cmd["act"] = "showAuthority";
     cmd["account"] = "00757007";
     
 	後端 to 前端:
@@ -14,7 +14,7 @@
                 .....
     其他: dataDB.data // 0(訪客)、1(一般使用者)、3(admin)
 	*/
-    function doBrowseAuthority($input){
+    function doShowAuthority($input){
         global $conn;
             $rtn = array();
             $rtn["status"] = true;
