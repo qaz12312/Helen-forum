@@ -10,7 +10,6 @@
 + 放在測試資料夾
 + [index.php debug會用到](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/index.php)
 + [logIn.php 是示範](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/logIn.php)
-+ [personalInfo.php 是示範(若有整合成一個function)](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/%E6%B8%AC%E8%A9%A6/personalInfo.php)
 + 在檔案中，你們需要改的地方只有**index.php**:
     ```
     // 改 ///////////////////////////////////////////////////////////
@@ -22,12 +21,6 @@
 + (完成version2)如果debug成功，summary寫: `ok: debug all`
 + 記得到[Trello](https://trello.com/b/2amh64r0/helen)做紀錄
 
-## 💎相同動作:整合在一起
-+ 可參考 changeNickname.php、changePassword.php 👉 整合成[personalInfo.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/PDO%E5%8A%A0%E5%AF%86%E6%9C%AA%E5%AE%8C%E6%88%90/personalInfo.php)
-    + 整合成doChangeInfo()
-
-### 💎git上去，Summary寫的資訊:
-+ ok: test什麼功能
 
 ### 有問題可以先上[Trello](https://trello.com/b/2amh64r0/helen)相關連結的`問題集`看~
 
