@@ -4,8 +4,8 @@
             let cmd = {};
             cmd["act"] = "editDir";
             cmd["account"] = "UserID"
-            cmd["oldDirName"] ="我喜歡的"
-            cmd["newDirName"] ="我不喜歡的"
+            cmd["old"] ="我喜歡的"
+            cmd["new"] ="我不喜歡的"
 
         */
 		
@@ -20,7 +20,7 @@
          */
     function doEditDir($input){
         global $conn;
-        $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['oldDirName']."' AND `UserID`='".$input['account']."' ";  
+        $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['old']."' AND `UserID`='".$input['account']."' ";  
         $result=$conn->query($sqlcheck);
         if(!$result){
             die($conn->error);
@@ -32,12 +32,12 @@
             $rtn["data"] = "";
         }
         else{
-            $updateSql="UPDATE `KeepDir` SET `DirName`='".$input['newDirName']."'";
+            $updateSql="UPDATE `KeepDir` SET `DirName`='".$input['new']."'";
             $result=$conn->query($updateSql);
             if(!$result){
                 die($conn->error);
             }
-            $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."'  AND`DirName`='".$input['newDirName']."'";
+            $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."'  AND`DirName`='".$input['new']."'";
             $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
