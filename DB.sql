@@ -12,12 +12,10 @@ CREATE TABLE Users (
 
 DROP TABLE IF EXISTS Board;
 CREATE TABLE Board (
-	# BoardID tinyint(100) NOT NULL AUTO_INCREMENT,
 	BoardName varchar(255) NOT NULL UNIQUE,
 	UserID varchar(101) NOT NULL,
 	Rule mediumtext ,
 	TopArticleID bigint(255) ,
-	# PRIMARY KEY (BoardID),
 	PRIMARY KEY (BoardName),
 	FOREIGN KEY (UserID) REFERENCES Users (UserID) 
 ) CHARSET=utf8mb4 ;
