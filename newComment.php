@@ -4,7 +4,7 @@
             cmd["act"] = "newComment";
             cmd["account"] = "00857210";
             cmd["content"] = "Content";
-            cmd["floors"] = 1;
+            cmd["floors"] = 1;  (前端自己數??)
             cmd["tagFloor"] = NULL;
             cmd["articleID"] = 1;
         */
