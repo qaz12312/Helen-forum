@@ -228,15 +228,12 @@ body{
 	margin-right: 3%;
 }
 .glyphicon-pushpin{
-	height: 30px;
-	width: 30px;
-	position: absolute;
-	left: 3px;
-	background-color: brown;
-	border-radius: 20px;
 	color: whitesmoke;
-	padding: 3px;
 }
+.pushpinBtn {
+  border-radius: 30px; width:35px !important; background-color: gray;
+}
+.pushpinBtn.top { background-color: brown !important;}
 
 .textInput{
 	width: 100%;

@@ -6,6 +6,8 @@ var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
 
 var keepMenu;
 
+boards = [ "美食", "廢文", "八卦", "企鵝", "漫威" ];
+
 $( document ).ready( function()
 {
     initial();
@@ -14,8 +16,8 @@ $( document ).ready( function()
     {
         $( ".topnav a" ).removeClass( "active" );
         $( this ).addClass( "active" );
-        $( ".contentArea h3" ).html( $(this).text() );
-        // initial();
+        sessionStorage.setItem( "Helen-sort", $(this).text() );
+        location.reload();
     });
 
     $( ".tabContent button" ).has( ".glyphicon-pencil" ).click( function ()
@@ -59,7 +61,7 @@ $( document ).ready( function()
                 //             showConfirmButton: false,
                 //             timer: 1000,
                 
-                //         }).then(( result ) => {
+                //         }).then(( result ) => {}, ( dismiss ) => {
                 //             if ( result ) 
                 //             {
                 //                 $( "#rule" ).html( "版規：" + escapeHtml(result).split("\n").join("<br/>") );
@@ -68,7 +70,7 @@ $( document ).ready( function()
                 //             {
                 //                 $( "#rule" ).html( "版規： 無");
                 //             }
-                //         }, ( dismiss ) => {} );
+                //         });
                 //     }
                 // });
 
@@ -87,11 +89,11 @@ $( document ).ready( function()
                     {
                         $( "#rule" ).html( "版規： 無");
                     }
-                } );
+                });
             }, ( dismiss ) => {} );
     });
 
-    $( ".glyphicon-pushpin" ).click( function()
+    $( ".pushpinBtn" ).click( function()
     {
         var tempTr = this.closest( "tr" );
         var tempTbody = this.closest( "tbody" );
@@ -118,7 +120,7 @@ $( document ).ready( function()
             {
                 if( dismiss )
                 {
-                    $( ".glyphicon-pushpin" ).removeClass( "top" );
+                    $( ".pushpinBtn" ).removeClass( "top" );
                     $( this ).addClass( "top" );
 
                     tempTr.remove();
@@ -130,7 +132,7 @@ $( document ).ready( function()
         // let cmd = {};
         // cmd[ "act" ] = "TopArticleChange";
         // cmd[ "account" ] = thisAccount;
-        // cmd[ "articleID" ] = articles.find( (element) => element.title == title ).articleID;
+        // cmd[ "articleID" ] = articles.find( (element) => element.title == $( ".articleTitle", tempTr ).text() ).articleID;
         // cmd[ "boardName" ] = thisBoardName;
 
         // $.post( "../index.php", cmd, function( dateDB )
@@ -139,34 +141,41 @@ $( document ).ready( function()
 
         //     if( dataDB.status == false )
         //     {
-                // swal({
-                //     title: "置頂失敗",
-                //     type: "error",
-                //     text: dataDB.errorCode
+        //         swal({
+        //             title: "置頂失敗",
+        //             type: "error",
+        //             text: dataDB.errorCode,
 
-                // }).then(( result ) => {}, ( dismiss ) => {} );
+        //         }).then(( result ) => {}, ( dismiss ) => {} );
         //     }
         //     else
-            // {
-            //     swal({
-            //         title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
-            //         type: "success",
-            //         showConfirmButton: false,
-            //         timer: 1000,
+        //     {
+        //         swal({
+        //             title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
+        //             type: "success",
+        //             showConfirmButton: false,
+        //             timer: 1000,
         
-            //     }).then(( result ) => {}, ( dismiss ) =>
-            //     {
-            //         if( dismiss )
-            //         {
-            //             $( ".glyphicon-pushpin" ).removeClass( "top" );
-            //             $( this ).addClass( "top" );
-    
-            //             tempTr.remove();
-            //             tempTbody.prepend( tempTr );
-            //         }
-            //     });
+        //         }).then(( result ) => {}, ( dismiss ) =>
+        //         {
+        //             if( dismiss )
+        //             {
+        //                 $( ".pushpinBtn" ).removeClass( "top" );
+        //                 $( this ).addClass( "top" );
+
+        //                 tempTr.remove();
+        //                 tempTbody.prepend( tempTr );
+        //             }
+        //         });
         //     }
         // });
+    });
+
+    $( ".articleTitle" ).parent().click( function() 
+    {
+        let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
+        sessionStorage.setItem( "Helen-articleID", thisArticle.articleID );
+        location.href =  "../html/post.html";
     });
 
     $( "button" ).has( ".glyphicon-heart" ).click( function()
@@ -201,7 +210,8 @@ $( document ).ready( function()
         //             $( chosen ).addClass( "text-light" );
         //             $( this ).addClass( "btn-danger" );
                     
-        //             thisArticle.like = parseInt(thisArticle.like) + 1;
+                    // thisArticle.like = parseInt(thisArticle.like) + 1;
+                    // $( chosen ).eq(1).html( thisArticle.like );
         //         }
         //         else
         //         {
@@ -209,10 +219,9 @@ $( document ).ready( function()
         //             $( chosen ).addClass( "text-danger" );
         //             $( chosen ).removeClass( "text-light" );
 
-        //             thisArticle.like = parseInt(thisArticle.like) - 1;
+                    // thisArticle.like = parseInt(thisArticle.like) - 1;
+                    // $( chosen ).eq(1).html( thisArticle.like );
         //         }
-
-        //         $( chosen ).eq(1).html( thisArticle.like );
         //     }
         // });
 
@@ -223,6 +232,7 @@ $( document ).ready( function()
             $( this ).addClass( "btn-danger" );
             
             thisArticle.like = parseInt(thisArticle.like) + 1;
+            $( chosen ).eq(1).html( thisArticle.like );
         }
         else
         {
@@ -231,9 +241,8 @@ $( document ).ready( function()
             $( chosen ).removeClass( "text-light" );
 
             thisArticle.like = parseInt(thisArticle.like) - 1;
+            $( chosen ).eq(1).html( thisArticle.like );
         }
-
-        $( chosen ).eq(1).html( thisArticle.like );
     });
 
     $( "button" ).has( ".glyphicon-star" ).click( function()
@@ -243,90 +252,7 @@ $( document ).ready( function()
         let thisArticle = articles.find( (element) => element.title == title );
 
         if( keepMenu === undefined ) keepMenu = getKeepMenu();
-        
-        // if( $( chosen ).hasClass( "text-warning" ) )
-        // {
-        //     swal({
-        //         title: "選擇收藏目錄",
-        //         input: 'select',
-        //         inputOptions: keepMenu,
-        //         showCancelButton: true,
 
-        //     }).then((result) => {
-
-        //         let cmd = {};
-        //         cmd[ "act" ] = "keep";
-        //         cmd[ "accout" ] = thisAccount;
-        //         cmd[ "articleID" ] = thisArticle.articleID;
-        //         cmd[ "dirName" ] = keepMenu[result];
-
-        //         $.post( "../index.php", cmd, function( dataDB )
-        //         {
-        //             dataDB = JSON.parse( dataDB );
-
-                    // if( dataDB.status == false )
-                    // {
-                    //     swal({
-                    //         title: "錯誤！",
-                    //         type: "error",
-                    //         text: dataDB.errorCode,
-                
-                    //     }).then(( result ) => {}, ( dismiss ) => {} );
-        //             }
-                    // else
-                    // {
-                    //     swal({
-                    //         title: "收藏成功<br/><small>&lt;" + keepMenu[result] + "&gt;</small>",
-                    //         type: "success",
-                    //         showConfirmButton: false,
-                    //         timer: 1000,
-                
-                    //     }).then(( result ) => {}, ( dismiss ) => {});
-                        
-        //                 $( chosen ).removeClass( "text-warning" );
-        //                 $( chosen ).addClass( "text-light" );
-        //                 $( this ).addClass( "btn-warning" );
-
-        //                 thisArticle.keep = parseInt( thisArticle.keep ) + 1;
-        //             }
-        //         });
-
-        //     }, ( dismiss ) => {});
-        // }
-        // else
-        // {
-        //     let cmd = {};
-        //     cmd[ "act" ] = "keep";
-        //     cmd[ "accout" ] = thisAccount;
-        //     cmd[ "articleID" ] = thisArticle.articleID;
-        //     cmd[ "dirName" ] = "";
-
-        //     $.post( "../index.php", cmd, function( dataDB )
-        //     {
-        //         dataDB = JSON.parse( dataDB );
-
-                // if( dataDB.status == false )
-                // {
-                //     swal({
-                //         title: "錯誤！",
-                //         type: "error",
-                //         text: dataDB.errorCode,
-            
-                //     }).then(( result ) => {}, ( dismiss ) => {} );
-        //         }
-        //         else
-        //         {
-        //             $( this ).removeClass( "btn-warning" );
-        //             $( chosen ).addClass( "text-warning" );
-        //             $( chosen ).removeClass( "text-light" );
-
-        //             thisArticle.keep = parseInt( thisArticle.keep ) - 1;
-        //         }
-        //     });
-        // }
-
-        // $( chosen ).eq(1).html( thisArticle.keep );
-        
         if( $( chosen ).hasClass( "text-warning" ) )
         {
             swal({
@@ -334,6 +260,8 @@ $( document ).ready( function()
                 input: 'select',
                 inputOptions: keepMenu,
                 showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
 
             }).then((result) => {
                 //
@@ -356,13 +284,14 @@ $( document ).ready( function()
                         showConfirmButton: false,
                         timer: 1000,
                 
-                    }).then(( result ) => {}, ( dismiss ) => {});
-                    
-                    $( chosen ).removeClass( "text-warning" );
-                    $( chosen ).addClass( "text-light" );
-                    $( this ).addClass( "btn-warning" );
+                    }).then(( result ) => {}, ( dismiss ) => {
+                        $( chosen ).removeClass( "text-warning" );
+                        $( chosen ).addClass( "text-light" );
+                        $( this ).addClass( "btn-warning" );
 
-                    thisArticle.keep = parseInt( thisArticle.keep ) + 1;
+                        thisArticle.keep = parseInt( thisArticle.keep ) + 1;
+                        $( chosen ).eq(1).html( thisArticle.keep );
+                    });
                 }
 
             }, ( dismiss ) => {} );
@@ -388,10 +317,94 @@ $( document ).ready( function()
                 $( chosen ).removeClass( "text-light" );
 
                 thisArticle.keep = parseInt( thisArticle.keep ) - 1;
+                $( chosen ).eq(1).html( thisArticle.keep );
             }
         }
+        
+        // if( $( chosen ).hasClass( "text-warning" ) )
+        // {
+        //     swal({
+        //         title: "選擇收藏目錄",
+        //         input: 'select',
+        //         inputOptions: keepMenu,
+        //         showCancelButton: true,
+        //         confirmButtonText: "確定",
+        //         cancelButtonText: "取消",
 
-        $( chosen ).eq(1).html( thisArticle.keep );
+        //     }).then((result) => {
+
+        //         let cmd = {};
+        //         cmd[ "act" ] = "keep";
+        //         cmd[ "accout" ] = thisAccount;
+        //         cmd[ "articleID" ] = thisArticle.articleID;
+        //         cmd[ "dirName" ] = keepMenu[result];
+
+        //         $.post( "../index.php", cmd, function( dataDB )
+        //         {
+        //             dataDB = JSON.parse( dataDB );
+
+        //             if( dataDB.status == false )
+        //             {
+        //                 swal({
+        //                     title: "錯誤！",
+        //                     type: "error",
+        //                     text: dataDB.errorCode,
+                
+        //                 }).then(( result ) => {}, ( dismiss ) => {} );
+        //             }
+        //             else
+        //             {
+        //                 swal({
+        //                     title: "收藏成功<br/><small>&lt;" + keepMenu[result] + "&gt;</small>",
+        //                     type: "success",
+        //                     showConfirmButton: false,
+        //                     timer: 1000,
+                
+        //                 }).then(( result ) => {}, ( dismiss ) => {
+        //                     $( chosen ).removeClass( "text-warning" );
+        //                     $( chosen ).addClass( "text-light" );
+        //                     $( this ).addClass( "btn-warning" );
+
+        //                     thisArticle.keep = parseInt( thisArticle.keep ) + 1;
+        //                     $( chosen ).eq(1).html( thisArticle.keep );
+        //                 });
+        //             }
+        //         });
+
+        //     }, ( dismiss ) => {});
+        // }
+        // else
+        // {
+        //     let cmd = {};
+        //     cmd[ "act" ] = "keep";
+        //     cmd[ "accout" ] = thisAccount;
+        //     cmd[ "articleID" ] = thisArticle.articleID;
+        //     cmd[ "dirName" ] = "";
+
+        //     $.post( "../index.php", cmd, function( dataDB )
+        //     {
+        //         dataDB = JSON.parse( dataDB );
+
+        //         if( dataDB.status == false )
+        //         {
+        //             swal({
+        //                 title: "錯誤！",
+        //                 type: "error",
+        //                 text: dataDB.errorCode,
+            
+        //             }).then(( result ) => {}, ( dismiss ) => {} );
+        //         }
+        //         else
+        //         {
+        //             $( this ).removeClass( "btn-warning" );
+        //             $( chosen ).addClass( "text-warning" );
+        //             $( chosen ).removeClass( "text-light" );
+
+        //             thisArticle.keep = parseInt( thisArticle.keep ) - 1;
+        //             $( chosen ).eq(1).html( thisArticle.keep );
+        //         }
+        //     });
+        // }
     });
 
     $('body').on('keydown','textarea', function(e)
@@ -427,7 +440,9 @@ function initial()
                 "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
             "</button>" 
     );
-    $( ".tabContent h3" ).html( "熱門" );
+    $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
+    $( ".topnav a" ).removeClass( "active" );
+    $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
 
     let status = true;
 
@@ -446,6 +461,34 @@ function initial()
         var topArticleID = "123";
 
         $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
+
+        // let cmd = {};
+        // cmd[ "act" ] = "boardSort";
+        // cmd[ "boardName" ] = thisBoardName;
+        // cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
+
+        // $.post( "../index.php", cmd, function( dataDB )
+        // {
+        //     dataDB = JSON.parse( dataDB );
+
+        //     if( dataDB.status == false )
+        //     {
+        //         swal({
+        //             title: "載入頁面失敗",
+        //             type: "error",
+        //             text: dataDB.errorCode
+        //         }).then(( result ) => {}, ( dismiss ) => {} );
+        //     }
+        //     else
+        //     {
+        //         let rule = dataDB.data.rule;
+        //         var topArticleID = dataDB.data.topArticleID;
+        //         articles = dataDB.data.articleList;
+
+        //         $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
+        //     }
+        // });
+
         $( ".tabContent tbody" ).empty();
 
         for( let i in articles )
@@ -454,8 +497,11 @@ function initial()
                             "<td>" +
                                 "<div class='card'>" +
                                     "<div class='card-body row'>" +
-                                        "<span class='glyphicon glyphicon-pushpin'></span>" +
-                                        "<span class='col-md-2'></span>" +
+                                        "<span class='col-md-2'>" + 
+                                            "<button type='button' class='btn pushpinBtn'>" +
+                                                "<span class='glyphicon glyphicon-pushpin'></span>" +
+                                            "</button>" +
+                                        "</span>" +
                                         "<span class='col-md-6'>" +
                                             "<span class='articleTitle'>" + articles[i].title + "</span>" +
                                         "</span>" +
@@ -484,7 +530,7 @@ function initial()
         {
             topArticle = topArticle.title;
 
-            $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" ).find( ".glyphicon-pushpin").addClass( "top" );
+            $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" ).find( ".pushpinBtn").addClass( "top" );
 
             let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
             let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
@@ -503,90 +549,6 @@ function initial()
                     "</tr>";
         $( ".tabContent tbody" ).append( isEmpty );
     }
-
-    // let cmd = {};
-    // cmd[ "act" ] = "boardSort";
-    // cmd[ "boardName" ] = thisBoardName;
-    // cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
-
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
-
-        // if( dataDB.status == false )
-        // {
-        //     swal({
-        //         title: "載入頁面失敗",
-        //         type: "error",
-        //         text: dataDB.errorCode
-        //     }).then(( result ) => {}, ( dismiss ) => {} );
-        // }
-    //     else
-    //     {
-    //         let rule = dataDB.data.rule;
-    //         var topArticleID = dataDB.data.topArticleID;
-    //         articles = dataDB.data.articleList;
-
-    //         $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
-
-    //         $( ".tabContent tbody" ).empty();
-
-    //         for( let i in articles )
-    //         {
-    //             let oneRow = "<tr>" +
-    //                             "<td>" +
-    //                                 "<div class='card'>" +
-    //                                     "<div class='card-body row'>" +
-    //                                         "<span class='glyphicon glyphicon-pushpin'></span>" +
-    //                                         "<span class='col-md-2'></span>" +
-    //                                         "<span class='col-md-6'>" +
-    //                                             "<span class='articleTitle'>" + articleList[i].title + "</span>" +
-    //                                         "</span>"
-    //                                         "<span class='col-md-4'>" +
-    //                                             "<button type='button' class='btn btn-secondary'>" +
-    //                                                 "<span class='glyphicon glyphicon-heart text-danger'></span><span class='text-danger heartaa'>" 
-    //                                                     + articles.like + "</span></button>" +
-    //                                             "<button type='button' class='btn btn-secondary'>" +
-    //                                                 "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning keep'>" +
-    //                                                     + articles.keep + "</span></button>" +
-    //                                         "</span>" +
-    //                                     "</div>" +
-    //                                 "</div>" +
-    //                             "</td>" +
-    //                         "</tr>";
-
-    //             $( ".tabContent tbody" ).append( oneRow );
-    //         }
-    //     }
-
-    //     if( topArticleID != "" )
-    //     {
-    //         let topArticle = articles.find( (element) => element.id == topArticleID );
-
-    //         if( topArticle !== undefined )
-    //         {
-    //             topArticle = topArticle.title;
-
-    //             $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".glyphicon-pushpin" ).addClass( "top" );
-    
-    //             let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
-    //             let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
-    
-    //             tempTr.remove();
-    //             tempTbody.prepend( tempTr );
-    //         }
-    //     }
-
-    //     if( articles.length == 0 )
-    //     {
-    //         let isEmpty = "<tr>" +
-    //                         "<td>" +
-    //                             "文章列表為空";
-    //                         "</td>" +
-    //                     "</tr>";
-    //         $( ".tabContent tbody" ).append( isEmpty );
-    //     }
-    // });
 
     checkPermission();
 }
