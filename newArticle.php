@@ -1,34 +1,33 @@
 <?php
-    //require_once 'test.php'; //連線資料庫 
-/* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "addArticle";
-			cmd["articleID"] = "ArticleID"
-            cmd["account"] = "AuthorID"
-            cmd["blockName"] ="美食"
-            cmd["title"] = "Title"
-            cmd["content"] = "Content"
-            cmd["picture"] = "Image"
-            cmd["hashTag"] ="HashTag"
-            cmd["timer"] ="Time"
-
-        */
-        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				dataDB.data[0]	// ArticleID
-				dataDB.data[1]	// AuthorID
-				dataDB.data[2]	// Title
-                dataDB.data[3]	// Content
-                dataDB.data[4]	// Image
-                dataDB.data[5]	// HashTag
-                dataDB.data[6]	// Time
-                dataDB.data[7]	// Color
-            否則
-                dataDB.data = ""
-         */
-    // global $input,$conn;
+	/* 
+	前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "addArticle";
+	cmd["articleID"] = ArticleID;(是否不用傳呢，我記得是用流水號的樣子?)
+	cmd["account"] = "AuthorID";
+	cmd["blockName"] ="美食";
+	cmd["title"] = "Title";
+	cmd["content"] = "Content"
+	cmd["picture"] = "Image"
+	cmd["hashTag"] ="HashTag"
+	cmd["timer"] ="Time"
+	
+	後端 to 前端:
+	dataDB.status
+	若 status = true:
+		dataDB.errorCode = ""
+		dataDB.data[0]	// ArticleID
+		dataDB.data[1]	// AuthorID
+		dataDB.data[2]	// Title
+		dataDB.data[3]	// Content
+		dataDB.data[4]	// Image
+		dataDB.data[5]	// HashTag
+		dataDB.data[6]	// Time
+		dataDB.data[7]	// Color
+	否則
+		dataDB.errorCode = ??????
+		dataDB.data = ""
+	*/
     function doNewArticle($input){
         global $conn;
         $new="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) 
