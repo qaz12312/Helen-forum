@@ -3,10 +3,7 @@ var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articl
 
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
-
 var keepMenu;
-
-boards = [ "美食", "廢文", "八卦", "企鵝", "漫威" ];
 
 $( document ).ready( function()
 {
