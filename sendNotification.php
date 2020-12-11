@@ -1,22 +1,23 @@
 <?php
-/* 
-前端 to 後端:
-let cmd = {};
-cmd["act"] = "sendNotification";
-cmd["recipient"] = "收通知的account";
-cmd["timer"] = "Times"(是否不需要呢?)
-cmd["content"] = "Content"
+    /* 
+    前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "sendNotification";
+    cmd["recipient"] = "收通知的account";
+    cmd["timer"] = "Times"(是否不需要呢?)
+    cmd["content"] = "Content"
 
-後端 to 前端:
-dataDB.status
-dataDB.errorCode
-若 status = true:
-dataDB.data[0]	// UserID
-dataDB.data[1]	// Times
-dataDB.data[2]	// Content
-否則
-dataDB.data = ""
-*/
+    後端 to 前端:
+    dataDB.status
+    若 status = true:
+        dataDB.errorCode = ""
+        dataDB.data[0]	// UserID
+        dataDB.data[1]	// Times
+        dataDB.data[2]	// Content
+    否則
+        dataDB.errorCode = ???
+        dataDB.data = ""
+    */
     function doSendNotification($input){
         global $conn;
         $new="INSERT INTO  `Notice`(`UserID`,`Content`)VALUES('".$input['recipient']."','".$input['content']."')";
