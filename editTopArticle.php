@@ -3,18 +3,19 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "TopArticleChange";
-	cmd["articleID"] = "1"
-	cmd["boardName"] = "美食"
+	cmd["articleID"] = 1;
+	cmd["boardName"] = "美食";
 	cmd["account"] = "admin";
 	
-        後端 to 前端
+        後端 to 前端:
 	dataDB.status
-	dataDB.errorCode
 	若 status = true:
+		dataDB.errorCode = ""
 		dataDB.data[0]	// TopArticleID
 		dataDB.data[1]  // title
 	否則
-	dataDB.data = ""
+		dataDB.errorCode =
+		dataDB.data = ""
          */
         function doEditTopArticle($input){
 		global $conn;
