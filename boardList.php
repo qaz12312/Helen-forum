@@ -1,17 +1,18 @@
 <?php
-    //require_once 'connectDB.php'; //連線資料庫 
-        /* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "boardList";
-        */
-        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-                dataDB.data[i] //有i筆boardName
-            否則
-                dataDB.data = "沒有文章"
-		*/
+	/* 
+	前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "boardList";
+	
+	後端 to 前端
+	dataDB.status
+	若 status = true:
+		dataDB.errorCode = ""
+		dataDB.data[i] //有i筆boardName
+	否則
+		dataDB.errorCode =
+		dataDB.data = 
+	*/
     function doBoardList($input){
         global $conn;
         $sql="SELECT `BoardName` FROM `Board` ";
