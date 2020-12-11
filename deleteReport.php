@@ -1,12 +1,12 @@
 <?php
-    /* 
-    前端 to 後端:
-    let cmd = {};
-    cmd["act"] = "deleteReport";
-    cmd["isPass"] = true / false; (通過審核/審核不通過)
-    cmd["articleID"] = "1";
+	/* 
+	前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "deleteReport";
+	cmd["isPass"] = true / false; (通過審核/審核不通過)
+	cmd["articleID"] = "1";
 
-    後端 to 前端:
+	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
@@ -15,7 +15,7 @@
 	否則
 		dataDB.errorCode = "刪除檢舉失敗"
 		dataDB.data = "" 
-    */
+	*/
     function doDeleteReport($input){ //審核被檢舉文章
         global $conn;
         if($input['isPass']){//刪除文章
