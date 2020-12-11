@@ -1,24 +1,25 @@
 <?php
-    //require_once 'test.php'; //連線資料庫 
-        /* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "newBoard";
-			cmd["boardName"] = "企鵝版"
-            cmd["account"] "00752233"
-            cmd ["rule"]=Rule
-        */
-		
-        /* 後端 to 前端
-            dataDB.status
-            dataDB.errorCode
-            若 status = true:
-				dataDB.data[0]	// BoardName
-				dataDB.data[1]	// UserID
-				dataDB.data[2]	// Rule
-				dataDB.data[3]	// TopArticleID
-            否則
-                dataDB.data = ""
-         */
+	/* 
+	前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "newBoard";
+	cmd["boardName"] = "企鵝"
+	(下面2行是否需要?因為有寫修改版規的php(editBoard)、版主的任命(editModerator))
+	cmd["account"] "00752233"(還是說這個有其他用途?)
+	cmd ["rule"]=Rule
+
+	後端 to 前端:
+	dataDB.status
+	若 status = true:
+		dataDB.errorCode = ""
+		dataDB.data[0]	// BoardName
+		dataDB.data[1]	// UserID
+		dataDB.data[2]	// Rule
+		dataDB.data[3]	// TopArticleID
+	否則
+		dataDB.errorCode = ???????
+		dataDB.data = ""
+	*/
     function doNewBoard($input){
         global $conn;
         $sql="SELECT `boardName`, `UserID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'";
