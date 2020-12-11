@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dropdown Menu</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+        nav {
+            margin: 100px 300px;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav li {
+            float: left;
+            width: 160px;
+            height: 40px;
+            background-color: midnightblue;
+            line-height: 40px;
+            text-align: center;
+            position: relative;
+             
+        }
+        nav li a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: white;
+            border: 1px solid lightgrey;
+        }
+        nav li a:hover {
+            background-color: lightseagreen;
+        }
+        nav ul.sub {
+            position: absolute;
+            display: none;
+        }
+        nav ul.sub li ul.sub {
+            top:0;
+            left: 160px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <h1>Dropdown Menu</h1>
+    <ul class="main">
+        
+        <li>
+            <a >B</a>
+            <ul class="sub">
+                <li><a href="#">B-1</a></li>
+                <li><a href="#">B-2</a></li>
+                <li><a href="#">B-3</a></li>
+            </ul>
+        </li>
+        
+    </ul>
+</nav>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    $(function(){
+        $(".main li").hover(
+            function(){
+                //$('ul.sub', this).slideDown(500);
+                //$('>ul.sub', this).slideDown(500);
+                $('>ul.sub:not(:animated)', this).slideDown(500);
+            },
+            function(){
+                //$('ul.sub',this).slideUp(300);
+                $('>ul.sub',this).slideUp(300);
+            }
+        );
+    });
+</script>
+</body>
+</html>

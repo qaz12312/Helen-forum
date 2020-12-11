@@ -434,6 +434,7 @@ $( document ).ready( function()
 
 function initial()
 {
+    
     $( ".tabContent h2" ).html( 
         "&emsp;&emsp;" + thisBoardName + "版" + 
             "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
@@ -555,18 +556,21 @@ function initial()
 
 function checkPermission()
 {
-    if( thisAccount == null )
-    {
-        $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
-        $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
-        $( ".glyphicon-pushpin.top" ).css( "visibility", "visible" );
-        return;
-    }
+    
+    // if( thisAccount == null )
+    // {
+        
+    //     $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
+    //     $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
+    //     $( ".glyphicon-pushpin.top" ).css( "visibility", "visible" );
+    //     return;
+    // }
 
-    let status = true;
+    let status =false;
 
     if( status == false )
-    {
+    {   
+        
         $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
         $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
         $( ".glyphicon-pushpin.top" ).css( "visibility", "visible" );
@@ -577,9 +581,10 @@ function checkPermission()
         color = "#000000";
         nickname = "haha";
         boardName = ["美食"];
-        
-        if( permission < 2 || boardName.indexOf( thisBoardName ) == -1 )
+        console.log("123")
+        if( permission < 2 )
         {
+            // console.log("123")|| boardName.indexOf( thisBoardName ) == -1 
             $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
             $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
             $( ".glyphicon-pushpin.top" ).css( "visibility", "visible" );
