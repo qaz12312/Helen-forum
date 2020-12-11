@@ -557,16 +557,15 @@ function initial()
 function checkPermission()
 {
     
-    // if( thisAccount == null )
-    // {
-        
-    //     $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
-    //     $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
-    //     $( ".glyphicon-pushpin.top" ).css( "visibility", "visible" );
-    //     return;
-    // }
+    if( thisAccount == null )
+    {
+        $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
+        $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
+        $( ".glyphicon-pushpin.top" ).css( "visibility", "visible" );
+        return;
+    }
 
-    let status =false;
+    let status =true;
 
     if( status == false )
     {   
@@ -581,10 +580,9 @@ function checkPermission()
         color = "#000000";
         nickname = "haha";
         boardName = ["美食"];
-        console.log("123")
-        if( permission < 2 )
+        
+        if( permission < 2 || boardName.indexOf( thisBoardName ) == -1 )
         {
-            // console.log("123")|| boardName.indexOf( thisBoardName ) == -1 
             $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
             $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
             $( ".glyphicon-pushpin.top" ).css( "visibility", "visible" );

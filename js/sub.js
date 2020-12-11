@@ -21,7 +21,6 @@ $(document).ready( function(){
 
     $(".tabContent button").on( "click", function(){
         let articleIndex = $(".tabContent tr").index(this.closest("tr"));
-        console.log(articleIndex)
         if( $(this).text().trim() == "刪除"){
             let cmd= {};
             cmd["act"] = "removeKeepArticle";
