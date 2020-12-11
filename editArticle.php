@@ -1,24 +1,25 @@
 <?php
-		/* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "editArticle";
-			cmd["articleID"] = "ArticleID"
-            cmd["account"] = "AuthorID"
-            cmd["newBlockName"] ="美食版"
-            cmd["title"] = "Title"
-            cmd["content"] = "Content"
-            cmd["picture"] = "Image"
-            cmd["hashTag"] ="HashTag"
-        */
+	/* 
+	前端 to 後端:
+	let cmd = {};
+	cmd["act"] = "editArticle";
+	cmd["articleID"] = ArticleID;
+	cmd["account"] = "AuthorID";
+	cmd["newBlockName"] ="美食";(是否不需要?因為ArticleID不會重複)
+	cmd["title"] = "Title";
+	cmd["content"] = "Content";
+	cmd["picture"] = "Image";
+	cmd["hashTag"] ="HashTag";
 
-       /* 後端 to 前端
-			若 status = true:
-				dataDB.data = 更新後的文章
-				 dataDB.status = true:
-			否則
-				dataDB.data = ""
-                dataDB.errorCode = "無權限更新"/"文章更新失敗";
-         */
+	後端 to 前端
+	dataDB.status
+	若 status = true:
+		dataDB.errorCode = ""
+		dataDB.data = 更新後的文章
+	否則
+		dataDB.errorCode = "無權限更新"/"文章更新失敗";
+		dataDB.data = ""
+	*/
     function doEditArticle($input){ 
 		global $conn;    
 		$sqlcheck="SELECT `ArticleID` FROM `Article` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' ";  
