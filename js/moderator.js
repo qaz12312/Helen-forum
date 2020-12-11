@@ -394,10 +394,10 @@ function initial()
     //         content.append( addNewModerator );
     //     }
     // });
+    
 
     let content = $( ".tabContent tbody" );
     content.empty();
-
     let boards = [ "資工版", "電機版", "美食版", "企鵝版", "aa版", "bb版", "cc版", "dd版" ];
     
     let dataDB = {};

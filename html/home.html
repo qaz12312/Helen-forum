@@ -2,75 +2,156 @@
 <head>
     <meta charset = "utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Helen</title>
+    <title>home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	<!-- w3school的搜尋圖示 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script><!--heart-->
-    
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	<!-- w3school的搜尋圖示 -->
-    
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!--
-    <link rel="icon" href="./static/icon128.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
-    <link rel= "stylesheet" href= "./static/myBookCaseMain.css">
-    -->
-    
-<link rel="stylesheet" href="../css/style.css">
-<link rel= "stylesheet" href= "../css/topnav.css">
+    <link rel= "stylesheet" href= "../css/style.css">
+    <link rel= "stylesheet" href= "../css/topnav.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+
+    <style>
+        .selectOption{
+            width: 100%;
+        }
+        .classification{
+            border: 0px;
+            width: 30%;
+            padding: 3px 7px 3px 7px;
+            margin-right: 5%;
+            margin-bottom: 2%;
+            font-size: inherit;
+          }
+
+        .input-file-container {
+            position: relative;
+          } 
+          .js .input-file-trigger {
+            display: block;
+            padding: 10px 10px 10px 10px;
+            background: #7c838f;
+            color: whitesmoke;
+            font-size: 1em;
+            transition: all .4s;
+            cursor: pointer;
+          }
+          .js .input-file {
+            width: 10px;
+            position: absolute;
+            top: 0; left: 0;
+            opacity: 0;
+            /*padding: 14px 0;*/
+            cursor: pointer;
+          }
+          .js .input-file:hover + .input-file-trigger,
+          .js .input-file:focus + .input-file-trigger,
+          .js .input-file-trigger:hover,
+          .js .input-file-trigger:focus {
+            background: #545871;
+            color: #e0d5d5;
+          }
+    </style>
 </head>
 <body>
+<div class= "topMenu">
+    <!-- 中間 -->
+    <div class="brand-centered">
+        <div class="search-container">
+            <input type="text" placeholder="Search..." name="search">
+            <button type="submit"><span class="glyphicon glyphicon-search"></span></i></button>
+        </div>
+    </div>
     
-<div class="topnav">
-    <div class="dropdown">
-    <button class="dropbtn" onclick="myFunction(), cross(this)">
-    <div class="bar1"></div>
-    <div class="bar2"></div>
-    <div class="bar3"></div>
-    </button>
-    <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
-        <a href="#">Link 1</a>	
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
-        <a href="#">+</a>
+    <div class="navbar-collapse collapse">
+        <!-- 靠左 -->
+        <ul class="nav navbar-nav navbar-left">
+            <li>
+                <div id="menuToggle">
+                    <input type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <ul id="menu">
+                        <a href="#"><li>美食版</li></a>
+                        <a href="#"><li>廢文版</li></a>
+                        <a href="#"><li>企鵝版</li></a>
+                        <a href="#"><li>漫威版</li></a>
+                        <a href="#">
+                            <li><h3 class="glyphicon glyphicon-plus"> __EDIT__ </h3></li>
+                        </a>
+                    </ul>
+                </div>
+            </li>
+            <li>&emsp;</li>
+            <li>    
+                <a href="#">
+                <!-- <img style="margin-right: 10px; padding: 0;" src="logo.png" alt="Helen"> -->
+                Helen
+                </a>
+            </li>
+        </ul>
+        <!-- 靠右 -->
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+               <button type="button" class="btn btn-primary" id="Log-inBtn">
+                    <span class="glyphicon glyphicon-log-in"></span> 登入
+                </button>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <span id= "head">&emsp;</span>
+                    <span class= "glyphicon glyphicon-chevron-down"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li class= "glyphicon glyphicon-user">
+                        <span> 00757015</span></li>
+                    <li class="divider"></li>
+                    <li class= "glyphicon glyphicon-edit">
+                        <a href="../html/PersonalProfile.html"> 個人資料</a></li>
+                    <li class= "glyphicon glyphicon-pencil">
+                        <a href="../html/publishArticle.html"> 發佈新文章</a></li>
+                    <li class= "glyphicon glyphicon-star-empty">
+                        <a href="../html/CollectionCatalog.html"> 我的收藏</a></li>
+                    <li class= "glyphicon glyphicon-time">
+                        <a href="../html/PostingRecord.html"> 發文紀錄</a></li>
+                    <li class= "glyphicon glyphicon-th-list">
+                        <a href="../html/manageBoard.html"> 管理看版</a></li>
+                    <li class= "glyphicon glyphicon-king">
+                        <a href="../html/moderator.html"> 管理版主</a></li>
+                    <li class= "glyphicon glyphicon-alert">
+                        <a href="../html/report.html"> 檢舉區</a></li>
+                    <li class= "glyphicon glyphicon-bullhorn">
+                        <a href="../html/sendAlert.html"> 發送通知</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
-    </div>
-    <div class="login">
-    <button>登入</button>
-    </div>
-    <div class="imgcontainer">
-        <i class="fa fa-user-circle" aria-hidden="true"></i>
-    </div>
-    <div class="search-container">
-        <input type="text" placeholder="Search.." name="search">
-        <button type="submit"><i class="fa fa-search"></i></button>
-    </div>
+  </div>
+
+    <div class="topnav">
+        <a class="active" href="#">熱門</a>
+        <a href="#">最新</a>
     </div>
 
-    <button class="tablink" onclick="openPage('popularPage', this, 'rgb(224, 174, 98)')"id="defaultOpen">個人資料</button>
-    <button class="tablink" onclick="openPage('newPage', this, 'rgb(224, 174, 98)')" >收藏目錄</button>
-
-
-<div id="popularPage" class= "tabContent">
-    <button class="addPost" id="addPost">+ 發文</button>
-<div class="contentArea">
+<div class= "tabContent">
+    <h2>Home</h2>
     
-    <h3> 熱門</h3>
-    <div class= "content">
-        <div class= "postContent">
+    <div class="contentArea">
+        <h3> 熱門</h3>
+            <div class= "content">
+                <div class= "postContent">
+    
             <table class="table table-borderless">
             <tr>
                 <td>
                     <div class="card">
                         <div class="card-body row">
-                            <span class="col-md-2">
                                 <h5 style="background-color: brown; display:inline-block"> 美食版 </h5>
-                            </span>
+                                <span class="col-md-2"></span>
                             <span class="col-md-6">
-                                <div class="postTitle">
+                                <div class="articleTitle">
                                 <span>海大附近有甚麼推薦的美食嗎？</span>
                                 </div>
                             </span>
@@ -88,11 +169,12 @@
                 <td>
                     <div class="card">
                         <div class="card-body row">
-                            <span class="col-md-2">
+                        
                                 <h5 style="background-color: brown; display:inline-block">美食版</h5>
-                            </span>
+                                <span class="col-md-2"></span>
+
                             <span class="col-md-6">
-                                <div class="postTitle">
+                                <div class="articleTitle">
                                 <span>學餐評價</span>
                                 </div>
                             </span>
@@ -109,11 +191,12 @@
                 <td>
                     <div class="card">
                         <div class="card-body row">
-                            <span class="col-md-2">
+                            
                                 <h5 style="background-color: navy; display:inline-block">廢文版</h5>
-                            </span>
+                                <span class="col-md-2"></span>
+                            
                             <span class="col-md-6">
-                                <div class="postTitle">
+                                <div class="articleTitle">
                                 <span>求海大沒有下雨的天數</span>
                             </div>
                             </span>
@@ -130,11 +213,12 @@
                 <td>
                     <div class="card">
                         <div class="card-body row">
-                            <span class="col-md-2">
+                            
                                 <h5 style="background-color: rgb(4, 85, 31); display:inline-block">課程版</h5>
-                            </span>
+                                <span class="col-md-2"></span>
+                            
                             <span class="col-md-6">
-                                <div class="postTitle">
+                                <div class="articleTitle">
                                 <span>通識涼課報你知隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻隻</span>
                             </div>
                             </span>
@@ -155,7 +239,7 @@
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
 </script>
-<script src="../js/tab.js"></script>
+<script src="../js/bar.js"></script>
 <script src="../js/home.js"></script>
 </body>
 

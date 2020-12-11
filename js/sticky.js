@@ -431,6 +431,7 @@ $( document ).ready( function()
 
 function initial()
 {
+    
     $( ".tabContent h2" ).html( 
         "&emsp;&emsp;" + thisBoardName + "版" + 
             "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
@@ -552,6 +553,7 @@ function initial()
 
 function checkPermission()
 {
+    
     if( thisAccount == null )
     {
         $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
@@ -560,10 +562,11 @@ function checkPermission()
         return;
     }
 
-    let status = true;
+    let status =true;
 
     if( status == false )
-    {
+    {   
+        
         $( ".tabContent button" ).has( ".glyphicon-pencil" ).css( "visibility", "hidden" );
         $( ".glyphicon-pushpin" ).css( "visibility", "hidden" );
         $( ".glyphicon-pushpin.top" ).css( "visibility", "visible" );

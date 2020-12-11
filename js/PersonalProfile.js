@@ -1,8 +1,6 @@
 //PersonalProfile
 document.querySelector('.PersonEditBtn').addEventListener('click',
 function () {
-    
-
     const div = document.createElement('div');
     /*var value = document.getElementById("name").value;    
     var value2 = document.getElementById("edit").value;*/ 
@@ -37,7 +35,7 @@ document.querySelector('.PasswordEditBtn').addEventListener('click',
 function () {
 const div = document.createElement('div');
 var value = document.getElementById("password").value;  
-var value2 = document.getElementById("editPw").value;   
+ 
 
 console.log(document.getElementById('password').disabled)
 if(document.getElementById('password').disabled == true){

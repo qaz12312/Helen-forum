@@ -216,8 +216,32 @@ body{
 		color: white;
 		color: white;
 		border: none;
-		margin: 20px;
+		
+		margin: 5px;
 	}
+	.delete{
+		width: 130px;
+		height: 40px;
+		font-size: 16px;
+		background-color: #e0d4bc;
+		color: white;
+		color: white;
+		border: none;
+		
+		margin: 5px;
+	}
+	.edit {
+		float:right; 
+		width: 30px;
+		height: 30px;
+		font-size: 20px;
+		background-color: rgb(250, 138, 118);
+		color: white;
+		border: none;
+		border-radius: 15px;
+		cursor: pointer;
+	}
+	
 	.Page {
 		margin: 20px;
 		padding-bottom: 25px;
@@ -268,6 +292,13 @@ body{
 		left: 0;
 		transform: skewY(-20deg);
 	}
+	.editDir{
+		width: 80%;
+		border-radius: 3px;
+		border: 1px solid #1c2988;
+		padding: 10px;
+		outline: none;
+	}
 	/*增加文章分類的+按鈕*/
 	.InputWrap button{
 		background-color: rgb(172, 151, 185);
@@ -301,6 +332,7 @@ body{
 		border-bottom: none;
 		z-index: 1;
 		position: relative;
+		bottom: -38px;
 	}
 	.Page .value::before, .Page .value::after {
 		content: "";
@@ -329,21 +361,21 @@ body{
 	.Page .currency {
 		display: inline-block;
 		font-size: 30px;
-		margin-top: 7px;
+		margin-top: -20px;
 		vertical-align: top;
 	}
 	.Page .WhichPage {
 		display: inline-block;
-		font-size: 40px;
+		font-size: 30px;/*字大小*/
 		font-weight: 600;
-		line-height: 65px;
+		line-height: 40px;
 	}
 	.Page .WhichPage span {
 		display: inline-block;
-		font-size: 30px;
+		font-size: 15px;
 		font-weight: normal;
 		vertical-align: top;
-		margin-top: -7px;
+		margin-top: 0px;
 	}
 	.PersonalProfileForm{
 		background: #545871;
@@ -378,8 +410,6 @@ body{
 			font-size: 22px;
 		}
 	}
-	/*發文紀錄*/
-	/*粉紅那塊*/
 	
 	.content{
 	text-align: center;

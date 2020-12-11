@@ -21,7 +21,6 @@ $(document).ready( function(){
 
     $(".tabContent button").on( "click", function(){
         let articleIndex = $(".tabContent tr").index(this.closest("tr"));
-
         if( $(this).text().trim() == "刪除"){
             let cmd= {};
             cmd["act"] = "removeKeepArticle";
@@ -76,8 +75,8 @@ $(document).ready( function(){
                                 }
                             // }
                         }
-                }, function( dismiss ) {
-                    if ( dismiss === 'cancel' );
+                    }, function( dismiss ) {
+                        if ( dismiss === 'cancel' );
                 });
             // });
         }
