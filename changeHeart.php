@@ -1,19 +1,19 @@
 <?php
 	/*前端 to 後端:
-		let cmd = {};
-		cmd["act"] = "heart";
-		cmd["account"] = "00857210";
-		cmd["articleId"] = "1";
+	let cmd = {};
+	cmd["act"] = "heart";
+	cmd["account"] = "00857210";
+	cmd["articleId"] = 1;
 
-	  後端 to 前端
-		dataDB.status
-		dataDB.errorCode
-		若 status = true:
-			dataDB.data="success to add heart / success to delete heart"
-		否則
-			dataDB.data = ""
+	後端 to 前端
+	dataDB.status
+	若 status = true:
+		dataDB.errorCode = ""
+		dataDB.data="success to add heart / success to delete heart"
+	否則
+		dataDB.errorCode = ??????
+		dataDB.data = ""
 	*/
-		
 function doAddDeleteHeart($input)
 {
 	global $conn;
