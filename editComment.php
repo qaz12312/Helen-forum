@@ -1,23 +1,23 @@
 <?php
-       //require_once 'test.php'; //連線資料庫 
-/* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "editComment"
-			cmd["account"] = "AuthorID"
-            cmd["detail"] = "Content"
-            cmd["articleID"] ="ArticleID"
-            cmd["floors"] = "Floor"
-            cmd["tagFloor"] = "TagFloor"
-        */
-		
-        /* 後端 to 前端
-            若 status = true:
-                dataDB.data = 更新後的留言
-				dataDB.status = true:
-            否則
-                dataDB.data = ""
-                dataDB.errorCode = 無權限更新/留言更新失敗
-         */
+/* 
+前端 to 後端:
+let cmd = {};
+cmd["act"] = "editComment"
+cmd["account"] = "AuthorID"
+cmd["detail"] = "Content"
+cmd["articleID"] ="ArticleID"
+cmd["floors"] = "Floor"
+cmd["tagFloor"] = "TagFloor"
+
+後端 to 前端:
+dataDB.status
+若 status = true:
+dataDB.errorCode = ???????????????
+dataDB.data = 更新後的留言
+否則
+dataDB.data = ""
+dataDB.errorCode = 無權限更新/留言更新失敗
+*/
     function doEditComment($input){
         global $conn;
         $sqlcheck="SELECT `ArticleID` FROM `Comments` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";  
