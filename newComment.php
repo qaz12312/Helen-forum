@@ -11,16 +11,18 @@
 		
         /* 後端 to 前端
             dataDB.status
-            dataDB.errorCode
             若 status = true:
-				dataDB.data[0]	// AuthorID
-				dataDB.data[1]	// Content
-				dataDB.data[2]	// ArticleID
+	    	dataDB.errorCode = ""
+		
+		dataDB.data[0]	// AuthorID
+		dataDB.data[1]	// Content
+		dataDB.data[2]	// ArticleID
                 dataDB.data[3]	// Time
                 dataDB.data[4]	// Floor
                 dataDB.data[5]	// TagFloor
                 dataDB.data[6]	// Color
             否則
+	    	dataDB.errorCode = ""
                 dataDB.data = ""
          */
 	function doNewComment($input){ 
