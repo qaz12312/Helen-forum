@@ -2,9 +2,9 @@
     /* 
     前端 to 後端:
     let cmd = {};
-    cmd["act"] = "board_sort";
-    cmd["sort"] = "time/hot";
+    cmd["act"] = "sortInBoard";
     cmd["boardName"] = "美食"
+    cmd["sort"] = "time/hot";
     cmd["account"]="00757033"
     後端 to 前端:
     dataDB.state
