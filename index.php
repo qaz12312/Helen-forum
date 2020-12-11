@@ -22,8 +22,8 @@
             require_once("logOut.php");
             doLogOut($input);
             break;   
-        case "modifyPersonalInfo": // 【user】修改個人資料(密碼/暱稱/顏色) -----鈞
-            require_once("personalInfo.php");
+        case "editPersonalInfo": // 【user】修改個人資料(密碼/暱稱/顏色) -----鈞
+            require_once("editPersonalInfo.php");
             break;
         case "showBoardList": //【訪客】主頁的顯示所有board -----劉
             require_once("showBoardList.php");

@@ -2,7 +2,7 @@
 /*
     前端 to 後端:
     let cmd = {};
-    cmd["act"] = "modifyPersonalInfo";
+    cmd["act"] = "editPersonalInfo";
     cmd["option"] = "password" / "nickname" / "color";
     cmd["account"] = "00757007";
     cmd["new"] = "987654321" / "beauty cook" / "\#028d5f";
