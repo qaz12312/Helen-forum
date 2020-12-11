@@ -1,17 +1,18 @@
 <?php
-// 前端 to 後端:
-// let cmd = {};
-// cmd["act"] = "changePassword";
-// cmd["account"] = "0123456";
-// cmd["password"] = "789789789";
+/*
+前端 to 後端:
+let cmd = {};
+cmd["act"] = "changePassword";
+cmd["account"] = "0123456";
+cmd["password"] = "789789789";
 
-// 後端 to 前端
-// dataDB.status
-// dataDB.errorCode
-// 若 status = true:
-// dataDB.data="success to change the password"
-// 否則
-// dataDB.data = "fail to find the password"
+後端 to 前端
+dataDB.status
+dataDB.errorCode
+若 status = true:
+dataDB.data="success to change the password"
+否則
+dataDB.data = "fail to find the password"
 
 use PHPMailer\PHPMailer\PHPMailer;
 
