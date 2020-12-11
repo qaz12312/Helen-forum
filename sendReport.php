@@ -9,12 +9,15 @@
 	
         後端 to 前端
 	dataDB.status
-	dataDB.errorCode
+	
 	若 status = true:
+		dataDB.errorCode = ""
+		(需要回傳東西麼?還是就傳"成功送出檢舉"呢?)
 		dataDB.data[0]	// ArticleID
 		dataDB.data[1]	// Reason
 		dataDB.data[2]	// times
 	否則
+		dataDB.errorCode = ?
 		dataDB.data = ""
          */
     function doSendReport($input){
