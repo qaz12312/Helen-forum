@@ -1,20 +1,22 @@
 <?php 
-    //require_once 'connectDB.php'; //連線資料庫
-    /*前端 to 後端:
-    let cmd = {};
-    cmd["act"] = "editModerator";
-    cmd["oldBoardName"] = "BoardName"
-    cmd["newBoardName"] = "BoardName"
-    cmd["account"] = "UserID"
-*/ 
-/* 後端 to 前端
-        dataDB.status
-        dataDB.errorCode
-        若 status = true:
-            dataDB.data="" 
-        否則
-              dataDB.errorCode= 刪除版主失敗 /任命版主失敗
-        */
+/*
+前端 to 後端:
+let cmd = {};
+cmd["act"] = "editModerator";
+cmd["account"] = "UserID";
+
+cmd["oldBoardName"] = "BoardName";
+cmd["newBoardName"] = "BoardName";
+
+後端 to 前端:
+dataDB.status
+若 status = true:
+dataDB.errorCode = ""
+dataDB.data="" 
+否則
+dataDB.errorCode = ""
+dataDB.errorCode= 刪除版主失敗 /任命版主失敗
+*/
     function doEditModerator($input){
         global $conn;
         $check= true;
