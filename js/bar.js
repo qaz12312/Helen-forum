@@ -1,12 +1,45 @@
-let boards= [];// [{boardName: "1"}, {boardName: "2"}, ...]
-let userData= {};
+let boards= []; // (array) [{boardName: "1"}, {boardName: "2"}, ...]
+let userData= {}; // (dir)
 
 $(document).ready(function(){
     barInitial();
 })
 
 function barInitial(){
+    $("#menu").empty();
     getBoards();
+    for(var i= 0; i< boards.length; i++){
+        var oneBoard= boards[i].boardName;
+        $("#menu").append("<a href=\"#\"><li>"+ oneBoard+"版</li></a>");
+    }
+}
+
+function getUserInfo(){
+    let cmd= {};
+    cmd["act"]= "userInfo";
+    $.post("../index.php", cmd, function(dataDB){
+        dataDB= JSON.parse(dataDB);
+        if(dataDB.status == false){
+            swal({
+                title: "獲取使用者資料失敗",
+                type: "error",
+                // text: dataDB.errorCode
+            });
+        }
+        else{
+            userData= daraDB.data;
+        }
+    });
+    
+    //Test
+    userData= {account: "00757015", 
+                color: "#FF00FF", 
+                nickname: "Cola", 
+                premission: 2};
+    //Test End
+    console.log(userData);
+
+    sessionStorage.setItem("Helen-userInfo", JSON.stringify(userData));
 }
 
 function getBoards(){
