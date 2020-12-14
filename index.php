@@ -153,7 +153,7 @@
             require_once("showModerator.php");
             doShowModerator($input);
             break;
-        case "editBoard": // 【版主】更改board的名字 + 版規 -----劉--------------------------------版主是否可以自己更動版名?
+        case "editBoard": // 【版主】更改board的名字 + 版規 -----劉
             require_once("editBoard.php");
             doEditBoard($input);
             break;
@@ -168,6 +168,9 @@
         case "removeTopArticle": //【版主】移除置頂文章 -----伶
             require_once("removeTopArticle.php");
             doRemoveTopArticle($input);
+            break;
+        case "sendMail": // 【系統】寄email -----轅
+            require_once("sendMail.php")
             break;
     }
 ?>
