@@ -37,10 +37,7 @@ function doShowReport($input){ //查看board底下的文章檢舉
             $log = array("title" => "$row[0]", "reason" => "$row[1]", "time" => "$row[2]");
             $arr[$i] = $log;
         }
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
-        $rtn["data"] = $arr;
+        $rtn = successCode($arr);
     }
     echo json_encode($rtn);
 }

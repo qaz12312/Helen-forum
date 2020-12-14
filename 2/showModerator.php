@@ -36,10 +36,7 @@
                 $log=array("account"=>"$row[0]","userColor"=>"$row[1]","boardName"=>"$row[2]");
                 $arr[$i]=$log;
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
+            $rtn = successCode($arr);
         }
         echo json_encode($rtn);
     }

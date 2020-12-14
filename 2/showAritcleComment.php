@@ -39,10 +39,7 @@
                 $log=array("title"=>"$row[0]","content"=>"$row[1]","blockName"=>"$row[2]","articleID"=>"$row[3]","like"=>"$row[4]","keep"=>"$row[5]");
                 $arr[$i]=$log;
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
+            $rtn = successCode($arr);
         }
         echo json_encode($rtn);
     }

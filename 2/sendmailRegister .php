@@ -76,16 +76,9 @@ try {
               errorCode("Failed to register,Database exception.");
             }
             else{
-              
-
               $row=$result->fetch_row();
-              $rtn = array();
-              $rtn["status"] = true;
-              $rtn["errorCode"] = "";
-              $rtn["data"][0] =$row[0];
-              $rtn["data"][1] =$row[1];
-              $rtn["data"][2] =$row[2];
-              $rtn["data"]['alert'] =  sendEmail(new PHPMailer(true),$input['account']);
+              $arr=array(0=>$row[0],1 =>$row[1],2=>$row[2],3=>sendEmail(new PHPMailer(true),$input['account']))
+              $rtn = successCode($arr);
             }
         }
 } catch (Exception $e) {

@@ -44,12 +44,7 @@
             }
             else{
                 $row=$result->fetch_row();
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"][0] =$row[0];
-                $rtn["data"][1] =$row[1];
-                $rtn["data"][2] =$row[2];
+                $rtn = successCode($row);
             }
         }
         echo json_encode($rtn);

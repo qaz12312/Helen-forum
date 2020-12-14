@@ -63,10 +63,7 @@
                     $log = array("title" => "$row[0]",  "boardName" => "$row[1]", "like" => "$row[2]", "keep" => "$row[3]", "hasHeart" => ( $heart->num_rows>0 ? 1 : 0), "hasKeep" => ($keep->num_rows>0 ? 1 : 0 ));
                     $arr[$i] = $log;
                 }
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = $arr;
+                $rtn = successCode($arr);
             }
         } else {
             errorCode("Failed to search in menu.");

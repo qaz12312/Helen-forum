@@ -36,10 +36,7 @@
                 $row=$result->fetch_row();
                 $arr[$i]=$row[0];
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
+            $rtn = successCode($arr);
         }
         echo json_encode($rtn);
     }

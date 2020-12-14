@@ -60,10 +60,7 @@
                     $log = array("title" => "$row[0]", "blockName" => "$row[1]", "articleID" => "$row[2]", "like" => "$row[3]", "keep" => "$row[4]", "hasHeart" => ( $heart->num_rows>0 ? 1 : 0), "hasKeep" => ($keep->num_rows>0 ? 1 : 0 ));
                     $arr[$i] = $log;
                 }
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = $arr;
+                $rtn = successCode($arr);
             }
         }else{
             errorCode("Failed to sort.");

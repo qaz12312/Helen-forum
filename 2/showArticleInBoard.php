@@ -37,17 +37,15 @@
             errorCode("Article not in this board.");
         }
         else{
-            $arr=array();
-            $row2=$result->fetch_row();
+            $articleList = array();
             for($i=0;$i<$resultCount;$i++){
                 $row=$result->fetch_row();
                 $log=array("title"=>"$row[0]","articleID"=>"$row[1]","like"=>"$row[2]","keep"=>"$row[3]");
-                $rtn["data"]["articleList"][$i]=$row;
+                $articleList[$i]=$log;
             }
-            $rtn["data"]["topArticleID"] =$row2[1];
-            $rtn["data"]["rule"] =$row2[0];
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
+            $row2=$result->fetch_row();
+            $arr = array("articleList"=>$articleList,"topArticleID"=>$row2[1],"rule"=>$row2[0]);
+            $rtn = successCode($arr);
          }
         echo json_encode($rtn);
     }

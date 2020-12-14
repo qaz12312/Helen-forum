@@ -36,10 +36,7 @@
                 $log=array("time"=>"$row[0]","content"=>"$row[1]");
                 $arr[$i]=$log;
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
+            $rtn = successCode($arr);
         }
         echo json_encode($rtn);
     }

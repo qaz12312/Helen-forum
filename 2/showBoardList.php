@@ -16,13 +16,13 @@
 	*/
     function doBoardList($input){
         global $conn;
-        $sql="SELECT `BoardName` FROM `Board` ";
+        $sql="SELECT `BoardName` FROM `Board`";
         $result=$conn->query($sql);
         if(!$result){
             die($conn->error);
         }
         if($resultCount <= 0){
-            errorCode("");
+            errorCode("Without any board now.");
         }
         else{
             $arr=array();
@@ -30,10 +30,7 @@
                 $row=$result->fetch_row();
                 $arr[$i]=$row[0];
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "Without any board now.";
-            $rtn["data"] =$arr;
+            $rtn = successCode($arr);
         }
         echo json_encode($rtn);
     }

@@ -17,8 +17,6 @@
     function doShowAuthority($input){
         global $conn;
             $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
             $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$input['account']."'";
             $result = $conn->query($sql);
             if(!$result){
@@ -31,20 +29,21 @@
                     die($conn->error);
                 }
                 if($result2->num_rows <= 0){
-                    $rtn["data"] = 0;
+                    $rtn = successCode(0);
                 }else if($result2[0]){
-                    $rtn["data"] = 3;
+                    $rtn = successCode(3);
                 }else{
-                    $rtn["data"] = 1;
+                    $rtn = successCode(1);
                 }
             }
             else{
-                $row = array();
-                $rtn["data"] = 2;
+                $boardNames = array();
                 for($i=0;$i<$resultCount;$i++){
                     $row=$result->fetch_row();
-                    $rtn["data"]["boardName"][$i]=$row[0];
+                    $boardNames[$i]=$row[0];
                 }
+                $arr = array(0=>2,"boardName"=>$boardNames);
+                $rtn = successCode($arr);
             }
 		echo json_encode($rtn);
     }

@@ -48,11 +48,8 @@
 			errorCode("Failed to upload comment,Database exception.");
 		}
 		else{
-			$rtn = array();
 			$row=$result->fetch_row();
-			$rtn["status"] = true;
-			$rtn["errorCode"] = "";
-			$rtn["data"] = $row;
+			$rtn = successCode($row);
 		}
 		echo json_encode($rtn);
 	}
