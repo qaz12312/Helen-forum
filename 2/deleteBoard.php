@@ -19,37 +19,27 @@
     function doDeleteBoard($input)
     {
         global $conn;
-        $sqlcheck = "SELECT `BoardName` FROM `Board` NATURAL JOIN `Users`  WHERE `BoardName`='" . $input['boardName'] . "'";
-        $result = $conn->query($sqlcheck);
-        if (!$result) {
-            die($conn->error);
-        }
-        if ($result->num_rows <= 0) {
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "This board doesn't exist.";
-            $rtn["data"] = "";
+        $sql = "SELECT `BoardName` FROM `Board` NATURAL JOIN `Users`  WHERE `BoardName`='" . $input['boardName'] . "'";
+        $arr = array();
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+        
+        if ($resultCount <= 0) {
+            errorCode("This board doesn't exist.");
         } else {
             $sql = "DELETE FROM `Board`  WHERE `BoardName`='" . $input['boardName'] ."'";
-            $result = $conn->query($sql);
-            if (!$result) {
-                die($conn->error);
-            }
+            $arr = array();
+			query($conn,$sql,$arr,"DELETE");
+
             $sql = "SELECT `BoardName` FROM `Board` WHERE `BoardName` = '" . $input['boardName'] . "'";
-            $result = $conn->query($sql);
-            if (!$result) {
-                die($conn->error);
-            }
-            if ($result->num_rows > 0) {
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to delete,Database exception.";
-                $rtn["data"] = "";
+            $arr = array();
+		    $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            
+            if ($resultCount > 0) {
+                errorCode("Failed to delete,Database exception.");
             } else {
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = "Successfully deleted this board.";
+                $rtn = successCode("Successfully deleted this board.");
             }
         }
         echo json_encode($rtn);

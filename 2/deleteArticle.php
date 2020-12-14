@@ -20,39 +20,29 @@
     */
     function doDeleteArticle($input){
         global $conn;
-        $sqlcheck="SELECT `ArticleID` FROM `Article` NATURAL JOIN `Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."'";  
-        $result=$conn->query($sqlcheck);
-        if(!$result){
-            die($conn->error);
-        } 
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "The query failed,This article does not exist.";
-            $rtn["data"] = "";
+        $sql="SELECT `ArticleID` FROM `Article` NATURAL JOIN `Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."'";  
+        $arr = array();
+		$result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        
+        if($resultCount <= 0){
+            errorCode("The query failed,This article does not exist.");
         }
         else{
-            $del="DELETE FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' AND  `AuthorID` = '".$input['account']."'";
-            $result=$conn->query($del);
-            if(!$result){
-                die($conn->error);
-            }
+            $sql="DELETE FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' AND  `AuthorID` = '".$input['account']."'";
+            $arr = array();
+			query($conn,$sql,$arr,"DELETE");
+			
             $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` = '".$input['articleID']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
-            if($result->num_rows > 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to delete,Database exception.";
-                $rtn["data"] = "";
+            $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            
+            if($resultCount > 0){
+                errorCode("Failed to delete,Database exception.");
             }
             else{
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = "Successfully deleted this article.";
+                $rtn = successCode("Successfully deleted this article.");
             }
         }
         echo json_encode($rtn);

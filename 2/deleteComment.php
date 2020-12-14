@@ -20,39 +20,29 @@
     */
     function doDeleteComment($input){
         global $conn;
-        $sqlcheck="SELECT `ArticleID` FROM `Comments` NATURAL JOIN `Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";  
-        $result=$conn->query($sqlcheck);
-        if(!$result){
-            die($conn->error);
-        } 
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Comment doesn't exit.";
-            $rtn["data"] = "";
+        $sql="SELECT `ArticleID` FROM `Comments` NATURAL JOIN `Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";  
+        $arr = array();
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+        
+        if($resultCount <= 0){
+            errorCode("Comment doesn't exit.");
         }
         else{    
-            $del="DELETE FROM `Comments` WHERE  `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
-            $result=$conn->query($del);
-                if(!$result){
-                    die($conn->error);
-                }
+            $sql="DELETE FROM `Comments` WHERE  `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
+            $arr = array();
+			query($conn,$sql,$arr,"DELETE");
+            
             $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor`,`TagFloor` FROM `Comments` WHERE `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
-            if($result->num_rows > 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to delete,Database exception.";
-                $rtn["data"] = "";
+            $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+
+            if($resultCount > 0){
+                errorCode("Failed to delete,Database exception.");
             }
             else{
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = "Successfully deleted this comment.";
+                $rtn = successCode("Successfully deleted this comment.");
             }
         }
         echo json_encode($rtn);
