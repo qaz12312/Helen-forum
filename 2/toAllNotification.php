@@ -24,8 +24,9 @@
             errorCode("Without any user.");
         }
         else{
-            for($i=0;$i<$resultCount;$i++){
-                $userID = $result[$i];
+            foreach($result as $userID){
+            // for($i=0;$i<$resultCount;$i++){
+            //     $userID = $result[$i];
                 $sql="INSERT INTO `Notice`(`UserID`,`Content`) VALUES('".$userID."','".$input['content']."')";
                 $arr = array();
                 query($conn,$sql,$arr,"INSERT");

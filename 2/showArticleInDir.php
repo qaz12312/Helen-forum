@@ -31,8 +31,9 @@
         }
         else{
             $arr=array();
-            for($i=0;$i<$resultCount;$i++){
-                $row = $result[$i];
+            foreach($result as $row){
+            // for($i=0;$i<$resultCount;$i++){
+            //     $row = $result[$i];
                 $arr[$i] = array("title"=>$row[0],"articleID"=>$row[1]);
             }
             $rtn = successCode($arr);

@@ -31,8 +31,9 @@
         }
         else{
             $arr=array();
-            for($i=0;$i<$resultCount;$i++){
-                $row = $result[$i];
+            foreach($result as $row){
+            // for($i=0;$i<$resultCount;$i++){
+            //     $row = $result[$i];
                 $arr[$i]=array("blockName"=>$row[0],"title"=>$row[1],"articleID"=>$row[2]);
             }
             $rtn = successCode($arr);

@@ -30,8 +30,9 @@
         }
         else{
             $arr=array();
-            for($i=0;$i<$resultCount;$i++){
-                $row = $result[$i];
+            foreach($result as $row){
+            // for($i=0;$i<$resultCount;$i++){
+            //     $row = $result[$i];
                 $arr[$i]=array("account"=>$row[0],"userColor"=>$row[1],"boardName"=>$row[2]);
             }
             $rtn = successCode($arr);

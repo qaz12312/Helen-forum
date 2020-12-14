@@ -40,9 +40,10 @@
                 errorCode("Without any article now.");
             } else {
                 $arr = array();
-                for($i=0;$i<$resultCount;$i++){
-                    $row = $result[$i];
-                    $articleID = $result[$i]['ArticleID'];
+                foreach($result as $row){
+                // for($i=0;$i<$resultCount;$i++){
+                //     $row = $result[$i];
+                    $articleID = $row['ArticleID'];
                     $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$articleID ."'AND`UserID`='".$input['account']."'" ;
                     $arr = array();
                     $heart = query($conn,$sql,$arr,"SELECT");
