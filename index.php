@@ -14,6 +14,7 @@
             break;
         case "verifyForgetPwd": // 【user】忘記密碼的驗證 ----- 轅
             require_once("verifyPwd.php"); 
+            doVerifyPwd($input)
             break;
         case "showAuthority": //【前端頁面(即系統)】查看權限(若為版主，則是所屬看板) -----劉
             require_once("showAuthority.php");
