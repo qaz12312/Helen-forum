@@ -41,8 +41,9 @@
             } 
             else {
                 $arr = array();
-                for($i=0;$i<$resultCount;$i++){//回傳找到的文章(包含關鍵字)
-                    $row = $result[$i];
+                foreach($result as $row){
+                // for($i=0;$i<$resultCount;$i++){//回傳找到的文章(包含關鍵字)
+                //     $row = $result[$i];
                     $articleID = $row['ArticleID'];
                     $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$articleID."'AND`UserID`='".$input['account']."'" ;
                     $arr = array();
@@ -54,8 +55,7 @@
                     $keep = query($conn,$sql,$arr,"SELECT");
                     $keepCount = count($keep);
 
-                    $log = array("title" => $row[0],  "articleID" => $articleID, "like" => $row[2], "keep" => $row[3], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
-                    $arr[$i] = $log;
+                    $arr[$i]= array("title" => $row[0],  "articleID" => $articleID, "like" => $row[2], "keep" => $row[3], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                 }
                 $rtn = successCode($arr);
             }

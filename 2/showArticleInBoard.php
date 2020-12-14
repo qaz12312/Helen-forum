@@ -40,8 +40,9 @@
         }
         else{
             $articleList = array();
-            for($i=0;$i<$resultCount;$i++){
-                $row = $result[$i];
+            foreach($result as $row){
+            // for($i=0;$i<$resultCount;$i++){
+            //     $row = $result[$i];
                 $articleList[$i]=array("title"=>$row[0],"articleID"=>$row[1],"like"=>$row[2],"keep"=>$row[3]);
             }
             $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[1],"rule"=>$result2[0]);

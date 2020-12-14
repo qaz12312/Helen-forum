@@ -34,10 +34,10 @@
         }
         else{
             $arr=array();
-            for($i=0;$i<$resultCount;$i++){
-                $row = $result[$i];
-                $log=array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5]);
-                $arr[$i]=$log;
+            foreach($result as $row){
+            // for($i=0;$i<$resultCount;$i++){
+            //     $row = $result[$i];
+                $arr[$i] = array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5]);
             }
             $rtn = successCode($arr);
         }
