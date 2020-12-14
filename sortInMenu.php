@@ -7,18 +7,19 @@
     cmd["sort"] = "time/hot";
 
     後端 to 前端:
+    dataDB = JSON.parse(data);
     dataDB.statue
     若 dataDB.statue = true:
-    dataDB.errorCode = ""
-    dataDB.data[i] //有i筆文章
-    (
-        dataDB.data[i].title //第i筆文章的標題
-        dataDB.data[i].blockName //第i筆文章的所屬看板
-        dataDB.data[i].articleID
-        dataDB.data[i].like //第i筆文章的總愛心數
-        dataDB.data[i].keep//第i筆文章的總收藏數
-        dataDB.data[i].time //第i筆文章的時間
-    )
+        dataDB.errorCode = ""
+        dataDB.data[i] //有i筆文章
+        (
+            dataDB.data[i].title //第i筆文章的標題
+            dataDB.data[i].blockName //第i筆文章的所屬看板
+            dataDB.data[i].articleID
+            dataDB.data[i].like //第i筆文章的總愛心數
+            dataDB.data[i].keep//第i筆文章的總收藏數
+            dataDB.data[i].time //第i筆文章的時間
+        )
     否則
         dataDB.errorCode = "沒有文章" / "sort input wrong"
         dataDB.data = ""

@@ -5,7 +5,7 @@
     cmd["act"] = "browseReport";
     cmd["boardName"] = "企鵝";
 
-    後端 to 前端
+    後端 to 前端:
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:

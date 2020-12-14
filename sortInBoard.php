@@ -3,21 +3,23 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "sortInBoard";
-    cmd["boardName"] = "美食"
+    cmd["account"]="00757033";
+    cmd["boardName"] = "美食";
     cmd["sort"] = "time/hot";
-    cmd["account"]="00757033"
+
     後端 to 前端:
+    dataDB = JSON.parse(data);
     dataDB.state
     若 state = true:
-    dataDB.data[i] //有i筆文章
-    (
-        dataDB.errorCode
-        dataDB.data[i].title //第i筆文章的標題
-        dataDB.data[i].articleID
-        dataDB.data[i].like //第i筆文章的總愛心數
-        dataDB.data[i].keep//第i筆文章的總收藏數
-        dataDB.data[i].time//第i筆文章的時間
-    )
+        dataDB.data[i] //有i筆文章
+        (
+            dataDB.errorCode
+            dataDB.data[i].title //第i筆文章的標題
+            dataDB.data[i].articleID
+            dataDB.data[i].like //第i筆文章的總愛心數
+            dataDB.data[i].keep//第i筆文章的總收藏數
+            dataDB.data[i].time//第i筆文章的時間
+        )
     否則
         dataDB.errorCode = "sort input wrong" / "沒有文章"
         dataDB.data = ""

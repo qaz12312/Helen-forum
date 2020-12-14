@@ -5,10 +5,11 @@
     cmd["act"] = "showPostRecord";
     cmd["account"] = "userid";
 
-    後端 to 前端
+    後端 to 前端:
+    dataDB = JSON.parse(data);
     dataDB.state
-    dataDB.errorCode
     若 state = true:
+        dataDB.errorCode = ""
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title //第i筆文章的標題
@@ -18,6 +19,7 @@
             dataDB.data[i].keep//第i筆文章的總收藏數
         ) 
     否則
+            dataDB.errorCode = "沒有文章"
         dataDB.data = ""
     */
     function doShowPostRecord($input){
