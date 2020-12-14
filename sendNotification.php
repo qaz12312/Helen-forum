@@ -15,7 +15,7 @@
         dataDB.data[1]	// Times
         dataDB.data[2]	// Content
     否則
-        dataDB.errorCode = "寄出通知失敗"
+        dataDB.errorCode = "Failed to send notification,Database exception."
         dataDB.data = ""
     */
     function doSendNotification($input){
@@ -33,7 +33,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "寄出通知失敗";
+            $rtn["errorCode"] = "Failed to send notification,Database exception.";
             $rtn["data"] = "";
         }
         else{

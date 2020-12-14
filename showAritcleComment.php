@@ -19,7 +19,7 @@
         dataDB.data[i].keep//第i筆文章的總收藏數
         ) 
     否則
-        dataDB.errorCode = "此文章不存在"
+        dataDB.errorCode = "Article doesn't exit."
         dataDB.data = ""
     */
     function doShowAritcleComment($input){
@@ -32,7 +32,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "此文章不存在";
+            $rtn["errorCode"] = "Article doesn't exit.";
             $rtn["data"] = "";
         }
         else{

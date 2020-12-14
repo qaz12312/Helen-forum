@@ -13,13 +13,12 @@
         dataDB.data[i] //有i筆文章
         (
         dataDB.data[i].title //第i筆文章的標題
-        dataDB.data[i].blockName //第i筆文章的所屬看板
         dataDB.data[i].articleID
         dataDB.data[i].like //第i筆文章的總愛心數
         dataDB.data[i].keep//第i筆文章的總收藏數
         ) 
     否則
-        dataDB.errorCode = "沒有文章在【boardName】裡"
+        dataDB.errorCode = "Article not in this board."
         dataDB.data = ""
     */
     function doShowArticleInBoard($input){
@@ -37,7 +36,7 @@
         if($result->num_rows <= 0 ){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "沒有文章在".$input['boardName']."裡";
+            $rtn["errorCode"] = "Article not in this board.";
             $rtn["data"] = "";
         }
         else{

@@ -21,7 +21,7 @@
         dataDB.data[i].hasHeart//第i筆文章的是否按過愛心
         dataDB.data[i].hasKeep//第i筆文章的是否收藏
     否則
-        dataDB.errorCode = "沒有文章" / "sort input wrong" 
+        dataDB.errorCode = "Don't have any article in board." / "Failed to search in board."
         dataDB.data = ""
     */
     function doSearchBoard($input)
@@ -45,9 +45,10 @@
             if ($result->num_rows <= 0) {    //找不到文章
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "沒有文章";
+                $rtn["errorCode"] = "Don't have any article in board.";
                 $rtn["data"] = "";
-            } else {
+            } 
+            else {
                 $arr = array();
                 for ($i = 0; $i < $result->num_rows; $i++) {    //回傳找到的文章(包含關鍵字)
                     $row = $result->fetch_row();
@@ -69,10 +70,11 @@
                 $rtn["errorCode"] = "";
                 $rtn["data"] = $arr;
             }
-        } else {
+        }
+        else {
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "sort input wrong";
+            $rtn["errorCode"] = "Failed to search in board.";
             $rtn["data"] = "";
         }
         echo json_encode($rtn);

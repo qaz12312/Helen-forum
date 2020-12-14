@@ -10,9 +10,9 @@
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
-		dataDB.data = ""
+		dataDB.data = "Successfully send notice to everyone."
 	否則
-		dataDB.errorCode = "系統尚無使用者" / "傳送通知失敗"
+		dataDB.errorCode = "Without any user." / "Failed to send Notification to everyone,Database exception."
 		dataDB.data = ""
 	*/
     function doToAllNotification($input){    
@@ -25,7 +25,7 @@
         if($result1->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "系統尚無使用者";
+            $rtn["errorCode"] = "Without any user.";
             $rtn["data"] = "";
         }
         else{
@@ -44,14 +44,14 @@
                 if($result->num_rows <= 0){
                     $rtn = array();
                     $rtn["status"] = false;
-                    $rtn["errorCode"] = "傳送通知失敗";
+                    $rtn["errorCode"] = "Failed to send Notification to everyone,Database exception.";
                     $rtn["data"] = "";
                 }
             }
             $rtn = array();
             $rtn["status"] = true;
             $rtn["errorCode"] = "";
-	        $rtn["data"] = "";
+	        $rtn["data"] = "Successfully send notice to everyone.";
         }
         echo json_encode($rtn);
     }

@@ -17,7 +17,7 @@
 		dataDB.data[1]	// Reason
 		dataDB.data[2]	// times
 	否則
-		dataDB.errorCode = "檢舉失敗"
+		dataDB.errorCode = "Failed to send report,Database exception."
 		dataDB.data = ""
     */
     function doSendReport($input){
@@ -36,7 +36,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "檢舉失敗";
+            $rtn["errorCode"] = "Failed to send report,Database exception.";
             $rtn["data"] = "";
         }
         else{

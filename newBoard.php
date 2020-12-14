@@ -4,20 +4,18 @@
 	let cmd = {};
 	cmd["act"] = "newBoard";
 	cmd["boardName"] = "企鵝"
-	(下面2行是否需要?因為有寫修改版規的php(editBoard)、版主的任命(editModerator))
-	cmd["account"] "00752233"(還是說這個有其他用途?)
-	cmd ["rule"]=Rule
 
 	後端 to 前端:
 	dataDB.status
-	若 status = true:
+    若 status = true:
+        dataDB.status = true
 		dataDB.errorCode = ""
 		dataDB.data[0]	// BoardName
-		dataDB.data[1]	// UserID
-		dataDB.data[2]	// Rule
-		dataDB.data[3]	// TopArticleID
-	否則
-		dataDB.errorCode = ???????
+		dataDB.data[1]	// Rule
+		dataDB.data[2]	// TopArticleID
+    否則 status = false:
+        dataDB.status = false
+		dataDB.errorCode = "Failed to upload board ,Database exception."
 		dataDB.data = ""
 	*/
     function doNewBoard($input){
@@ -36,7 +34,7 @@
         }
         else{
             $admin="admin";
-            $new="INSERT INTO  `Board`(`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['boardName']."','admin','".$input['rule']."',NULL)";
+            $new="INSERT INTO  `Board`(`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['boardName']."','admin',NULL,NULL)";
             $resultNew=$conn->query($new);
             if(!$resultNew){
                 die($conn->error);
@@ -49,7 +47,7 @@
             if($result->num_rows <= 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "註冊失敗，資料庫異常";
+                $rtn["errorCode"] = "Failed to upload board ,Database exception.";
                 $rtn["data"] = "";
             }
             else{

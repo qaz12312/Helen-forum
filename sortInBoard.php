@@ -21,7 +21,7 @@
             dataDB.data[i].time//第i筆文章的時間
         )
     否則
-        dataDB.errorCode = "sort input wrong" / "沒有文章"
+        dataDB.errorCode = "Failed to sort in board." / "Without any article in board now."
         dataDB.data = ""
     */
     function doSortBoard($input)
@@ -35,7 +35,7 @@
                     die($conn->error);
                 }
             } else if ($input['sort'] == "hot") {
-                $sql1 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = '".$input['boardName']."'ORDER BY `cntHeart` DESC";
+                $sql1 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = '".$input['boardName']."'ORDER BY `cntHeart` DESC";
                 $result = $conn->query($sql1);
                 if (!$result) {
                     die($conn->error);
@@ -44,7 +44,7 @@
             if ($result->num_rows <= 0) {
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "沒有文章";
+                $rtn["errorCode"] = "Without any article in board now.";
                 $rtn["data"] = "";
             } else {
                 $arr = array();
@@ -71,7 +71,7 @@
         } else {
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "sort input wrong";
+            $rtn["errorCode"] = "Failed to sort in board.";
             $rtn["data"] = "";
         }
         echo json_encode($rtn);

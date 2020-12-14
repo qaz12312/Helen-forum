@@ -16,7 +16,7 @@
         dataDB.data[i].boardName 
         ) 
     否則
-        dataDB.errorCode = "沒有指明版主"
+        dataDB.errorCode = "Failed to show Moderator. "
         dataDB.data = ""
     */
     function doShowModerator($input){
@@ -29,7 +29,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "沒有指明版主";
+            $rtn["errorCode"] = "Failed to show Moderator. ";
             $rtn["data"] = "";
         }
         else{

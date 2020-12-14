@@ -16,7 +16,7 @@
 			dataDB.data.content	// Content
 		)
 	否則
-		dataDB.errorCode = "目前沒有通知"
+		dataDB.errorCode = "No notifications right now."
 		dataDB.data = ""
 	*/
     function doShowNotification($input){
@@ -29,7 +29,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "目前沒有通知";
+            $rtn["errorCode"] = "No notifications right now.";
             $rtn["data"] = "";
         }
         else{

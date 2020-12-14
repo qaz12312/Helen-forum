@@ -11,7 +11,7 @@
 		dataDB.errorCode = ""
 		dataDB.data[i] //有i筆boardName
 	否則
-		dataDB.errorCode = "目前沒有任何看板"
+		dataDB.errorCode = "Without any board now."
 		dataDB.data = ""
 	*/
     function doBoardList($input){
@@ -24,7 +24,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "目前沒有任何看板";
+            $rtn["errorCode"] = "";
             $rtn["data"] = "";
         }
         else{
@@ -35,7 +35,7 @@
             }
             $rtn = array();
             $rtn["status"] = true;
-            $rtn["errorCode"] = "";
+            $rtn["errorCode"] = "Without any board now.";
             $rtn["data"] =$arr;
         }
         echo json_encode($rtn);

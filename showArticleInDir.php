@@ -13,11 +13,11 @@
         dataDB.errorCode = ""
         dataDB.data[i] //有i筆文章在此收藏資料夾下
         (
-        dataDB.data[i].articleID
         dataDB.data[i].title //第i筆文章的標題
+        dataDB.data[i].articleID
         ) 
     否則
-        dataDB.errorCode = "沒有文章在【dirName】資料夾下"
+        dataDB.errorCode = "Article not in the dir which names ".$input['dirName']." in this user."
         dataDB.data = ""
     */
     function doShowArticleInDir($input){
@@ -30,7 +30,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "沒有文章在【".$input['dirName']."】資料夾下";
+            $rtn["errorCode"] = "Article not in the dir which names ".$input['dirName']." in this user.";
             $rtn["data"] = "";
         }
         else{

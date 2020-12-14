@@ -21,7 +21,7 @@
             dataDB.data[i].time //第i筆文章的時間
         )
     否則
-        dataDB.errorCode = "沒有文章" / "sort input wrong"
+        dataDB.errorCode = "Without any article now." / "Failed to sort."
         dataDB.data = ""
     */ 
     function doSortMenu($input)
@@ -44,7 +44,7 @@
             if ($result->num_rows <= 0) {
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "沒有文章";
+                $rtn["errorCode"] = "Without any article now.";
                 $rtn["data"] = "";
             } else {
                 $arr = array();
@@ -71,7 +71,7 @@
         }else{
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "sort input wrong";
+            $rtn["errorCode"] = "Failed to sort.";
             $rtn["data"] = "";
         }
         echo json_encode($rtn);

@@ -19,7 +19,7 @@
             dataDB.data[i].keep//第i筆文章的總收藏數
         ) 
     否則
-            dataDB.errorCode = "沒有文章"
+            dataDB.errorCode = "No article right now."
         dataDB.data = ""
     */
     function doShowPostRecord($input){
@@ -32,7 +32,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "沒有文章";
+            $rtn["errorCode"] = "No article right now.";
             $rtn["data"] = "";
         }
         else{
