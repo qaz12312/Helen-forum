@@ -23,7 +23,7 @@
         }
         if($result->num_rows <= 0){
             $rtn = array();
-            $rtn["statue"] = false;
+            $rtn["status"] = false;
             $rtn["errorCode"] = "目前沒有任何看板";
             $rtn["data"] = "";
         }
@@ -34,7 +34,7 @@
                 $arr[$i]=$row[0];
             }
             $rtn = array();
-            $rtn["statue"] = true;
+            $rtn["status"] = true;
             $rtn["errorCode"] = "";
             $rtn["data"] =$arr;
         }

@@ -6,9 +6,9 @@
    cmd["boardName"] = "BoardName";
 
    後端 to 前端
-   dataDB.state
+   dataDB.status
    dataDB.errorCode
-   若 state = true:
+   若 status = true:
    dataDB.data[i] //有i筆文章
    (
      dataDB.data[i].title //第i筆文章的標題
@@ -34,7 +34,7 @@
         }
         if($result->num_rows <= 0 ){
             $rtn = array();
-            $rtn["statue"] = false;
+            $rtn["status"] = false;
             $rtn["errorCode"] = "沒有文章";
             $rtn["data"] = "";
         }
@@ -48,7 +48,7 @@
             }
             $rtn["data"]["topArticleID"] =$row2[1];
             $rtn["data"]["rule"] =$row2[0];
-            $rtn["statue"] = true;
+            $rtn["status"] = true;
             $rtn["errorCode"] = "";
          }
         echo json_encode($rtn);

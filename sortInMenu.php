@@ -8,8 +8,8 @@
 
     後端 to 前端:
     dataDB = JSON.parse(data);
-    dataDB.statue
-    若 dataDB.statue = true:
+    dataDB.status
+    若 dataDB.status = true:
         dataDB.errorCode = ""
         dataDB.data[i] //有i筆文章
         (
@@ -43,7 +43,7 @@
             }
             if ($result->num_rows <= 0) {
                 $rtn = array();
-                $rtn["statue"] = false;
+                $rtn["status"] = false;
                 $rtn["errorCode"] = "沒有文章";
                 $rtn["data"] = "";
             } else {
@@ -64,13 +64,13 @@
                     $arr[$i] = $log;
                 }
                 $rtn = array();
-                $rtn["statue"] = true;
+                $rtn["status"] = true;
                 $rtn["errorCode"] = "";
                 $rtn["data"] = $arr;
             }
         }else{
             $rtn = array();
-            $rtn["statue"] = false;
+            $rtn["status"] = false;
             $rtn["errorCode"] = "sort input wrong";
             $rtn["data"] = "";
         }

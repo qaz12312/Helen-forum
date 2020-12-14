@@ -43,7 +43,7 @@ function doSearchMenu($input)
 
         if ($result->num_rows <= 0) {    //找不到文章
             $rtn = array();
-            $rtn["statue"] = false;
+            $rtn["status"] = false;
             $rtn["errorCode"] = "沒有文章";
             $rtn["data"] = "";
         } else {
@@ -64,13 +64,13 @@ function doSearchMenu($input)
                 $arr[$i] = $log;
             }
             $rtn = array();
-            $rtn["statue"] = true;
+            $rtn["status"] = true;
             $rtn["errorCode"] = "";
             $rtn["data"] = $arr;
         }
     } else {
         $rtn = array();
-        $rtn["statue"] = false;
+        $rtn["status"] = false;
         $rtn["errorCode"] = "sort input wrong";
         $rtn["data"] = "";
     }

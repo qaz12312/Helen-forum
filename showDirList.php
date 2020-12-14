@@ -39,7 +39,7 @@
                 $arr[$i]=$row[0];
             }
             $rtn = array();
-            $rtn["statue"] = true;
+            $rtn["status"] = true;
             $rtn["errorCode"] = "";
             $rtn["data"] =$arr;
         }
