@@ -361,14 +361,14 @@ body{
 	.Page .currency {
 		display: inline-block;
 		font-size: 30px;
-		margin-top: -20px;
-		vertical-align: top;
+		margin-top: -10px;
+		vertical-align: center;
 	}
 	.Page .WhichPage {
 		display: inline-block;
 		font-size: 30px;/*字大小*/
 		font-weight: 600;
-		line-height: 40px;
+		line-height: 20px;
 	}
 	.Page .WhichPage span {
 		display: inline-block;

@@ -1,11 +1,11 @@
 //CollectionCatalog
 var CollectionCatalog = [];
 var values=[];
-var dirNames = ["漫威宇宙", "衣服買起來", "必去", "好好吃", "55", "22", "COOL", "YA" ];
+var dirNames = ["漫威宇宙", "1", "必去", "好好吃", "55", "22", "COOL", "YA" ];
 var dirIDss = [ "1", "2", "3", "4", "5", "6", "7", "8" ];
 $( document ).ready( function() 
 {
-    CollectionCataloginitial();
+    initial();
     $("#CollectionCatalog button").on( "click", function(){
         let dirIndex = $("div .Page").index(this.closest(".Page"));
         console.log(dirIndex)
@@ -13,60 +13,104 @@ $( document ).ready( function()
         {
             
             let cmd = {};
-            cmd["act"] = "removeKeepArticle";
+            cmd["act"] = "editDir";
             cmd["account"] = sessionStorage.getItem("Helen-userID");
             cmd["articleID"] = CollectionCatalog[dirIndex].dirID;
-            //console.log(cmd["articleID"])
-            cmd["dirName"] = //還沒做;
+            cmd["old"] =$(this).parents('.Page').find("span").text();
             console.log($(this));
             
 
-            // $.post( "../index.php", cmd, function( dataDB ){
-            //     dataDB = JSON.parse( dataDB );
-            console.log("edit")
             swal({
-                title: "確定要修改此篇文章嗎？"
-                //  + articles[ articleIndex ].title
-                ,
-                showCancelButton: true,
-                confirmButtonText: "確定",
-                cancelButtonText: "取消",
-                animation: false
+            title: "修改收藏目錄名稱",
+            input: "textarea",
+            inputPlaceholder: "請輸入文字...",
+            showCancelButton: true,
+            confirmButtonText: "確認",
+            cancelButtonText: "取消",
+            inputPlaceholder:$(this).parents('.Page').find("span").text(),
+            animation: false
+                
+            }).then(( result ) => {
+                
+                
+                if(values.includes(result)==true)
+                {
+                    alert("收藏目錄已存在");
+                    return false
+                }
+                // let cmd = {};
+                // cmd["act"] = "editDir";
+                // cmd["account"] = sessionStorage.getItem("Helen-userID");
+                // cmd["articleID"] = CollectionCatalog[dirIndex].dirID;
+                // cmd["old"] =$(this).parents('.Page').find("span").text();
+                // console.log($(this));
+                
 
-                }).then(( result ) => {
+                // $.post( "../index.php", cmd, function( dataDB )
+                // {
+                //     dataDB = JSON.parse( dataDB );
+
+                //     if( dataDB.status == false )
+                //     {
+                //         swal({
+                //             title: "修改收藏目錄名稱失敗",
+                //             type: "error",
+                //             text: dataDB.errorCode
+                //         }.then(( result ) => {}, ( dismiss ) => {} );
+                //     }
+                //     else
+                //     {
+                //         swal({
+                //             title: "已成功修改收藏目錄名稱",
+                //             type: "success",
+                //             showConfirmButton: false,
+                //             timer: 1000,
+                
+                //         }).then(( result ) => {}, ( dismiss ) => {
+                //             if ( result ) 
+                //             {
+                //                 CollectionCatalog[ dirIndex ].title=result;
+                //                 console.log(CollectionCatalog[ dirIndex ].title)
+                //                 cmd["new"] =result;
+                //                 location.reload();
+                //             }
+                //             else
+                //             {
+                //                 CollectionCatalog[ dirIndex ].title=" ";
+                //                
+                //                 location.reload();//重整
+                //             }
+                //         });
+                //     }
+                // });
+
+                swal({
+                    title: "已成功修改收藏目錄名稱",
+                    type: "success",
+                    showConfirmButton: false,
+                    timer: 1000,
         
-
+                }).then(( result ) => {}, ( dismiss ) => {
                     if ( result ) 
                     {
-                        
-                        
-                        // if( status == false )
+                        CollectionCatalog[ dirIndex ].title=result;
+                        console.log(CollectionCatalog[ dirIndex ].title);
+                        $(this).parents('.Page').find("span").text(result);
+                        // for( let p in CollectionCatalog )
                         // {
-                        //     swal({
-                        //         title: "移除失敗<br /><small>&lt;"
-                        //         //  + CollectionCatalog[ dirIndex ].title
-                        //           + "&gt;</small>",
-                        //         type: "error",
-                        //         // text: dataDB.errorCode,
-                        //         animation: false
-                        //     });
+                        //     console.log(CollectionCatalog[p].title)
                         // }
-                        // else
-                        // {
-                            swal({
-                                title: "已成功修改收藏文章！<br /><small>&lt;"
-                                + CollectionCatalog[ dirIndex ].title
-                                + "&gt;</small>",
-                                type: "success",
-                            })
-                            console.log($(this).parents('.Page').find("span").text());
-                            
-
-                        // }
-                                }
-                            }, function( dismiss ) {
-                                if ( dismiss === 'cancel' );
-                            });
+                        cmd["new"] =result;
+                        location.reload();
+                        
+                    }
+                    else
+                    {
+                        location.reload();//重整
+                    }
+                });
+            }, ( dismiss ) => {console.log("cancel")} );
+    
             }
          //});
 
@@ -85,13 +129,14 @@ $( document ).ready( function()
                     //     dataDB = JSON.parse( dataDB );
                     console.log("delete")
                     swal({
-                        title: "確定要刪除此篇文章嗎？<br /><small>&lt;"
+                        title: "確定要刪除此收藏目錄嗎？<br /><span style='color:#FF0000'>會連同裡面整個刪除喔!!</span><br /><small>&lt;"
                         + CollectionCatalog[ dirIndex ].title
                         + "&gt;</small>",
                         showCancelButton: true,
                         confirmButtonText: "確定",
                         cancelButtonText: "取消",
-                        animation: false
+                        animation: false,
+                        type: 'warning'
 
                         }).then(( result ) => {
                             if ( result ) 
@@ -153,9 +198,10 @@ $( document ).ready( function()
                         //         function () { },
                         //         function (dismiss) {
                         //             if (dismiss === 'timer') {
-                        //                 sessionStorage.setItem("Helen-act", "newCollectionCatalog");
-                        //                 sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
-                        //                 window.location.href = "../html/sub.html";
+                        //                  sessionStorage.setItem("Helen-act", "showArticleInDir");
+                        //                  sessionStorage.setItem("Helen-dirID", CollectionCatalog[dirIndex].dirID);
+                        //                  sessionStorage.setItem("Helen-dirName", CollectionCatalog[dirIndex].title);
+                        //                  window.location.href = "../html/sub.html";
                         //             }
                         //         }
                         //     )
@@ -244,7 +290,7 @@ $( document ).ready( function()
                                                 
                                 //                 if(values.includes(value)==false)
                                 //                 {
-                                //                     values.push(value); 
+                                //                     
                                 //                     swal({
                                 //                         title: "增加收藏成功" ,
                                 //                         type: "success"
@@ -297,7 +343,7 @@ $( document ).ready( function()
                                         
                                         if(values.includes(value)==false)
                                         {
-                                            values.push(value); 
+                                            
                                             swal({
                                                 title: "增加收藏成功" ,
                                                 type: "success"
@@ -333,15 +379,15 @@ $( document ).ready( function()
             });
             
 });
-function CollectionCataloginitial()
+function initial()
 {
     
-    
+    values=[];
     // let isValid = checkPermission();
     // if( !isValid ) return;
     let cmd = {};
 	cmd["act"] = "showDirList";
-    // dirIDs = sessionStorage.getItem( "Helen-boardIDs" );
+    // dirIDs = sessionStorage.getItem( "Helen-DirIDs" );
     // dirIDs = JSON.parse( dirIDs );
     // dirNames = sessionStorage.getItem( "Helen-dirNames" );
     // dirNames = JSON.parse( dirNames );
