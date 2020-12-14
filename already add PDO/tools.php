@@ -8,11 +8,11 @@ function errorCode($msg){
     die();
 }
 
-function successCode($msg){
+function successCode($info){
     $rtn = array();
     $rtn["status"] = true;
     $rtn["errorCode"] = "";
-    $rtn["data"] = $msg;
+    $rtn["data"] = $info;
     return $rtn;
 }
 
