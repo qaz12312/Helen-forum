@@ -43,19 +43,20 @@
                 errorCode("Don't have any article.");
             } else {
                 $arr = array();
-                for ($i = 0; $i < $resultCount; $i++) {    //回傳找到的文章(包含關鍵字)
-                    $row = $result->fetch_row();
-                    $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
+                for($i=0;$i<$resultCount;$i++){//回傳找到的文章(包含關鍵字)
+                    $row = $result[$i];
+                    $articleID = $row['ArticleID'];
+                    $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$articleID."'AND`UserID`='".$input['account']."'" ;
                     $arr = array();
                     $heart = query($conn,$sql,$arr,"SELECT");
                     $heartCount = count($heart);
                     
-                    $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
+                    $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$articleID."'AND`UserID`='".$input['account']."'" ;
                     $arr = array();
                     $keep = query($conn,$sql,$arr,"SELECT");
                     $keepCount = count($keep);
 
-                    $log = array("title" => "$row[0]",  "boardName" => "$row[1]", "like" => "$row[2]", "keep" => "$row[3]", "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
+                    $log = array("title" => $row[0],"boardName" => $row[1],"articleID" => $articleID,"like" => $row[2], "keep" => $row[3], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                     $arr[$i] = $log;
                 }
                 $rtn = successCode($arr);

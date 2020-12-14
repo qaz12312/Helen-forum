@@ -25,12 +25,12 @@
         }
         else{
             for($i=0;$i<$resultCount;$i++){
-                $row=$result1->fetch_row();
-                $sql="INSERT INTO `Notice`(`UserID`,`Content`) VALUES('".$row[0]."','".$input['content']."')";
+                $userID = $result[$i];
+                $sql="INSERT INTO `Notice`(`UserID`,`Content`) VALUES('".$userID."','".$input['content']."')";
                 $arr = array();
                 query($conn,$sql,$arr,"INSERT");
         
-                $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`=$row[0] AND`Content`='".$input['content']."'";
+                $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`=$userID AND`Content`='".$input['content']."'";
                 $arr = array();
                 $result = query($conn,$sql,$arr,"SELECT");
                 $resultCount = count($result);

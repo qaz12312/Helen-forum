@@ -35,12 +35,7 @@
             }
         }
         else{
-            $boardNames = array();
-            for($i=0;$i<$resultCount;$i++){
-                $row=$result->fetch_row();
-                $boardNames[$i]=$row[0];
-            }
-            $arr = array(0=>2,"boardName"=>$boardNames);
+            $arr = array(0=>2,"boardName"=>$result);
             $rtn = successCode($arr);
         }
 		echo json_encode($rtn);

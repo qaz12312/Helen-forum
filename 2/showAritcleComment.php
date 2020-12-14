@@ -13,6 +13,7 @@
         dataDB.data[i] //有i筆文章
         (
         dataDB.data[i].title //第i筆文章的標題
+        dataDB.data[i].content //第i筆文章的內文
         dataDB.data[i].blockName //第i筆文章的所屬看板
         dataDB.data[i].articleID
         dataDB.data[i].like //第i筆文章的總愛心數
@@ -34,8 +35,8 @@
         else{
             $arr=array();
             for($i=0;$i<$resultCount;$i++){
-                $row=$result->fetch_row();
-                $log=array("title"=>"$row[0]","content"=>"$row[1]","blockName"=>"$row[2]","articleID"=>"$row[3]","like"=>"$row[4]","keep"=>"$row[5]");
+                $row = $result[$i];
+                $log=array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5]);
                 $arr[$i]=$log;
             }
             $rtn = successCode($arr);

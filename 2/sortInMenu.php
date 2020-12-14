@@ -40,20 +40,20 @@
                 errorCode("Without any article now.");
             } else {
                 $arr = array();
-                for ($i = 0; $i < $resultCount; $i++) {
-                    $row = $result->fetch_row();
-                    $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[2]."'AND`UserID`='".$input['account']."'" ;
+                for($i=0;$i<$resultCount;$i++){
+                    $row = $result[$i];
+                    $articleID = $result[$i]['ArticleID'];
+                    $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$articleID ."'AND`UserID`='".$input['account']."'" ;
                     $arr = array();
                     $heart = query($conn,$sql,$arr,"SELECT");
                     $heartCount = count($heart);
 
-                    $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[2]."'AND`UserID`='".$input['account']."'" ;
+                    $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$articleID ."'AND`UserID`='".$input['account']."'" ;
                     $arr = array();
                     $keep = query($conn,$sql,$arr,"SELECT");
                     $keepCount = count($keep);
 
-                    $log = array("title" => "$row[0]", "blockName" => "$row[1]", "articleID" => "$row[2]", "like" => "$row[3]", "keep" => "$row[4]", "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
-                    $arr[$i] = $log;
+                    $arr[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                 }
                 $rtn = successCode($arr);
             }

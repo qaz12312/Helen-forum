@@ -32,9 +32,8 @@
         else{
             $arr=array();
             for($i=0;$i<$resultCount;$i++){
-                $row=$result->fetch_row();
-                $log=array("title"=>"$row[0]","articleID"=>"$row[1]");
-                $arr[$i]=$log;
+                $row = $result[$i];
+                $arr[$i] = array("title"=>$row[0],"articleID"=>$row[1]);
             }
             $rtn = successCode($arr);
         }

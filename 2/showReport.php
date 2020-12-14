@@ -31,10 +31,9 @@ function doShowReport($input){ //查看board底下的文章檢舉
         errorCode("No report right now.");
     } else {
         $arr = array();
-        for ($i = 0; $i < $resultCount; $i++) {
-            $row = $result->fetch_row();
-            $log = array("title" => "$row[0]", "reason" => "$row[1]", "time" => "$row[2]");
-            $arr[$i] = $log;
+        for($i=0;$i<$resultCount;$i++){
+            $row = $result[$i];
+            $arr[$i] = array("title" => $row[0], "reason" => $row[1], "time" => $row[2]);
         }
         $rtn = successCode($arr);
     }

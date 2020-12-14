@@ -31,9 +31,8 @@
         else{
             $arr=array();
             for($i=0;$i<$resultCount;$i++){
-                $row=$result->fetch_row();
-                $log=array("account"=>"$row[0]","userColor"=>"$row[1]","boardName"=>"$row[2]");
-                $arr[$i]=$log;
+                $row = $result[$i];
+                $arr[$i]=array("account"=>$row[0],"userColor"=>$row[1],"boardName"=>$row[2]);
             }
             $rtn = successCode($arr);
         }

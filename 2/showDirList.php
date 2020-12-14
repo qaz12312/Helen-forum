@@ -30,12 +30,7 @@
             errorCode("User didn't create any folder.");
         }
         else{
-            $arr=array();
-            for($i=0;$i<$resultCount;$i++){
-                $row=$result->fetch_row();
-                $arr[$i]=$row[0];
-            }
-            $rtn = successCode($arr);
+            $rtn = successCode($result);
         }
         echo json_encode($rtn);
     }

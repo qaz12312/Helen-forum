@@ -15,8 +15,6 @@
             dataDB.data[i].title //第i筆文章的標題
             dataDB.data[i].blockName //第i筆文章的所屬看板
             dataDB.data[i].articleID
-            dataDB.data[i].like //第i筆文章的總愛心數
-            dataDB.data[i].keep//第i筆文章的總收藏數
         ) 
     否則
             dataDB.errorCode = "No article right now."
@@ -34,9 +32,8 @@
         else{
             $arr=array();
             for($i=0;$i<$resultCount;$i++){
-                $row=$result->fetch_row();
-                $log=array("blockName"=>"$row[0]","title"=>"$row[1]","articleID"=>"$row[2]");
-                $arr[$i]=$log;
+                $row = $result[$i];
+                $arr[$i]=array("blockName"=>$row[0],"title"=>$row[1],"articleID"=>$row[2]);
             }
             $rtn = successCode($arr);
         }
