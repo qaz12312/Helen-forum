@@ -22,10 +22,7 @@ function doVerifyPwd($input){
         $last = $arr['time'];   //過期時間
         $now = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d'), date('Y')));   //現在時間
         if((strtotime($last) - strtotime($now)) < 900){    //沒過期
-            $rtn = array();
-			$rtn["status"] = true;
-			$rtn["errorCode"] = "";
-			$rtn["data"] = "success to verify";
+            $rtn = successCode("success to verify");
         }else{
             errorCode("fail to verify");
         }

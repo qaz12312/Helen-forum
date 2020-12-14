@@ -50,10 +50,8 @@ try {
   $alert = '<div class="alert-success">
                  <span>Welcome to HELEN!!!</span>
                 </div>';
-  $rtn = array();
-  $rtn["status"] = true;
-  $rtn["errorCode"] = "";
-  $rtn["data"] = $alert;*/
+  $rtn = successCode($alert);
+ */
 
   $sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
         $result=$conn->query($sql);

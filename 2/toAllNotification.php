@@ -42,10 +42,7 @@
                     errorCode("Failed to send Notification to everyone,Database exception.");
                 }
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-	        $rtn["data"] = "Successfully send notice to everyone.";
+            $rtn = successCode("Successfully send notice to everyone.");
         }
         echo json_encode($rtn);
     }

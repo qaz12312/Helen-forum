@@ -23,10 +23,7 @@
 			errorCode("Failed to remove top article in board,Database exception.");
 		}
 		else{
-			$rtn = array();
-			$rtn["status"] = true;
-			$rtn["errorCode"] = "";
-			$rtn["data"] = "Successfully remove top article in board.";
+			$rtn = successCode("Successfully remove top article in board.");
 		}
 		echo json_encode($rtn);
 	}

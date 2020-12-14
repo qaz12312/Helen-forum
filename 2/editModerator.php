@@ -74,10 +74,7 @@
             }
         }
         if($check){
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] ="Successfully modified moderator.";
+            $rtn = successCode("Successfully modified moderator.");
         }
         echo json_encode($rtn);
     }

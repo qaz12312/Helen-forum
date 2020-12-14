@@ -22,10 +22,7 @@
         if(!$resultNew){
 			errorCode("Failed to upload dir,Database exception.");
 		}
-		$rtn = array();
-		$rtn["status"] = true;
-		$rtn["errorCode"] = "";
-		$rtn["data"] = "Successfully new the dir.";
+		$rtn = successCode("Successfully new the dir.");
         echo json_encode($rtn);
     }
 ?>

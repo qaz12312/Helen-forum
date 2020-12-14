@@ -71,10 +71,7 @@ $email = $input['account'];
 			if(!$keepresult){
 			die($conn->error);
 			}
-			$rtn = array();
-			$rtn["status"] = true;
-			$rtn["errorCode"] = "";
-			$rtn["data"] = "success to change the password";
+			$rtn = successCode("success to change the password");
 		}
 	echo json_encode($rtn);
 	}

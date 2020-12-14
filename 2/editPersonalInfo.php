@@ -51,10 +51,7 @@
             if(!$result){
                 errorCode("Failed to Update personal information in ".$input["option"].".You need to login again.");
             }else{
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = "Success to change the ".$input["option"];
+                $rtn = successCode("Success to change the ".$input["option"]);
             }
         }
         echo json_encode($rtn);

@@ -73,10 +73,7 @@ use PHPMailer\PHPMailer\PHPMailer;
                 if(!$keepresult){
                 die($conn->error);
                 }
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = "success to verify";
+                $rtn = successCode("success to verify");
             }
         echo json_encode($rtn);
         }*/
@@ -85,10 +82,7 @@ use PHPMailer\PHPMailer\PHPMailer;
         $alert = '<div class="alert-success">
                     <span>Message Sent! Thank you for contacting us.</span>
                     </div>';
-        $rtn = array();
-        $rtn["status"] = true;
-        $rtn["errorCode"] = "";
-        $rtn["data"] = $alert;
+        $rtn = successCode($alert);
     } catch (Exception $e){
         $alert = '<div class="alert-error">
                     <span>'.$e->getMessage().'</span>

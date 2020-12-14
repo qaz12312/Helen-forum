@@ -33,10 +33,7 @@
             errorCode("Failed to remove article in keepDir,Database exception.");
         }
         else{
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-			$rtn["data"] = "Successfully remove article in keepDir.";
+            $rtn = successCode("Successfully remove article in keepDir.");
         }
         echo json_encode($rtn);
     }
