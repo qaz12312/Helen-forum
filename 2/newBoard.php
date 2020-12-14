@@ -22,8 +22,8 @@
         global $conn;
         $sql="SELECT `boardName`, `UserID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'";
         $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
 
         if($resultCount > 0){
             errorCode("版面已新增");
@@ -31,10 +31,9 @@
         else{
             $admin="admin";
             $sql="INSERT INTO  `Board`(`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES('".$input['boardName']."','admin',NULL,NULL)";
-            $resultNew=$conn->query($sql);
-            if(!$resultNew){
-                die($conn->error);
-            }
+            $arr = array();
+            query($conn,$sql,$arr,"INSERT");
+
             $sql="SELECT `BoardName`,`Rule`,`TopArticleID` FROM `Board`  JOIN`Users` ON Users.UserID =Board.UserID WHERE `BoardName`='".$input['boardName']."' AND Users.UserID='".$admin."'";
             $arr = array();
             $result = query($conn,$sql,$arr,"SELECT");

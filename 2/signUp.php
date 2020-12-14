@@ -29,10 +29,9 @@
         }
         else{
             $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."','\#ffffff','".$input['account']."')";
-            $resultNew=$conn->query($sql);
-            if(!$resultNew){
-                die($conn->error);
-            }
+            $arr = array();
+        query($conn,$sql,$arr,"INSERT");
+        
             $sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
             $arr = array();
             $result = query($conn,$sql,$arr,"SELECT");

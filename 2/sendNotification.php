@@ -21,10 +21,9 @@
     function doSendNotification($input){
         global $conn;
         $sql="INSERT INTO  `Notice`(`UserID`,`Content`)VALUES('".$input['recipient']."','".$input['content']."')";
-        $resultNew=$conn->query($sql);
-        if(!$resultNew){
-            die($conn->error);
-        }
+       $arr = array();
+        query($conn,$sql,$arr,"INSERT");
+        
         $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`='".$input['recipient']."' AND`Content`='".$input['content']."' ";
         $arr = array();
             $result = query($conn,$sql,$arr,"SELECT");

@@ -19,8 +19,8 @@
      */
     function doRemoveKeepArticle($input){ // 將文章從收藏資料夾移除
     	global $conn;
-        $del="DELETE FROM `FollowKeep` WHERE  `DirName`='".$input['dirName']."' AND`UserID`='".$input['account']. "'AND`ArticleID`='".$input['articleID']."'";
-        $result=$conn->query($del);
+        $sql="DELETE FROM `FollowKeep` WHERE  `DirName`='".$input['dirName']."' AND`UserID`='".$input['account']. "'AND`ArticleID`='".$input['articleID']."'";
+        $result=$conn->query($sql);
             if(!$result){
                 die($conn->error);
             }

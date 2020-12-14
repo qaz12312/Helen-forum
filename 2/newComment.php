@@ -22,7 +22,6 @@
 */
 	function doNewComment($input){ 
 		global $conn;
-		
 		$cnt="SELECT COUNT(`Floor`) FROM `Comments`  WHERE `ArticleID`='".$input['articleID']."'";
 		$resultcnt=$conn->query($cnt);
 		$rowcnt=$resultcnt->fetch_row();
@@ -35,14 +34,13 @@
 		
 		$sql="INSERT INTO  `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`) 
 		VALUES('".$input['account']."','".$input['content']."','".$input['articleID']."','".$rowcnt0."')";
-		$resultNew=$conn->query($sql);
-		if(!$resultNew){
-			die($conn->error);
-		}
+		$arr = array();
+		query($conn,$sql,$arr,"INSERT");
+		
 		$sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID WHERE `ArticleID`='".$input['articleID']."' AND`Floor`='".$rowcnt0."'";
 		$arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
 		if($resultCount <= 0){
 			errorCode("Failed to upload comment,Database exception.");
 		}

@@ -18,10 +18,9 @@
     function doNewDir($input){
         global $conn;
         $sql="INSERT INTO  `KeepDir`(`UserID`,`DirName`) VALUES('".$input['account']."','".$input['dirName']."')";
-        $resultNew=$conn->query($sql);
-        if(!$resultNew){
-			errorCode("Failed to upload dir,Database exception.");
-		}
+        $arr = array();
+		query($conn,$sql,$arr,"INSERT");
+		
 		$rtn = successCode("Successfully new the dir.");
         echo json_encode($rtn);
     }

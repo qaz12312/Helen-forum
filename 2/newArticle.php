@@ -31,15 +31,14 @@
         global $conn;
         $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) 
         VALUES('".$input['account']."','".$input['title']."','".$input['content']."','".$input['picture']."','".$input['hashTag']."','".$input['blockName']."')";
-        $resultNew=$conn->query($sql);
-        if(!$resultNew){
-            die($conn->error);
-        }
+        $arr = array();
+        query($conn,$sql,$arr,"INSERT");
+            
         $articleID=mysqli_insert_id($conn);//取得流水號
         $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color` FROM `Article` NATURAL JOIN`Users` WHERE `ArticleID`=$articleID";
         $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Failed to upload article,Database exception.");
         }

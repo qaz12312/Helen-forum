@@ -24,10 +24,9 @@
         global $conn;
         $sql="INSERT INTO  `Report`(`UserID`,`ArticleID`,`Reason`) 
         VALUES('".$input['account']."','".$input['articleID']."','".$input['reason']."')";
-        $resultNew=$conn->query($sql);
-        if(!$resultNew){
-            die($conn->error);
-        }
+        $arr = array();
+        query($conn,$sql,$arr,"INSERT");
+        
         $sql="SELECT `ArticleID`,`Reason`,`Times` FROM `Report` WHERE `ArticleID`='".$input['articleID']."' AND `reason`='".$input['reason']."' ";
         $arr = array();
             $result = query($conn,$sql,$arr,"SELECT");
