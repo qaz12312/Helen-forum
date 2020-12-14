@@ -9,19 +9,21 @@
     $conn = connSql();
     // session_start();
     switch ($input["act"]) {
-        // 獨立出去了，註冊 : 轅
-        case "sendmail":
-            require_once("sendmailPwd.php"); // 【】忘記密碼 ----- 轅
+        case "sendmailPwd": // 【user】忘記密碼 ----- 轅
+            require_once("sendmailPwd.php"); 
             break;
         case "showAuthority": //【前端頁面(即系統)】查看權限(若為版主，則是所屬看板) -----劉
             require_once("showAuthority.php");
             doShowAuthority($input);
             break;
-        case "logIn": //登入 -----鈞
+        case "sendMailRegister": // 【非user者】註冊 ----- 轅
+            require_once("sendmailRegister.php"); 
+            break;
+        case "logIn": // 【user】登入 -----鈞
             require_once("logIn.php");
             doLogIn($input);
             break;
-        case "logOut": //登出 -----鈞
+        case "logOut": // 【user】登出 -----鈞
             require_once("logOut.php");
             doLogOut($input);
             break;   
