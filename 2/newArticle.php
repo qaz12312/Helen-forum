@@ -29,24 +29,22 @@
 	*/
     function doNewArticle($input){
         global $conn;
-        $new="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) 
+        $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) 
         VALUES('".$input['account']."','".$input['title']."','".$input['content']."','".$input['picture']."','".$input['hashTag']."','".$input['blockName']."')";
-        $resultNew=$conn->query($new);
+        $resultNew=$conn->query($sql);
         if(!$resultNew){
             die($conn->error);
         }
         $articleID=mysqli_insert_id($conn);//取得流水號
         $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color` FROM `Article` NATURAL JOIN`Users` WHERE `ArticleID`=$articleID";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Failed to upload article,Database exception.");
         }
         else{
-            $row=$result->fetch_row();
-            $rtn = successCode($row);
+            $rtn = successCode($result);
         }
         echo json_encode($rtn);
     }

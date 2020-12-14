@@ -22,10 +22,9 @@
     function doShowNotification($input){
         global $conn;
         $sql="SELECT `Times`,`Content` FROM `Notice` WHERE `UserID`='".$input['account']."' order by `Times`DESC ";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("No notifications right now.");
         }

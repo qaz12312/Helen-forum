@@ -25,10 +25,9 @@
                 die($conn->error);
             }
         $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`='".$input['articleID']."' AND`UserID`='".$input['account']."'AND`DirName`='".$input['dirName']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
         if($resultCount > 0){
             errorCode("Failed to remove article in keepDir,Database exception.");
         }

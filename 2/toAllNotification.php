@@ -28,16 +28,15 @@
         else{
             for($i=0;$i<$result1->num_rows;$i++){
                 $row=$result1->fetch_row();
-                $new="INSERT INTO `Notice`(`UserID`,`Content`) VALUES('".$row[0]."','".$input['content']."')";
-                $resultNew=$conn->query($new);
+                $sql="INSERT INTO `Notice`(`UserID`,`Content`) VALUES('".$row[0]."','".$input['content']."')";
+                $resultNew=$conn->query($sql);
                 if(!$resultNew){
                     die($conn->error);
                 }
                 $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`=$row[0] AND`Content`='".$input['content']."'";
-                $result=$conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
+                $arr = array();
+                $result = query($conn,$sql,$arr,"SELECT");
+                $resultCount = count($result);
                 if($resultCount <= 0){
                     errorCode("Failed to send Notification to everyone,Database exception.");
                 }

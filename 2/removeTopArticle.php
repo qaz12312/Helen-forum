@@ -18,13 +18,9 @@
 	function doRemoveTopArticle($input){ //移除置頂文章
     	global $conn;
 		$sql="UPDATE `Board` SET `TopArticleID`= NULL WHERE `BoardName`='".$input['boardName']."'";
-		$result=$conn->query($sql);
-		if(!$result){
-			errorCode("Failed to remove top article in board,Database exception.");
-		}
-		else{
-			$rtn = successCode("Successfully remove top article in board.");
-		}
+		$arr = array();
+        $result = query($conn,$sql,$arr,"UPDATE");
+		$rtn = successCode("Successfully remove top article in board.");
 		echo json_encode($rtn);
 	}
 ?>

@@ -20,22 +20,20 @@
     */
     function doSendNotification($input){
         global $conn;
-        $new="INSERT INTO  `Notice`(`UserID`,`Content`)VALUES('".$input['recipient']."','".$input['content']."')";
-        $resultNew=$conn->query($new);
+        $sql="INSERT INTO  `Notice`(`UserID`,`Content`)VALUES('".$input['recipient']."','".$input['content']."')";
+        $resultNew=$conn->query($sql);
         if(!$resultNew){
             die($conn->error);
         }
         $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`='".$input['recipient']."' AND`Content`='".$input['content']."' ";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Failed to send notification,Database exception.");
         }
         else{
-            $row=$result->fetch_row();
-            $rtn = successCode($row);
+            $rtn = successCode($result);
         }
         echo json_encode($rtn);
     }

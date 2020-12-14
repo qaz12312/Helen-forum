@@ -21,16 +21,14 @@
     function doLogIn($input){
     	global $conn;
     	$sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
-	    $result = $conn->query($sql);
-	    if(!$result){
-	        die($conn->error);
-	    }
+	    $arr = array();
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
 	    if($resultCount <= 0){
 			errorCode("Could not find the user.");
 	    }
 	    else{
-			$row=$result->fetch_row();
-			$rtn = successCode($row);
+			$rtn = successCode($result);
 	    }
 		echo json_encode($rtn);
     }

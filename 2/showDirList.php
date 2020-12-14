@@ -23,10 +23,9 @@
     function doShowDirList($input){
         global $conn;
         $sql="SELECT `DirName` FROM `KeepDir` where `UserID` = '".$input['account']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("User didn't create any folder.");
         }

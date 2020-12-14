@@ -54,10 +54,9 @@ try {
  */
 
   $sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+       $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
         if($resultCount > 0){
           errorCode("Account has been registered.");
         }
@@ -68,10 +67,9 @@ try {
                 die($conn->error);
             }
             $sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
+            $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
             if($resultCount <= 0){
               errorCode("Failed to register,Database exception.");
             }

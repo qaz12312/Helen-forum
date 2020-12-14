@@ -58,10 +58,9 @@ $email = $input['account'];
 		//update password
 	//global $conn;
 	$sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$email."'";
-	$result=$conn->query($sql);
-	if(!$result){
-		die($conn->error); 
-	}
+	$arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
 	if($resultCount <= 0){	//找不到用戶
 		errorCode("fail to find the password");
 	}

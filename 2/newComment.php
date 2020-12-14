@@ -33,23 +33,21 @@
 			$rowcnt0=(int)$rowcnt[0]+1;
 		}
 		
-		$new="INSERT INTO  `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`) 
+		$sql="INSERT INTO  `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`) 
 		VALUES('".$input['account']."','".$input['content']."','".$input['articleID']."','".$rowcnt0."')";
-		$resultNew=$conn->query($new);
+		$resultNew=$conn->query($sql);
 		if(!$resultNew){
 			die($conn->error);
 		}
 		$sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID WHERE `ArticleID`='".$input['articleID']."' AND`Floor`='".$rowcnt0."'";
-		$result=$conn->query($sql);
-		if(!$result){
-			die($conn->error);
-		}
+		$arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
 		if($resultCount <= 0){
 			errorCode("Failed to upload comment,Database exception.");
 		}
 		else{
-			$row=$result->fetch_row();
-			$rtn = successCode($row);
+			$rtn = successCode($result);
 		}
 		echo json_encode($rtn);
 	}

@@ -24,15 +24,15 @@
     function doShowArticleInBoard($input){
         global $conn;
         $sql="SELECT `Title`,`ArticleID` ,`cntHeart`,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName`='".$input['boardName']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        $rule="SELECT `Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'";
-        $result2=$conn->query($rule);
-        if(!$result2 || !$result2){
-            die($conn->error);
-        }
+        $arr = array();
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+
+        $sql="SELECT `Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`='".$input['boardName']."'";
+        $arr = array();
+        $result2 = query($conn,$sql,$arr,"SELECT");
+        $result2Count = count($result);
+        
         if($resultCount <= 0 ){
             errorCode("Article not in this board.");
         }

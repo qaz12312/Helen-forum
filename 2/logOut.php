@@ -13,7 +13,6 @@
     dataDB.data = "already log out!"
 	*/
     function doLogOut($input){
-		global $conn;
 		$rtn = successCode("already log out!");
 		echo json_encode($rtn);
     }

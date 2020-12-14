@@ -23,25 +23,23 @@
         $check= true;
         if(isset($input['oldBoardName'])){
             global $conn;
-            $sqlcheck="SELECT `UserID` FROM `Board` WHERE `BoardName` = '".$input['oldBoardName']."' AND `UserID`='".$input['account']."' ";  
-            $result=$conn->query($sqlcheck);
-            if(!$result){
-                die($conn->error);
-            } 
+            $sql="SELECT `UserID` FROM `Board` WHERE `BoardName` = '".$input['oldBoardName']."' AND `UserID`='".$input['account']."' ";  
+            $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
             if($resultCount <= 0){
                 errorCode("Update without permission.");
             }
             else{
-                $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = '".$input['oldBoardName']."'";
-                $result=$conn->query($updateSql);
-                if(!$result){
-                    die($conn->error);
-                }
+                $sql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = '".$input['oldBoardName']."'";
+                $arr = array();
+                $result = query($conn,$sql,$arr,"UPDATE");
+
                 $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`WHERE `BoardName`='".$input['oldBoardName']."' AND`UserID`='admin' " ;
                 $result=$conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
+                $arr = array();
+                $result = query($conn,$sql,$arr,"SELECT");
+                $resultCount = count($result);
                 if($resultCount <= 0){
                     errorCode("Failed to found the update Moderator.");
                 }
@@ -49,25 +47,21 @@
         }
         if(isset($input['newBoardName'])){
             global $conn;
-            $sqlcheck="SELECT `UserID` FROM `Board` WHERE `BoardName` = '".$input['newBoardName']."' AND `UserID`='admin' ";  
-            $result=$conn->query($sqlcheck);
-            if(!$result){
-                die($conn->error);
-            } 
+            $sql="SELECT `UserID` FROM `Board` WHERE `BoardName` = '".$input['newBoardName']."' AND `UserID`='admin' ";  
+            $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
             if($resultCount <= 0){
                 errorCode("Update without permission.");
             }
             else{
-                $updateSql2="UPDATE `Board` SET `UserID`='".$input['account']."' WHERE `BoardName` = '".$input['newBoardName']."'";
-                $result=$conn->query($updateSql2);
-                if(!$result){
-                    die($conn->error);
-                }
+                $sql="UPDATE `Board` SET `UserID`='".$input['account']."' WHERE `BoardName` = '".$input['newBoardName']."'";
+                $arr = array();
+                $result = query($conn,$sql,$arr,"UPDATE");
+                
                 $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`  WHERE `BoardName` = '".$input['newBoardName']."' AND`UserID`='".$input['account']."' " ;
-                $result=$conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
+                $arr = array();
+                $result = query($conn,$sql,$arr,"SELECT");
                 if($resultCount <= 0){
                     errorCode("Failed to appoint moderator,Database exception.");
                 }

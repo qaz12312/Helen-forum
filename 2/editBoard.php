@@ -18,31 +18,27 @@
          */
     function doEditBoard($input){
         global $conn;
-        $sqlcheck="SELECT `BoardName` FROM `Board` WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."' ";  
-        $result=$conn->query($sqlcheck);
-        if(!$result){
-            die($conn->error);
-        } 
+        $sql="SELECT `BoardName` FROM `Board` WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."' ";  
+        $arr = array();
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Delete without permission.");
         }
         else{
-            $updateSql="UPDATE `Board` SET `Rule`='".$input['rule']."'where `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."'";
-            $result=$conn->query($updateSql);
-            if(!$result){
-                die($conn->error);
-            }
+            $sql="UPDATE `Board` SET `Rule`='".$input['rule']."'where `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."'";
+            $arr = array();
+            $result = query($conn,$sql,$arr,"UPDATE");
+            
             $sql ="SELECT `BoardName` FROM `Board` NATURAL JOIN`Users` WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."'AND `Rule`='".$input['rule']."'" ;
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
+            $arr = array();
+			$result = query($conn,$sql,$arr,"SELECT");
+			$resultCount = count($result);
             if($resultCount <= 0){
                 errorCode("Failed to found the update board.");
             }
             else{
-                $row=$result->fetch_row();
-                $rtn = successCode($row);
+                $rtn = successCode($result);
             }
         }
         echo json_encode($rtn);

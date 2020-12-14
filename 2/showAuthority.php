@@ -18,19 +18,17 @@
         global $conn;
             $rtn = array();
             $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$input['account']."'";
-            $result = $conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
+            $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
             if($resultCount <= 0){
                 $sql="SELECT `IsAdmin` FROM `Users` WHERE `UserID`='".$input['account']."'";
-                $result2 = $conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
-                if($result2->num_rows <= 0){
+                $arr = array();
+                $result = query($conn,$sql,$arr,"SELECT");
+                $resultCount = count($result);
+                if($resultCount <= 0){
                     $rtn = successCode(0);
-                }else if($result2[0]){
+                }else if($result[0]){
                     $rtn = successCode(3);
                 }else{
                     $rtn = successCode(1);

@@ -23,10 +23,9 @@
     function doShowArticleInDir($input){
         global $conn;
         $sql="SELECT `Title`,`ArticleID`  FROM `KeepDir` NATURAL JOIN `FollowKeep` NATURAL JOIN`Article` WHERE `UserID`='".$input['account']."'AND`DirName`='".$input['dirName']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Article not in the dir which names ".$input['dirName']." in this user.");
         }

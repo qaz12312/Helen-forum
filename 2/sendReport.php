@@ -22,23 +22,21 @@
     */
     function doSendReport($input){
         global $conn;
-        $new="INSERT INTO  `Report`(`UserID`,`ArticleID`,`Reason`) 
+        $sql="INSERT INTO  `Report`(`UserID`,`ArticleID`,`Reason`) 
         VALUES('".$input['account']."','".$input['articleID']."','".$input['reason']."')";
-        $resultNew=$conn->query($new);
+        $resultNew=$conn->query($sql);
         if(!$resultNew){
             die($conn->error);
         }
         $sql="SELECT `ArticleID`,`Reason`,`Times` FROM `Report` WHERE `ArticleID`='".$input['articleID']."' AND `reason`='".$input['reason']."' ";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Failed to send report,Database exception.");
         }
         else{
-            $row=$result->fetch_row();
-            $rtn = successCode($row);
+            $rtn = successCode($result);
         }
         echo json_encode($rtn);
     }

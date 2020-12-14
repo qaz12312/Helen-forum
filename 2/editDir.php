@@ -20,31 +20,27 @@
 	*/
     function doEditDir($input){
         global $conn;
-        $sqlcheck="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['old']."' AND `UserID`='".$input['account']."' ";  
-        $result=$conn->query($sqlcheck);
-        if(!$result){
-            die($conn->error);
-        } 
+        $sql="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='".$input['old']."' AND `UserID`='".$input['account']."' ";  
+        $arr = array();
+		$result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Update without permission.");
         }
         else{
-            $updateSql="UPDATE `KeepDir` SET `DirName`='".$input['new']."'";
-            $result=$conn->query($updateSql);
-            if(!$result){
-                die($conn->error);
-            }
+            $sql="UPDATE `KeepDir` SET `DirName`='".$input['new']."'";
+            $arr = array();
+            $result = query($conn,$sql,$arr,"UPDATE");
+
             $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`='".$input['account']."'  AND`DirName`='".$input['new']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
+            $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
             if($resultCount <= 0){
                 errorCode("Failed to found the update folder.");
             }
             else{
-                $row=$result->fetch_row();
-                $rtn = successCode($row);
+                $rtn = successCode($result);
             }
         }
         echo json_encode($rtn);

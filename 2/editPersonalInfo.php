@@ -38,21 +38,17 @@
     function doChangeInfo($input,$optionAttr){
         global $conn;
         $sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $arr = array();
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Cannot find the user.Failed to Update personal information in ".$input["option"].".You need to login again.");
         }
         else{
             $sql="UPDATE `Users` SET `".$optionAttr."`='".$input['new']."' WHERE `UserID` ='".$input['account']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                errorCode("Failed to Update personal information in ".$input["option"].".You need to login again.");
-            }else{
-                $rtn = successCode("Success to change the ".$input["option"]);
-            }
+            $arr = array();
+            $result = query($conn,$sql,$arr,"UPDATE");
+            $rtn = successCode("Success to change the ".$input["option"]);
         }
         echo json_encode($rtn);
     }

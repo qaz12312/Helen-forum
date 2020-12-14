@@ -21,31 +21,28 @@
     */
     function doEditComment($input){
         global $conn;
-        $sqlcheck="SELECT `ArticleID` FROM `Comments` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";  
-        $result=$conn->query($sqlcheck);
-        if(!$result){
-            die($conn->error);
-        } 
+        $sql="SELECT `ArticleID` FROM `Comments` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";  
+        $arr = array();
+		$result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        
         if($resultCount <= 0){
             errorCode("Update without permission.");
         }
         else{    
-            $updateSql="UPDATE `Comments` SET `Content`='".$input['detail']."' WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
-            $result=$conn->query($updateSql);
-            if(!$result){
-                die($conn->error);
-            }
+            $sql="UPDATE `Comments` SET `Content`='".$input['detail']."' WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
+            $arr = array();
+            $result = query($conn,$sql,$arr,"UPDATE");
+
             $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
+            $arr = array();
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
             if($resultCount <= 0){
                 errorCode("Failed to found the update comment.");
             }
             else{
-                $row=$result->fetch_row();
-                $rtn = successCode($row);
+                $rtn = successCode($result);
             }
         }
         echo json_encode($rtn);
