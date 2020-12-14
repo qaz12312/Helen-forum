@@ -170,7 +170,7 @@
             doRemoveTopArticle($input);
             break;
         case "sendMail": // 【系統】寄email -----轅
-            require_once("sendMail.php")
+            require_once("sendMail.php");
             break;
     }
 ?>
