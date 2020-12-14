@@ -1,0 +1,55 @@
+<?php
+    /* 
+    前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "deleteDir";
+    cmd["account"] = "00757007";
+    cmd["dirName"] ="我喜歡的";
+
+    後端 to 前端
+    dataDB.status
+    若 status = true:
+        dataDB.errorCode = ""
+        dataDB.data= "成功刪除此資料夾"
+    否則
+        dataDB.errorCode = "此版塊不存在" / "刪除失敗，資料庫異常"
+        dataDB.data = ""
+    */
+    function doDeleteDir($input)
+    {
+        global $conn;
+        $sqlcheck = "SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $input['account'] . "' ";
+        $result = $conn->query($sqlcheck);
+        if (!$result) {
+            die($conn->error);
+        }
+        if ($result->num_rows <= 0) {
+            $rtn = array();
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "此資料夾不存在";
+            $rtn["data"] = "";
+        } else {
+            $delkeep = "DELETE FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $input['account'] . "'";
+            $result = $conn->query($delkeep);
+            if (!$result) {
+                die($conn->error);
+            }
+            $sql = "SELECT `DirName` FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $input['account'] . "'";
+            $result = $conn->query($sql);
+            if (!$result) {
+                die($conn->error);
+            }
+            if ($result->num_rows > 0) {
+                $rtn = array();
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "刪除失敗，資料庫異常";
+                $rtn["data"] = "";
+            } else {
+                $rtn = array();
+                $rtn["status"] = true;
+                $rtn["errorCode"] = "成功刪除此資料夾";
+            }
+        }
+        echo json_encode($rtn);
+    }
+?>

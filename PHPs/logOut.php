@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "logOut";
-	cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51"
+	cmd["account"] = "00757007";
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -12,11 +12,8 @@
     dataDB.errorCode = ""
     dataDB.data = "already log out!"
 	*/
-    function doLogOut($inputJS){
+    function doLogOut($input){
         global $conn;
-        $token =$inputJS['token'];
-        unset($_SESSION[$token]);
-        session_destroy();
 		$rtn = array();
 		$rtn["status"] = true;
 		$rtn["errorCode"] = "";
