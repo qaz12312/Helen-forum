@@ -3,29 +3,28 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "addArticle";
-	cmd["articleID"] = ArticleID;(是否不用傳呢，我記得是用流水號的樣子?)
 	cmd["account"] = "AuthorID";
 	cmd["blockName"] ="美食";
 	cmd["title"] = "Title";
 	cmd["content"] = "Content"
 	cmd["picture"] = "Image"
 	cmd["hashTag"] ="HashTag"
-	cmd["timer"] ="Time"
 	
 	後端 to 前端:
 	dataDB.status
-	若 status = true:
+    若 status = true:
+        dataDB.status = true
 		dataDB.errorCode = ""
 		dataDB.data[0]	// ArticleID
-		dataDB.data[1]	// AuthorID
-		dataDB.data[2]	// Title
-		dataDB.data[3]	// Content
-		dataDB.data[4]	// Image
-		dataDB.data[5]	// HashTag
-		dataDB.data[6]	// Time
-		dataDB.data[7]	// Color
-	否則
-		dataDB.errorCode = ??????
+		dataDB.data[1]	// Title
+		dataDB.data[2]	// Content
+		dataDB.data[3]	// Image
+		dataDB.data[4]	// HashTag
+		dataDB.data[5]	// Time
+		dataDB.data[6]	// Color
+    否則 status = false:
+        dataDB.status = false
+		dataDB.errorCode = "Failed to upload article,Database exception."
 		dataDB.data = ""
 	*/
     function doNewArticle($input){
@@ -45,7 +44,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "文章上傳失敗";
+            $rtn["errorCode"] = "Failed to upload article,Database exception.";
             $rtn["data"] = "";
         }
         else{
@@ -53,8 +52,7 @@
             $rtn = array();
             $rtn["status"] = true;
             $rtn["errorCode"] = "";
-            $rtn["data"] = $row[0];
-            $rtn["articleID"] =$articleID;
+            $rtn["data"] = $row;
         }
         echo json_encode($rtn);
     }

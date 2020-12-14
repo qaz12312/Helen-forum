@@ -9,11 +9,13 @@
 	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status
-	若 status = true:
+    若 status = true:
+        dataDB.status = true
 		dataDB.errorCode = ""
-		dataDB.data = "刪除檢舉成功"
-	否則
-		dataDB.errorCode = "刪除檢舉失敗"
+		dataDB.data = "Successfully canceled this report."
+    否則 status = false:
+        dataDB.status = false
+		dataDB.errorCode = "This report doesn't exit." / "Failed to delete,Database exception." / "Failed to cancel report." / "Successfully deleted this report."
 		dataDB.data = "" 
 	*/
     function doDeleteReport($input){ //審核被檢舉文章
@@ -27,7 +29,7 @@
             if($result->num_rows <= 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "can't find this article";
+                $rtn["errorCode"] = "This report doesn't exit.";
                 $rtn["data"] = "";
             }
             else{
@@ -44,14 +46,14 @@
                 if($result->num_rows > 0){
                     $rtn = array();
                     $rtn["status"] = false;
-                    $rtn["errorCode"] = "delete report, DB error";
+                    $rtn["errorCode"] = "Failed to delete,Database exception.";
                     $rtn["data"] = "";
                 }
                 else{
                     $rtn = array();
                     $rtn["status"] = true;
                     $rtn["errorCode"] = "";
-                    $rtn["data"] = "success delete report";
+                    $rtn["data"] = "Successfully deleted this report.";
                 }
             }
         }
@@ -69,14 +71,14 @@
 			if($result->num_rows > 0){
 				$rtn = array();
 				$rtn["status"] = false;
-				$rtn["errorCode"] = "cancel report fail";
+				$rtn["errorCode"] = "Failed to cancel report.";
 				$rtn["data"] = "";
 			}
 			else{
 				$rtn = array();
 				$rtn["status"] = true;
 				$rtn["errorCode"] = "";
-				$rtn["data"] = "cancel report success";
+				$rtn["data"] = "Successfully canceled this report.";
 			}
 		}
         echo json_encode($rtn);

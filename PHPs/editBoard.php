@@ -10,10 +10,11 @@
             
             若 status = true:
                 dataDB.data = 更新後的版
-               dataDB.status = true:
-            否則
+                dataDB.status = true
+            否則 status = false:
+                dataDB.status = false
                 dataDB.data = ""
-               dataDB.errorCode = 沒有版/無權限刪除 
+               dataDB.errorCode = "Failed to found the update board."/ "Delete without permission." 
          */
     function doEditBoard($input){
         global $conn;
@@ -25,7 +26,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "無權限刪除";
+            $rtn["errorCode"] = "Delete without permission.";
             $rtn["data"] = "";
         }
         else{
@@ -42,7 +43,7 @@
             if($result->num_rows <= 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "沒有版";
+                $rtn["errorCode"] = "Failed to found the update board.";
                 $rtn["data"] = "";
             }
             else{

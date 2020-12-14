@@ -10,10 +10,12 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
+        dataDB.status = true
         dataDB.errorCode = ""    
-        dataDB.data = "成功刪除此文章"
-    否則
-        dataDB.errorCode = "查詢失敗，無此文章" / "刪除失敗，資料庫異常"
+        dataDB.data = "Successfully deleted this article."
+    否則 status = false:
+        dataDB.status = false
+        dataDB.errorCode = "The query failed,This article does not exist." / "Failed to delete,Database exception."
         dataDB.data = ""
     */
     function doDeleteArticle($input){
@@ -26,7 +28,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "查詢失敗，無此文章";
+            $rtn["errorCode"] = "The query failed,This article does not exist.";
             $rtn["data"] = "";
         }
         else{
@@ -43,14 +45,14 @@
             if($result->num_rows > 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "刪除失敗，資料庫異常";
+                $rtn["errorCode"] = "Failed to delete,Database exception.";
                 $rtn["data"] = "";
             }
             else{
                 $rtn = array();
                 $rtn["status"] = true;
                 $rtn["errorCode"] = "";
-                $rtn["data"] = "成功刪除此文章";
+                $rtn["data"] = "Successfully deleted this article.";
             }
         }
         echo json_encode($rtn);

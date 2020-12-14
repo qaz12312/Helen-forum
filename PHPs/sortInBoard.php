@@ -3,23 +3,25 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "sortInBoard";
-    cmd["boardName"] = "美食"
+    cmd["account"]="00757033";
+    cmd["boardName"] = "美食";
     cmd["sort"] = "time/hot";
-    cmd["account"]="00757033"
+
     後端 to 前端:
-    dataDB.state
-    若 state = true:
-    dataDB.data[i] //有i筆文章
-    (
-        dataDB.errorCode
-        dataDB.data[i].title //第i筆文章的標題
-        dataDB.data[i].articleID
-        dataDB.data[i].like //第i筆文章的總愛心數
-        dataDB.data[i].keep//第i筆文章的總收藏數
-        dataDB.data[i].time//第i筆文章的時間
-    )
+    dataDB = JSON.parse(data);
+    dataDB.status
+    若 status = true:
+        dataDB.data[i] //有i筆文章
+        (
+            dataDB.errorCode
+            dataDB.data[i].title //第i筆文章的標題
+            dataDB.data[i].articleID
+            dataDB.data[i].like //第i筆文章的總愛心數
+            dataDB.data[i].keep//第i筆文章的總收藏數
+            dataDB.data[i].time//第i筆文章的時間
+        )
     否則
-        dataDB.errorCode = "sort input wrong" / "沒有文章"
+        dataDB.errorCode = "Failed to sort in board." / "Without any article in board now."
         dataDB.data = ""
     */
     function doSortBoard($input)
@@ -33,7 +35,7 @@
                     die($conn->error);
                 }
             } else if ($input['sort'] == "hot") {
-                $sql1 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = '".$input['boardName']."'ORDER BY `cntHeart` DESC";
+                $sql1 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = '".$input['boardName']."'ORDER BY `cntHeart` DESC";
                 $result = $conn->query($sql1);
                 if (!$result) {
                     die($conn->error);
@@ -41,8 +43,8 @@
             }
             if ($result->num_rows <= 0) {
                 $rtn = array();
-                $rtn["statue"] = false;
-                $rtn["errorCode"] = "沒有文章";
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "Without any article in board now.";
                 $rtn["data"] = "";
             } else {
                 $arr = array();
@@ -62,14 +64,14 @@
                     $arr[$i] = $log;
                 }
                 $rtn = array();
-                $rtn["statue"] = true;
+                $rtn["status"] = true;
                 $rtn["errorCode"] = "";
                 $rtn["data"] = $arr;
             }
         } else {
             $rtn = array();
-            $rtn["statue"] = false;
-            $rtn["errorCode"] = "sort input wrong";
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "Failed to sort in board.";
             $rtn["data"] = "";
         }
         echo json_encode($rtn);

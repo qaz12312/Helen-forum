@@ -5,7 +5,8 @@
 	cmd["act"] = "showNotice";
 	cmd["account"] = "00757007";
 
-	後端 to 前端:
+    後端 to 前端:
+    dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
@@ -15,7 +16,7 @@
 			dataDB.data.content	// Content
 		)
 	否則
-		dataDB.errorCode = "目前沒有通知"
+		dataDB.errorCode = "No notifications right now."
 		dataDB.data = ""
 	*/
     function doShowNotification($input){
@@ -28,7 +29,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "目前沒有通知";
+            $rtn["errorCode"] = "No notifications right now.";
             $rtn["data"] = "";
         }
         else{

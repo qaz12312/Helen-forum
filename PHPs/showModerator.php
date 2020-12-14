@@ -1,22 +1,24 @@
 <?php
-            /* 前端 to 後端:
-            let cmd = {};
-            cmd["act"] = "showModerator";
+    /* 
+    前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "showModerator";
 
-            後端 to 前端
-            dataDB.state
-            若 state = true:
-            dataDB.errorCode = ""
-            dataDB.data[i] //有i筆版資訊
-            (
-                        dataDB.data[i].account 
-                        dataDB.data[i].userColor 
-                        dataDB.data[i].boardName 
-            ) 
-            否則
-            dataDB.errorCode = "沒有指明版主"
-            dataDB.data = ""
-            */
+    後端 to 前端
+    dataDB = JSON.parse(data);
+    dataDB.status
+    若 status = true:
+        dataDB.errorCode = ""
+        dataDB.data[i] //有i筆版資訊
+        (
+        dataDB.data[i].account 
+        dataDB.data[i].userColor 
+        dataDB.data[i].boardName 
+        ) 
+    否則
+        dataDB.errorCode = "Failed to show Moderator. "
+        dataDB.data = ""
+    */
     function doShowModerator($input){
         global $conn;
         $sql ="SELECT `UserID`, `Color`, `BoardName` FROM `Board` NATURAL JOIN `Users` order by `UserID` ASC " ;
@@ -27,7 +29,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "沒有指明版主";
+            $rtn["errorCode"] = "Failed to show Moderator. ";
             $rtn["data"] = "";
         }
         else{

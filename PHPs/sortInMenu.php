@@ -7,20 +7,21 @@
     cmd["sort"] = "time/hot";
 
     後端 to 前端:
-    dataDB.statue
-    若 dataDB.statue = true:
-    dataDB.errorCode = ""
-    dataDB.data[i] //有i筆文章
-    (
-        dataDB.data[i].title //第i筆文章的標題
-        dataDB.data[i].blockName //第i筆文章的所屬看板
-        dataDB.data[i].articleID
-        dataDB.data[i].like //第i筆文章的總愛心數
-        dataDB.data[i].keep//第i筆文章的總收藏數
-        dataDB.data[i].time //第i筆文章的時間
-    )
+    dataDB = JSON.parse(data);
+    dataDB.status
+    若 dataDB.status = true:
+        dataDB.errorCode = ""
+        dataDB.data[i] //有i筆文章
+        (
+            dataDB.data[i].title //第i筆文章的標題
+            dataDB.data[i].blockName //第i筆文章的所屬看板
+            dataDB.data[i].articleID
+            dataDB.data[i].like //第i筆文章的總愛心數
+            dataDB.data[i].keep//第i筆文章的總收藏數
+            dataDB.data[i].time //第i筆文章的時間
+        )
     否則
-        dataDB.errorCode = "沒有文章" / "sort input wrong"
+        dataDB.errorCode = "Without any article now." / "Failed to sort."
         dataDB.data = ""
     */ 
     function doSortMenu($input)
@@ -42,8 +43,8 @@
             }
             if ($result->num_rows <= 0) {
                 $rtn = array();
-                $rtn["statue"] = false;
-                $rtn["errorCode"] = "沒有文章";
+                $rtn["status"] = false;
+                $rtn["errorCode"] = "Without any article now.";
                 $rtn["data"] = "";
             } else {
                 $arr = array();
@@ -63,14 +64,14 @@
                     $arr[$i] = $log;
                 }
                 $rtn = array();
-                $rtn["statue"] = true;
+                $rtn["status"] = true;
                 $rtn["errorCode"] = "";
                 $rtn["data"] = $arr;
             }
         }else{
             $rtn = array();
-            $rtn["statue"] = false;
-            $rtn["errorCode"] = "sort input wrong";
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "Failed to sort.";
             $rtn["data"] = "";
         }
         echo json_encode($rtn);

@@ -5,10 +5,11 @@
     cmd["act"] = "showPostRecord";
     cmd["account"] = "userid";
 
-    後端 to 前端
-    dataDB.state
-    dataDB.errorCode
-    若 state = true:
+    後端 to 前端:
+    dataDB = JSON.parse(data);
+    dataDB.status
+    若 status = true:
+        dataDB.errorCode = ""
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title //第i筆文章的標題
@@ -18,6 +19,7 @@
             dataDB.data[i].keep//第i筆文章的總收藏數
         ) 
     否則
+            dataDB.errorCode = "No article right now."
         dataDB.data = ""
     */
     function doShowPostRecord($input){
@@ -29,8 +31,8 @@
         }
         if($result->num_rows <= 0){
             $rtn = array();
-            $rtn["statue"] = false;
-            $rtn["errorCode"] = "沒有文章";
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "No article right now.";
             $rtn["data"] = "";
         }
         else{
@@ -41,7 +43,7 @@
                 $arr[$i]=$log;
             }
             $rtn = array();
-            $rtn["statue"] = true;
+            $rtn["status"] = true;
             $rtn["errorCode"] = "";
             $rtn["data"] =$arr;
         }

@@ -8,10 +8,12 @@
     後端 to 前端
     dataDB.status
     若 status = true:
+        dataDB.status = true
         dataDB.errorCode = ""
-        dataDB.data= "成功刪除此版塊"
-    否則
-        dataDB.errorCode = "此版塊不存在" / "刪除失敗，資料庫異常"
+        dataDB.data= "Successfully deleted this board."
+    否則 status = false:
+        dataDB.status = false
+        dataDB.errorCode = "This board doesn't exist." / "Failed to delete,Database exception."
         dataDB.data = ""
     */
     function doDeleteBoard($input)
@@ -25,7 +27,7 @@
         if ($result->num_rows <= 0) {
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "此版塊不存在";
+            $rtn["errorCode"] = "This board doesn't exist.";
             $rtn["data"] = "";
         } else {
             $sql = "DELETE FROM `Board`  WHERE `BoardName`='" . $input['boardName'] ."'";
@@ -41,12 +43,13 @@
             if ($result->num_rows > 0) {
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "刪除失敗，資料庫異常";
+                $rtn["errorCode"] = "Failed to delete,Database exception.";
                 $rtn["data"] = "";
             } else {
                 $rtn = array();
                 $rtn["status"] = true;
-                $rtn["errorCode"] = "成功刪除此版塊";
+                $rtn["errorCode"] = "";
+                $rtn["data"] = "Successfully deleted this board.";
             }
         }
         echo json_encode($rtn);

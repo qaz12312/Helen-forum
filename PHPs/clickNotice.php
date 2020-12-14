@@ -10,10 +10,12 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
+        dataDB.status = true
         dataDB.errorCode = ""
-        dataDB.data = ""
-    否則
-        dataDB.errorCode = "無權限更新 / 沒有通知"
+        dataDB.data = "Successfully deleted this notification. "
+    否則 status = false:
+        dataDB.status = false
+        dataDB.errorCode = "Update without permission. / Without notice."
         dataDB.data = ""
     */
     function doClickNotice($input){ //user點通知->刪除此則通知
@@ -26,7 +28,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "無權限更新";
+            $rtn["errorCode"] = "Update without permission.";
             $rtn["data"] = "";
         }
         else{
@@ -39,13 +41,15 @@
             if($result->num_rows > 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "沒有通知";
+                $rtn["errorCode"] = "Without notice.";
                 $rtn["data"] = "";
             }
             else{
                 $rtn = array();
                 $rtn["status"] = true;
                 $rtn["errorCode"] = "";
+                $rtn["data"] = "Successfully deleted this notification.";
+                
             }
         }
         echo json_encode($rtn);

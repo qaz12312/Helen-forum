@@ -4,13 +4,14 @@
 	let cmd = {};
 	cmd["act"] = "showBoardList";
 	
-	後端 to 前端:
+    後端 to 前端:
+    dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
 		dataDB.data[i] //有i筆boardName
 	否則
-		dataDB.errorCode = ????? 
+		dataDB.errorCode = "Without any board now."
 		dataDB.data = ""
 	*/
     function doBoardList($input){
@@ -22,8 +23,8 @@
         }
         if($result->num_rows <= 0){
             $rtn = array();
-            $rtn["statue"] = false;
-            $rtn["errorCode"] = "沒有文章";
+            $rtn["status"] = false;
+            $rtn["errorCode"] = "";
             $rtn["data"] = "";
         }
         else{
@@ -33,8 +34,8 @@
                 $arr[$i]=$row[0];
             }
             $rtn = array();
-            $rtn["statue"] = true;
-            $rtn["errorCode"] = "";
+            $rtn["status"] = true;
+            $rtn["errorCode"] = "Without any board now.";
             $rtn["data"] =$arr;
         }
         echo json_encode($rtn);

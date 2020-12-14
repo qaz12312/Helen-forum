@@ -10,11 +10,13 @@
         後端 to 前端:
 	dataDB.status
 	若 status = true:
+		dataDB.status = true
 		dataDB.errorCode = ""
 		dataDB.data[0]	// TopArticleID
 		dataDB.data[1]  // title
-	否則
-		dataDB.errorCode =
+	否則 status = false:
+		dataDB.status = false
+		dataDB.errorCode ="Update without permission." / "Failed to set Top article."
 		dataDB.data = ""
          */
         function doEditTopArticle($input){
@@ -27,7 +29,7 @@
 		if($result->num_rows <= 0){
 			$rtn = array();
 			$rtn["status"] = false;
-			$rtn["errorCode"] = "no permission";
+			$rtn["errorCode"] = "Update without permission.";
 			$rtn["data"] = "";
 		}
 		else{
@@ -44,14 +46,14 @@
           if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "Top article set error";
+            $rtn["errorCode"] = "Failed to set Top article.";
             $rtn["data"] = "";
           }
           else{
 			$row=$result->fetch_row();
             $rtn = array();
             $rtn["status"] = true;
-            $rtn["errorCode"] = "Top article set success";
+            $rtn["errorCode"] = "";
             $rtn["data"] = $row;
           }
 		}

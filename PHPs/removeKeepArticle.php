@@ -11,10 +11,10 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = "已從資料夾中移除文章"
+		dataDB.errorCode = "Successfully remove article in keepDir."
 		dataDB.data = ""
 	否則
-		dataDB.errorCode = "收藏文章移除失敗"
+		dataDB.errorCode = "Failed to remove article in keepDir,Database exception."
 		dataDB.data = "" 
      */
     function doRemoveKeepArticle($input){ // 將文章從收藏資料夾移除
@@ -32,14 +32,14 @@
         if($result->num_rows > 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "收藏文章移除失敗";
+            $rtn["errorCode"] = "Failed to remove article in keepDir,Database exception.";
             $rtn["data"] = "";
         }
         else{
             $rtn = array();
             $rtn["status"] = true;
-            $rtn["errorCode"] = "已從資料夾中移除文章";
-			$rtn["data"] = "";
+            $rtn["errorCode"] = "";
+			$rtn["data"] = "Successfully remove article in keepDir.";
         }
         echo json_encode($rtn);
     }

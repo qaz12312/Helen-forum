@@ -2,9 +2,11 @@
 	/* 
 	前端 to 後端:
 	let cmd = {};
-	cmd["act"] = "showDirList";
+    cmd["act"] = "showDirList";
+    cmd["account"] = "00757033";
 
-	後端 to 前端:
+    後端 to 前端:
+    dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
 		dataDB.errorCode = ""
@@ -15,7 +17,7 @@
 			...
 		)
 	否則
-		dataDB.errorCode = "使用者沒有建立資料夾";
+		dataDB.errorCode = "User didn't create any folder.";
 		dataDB.data = ""
 	*/
     function doShowDirList($input){
@@ -28,7 +30,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "使用者沒有建立資料夾";
+            $rtn["errorCode"] = "User didn't create any folder.";
             $rtn["data"] = "";
         }
         else{
@@ -38,7 +40,7 @@
                 $arr[$i]=$row[0];
             }
             $rtn = array();
-            $rtn["statue"] = true;
+            $rtn["status"] = true;
             $rtn["errorCode"] = "";
             $rtn["data"] =$arr;
         }
