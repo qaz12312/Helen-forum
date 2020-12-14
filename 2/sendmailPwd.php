@@ -1,29 +1,27 @@
 <?php
-// 前端 to 後端:
-// let cmd = {};
-// cmd["act"] = "sendmail";
-// cmd["account"] = "0123456";
+    /*
+    前端 to 後端:
+    let cmd = {};
+    cmd["act"] = "sendmailPwd";
+    cmd["account"] = "00757007";
 
+    後端 to 前端:
+    dataDB.status
+    若 status = true:
+        dataDB.errorCode = ""    
+        dataDB.data="success to verify"
+    否則
+        dataDB.errorCode = "fail to find the password"
+        dataDB.data = ""
+    */
 
-// 後端 to 前端
-// dataDB.status
-// dataDB.errorCode
-// 若 status = true:
-// dataDB.data="success to verify"
-// 否則
-// dataDB.data = "fail to find the password"
-//header("Content-Type:text/html; charset=utf-8");
-use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\PHPMailer;
     require_once 'phpmailer/Exception.php';
     require_once 'phpmailer/PHPMailer.php';
     require_once 'phpmailer/SMTP.php';
 
     $mail = new PHPMailer(true);
-
     $alert = '';
-
-    // if(isset($input['submit'])){
-    //   $email = $_POST['email'];
     $email = $input['account'];
     
     try{
@@ -76,17 +74,11 @@ use PHPMailer\PHPMailer\PHPMailer;
             }
         echo json_encode($rtn);
         }*/
-        
         //例外
-        $alert = '<div class="alert-success">
-                    <span>Message Sent! Thank you for contacting us.</span>
-                    </div>';
+        $alert = 'Message Sent! Thank you for contacting us.';
         $rtn = successCode($alert);
     } catch (Exception $e){
-        $alert = '<div class="alert-error">
-                    <span>'.$e->getMessage().'</span>
-                </div>';
-        errorCode($alert);
+        errorCode("【sendmailPwd.php】failed: ". $e->getMessage());
     }
     echo json_encode($rtn);
 ?>

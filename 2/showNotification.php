@@ -23,8 +23,8 @@
         global $conn;
         $sql="SELECT `Times`,`Content` FROM `Notice` WHERE `UserID`='".$input['account']."' order by `Times`DESC ";
         $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("No notifications right now.");
         }

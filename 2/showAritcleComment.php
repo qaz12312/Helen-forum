@@ -25,9 +25,9 @@
     function doShowAritcleComment($input){
         global $conn;
         $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `ArticleID`='".$input['articleID']."'";
-       $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $arr = array();
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Article doesn't exit.");
         }

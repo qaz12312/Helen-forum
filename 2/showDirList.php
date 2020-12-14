@@ -24,8 +24,8 @@
         global $conn;
         $sql="SELECT `DirName` FROM `KeepDir` where `UserID` = '".$input['account']."'";
         $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("User didn't create any folder.");
         }

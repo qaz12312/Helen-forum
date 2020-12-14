@@ -22,15 +22,15 @@
     	global $conn;
     	$sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
         $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount > 0){
             errorCode("Account has been registered.");
         }
         else{
             $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."','\#ffffff','".$input['account']."')";
             $arr = array();
-        query($conn,$sql,$arr,"INSERT");
+            query($conn,$sql,$arr,"INSERT");
         
             $sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
             $arr = array();

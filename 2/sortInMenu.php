@@ -24,40 +24,35 @@
         dataDB.errorCode = "Without any article now." / "Failed to sort."
         dataDB.data = ""
     */ 
-    function doSortMenu($input)
-    {
+    function doSortMenu($input){
         global $conn;
         if ($input['sort'] == "time" || $input['sort'] == "hot") {
             if ($input['sort'] == "time") {
-                $sql1 = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `Times` DESC";
-                $result = $conn->query($sql1);
-                if (!$result) {
-                    die($conn->error);
-                }
-            } else if ($input['sort'] == "hot") {
-                $sql1 = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `cntHeart` DESC";
-                $result = $conn->query($sql1);
-                if (!$result) {
-                    die($conn->error);
-                }
+                $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `Times` DESC";
+                $arr = array();
+            } else{
+                $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `cntHeart` DESC";
+                $arr = array();
             }
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
             if ($resultCount <= 0) {
                 errorCode("Without any article now.");
             } else {
                 $arr = array();
                 for ($i = 0; $i < $resultCount; $i++) {
                     $row = $result->fetch_row();
-                    $sqlHeart ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[2]."'AND`UserID`='".$input['account']."'" ;
-                    $heart = $conn->query($sqlHeart);
-                    if (!$heart) {
-                        die($conn->error);
-                    }
-                    $sqlKeep ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[2]."'AND`UserID`='".$input['account']."'" ;
-                    $keep = $conn->query($sqlKeep);
-                    if (!$keep) {
-                        die($conn->error);
-                    }
-                    $log = array("title" => "$row[0]", "blockName" => "$row[1]", "articleID" => "$row[2]", "like" => "$row[3]", "keep" => "$row[4]", "hasHeart" => ( $heart->num_rows>0 ? 1 : 0), "hasKeep" => ($keep->num_rows>0 ? 1 : 0 ));
+                    $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[2]."'AND`UserID`='".$input['account']."'" ;
+                    $arr = array();
+                    $heart = query($conn,$sql,$arr,"SELECT");
+                    $heartCount = count($heart);
+
+                    $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[2]."'AND`UserID`='".$input['account']."'" ;
+                    $arr = array();
+                    $keep = query($conn,$sql,$arr,"SELECT");
+                    $keepCount = count($keep);
+
+                    $log = array("title" => "$row[0]", "blockName" => "$row[1]", "articleID" => "$row[2]", "like" => "$row[3]", "keep" => "$row[4]", "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                     $arr[$i] = $log;
                 }
                 $rtn = successCode($arr);

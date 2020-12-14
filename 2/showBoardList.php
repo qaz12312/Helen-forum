@@ -17,9 +17,9 @@
     function doBoardList($input){
         global $conn;
         $sql="SELECT `BoardName` FROM `Board`";
-       $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $arr = array();
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Without any board now.");
         }

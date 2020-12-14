@@ -22,15 +22,14 @@
     */
     function doSendReport($input){
         global $conn;
-        $sql="INSERT INTO  `Report`(`UserID`,`ArticleID`,`Reason`) 
-        VALUES('".$input['account']."','".$input['articleID']."','".$input['reason']."')";
+        $sql="INSERT INTO  `Report`(`UserID`,`ArticleID`,`Reason`) VALUES('".$input['account']."','".$input['articleID']."','".$input['reason']."')";
         $arr = array();
         query($conn,$sql,$arr,"INSERT");
         
         $sql="SELECT `ArticleID`,`Reason`,`Times` FROM `Report` WHERE `ArticleID`='".$input['articleID']."' AND `reason`='".$input['reason']."' ";
         $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Failed to send report,Database exception.");
         }

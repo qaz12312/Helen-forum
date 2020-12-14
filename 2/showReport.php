@@ -23,11 +23,10 @@
     */
 function doShowReport($input){ //查看board底下的文章檢舉
     global $conn;
-    $sql = "SELECT `Title`,`Reason`,Report.Times FROM `Report` JOIN `Article`  ON Article.ArticleID = Report.ArticleID  WHERE  `BlockName`='" . $input['boardName'] . "'ORDER BY `Times` DESC ";
-    $result = $conn->query($sql);
-    if (!$result) {
-        die($conn->error);
-    }
+    $sql="SELECT `Title`,`Reason`,Report.Times FROM `Report` JOIN `Article`  ON Article.ArticleID = Report.ArticleID  WHERE  `BlockName`='" . $input['boardName'] . "'ORDER BY `Times` DESC ";
+    $arr = array();
+    $result = query($conn,$sql,$arr,"SELECT");
+    $resultCount = count($result);
     if ($resultCount <= 0) {
         errorCode("No report right now.");
     } else {

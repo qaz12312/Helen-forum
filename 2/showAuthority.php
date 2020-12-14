@@ -16,33 +16,33 @@
 	*/
     function doShowAuthority($input){
         global $conn;
-            $rtn = array();
-            $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$input['account']."'";
+        $rtn = array();
+        $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$input['account']."'";
+        $arr = array();
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            $sql="SELECT `IsAdmin` FROM `Users` WHERE `UserID`='".$input['account']."'";
             $arr = array();
             $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
             if($resultCount <= 0){
-                $sql="SELECT `IsAdmin` FROM `Users` WHERE `UserID`='".$input['account']."'";
-                $arr = array();
-                $result = query($conn,$sql,$arr,"SELECT");
-                $resultCount = count($result);
-                if($resultCount <= 0){
-                    $rtn = successCode(0);
-                }else if($result[0]){
-                    $rtn = successCode(3);
-                }else{
-                    $rtn = successCode(1);
-                }
+                $rtn = successCode(0);
+            }else if($result[0]){
+                $rtn = successCode(3);
+            }else{
+                $rtn = successCode(1);
             }
-            else{
-                $boardNames = array();
-                for($i=0;$i<$resultCount;$i++){
-                    $row=$result->fetch_row();
-                    $boardNames[$i]=$row[0];
-                }
-                $arr = array(0=>2,"boardName"=>$boardNames);
-                $rtn = successCode($arr);
+        }
+        else{
+            $boardNames = array();
+            for($i=0;$i<$resultCount;$i++){
+                $row=$result->fetch_row();
+                $boardNames[$i]=$row[0];
             }
+            $arr = array(0=>2,"boardName"=>$boardNames);
+            $rtn = successCode($arr);
+        }
 		echo json_encode($rtn);
     }
 ?>

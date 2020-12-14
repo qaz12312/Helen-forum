@@ -21,11 +21,10 @@
     */
     function doShowModerator($input){
         global $conn;
-        $sql ="SELECT `UserID`, `Color`, `BoardName` FROM `Board` NATURAL JOIN `Users` order by `UserID` ASC " ;
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
+        $sql="SELECT `UserID`, `Color`, `BoardName` FROM `Board` NATURAL JOIN `Users` order by `UserID` ASC " ;
+        $arr = array();
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Failed to show Moderator.");
         }

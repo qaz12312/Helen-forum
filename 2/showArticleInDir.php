@@ -24,8 +24,8 @@
         global $conn;
         $sql="SELECT `Title`,`ArticleID`  FROM `KeepDir` NATURAL JOIN `FollowKeep` NATURAL JOIN`Article` WHERE `UserID`='".$input['account']."'AND`DirName`='".$input['dirName']."'";
         $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Article not in the dir which names ".$input['dirName']." in this user.");
         }
