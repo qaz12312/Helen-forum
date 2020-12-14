@@ -12,10 +12,12 @@ CREATE TABLE Users (
 
 DROP TABLE IF EXISTS Board;
 CREATE TABLE Board (
+	# BoardID tinyint(100) NOT NULL AUTO_INCREMENT,
 	BoardName varchar(255) NOT NULL UNIQUE,
 	UserID varchar(101) NOT NULL,
 	Rule mediumtext ,
 	TopArticleID bigint(255) ,
+	# PRIMARY KEY (BoardID),
 	PRIMARY KEY (BoardName),
 	FOREIGN KEY (UserID) REFERENCES Users (UserID) 
 ) CHARSET=utf8mb4 ;
@@ -52,8 +54,8 @@ CREATE TABLE Comments (
 	ArticleID bigint(255) NOT NULL,
 	Times datetime DEFAULT CURRENT_TIMESTAMP,
 	Floor int(255) NOT NULL,
-	TagFloor int(255),
-	PRIMARY KEY (AuthorID, Floor),
+	#TagFloor int(255),
+	PRIMARY KEY (ArticleID, Floor),
 FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
 FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
