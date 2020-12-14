@@ -1,5 +1,6 @@
 <?php
     require_once("connectDB.php");
+    require_once("tools.php");
     $conn = connSql();
     $input = $_POST;
     // session_start();
@@ -165,7 +166,7 @@
             doRemoveTopArticle($input);
             break;
         case "sendMail": // 【系統】寄email -----轅
-            require_once("sendMail.php")
+            require_once("sendMail.php");
             break;
     }
     $conn = null;

@@ -12,12 +12,7 @@
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
         }catch(PDOException $e){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = '【Connection Database】failed: ' . $e->getMessage();
-            $rtn["data"] = "";
-            echo json_encode($rtn);
-            die();
+            errorCode("【Connection Database】failed: " . $e->getMessage());
         }
         error_reporting(1);
         error_reporting(E_ALL);
