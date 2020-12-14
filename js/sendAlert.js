@@ -5,8 +5,7 @@ $(document).ready(function () {
     $("#SentAlert-inBtn").click(function () {
         var value = $('#who').val();
         console.log(value)
-        if(value=="")
-        {
+       
 
         var comment = $.trim($("#comment").val());
             if(comment != ""){
@@ -39,7 +38,17 @@ $(document).ready(function () {
                                     let cmd = {};
                                     cmd["act"] = "toAllNotification";
                                     cmd["content"] = comment;
-                                    cmd["timer"] = "Times";
+                                    var currentdate = new Date(); 
+                                    var datetime =currentdate.getFullYear() + "-"  
+                                                + (currentdate.getMonth()+1) + "-"
+                                                + currentdate.getDate()  + " " 
+                                                + currentdate.getHours() + ":"  
+                                                + currentdate.getMinutes() + ":" 
+                                                + currentdate.getSeconds();
+
+                                    
+                                    cmd["timer"] = datetime;
+                                    console.log(cmd["timer"])
                                     swal({
                                         title: "已傳送給每個人！<br />",
                                         type: "success",
@@ -52,55 +61,7 @@ $(document).ready(function () {
                         if ( dismiss === 'cancel' );
                     });
             }
-        }
-        else{
-
-                var comment = $.trim($("#comment").val());
-                    if(comment != ""){
-                        console.log(comment);
-                        console.log( "send" );
-                            let status = true;
-                            swal({
-                                title: "確定要傳送給"+value+"？<br />" ,
-                                showCancelButton: true,
-                                confirmButtonText: "確定",
-                                cancelButtonText: "取消",
-                                animation: false
-
-                                }).then(( result ) => {
-                                    if ( result ) 
-                                    {
-                                        console.log( "status " + status );
-                                        if( status == false )
-                                        {
-                                            swal({
-                                                title: "傳頌失敗<br />" ,
-                                                type: "error",
-                                                text: dataDB.errorCode,
-                                                animation: false
-                                            })
-                                        }
-                                        else
-                                        {
-                                            let cmd = {};
-                                            cmd["act"] = "sendNotification";
-                                            cmd["account"] = value;
-                                            cmd["timer"] = "Times";
-                                            cmd["content"] = comment;
-                                            swal({
-                                                title: "已傳送給"+value+"<br />" ,
-                                                type: "success",
-                                            })
-                                            //$(this).closest( "tr" ).remove();
-                                        }
-                                        //$(this).closest( "tr" ).remove();
-                                    }
-                            }, function( dismiss ) {
-                                if ( dismiss === 'cancel' );
-                            });
-                    }
-                }
-            
+        
         });
 
 });

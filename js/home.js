@@ -1,7 +1,6 @@
 var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 ,"list":"美食版"}, 
                 { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 ,"list":"詢問版"}];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
-var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
 
 var keepMenu;
 
@@ -21,87 +20,6 @@ $(document).ready(function(){
       sessionStorage.setItem( "Helen-sort", $(this).text() );
       location.reload();
   });
-
-  
-
-  $( ".pushpinBtn" ).click( function()
-  {
-      var tempTr = this.closest( "tr" );
-      var tempTbody = this.closest( "tbody" );
-
-      let status = true;
-      if( status == false )
-      {
-          swal({
-              title: "置頂失敗",
-              type: "error",
-              text: "dataDB.errorCode"
-
-          }).then(( result ) => {}, ( dismiss ) => {} );
-      }
-      else
-      {
-          swal({
-              title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
-              type: "success",
-              showConfirmButton: false,
-              timer: 1000,
-  
-          }).then(( result ) => {}, ( dismiss ) =>
-          {
-              if( dismiss )
-              {
-                  $( ".pushpinBtn" ).removeClass( "top" );
-                  $( this ).addClass( "top" );
-
-                  tempTr.remove();
-                  tempTbody.prepend( tempTr );
-              }
-          });
-      }
-      
-      // let cmd = {};
-      // cmd[ "act" ] = "TopArticleChange";
-      // cmd[ "account" ] = thisAccount;
-      // cmd[ "articleID" ] = articles.find( (element) => element.title == $( ".articleTitle", tempTr ).text() ).articleID;
-      // cmd[ "boardName" ] = thisBoardName;
-
-      // $.post( "../index.php", cmd, function( dateDB )
-      // {
-      //     dataDB = JSON.parse( dataDB );
-
-      //     if( dataDB.status == false )
-      //     {
-      //         swal({
-      //             title: "置頂失敗",
-      //             type: "error",
-      //             text: dataDB.errorCode,
-
-      //         }).then(( result ) => {}, ( dismiss ) => {} );
-      //     }
-      //     else
-      //     {
-      //         swal({
-      //             title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
-      //             type: "success",
-      //             showConfirmButton: false,
-      //             timer: 1000,
-      
-      //         }).then(( result ) => {}, ( dismiss ) =>
-      //         {
-      //             if( dismiss )
-      //             {
-      //                 $( ".pushpinBtn" ).removeClass( "top" );
-      //                 $( this ).addClass( "top" );
-
-      //                 tempTr.remove();
-      //                 tempTbody.prepend( tempTr );
-      //             }
-      //         });
-      //     }
-      // });
-  });
-
   $( ".articleTitle" ).parent().click( function() 
   {
       let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
@@ -365,7 +283,7 @@ $(document).ready(function(){
 
 function initial()
 {
-  $( ".tabContent h2" ).html(  "Home"  +
+  $( ".tabContent h2" ).html(  "Home"  +"</br>"+
   "<button class='addPost' id='addPost'>+ 發文</button>"
   
   );
@@ -387,12 +305,9 @@ function initial()
   else
   {
       
-      var topArticleID = "123";
-
-      
-
+     
       // let cmd = {};
-      // cmd[ "act" ] = "boardList";
+      // cmd[ "act" ] = "showBoardList";
       // cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
 
       // $.post( "../index.php", cmd, function( dataDB )
@@ -408,9 +323,7 @@ function initial()
       //         }).then(( result ) => {}, ( dismiss ) => {} );
       //     }
       //     else
-      //     {
-      //         l
-      //         var topArticleID = dataDB.data.topArticleID;
+      //     { 
       //         articles = dataDB.data.articleList;
 
       //         
@@ -448,23 +361,6 @@ function initial()
       }
   }
 
-  if( topArticleID != "" )
-  {
-      let topArticle = articles.find( (element) => element.articleID == topArticleID );
-
-      if( topArticle !== undefined )
-      {
-          topArticle = topArticle.title;
-
-          $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" ).find( ".pushpinBtn").addClass( "top" );
-
-          let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
-          let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
-
-          tempTr.remove();
-          tempTbody.prepend( tempTr );
-      }
-  }
 
   if( articles.length == 0 )
   {
@@ -481,6 +377,8 @@ function initial()
 
 function checkPermission()
 {
+    let perm = sessionStorage.getItem( "Helen-permission" );
+    console.log("Permission:　"+ perm );
   // if( thisAccount == null )
     // {
         
@@ -488,21 +386,23 @@ function checkPermission()
 
     //     return;
     // }
+    
     let status = true;
 
     if( status == false )
     {   
-      console.log("456")
+      console.log("addPost hidden")
       $( ".addPost" ).css( "visibility", "hidden" );
     }
     else
     {
-        permission = "1";
+        perm = "1";
         color = "#000000";
         nickname = "haha";
        
-        if( permission < 1 )
+        if( perm.valueOf() < 1 )
         {
+                console.log("唉呦你是訪客")
                 $( ".addPost" ).css( "visibility", "hidden" );
 
 

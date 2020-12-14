@@ -1,4 +1,5 @@
 //CollectionCatalog
+//267 cmd[ "dirIDs"]給什麼
 var CollectionCatalog = [];
 var values=[];
 var dirNames = ["漫威宇宙", "1", "必去", "好好吃", "55", "22", "COOL", "YA" ];
@@ -6,6 +7,7 @@ var dirIDss = [ "1", "2", "3", "4", "5", "6", "7", "8" ];
 $( document ).ready( function() 
 {
     initial();
+    
     $("#CollectionCatalog button").on( "click", function(){
         let dirIndex = $("div .Page").index(this.closest(".Page"));
         console.log(dirIndex)
@@ -38,12 +40,7 @@ $( document ).ready( function()
                     alert("收藏目錄已存在");
                     return false
                 }
-                // let cmd = {};
-                // cmd["act"] = "editDir";
-                // cmd["account"] = sessionStorage.getItem("Helen-userID");
-                // cmd["articleID"] = CollectionCatalog[dirIndex].dirID;
-                // cmd["old"] =$(this).parents('.Page').find("span").text();
-                // console.log($(this));
+                
                 
 
                 // $.post( "../index.php", cmd, function( dataDB )
@@ -60,6 +57,7 @@ $( document ).ready( function()
                 //     }
                 //     else
                 //     {
+
                 //         swal({
                 //             title: "已成功修改收藏目錄名稱",
                 //             type: "success",
@@ -69,10 +67,16 @@ $( document ).ready( function()
                 //         }).then(( result ) => {}, ( dismiss ) => {
                 //             if ( result ) 
                 //             {
-                //                 CollectionCatalog[ dirIndex ].title=result;
-                //                 console.log(CollectionCatalog[ dirIndex ].title)
-                //                 cmd["new"] =result;
-                //                 location.reload();
+                //                   let cmd = {};
+                //                  cmd["act"] = "editDir";
+                //                  cmd["account"] = sessionStorage.getItem("Helen-userID");
+                //                  cmd["articleID"] = CollectionCatalog[dirIndex].dirID;
+                //                  cmd["old"] =$(this).parents('.Page').find("span").text();
+                //                  console.log($(this));
+                //                  CollectionCatalog[ dirIndex ].title=result;
+                //                  console.log(CollectionCatalog[ dirIndex ].title)
+                //                  cmd["new"] =result;
+                //                  location.reload();
                 //             }
                 //             else
                 //             {
@@ -261,7 +265,7 @@ $( document ).ready( function()
                         // let cmd = {};
                         // cmd[ "act" ] = "newDir";
                         // cmd[ "account" ] = sessionStorage().getItem("Helen-UserID")
-                        //等等我想想看 //cmd[ "dirIDs"] = dirIDs[ CollectionCatalog.indexOf( $(this).closest( "td" ).prev().find( "select" ).val() )];
+                        //我不知道cmd[ "dirIDs"] = dirIDs[dirIndex];
                         // cmd[ "dirNames" ] = $('#input2').val();
 
                         //console.log( cmd["articleID"] );
@@ -381,7 +385,7 @@ $( document ).ready( function()
 });
 function initial()
 {
-    
+
     values=[];
     // let isValid = checkPermission();
     // if( !isValid ) return;
@@ -466,6 +470,8 @@ function initial()
     for( let i in dataDB.data )
     {
         values.push(dataDB.data[i].title)
+        console.log(values)
+
         const div = document.createElement('div');
         console.log(i)          
         div.classList.add('Page');
