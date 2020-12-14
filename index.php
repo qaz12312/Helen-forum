@@ -5,7 +5,7 @@
     error_reporting(1);
     error_reporting(E_ALL);
     $input = $_POST;
-    require_once("connectDB.php");
+    require_once("./PHPs/connectDB.php");
     $conn = connSql();
     // session_start();
     switch ($input["act"]) {
