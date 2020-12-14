@@ -9,7 +9,10 @@
     $conn = connSql();
     // session_start();
     switch ($input["act"]) {
-        // 獨立出去了，忘記密碼&註冊 : 轅
+        // 獨立出去了，註冊 : 轅
+        case "sendmail":
+            require_once("sendmailPwd.php"); // 【】忘記密碼 ----- 轅
+            break;
         case "showAuthority": //【前端頁面(即系統)】查看權限(若為版主，則是所屬看板) -----劉
             require_once("showAuthority.php");
             doShowAuthority($input);
