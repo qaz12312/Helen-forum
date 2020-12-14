@@ -15,7 +15,7 @@
 		dataDB.data[1] // color:"#ffffff"
 		dataDB.data[2] // nickname:"00757007"
 	否則
-		dataDB.errorCode = "找不到會員"
+		dataDB.errorCode = "Could not find the user."
 		dataDB.data = "" 
 	*/
     function doLogIn($input){
@@ -28,7 +28,7 @@
 	    if($result->num_rows <= 0){
 	        $rtn = array();
 	        $rtn["status"] = false;
-	        $rtn["errorCode"] = "找不到會員";
+	        $rtn["errorCode"] = "Could not find the user.";
 	        $rtn["data"] = "";
 	    }
 	    else{

@@ -45,7 +45,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "文章上傳失敗";
+            $rtn["errorCode"] = "Failed to upload article.";
             $rtn["data"] = "";
         }
         else{

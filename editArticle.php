@@ -14,10 +14,12 @@
 	後端 to 前端
 	dataDB.status
 	若 status = true:
+		dataDB.status = true
 		dataDB.errorCode = ""
 		dataDB.data = 更新後的文章
-	否則
-		dataDB.errorCode = "無權限更新"/"文章更新失敗";
+	否則 status = false:
+		dataDB.status = false
+		dataDB.errorCode = "Update without permission."/"Failed to Update Article,Database exception.";
 		dataDB.data = ""
 	*/
     function doEditArticle($input){ 
@@ -30,7 +32,7 @@
 		if($result->num_rows <= 0){
 			$rtn = array();
 			$rtn["status"] = false;
-			$rtn["errorCode"] = "無權限更新";
+			$rtn["errorCode"] = "Update without permission.";
 			$rtn["data"] = "";
 		}
 		else{
@@ -47,7 +49,7 @@
 			if($result->num_rows <= 0){
 				$rtn = array();
 				$rtn["status"] = false;
-				$rtn["errorCode"] = "文章更新失敗";
+				$rtn["errorCode"] = "Failed to Update Article,Database exception.";
 				$rtn["data"] = "";
 			}
 			else{

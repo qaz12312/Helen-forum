@@ -10,8 +10,11 @@
 		dataDB.status
 		dataDB.errorCode
 		若 status = true:
-			dataDB.data="success to keep the article / success to delete the article"
+			dataDB.status = true
+			dataDB.errorCode = ""
+			dataDB.data="Successfully kept this article. / Successfully deleted this article."
 		否則
+			dataDB.errorCode = ""
 			dataDB.data = "" */
 
 function doAddDeleteKeep($input)
@@ -32,7 +35,7 @@ function doAddDeleteKeep($input)
 		$rtn = array();
 		$rtn["status"] = true;
 		$rtn["errorCode"] = "";
-		$rtn["data"] = "success to keep the article";
+		$rtn["data"] = "Successfully kept this keep the article.";
 	} else {	//收回收藏
 		$row = $result->fetch_row();
 		$keepsql = "DELETE FROM `FollowKeep` WHERE `UserID`='" . $input['account'] . "' AND `ArticleID`='" . $input['articleId'] . "'";
@@ -43,7 +46,7 @@ function doAddDeleteKeep($input)
 		$rtn = array();
 		$rtn["status"] = true;
 		$rtn["errorCode"] = "";
-		$rtn["data"] = "success to delete the article";
+		$rtn["data"] = "Successfully deleted this article.";
 	}
 	echo json_encode($rtn);
 }

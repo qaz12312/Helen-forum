@@ -27,13 +27,13 @@
          */
 	function doNewComment($input){ 
 		global $conn;
-		$new="INSERT INTO  `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`,`TagFloor`) 
-		VALUES('".$input['account']."','".$input['content']."','".$input['articleID']."','".$input['floors']."','".$input['tagFloor']."')";
+		$new="INSERT INTO  `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`) 
+		VALUES('".$input['account']."','".$input['content']."','".$input['articleID']."','".$input['floors']."')";
 		$resultNew=$conn->query($new);
 		if(!$resultNew){
 			die($conn->error);
 		}
-		$sql="SELECT `AuthorID`,`Content`,`Times`,`Floor`,`TagFloor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID WHERE `ArticleID`='".$input['articleID']."' AND`Floor`='".$input['floors']."'";
+		$sql="SELECT `AuthorID`,`Content`,`Times`,`Floor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID WHERE `ArticleID`='".$input['articleID']."' AND`Floor`='".$input['floors']."'";
 		$result=$conn->query($sql);
 		if(!$result){
 			die($conn->error);

@@ -9,12 +9,14 @@
 
 	後端 to 前端
 	dataDB.status
-	若 status = true:
+    若 status = true:
+        dataDB.status = true
 		dataDB.errorCode = ""
 		dataDB.data=更新後的資料夾名稱
-	否則
+    否則 status = false:
+        dataDB.status = false
 		dataDB.data=""
-		dataDB.errorCode = 無權限修改 / 修改失敗
+		dataDB.errorCode = "Update without permission." / "Failed to found the update folder."
 	*/
     function doEditDir($input){
         global $conn;
@@ -26,7 +28,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "無權限修改";
+            $rtn["errorCode"] = "Update without permission.";
             $rtn["data"] = "";
         }
         else{
@@ -43,7 +45,7 @@
             if($result->num_rows <= 0){
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "修改失敗";
+                $rtn["errorCode"] = "Failed to found the update folder.";
                 $rtn["data"] = "";
             }
             else{

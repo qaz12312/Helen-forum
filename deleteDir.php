@@ -9,10 +9,12 @@
     後端 to 前端
     dataDB.status
     若 status = true:
+        dataDB.status = true
         dataDB.errorCode = ""
-        dataDB.data= "成功刪除此資料夾"
-    否則
-        dataDB.errorCode = "此版塊不存在" / "刪除失敗，資料庫異常"
+        dataDB.data= "Successfully deleted this folder."
+    否則 status = false:
+        dataDB.status = false
+        dataDB.errorCode = "This folder doesn't exit." / "Failed to delete,Database exception."
         dataDB.data = ""
     */
     function doDeleteDir($input)
@@ -26,7 +28,7 @@
         if ($result->num_rows <= 0) {
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "此資料夾不存在";
+            $rtn["errorCode"] = "This folder doesn't exit.";
             $rtn["data"] = "";
         } else {
             $delkeep = "DELETE FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $input['account'] . "'";
@@ -42,12 +44,13 @@
             if ($result->num_rows > 0) {
                 $rtn = array();
                 $rtn["status"] = false;
-                $rtn["errorCode"] = "刪除失敗，資料庫異常";
+                $rtn["errorCode"] = "Failed to delete,Database exception.";
                 $rtn["data"] = "";
             } else {
                 $rtn = array();
                 $rtn["status"] = true;
-                $rtn["errorCode"] = "成功刪除此資料夾";
+                $rtn["errorCode"] = "";
+                $rtn["data"] = "Successfully deleted this folder.";
             }
         }
         echo json_encode($rtn);

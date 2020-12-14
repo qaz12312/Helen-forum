@@ -8,10 +8,11 @@
 	後端 to 前端
 	dataDB.status
 	若 status = true:
+		dataDB.status = true
 		dataDB.errorCode = ""
-		dataDB.data="success to add heart / success to delete heart"
-	否則
-		dataDB.errorCode = ??????
+		dataDB.data="Successfully added this heart. / Successfully deleted this heart."
+	否則 
+		dataDB.errorCode = ""
 		dataDB.data = ""
 	*/
 function doAddDeleteHeart($input)
@@ -32,7 +33,7 @@ function doAddDeleteHeart($input)
 		$rtn = array();
 		$rtn["status"] = true;
 		$rtn["errorCode"] = "";
-		$rtn["data"] = "success to add heart";
+		$rtn["data"] = "Successfully added this heart.";
 	} else {	//DELETE HEART
 		$row = $result->fetch_row();
 		$heartsql = "DELETE FROM `FollowHeart` WHERE `UserID`='" . $input['account'] . "' AND `ArticleID`='" . $input['articleId'] . "'";
@@ -43,7 +44,7 @@ function doAddDeleteHeart($input)
 		$rtn = array();
 		$rtn["status"] = true;
 		$rtn["errorCode"] = "";
-		$rtn["data"] = "success to delete heart";
+		$rtn["data"] = "Successfully deleted this heart.";
 	}
 	echo json_encode($rtn);
 }
