@@ -10,15 +10,15 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-    dataDB.errorCode = ""
-    dataDB.data[i] //有i筆文章在此收藏資料夾下
-    (
-    dataDB.data[i].articleID
-    dataDB.data[i].title //第i筆文章的標題
-    ) 
+        dataDB.errorCode = ""
+        dataDB.data[i] //有i筆文章在此收藏資料夾下
+        (
+        dataDB.data[i].articleID
+        dataDB.data[i].title //第i筆文章的標題
+        ) 
     否則
-    dataDB.errorCode = "沒有文章在【dirName】資料夾下"
-    dataDB.data = ""
+        dataDB.errorCode = "沒有文章在【dirName】資料夾下"
+        dataDB.data = ""
     */
     function doShowArticleInDir($input){
         global $conn;

@@ -7,9 +7,9 @@
 	cmd["reason"] = "Reason";
 	cmd["articleID"] = articleID;	
 	
-        後端 to 前端
+    後端 to 前端:
+    dataDB = JSON.parse(data);
 	dataDB.status
-	
 	若 status = true:
 		dataDB.errorCode = ""
 		(需要回傳東西麼?還是就傳"成功送出檢舉"呢?)
@@ -17,9 +17,9 @@
 		dataDB.data[1]	// Reason
 		dataDB.data[2]	// times
 	否則
-		dataDB.errorCode = ?
+		dataDB.errorCode = "檢舉失敗"
 		dataDB.data = ""
-         */
+    */
     function doSendReport($input){
         global $conn;
         $new="INSERT INTO  `Report`(`UserID`,`ArticleID`,`Reason`) 
@@ -36,7 +36,7 @@
         if($result->num_rows <= 0){
             $rtn = array();
             $rtn["status"] = false;
-            $rtn["errorCode"] = "傳送檢舉失敗";
+            $rtn["errorCode"] = "檢舉失敗";
             $rtn["data"] = "";
         }
         else{
