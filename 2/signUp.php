@@ -25,11 +25,8 @@
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows > 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Account has been registered.";
-            $rtn["data"] = "";
+        if($resultCount > 0){
+            errorCode("Account has been registered.");
         }
         else{
             $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."','\#ffffff','".$input['account']."')";
@@ -42,11 +39,8 @@
             if(!$result){
                 die($conn->error);
             }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to register,Database exception.";
-                $rtn["data"] = "";
+            if($resultCount <= 0){
+                errorCode("Failed to register,Database exception.");
             }
             else{
                 $row=$result->fetch_row();

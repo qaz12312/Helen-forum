@@ -15,7 +15,7 @@
 		dataDB.data[2]	// TopArticleID
     否則 status = false:
         dataDB.status = false
-		dataDB.errorCode = "Failed to upload board ,Database exception."
+		dataDB.errorCode = "版面已新增" / "Failed to upload board ,Database exception."
 		dataDB.data = ""
 	*/
     function doNewBoard($input){
@@ -26,11 +26,8 @@
             die($conn->error);
         }
 
-        if($result->num_rows > 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "版面已新增";
-            $rtn["data"] = "";
+        if($resultCount > 0){
+            errorCode("版面已新增");
         }
         else{
             $admin="admin";
@@ -44,11 +41,8 @@
             if(!$result){
                 die($conn->error);
             }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to upload board ,Database exception.";
-                $rtn["data"] = "";
+            if($resultCount <= 0){
+                errorCode("Failed to upload board ,Database exception.");
             }
             else{
                 $row=$result->fetch_row();

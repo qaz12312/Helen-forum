@@ -29,11 +29,8 @@
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows > 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to remove article in keepDir,Database exception.";
-            $rtn["data"] = "";
+        if($resultCount > 0){
+            errorCode("Failed to remove article in keepDir,Database exception.");
         }
         else{
             $rtn = array();

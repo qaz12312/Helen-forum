@@ -29,15 +29,12 @@
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Article doesn't exit.";
-            $rtn["data"] = "";
+        if($resultCount <= 0){
+            errorCode("Article doesn't exit.");
         }
         else{
             $arr=array();
-            for($i=0;$i<$result->num_rows;$i++){
+            for($i=0;$i<$resultCount;$i++){
                 $row=$result->fetch_row();
                 $log=array("title"=>"$row[0]","content"=>"$row[1]","blockName"=>"$row[2]","articleID"=>"$row[3]","like"=>"$row[4]","keep"=>"$row[5]");
                 $arr[$i]=$log;

@@ -27,10 +27,7 @@ function doVerifyPwd($input){
 			$rtn["errorCode"] = "";
 			$rtn["data"] = "success to verify";
         }else{
-            $rtn = array();
-			$rtn["status"] = false;
-			$rtn["errorCode"] = "";
-			$rtn["data"] = "fail to verify";
+            errorCode("fail to verify");
         }
         unset($_SESSION[$input['token']]);
     }

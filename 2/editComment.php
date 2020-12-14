@@ -26,11 +26,8 @@
         if(!$result){
             die($conn->error);
         } 
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Update without permission.";
-            $rtn["data"] = "";
+        if($resultCount <= 0){
+            errorCode("Update without permission.");
         }
         else{    
             $updateSql="UPDATE `Comments` SET `Content`='".$input['detail']."' WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
@@ -43,11 +40,8 @@
             if(!$result){
                 die($conn->error);
             }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to found the update comment.";
-                $rtn["data"] = "";
+            if($resultCount <= 0){
+                errorCode("Failed to found the update comment.");
             }
             else{
                 $rtn = array();

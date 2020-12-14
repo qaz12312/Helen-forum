@@ -62,11 +62,8 @@ $email = $input['account'];
 	if(!$result){
 		die($conn->error); 
 	}
-	if($result->num_rows <= 0){	//找不到用戶
-		$rtn = array();
-		$rtn["status"] = false;
-		$rtn["errorCode"] = "fail to find the password";
-		$rtn["data"] = "";
+	if($resultCount <= 0){	//找不到用戶
+		errorCode("fail to find the password");
 	}
 		else{	//更改用戶密碼
 			$keepsql="UPDATE `Users` SET `Password` = '".$encodeletter."' WHERE `UserID` ='".$email."'";

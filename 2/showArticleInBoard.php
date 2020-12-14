@@ -33,16 +33,13 @@
         if(!$result2 || !$result2){
             die($conn->error);
         }
-        if($result->num_rows <= 0 ){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Article not in this board.";
-            $rtn["data"] = "";
+        if($resultCount <= 0 ){
+            errorCode("Article not in this board.");
         }
         else{
             $arr=array();
             $row2=$result->fetch_row();
-            for($i=0;$i<$result->num_rows;$i++){
+            for($i=0;$i<$resultCount;$i++){
                 $row=$result->fetch_row();
                 $log=array("title"=>"$row[0]","articleID"=>"$row[1]","like"=>"$row[2]","keep"=>"$row[3]");
                 $rtn["data"]["articleList"][$i]=$row;

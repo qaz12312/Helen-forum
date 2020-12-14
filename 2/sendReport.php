@@ -33,11 +33,8 @@
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to send report,Database exception.";
-            $rtn["data"] = "";
+        if($resultCount <= 0){
+            errorCode("Failed to send report,Database exception.");
         }
         else{
             $row=$result->fetch_row();

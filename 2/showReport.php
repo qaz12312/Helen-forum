@@ -28,14 +28,11 @@ function doShowReport($input){ //查看board底下的文章檢舉
     if (!$result) {
         die($conn->error);
     }
-    if ($result->num_rows <= 0) {
-        $rtn = array();
-        $rtn["status"] = false;
-        $rtn["errorCode"] = "No report right now.";
-        $rtn["data"] = "";
+    if ($resultCount <= 0) {
+        errorCode("No report right now.");
     } else {
         $arr = array();
-        for ($i = 0; $i < $result->num_rows; $i++) {
+        for ($i = 0; $i < $resultCount; $i++) {
             $row = $result->fetch_row();
             $log = array("title" => "$row[0]", "reason" => "$row[1]", "time" => "$row[2]");
             $arr[$i] = $log;

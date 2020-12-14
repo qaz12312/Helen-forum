@@ -29,11 +29,8 @@
 		if(!$result){
 			die($conn->error);
 		} 
-		if($result->num_rows <= 0){
-			$rtn = array();
-			$rtn["status"] = false;
-			$rtn["errorCode"] = "Update without permission.";
-			$rtn["data"] = "";
+		if($resultCount <= 0){
+			errorCode("Update without permission.");
 		}
 		else{
 			$updateSql="UPDATE `Article` SET `Title`='".$input['title']."',`Content`='".$input['content']."',`Image`='".$input['picture']."',`HashTag`='".$input['hashTag']."',`BlockName`='".$input['newBlockName']."' WHERE `ArticleID` = '".$input['articleID']."'AND `AuthorID`='".$input['account']."' ";
@@ -46,11 +43,8 @@
 			if(!$result){
 				die($conn->error);
 			}
-			if($result->num_rows <= 0){
-				$rtn = array();
-				$rtn["status"] = false;
-				$rtn["errorCode"] = "Failed to Update Article,Database exception.";
-				$rtn["data"] = "";
+			if($resultCount <= 0){
+				errorCode("Failed to Update Article,Database exception.");
 			}
 			else{
 				$row=$result->fetch_row();

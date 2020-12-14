@@ -42,15 +42,12 @@
                     die($conn->error);
                 }
             }
-            if ($result->num_rows <= 0) {    //找不到文章
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Don't have any article in board.";
-                $rtn["data"] = "";
+            if ($resultCount <= 0) {    //找不到文章
+                errorCode("Don't have any article in board.");
             } 
             else {
                 $arr = array();
-                for ($i = 0; $i < $result->num_rows; $i++) {    //回傳找到的文章(包含關鍵字)
+                for ($i = 0; $i < $resultCount; $i++) {    //回傳找到的文章(包含關鍵字)
                     $row = $result->fetch_row();
                     $sqlHeart ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
                     $heart = $conn->query($sqlHeart);
@@ -72,10 +69,7 @@
             }
         }
         else {
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to search in board.";
-            $rtn["data"] = "";
+            errorCode("Failed to search in board.");
         }
         echo json_encode($rtn);
     }

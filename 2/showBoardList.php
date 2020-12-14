@@ -21,15 +21,12 @@
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = "";
+        if($resultCount <= 0){
+            errorCode("");
         }
         else{
             $arr=array();
-            for($i=0;$i<$result->num_rows;$i++){
+            for($i=0;$i<$resultCount;$i++){
                 $row=$result->fetch_row();
                 $arr[$i]=$row[0];
             }

@@ -17,7 +17,7 @@
 			dataDB.data[4]	// Floor
 			dataDB.data[5]	// Color
 		否則
-			dataDB.errorCode = "Failed to count comment,Database exception."/"Failed to upload comment,Database exception."
+			dataDB.errorCode = "Failed to upload comment,Database exception."
 			dataDB.data = ""
 */
 	function doNewComment($input){ 
@@ -44,11 +44,8 @@
 		if(!$result){
 			die($conn->error);
 		}
-		if($result->num_rows <= 0){
-			$rtn = array();
-			$rtn["status"] = false;
-			$rtn["errorCode"] = "Failed to upload comment,Database exception.";
-			$rtn["data"] = "";
+		if($resultCount <= 0){
+			errorCode("Failed to upload comment,Database exception.");
 		}
 		else{
 			$rtn = array();

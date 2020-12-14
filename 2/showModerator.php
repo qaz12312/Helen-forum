@@ -26,15 +26,12 @@
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to show Moderator. ";
-            $rtn["data"] = "";
+        if($resultCount <= 0){
+            errorCode("Failed to show Moderator.");
         }
         else{
             $arr=array();
-            for($i=0;$i<$result->num_rows;$i++){
+            for($i=0;$i<$resultCount;$i++){
                 $row=$result->fetch_row();
                 $log=array("account"=>"$row[0]","userColor"=>"$row[1]","boardName"=>"$row[2]");
                 $arr[$i]=$log;

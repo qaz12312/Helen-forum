@@ -20,12 +20,7 @@
 		$sql="UPDATE `Board` SET `TopArticleID`= NULL WHERE `BoardName`='".$input['boardName']."'";
 		$result=$conn->query($sql);
 		if(!$result){
-			$rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to remove top article in board,Database exception.";
-			$rtn["data"] = "";
-			echo json_encode($rtn);
-			die($conn->error);
+			errorCode("Failed to remove top article in board,Database exception.");
 		}
 		else{
 			$rtn = array();

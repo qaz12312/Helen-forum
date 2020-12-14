@@ -42,21 +42,14 @@
         if(!$result){
             die($conn->error);
         }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Cannot find the user.Failed to Update personal information in ".$input["option"].".You need to login again.";
-            $rtn["data"] = "";
+        if($resultCount <= 0){
+            errorCode("Cannot find the user.Failed to Update personal information in ".$input["option"].".You need to login again.");
         }
         else{
             $sql="UPDATE `Users` SET `".$optionAttr."`='".$input['new']."' WHERE `UserID` ='".$input['account']."'";
             $result=$conn->query($sql);
             if(!$result){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to Update personal information in ".$input["option"].".You need to login again.";
-                $rtn["data"] = "";
-                die($conn->error);
+                errorCode("Failed to Update personal information in ".$input["option"].".You need to login again.");
             }else{
                 $rtn = array();
                 $rtn["status"] = true;

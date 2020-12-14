@@ -23,10 +23,7 @@
             die($conn->error);
         }
         if($result1->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Without any user.";
-            $rtn["data"] = "";
+            errorCode("Without any user.");
         }
         else{
             for($i=0;$i<$result1->num_rows;$i++){
@@ -41,11 +38,8 @@
                 if(!$result){
                     die($conn->error);
                 }
-                if($result->num_rows <= 0){
-                    $rtn = array();
-                    $rtn["status"] = false;
-                    $rtn["errorCode"] = "Failed to send Notification to everyone,Database exception.";
-                    $rtn["data"] = "";
+                if($resultCount <= 0){
+                    errorCode("Failed to send Notification to everyone,Database exception.");
                 }
             }
             $rtn = array();

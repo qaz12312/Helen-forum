@@ -24,7 +24,7 @@
             if(!$result){
                 die($conn->error);
             }
-            if($result->num_rows <= 0){
+            if($resultCount <= 0){
                 $sql="SELECT `IsAdmin` FROM `Users` WHERE `UserID`='".$input['account']."'";
                 $result2 = $conn->query($sql);
                 if(!$result){
@@ -41,7 +41,7 @@
             else{
                 $row = array();
                 $rtn["data"] = 2;
-                for($i=0;$i<$result->num_rows;$i++){
+                for($i=0;$i<$resultCount;$i++){
                     $row=$result->fetch_row();
                     $rtn["data"]["boardName"][$i]=$row[0];
                 }

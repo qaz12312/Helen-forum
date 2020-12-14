@@ -26,11 +26,8 @@
 		if(!$result){
 			die($conn->error);
 		} 
-		if($result->num_rows <= 0){
-			$rtn = array();
-			$rtn["status"] = false;
-			$rtn["errorCode"] = "Update without permission.";
-			$rtn["data"] = "";
+		if($resultCount <= 0){
+			errorCode("Update without permission.");
 		}
 		else{
 		  $edit="UPDATE `Board` SET `TopArticleID`='".$input['articleID']."' WHERE `BoardName`='".$input['boardName']."'";
@@ -43,11 +40,8 @@
           if(!$result){
             die($conn->error);
           }
-          if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to set Top article.";
-            $rtn["data"] = "";
+          if($resultCount <= 0){
+			errorCode("Failed to set Top article.");
           }
           else{
 			$row=$result->fetch_row();

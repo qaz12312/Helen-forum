@@ -20,12 +20,7 @@
         $new="INSERT INTO  `KeepDir`(`UserID`,`DirName`) VALUES('".$input['account']."','".$input['dirName']."')";
         $resultNew=$conn->query($new);
         if(!$resultNew){
-			$rtn = array();
-		    $rtn["status"] = false;
-		    $rtn["errorCode"] ="Failed to upload dir,Database exception.";
-			$rtn["data"] = "";
-			echo json_encode($rtn);
-            die($conn->error);
+			errorCode("Failed to upload dir,Database exception.");
 		}
 		$rtn = array();
 		$rtn["status"] = true;

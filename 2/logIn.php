@@ -25,11 +25,8 @@
 	    if(!$result){
 	        die($conn->error);
 	    }
-	    if($result->num_rows <= 0){
-	        $rtn = array();
-	        $rtn["status"] = false;
-	        $rtn["errorCode"] = "Could not find the user.";
-	        $rtn["data"] = "";
+	    if($resultCount <= 0){
+			errorCode("Could not find the user.");
 	    }
 	    else{
 			$row=$result->fetch_row();

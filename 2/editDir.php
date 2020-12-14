@@ -25,11 +25,8 @@
         if(!$result){
             die($conn->error);
         } 
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Update without permission.";
-            $rtn["data"] = "";
+        if($resultCount <= 0){
+            errorCode("Update without permission.");
         }
         else{
             $updateSql="UPDATE `KeepDir` SET `DirName`='".$input['new']."'";
@@ -42,11 +39,8 @@
             if(!$result){
                 die($conn->error);
             }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to found the update folder.";
-                $rtn["data"] = "";
+            if($resultCount <= 0){
+                errorCode("Failed to found the update folder.");
             }
             else{
                 $row=$result->fetch_row();

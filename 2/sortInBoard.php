@@ -41,14 +41,11 @@
                     die($conn->error);
                 }
             }
-            if ($result->num_rows <= 0) {
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Without any article in board now.";
-                $rtn["data"] = "";
+            if ($resultCount <= 0) {
+                errorCode("Without any article in board now.");
             } else {
                 $arr = array();
-                for ($i = 0; $i < $result->num_rows; $i++) {
+                for ($i = 0; $i < $resultCount; $i++) {
                     $row = $result->fetch_row();
                     $sqlHeart ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
                     $heart = $conn->query($sqlHeart);
@@ -69,10 +66,7 @@
                 $rtn["data"] = $arr;
             }
         } else {
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to sort in board.";
-            $rtn["data"] = "";
+            errorCode("Failed to sort in board.");
         }
         echo json_encode($rtn);
     }

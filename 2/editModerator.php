@@ -28,11 +28,8 @@
             if(!$result){
                 die($conn->error);
             } 
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Update without permission.";
-                $rtn["data"] = "";
+            if($resultCount <= 0){
+                errorCode("Update without permission.");
             }
             else{
                 $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = '".$input['oldBoardName']."'";
@@ -45,12 +42,8 @@
                 if(!$result){
                     die($conn->error);
                 }
-                if($result->num_rows <= 0){
-                    $rtn = array();
-                    $rtn["status"] = false;
-                    $rtn["errorCode"] = "Failed to found the update Moderator.";
-                    $rtn["data"] = "";
-                    $check= false;
+                if($resultCount <= 0){
+                    errorCode("Failed to found the update Moderator.");
                 }
             }
         }
@@ -61,11 +54,8 @@
             if(!$result){
                 die($conn->error);
             } 
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Update without permission.";
-                $rtn["data"] = "";
+            if($resultCount <= 0){
+                errorCode("Update without permission.");
             }
             else{
                 $updateSql2="UPDATE `Board` SET `UserID`='".$input['account']."' WHERE `BoardName` = '".$input['newBoardName']."'";
@@ -78,12 +68,8 @@
                 if(!$result){
                     die($conn->error);
                 }
-                if($result->num_rows <= 0){
-                    $rtn = array();
-                    $rtn["status"] = false;
-                    $rtn["errorCode"] = "Failed to appoint moderator,Database exception.";
-                    $rtn["data"] = "";
-                    $check= false;
+                if($resultCount <= 0){
+                    errorCode("Failed to appoint moderator,Database exception.");
                 }
             }
         }

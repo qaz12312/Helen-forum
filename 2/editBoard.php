@@ -23,11 +23,8 @@
         if(!$result){
             die($conn->error);
         } 
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Delete without permission.";
-            $rtn["data"] = "";
+        if($resultCount <= 0){
+            errorCode("Delete without permission.");
         }
         else{
             $updateSql="UPDATE `Board` SET `Rule`='".$input['rule']."'where `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."'";
@@ -40,11 +37,8 @@
             if(!$result){
                 die($conn->error);
             }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to found the update board.";
-                $rtn["data"] = "";
+            if($resultCount <= 0){
+                errorCode("Failed to found the update board.");
             }
             else{
                 $row=$result->fetch_row();
