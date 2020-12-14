@@ -20,14 +20,13 @@
     function doRemoveKeepArticle($input){ // 將文章從收藏資料夾移除
     	global $conn;
         $sql="DELETE FROM `FollowKeep` WHERE  `DirName`='".$input['dirName']."' AND`UserID`='".$input['account']. "'AND`ArticleID`='".$input['articleID']."'";
-        $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
+        $arr = array();
+        query($conn,$sql,$arr,"DELETE");
+            
         $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`='".$input['articleID']."' AND`UserID`='".$input['account']."'AND`DirName`='".$input['dirName']."'";
         $arr = array();
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
         if($resultCount > 0){
             errorCode("Failed to remove article in keepDir,Database exception.");
         }

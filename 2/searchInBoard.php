@@ -24,24 +24,18 @@
         dataDB.errorCode = "Don't have any article in board." / "Failed to search in board."
         dataDB.data = ""
     */
-    function doSearchBoard($input)
-    {
+    function doSearchBoard($input){
         global $conn;
-        //View: HomeHeart,HomeKeep  
         if ($input['sort'] == "time" || $input['sort'] == "hot") {
             if ($input['sort'] == "time") {
-                $sql3 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `Content` LIKE '%".$input['searchWord']."%' OR `Title` LIKE '%".$input['searchWord']."%' AND `BoardName` = '" . $input['searchBoard'] . "' ORDER BY `Times` DESC";
-                $result = $conn->query($sql3);
-                if (!$result) {
-                    die($conn->error);
-                }
-            } else if ($input['sort'] == "hot") {
-                $sql3 = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE (`Content` LIKE '%".$input['searchWord']."%' OR `Title` LIKE '%" .$input['searchWord']."%') AND `BoardName` = '" . $input['searchBoard'] . "' ORDER BY `cntHeart` DESC";
-                $result = $conn->query($sql3);
-                if (!$result) {
-                    die($conn->error);
-                }
+                $sql = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `Content` LIKE '%".$input['searchWord']."%' OR `Title` LIKE '%".$input['searchWord']."%' AND `BoardName` = '" . $input['searchBoard'] . "' ORDER BY `Times` DESC";
+                $arr = array();
+            }else{
+                $sql = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE (`Content` LIKE '%".$input['searchWord']."%' OR `Title` LIKE '%" .$input['searchWord']."%') AND `BoardName` = '" . $input['searchBoard'] . "' ORDER BY `cntHeart` DESC";
+                $arr = array();
             }
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
             if ($resultCount <= 0) {    //找不到文章
                 errorCode("Don't have any article in board.");
             } 
@@ -49,17 +43,17 @@
                 $arr = array();
                 for ($i = 0; $i < $resultCount; $i++) {    //回傳找到的文章(包含關鍵字)
                     $row = $result->fetch_row();
-                    $sqlHeart ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
-                    $heart = $conn->query($sqlHeart);
-                    if (!$heart) {
-                        die($conn->error);
-                    }
-                    $sqlKeep ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
-                    $keep = $conn->query($sqlKeep);
-                    if (!$keep) {
-                        die($conn->error);
-                    }
-                    $log = array("title" => "$row[0]",  "articleID" => "$row[1]", "like" => "$row[2]", "keep" => "$row[3]", "hasHeart" => ( $heart->num_rows>0 ? 1 : 0), "hasKeep" => ($keep->num_rows>0 ? 1 : 0 ));
+                    $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
+                    $arr = array();
+                    $heart = query($conn,$sql,$arr,"SELECT");
+                    $heartCount = count($heart);
+
+                    $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
+                    $arr = array();
+                    $keep = query($conn,$sql,$arr,"SELECT");
+                    $keepCount = count($keep);
+
+                    $log = array("title" => "$row[0]",  "articleID" => "$row[1]", "like" => "$row[2]", "keep" => "$row[3]", "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                     $arr[$i] = $log;
                 }
                 $rtn = successCode($arr);
