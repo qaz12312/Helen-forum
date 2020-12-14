@@ -1,12 +1,7 @@
 <?php
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type:text/html; charset=utf-8");
-    date_default_timezone_set("Asia/Taipei");
-    error_reporting(1);
-    error_reporting(E_ALL);
-    $input = $_POST;
     require_once("connectDB.php");
     $conn = connSql();
+    $input = $_POST;
     // session_start();
     switch ($input["act"]) {
         // 獨立出去了，忘記密碼&註冊 : 轅
@@ -173,4 +168,5 @@
             require_once("sendMail.php")
             break;
     }
+    $conn = null;
 ?>
