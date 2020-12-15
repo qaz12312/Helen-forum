@@ -10,58 +10,50 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
+        dataDB.status = true
         dataDB.errorCode = ""    
-        dataDB.data = "成功刪除此文章"
-    否則
-        dataDB.errorCode = "You don't have permission to do this action." / "查詢失敗，無此文章" / "刪除失敗，資料庫異常"
+        dataDB.data = "Successfully deleted this article."
+    否則 status = false:
+        dataDB.status = false
+        dataDB.errorCode = "The query failed,This article does not exist." / "Failed to delete,Database exception."
         dataDB.data = ""
     */
     function doDeleteArticle($input){
         global $conn;
-        $token =$input['token'];
-        if(!isset($_SESSION[$token])){
-           $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "You don't have permission to do this action.";
-            $rtn["data"] = "";
-        }else{
-            $userInfo = $_SESSION[$token];
-            $sqlcheck="SELECT `ArticleID` FROM `Article` NATURAL JOIN `Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$userInfo['account']."'";  
-            $result=$conn->query($sqlcheck);
-            if(!$result){
-                die($conn->error);
-            } 
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "查詢失敗，無此文章";
-                $rtn["data"] = "";
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+        //    $rtn = array();
+        //     $rtn["status"] = false;
+        //     $rtn["errorCode"] = "You don't have permission to do this action.";
+        //     $rtn["data"] = "";
+        // }else{
+        //     $userInfo = $_SESSION[$token];
+            $sql="SELECT `ArticleID` FROM `Article` NATURAL JOIN `Users`  WHERE `ArticleID`=? AND `AuthorID`=?";  
+            $arr = array($input['articleID'], $input['account']);//$userInfo['account']
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            
+            if($resultCount <= 0){
+                errorCode("The query failed,This article does not exist.");
             }
             else{
-                $del="DELETE FROM `Article` WHERE `ArticleID` = '".$input['articleID']."' AND  `AuthorID` = '".$userInfo['account']."'";
-                $result=$conn->query($del);
-                if(!$result){
-                    die($conn->error);
-                }
-                $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` = '".$input['articleID']."'";
-                $result=$conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
-                if($result->num_rows > 0){
-                    $rtn = array();
-                    $rtn["status"] = false;
-                    $rtn["errorCode"] = "刪除失敗，資料庫異常";
-                    $rtn["data"] = "";
+                $sql="DELETE FROM `Article` WHERE `ArticleID` =? AND  `AuthorID` =?";
+                $arr = array($input['articleID'], $input['account']);//$userInfo['account']
+                query($conn,$sql,$arr,"DELETE");
+                
+                $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` =?";
+                $arr = array($input['articleID']);
+                $result = query($conn,$sql,$arr,"SELECT");
+                $resultCount = count($result);
+                
+                if($resultCount > 0){
+                    errorCode("Failed to delete,Database exception.");
                 }
                 else{
-                    $rtn = array();
-                    $rtn["status"] = true;
-                    $rtn["errorCode"] = "";
-                    $rtn["data"] = "成功刪除此文章";
+                    $rtn = successCode("Successfully deleted this article.");
                 }
             }
-        }
+        // }
         echo json_encode($rtn);
     }
 ?>

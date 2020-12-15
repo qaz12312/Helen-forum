@@ -3,8 +3,8 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "creatAccount";
-    cmd["account"] = "00857210";
-    cmd["password"] = "00857210";
+    cmd["account"] = "00757007";
+    cmd["password"] = "00757007";
 
     後端 to 前端:
     dataDB = JSON.parse(data);
@@ -15,50 +15,35 @@
 		dataDB.data[1] // color:"#ffffff"
 		dataDB.data[2] // nickname:"00857210"
     否則
-        dataDB.errorCode = "帳號已註冊" / "資料庫異常，註冊失敗"
+        dataDB.errorCode = "Account has been registered." / "Failed to register,Database exception."
         dataDB.data = "" 
 	*/
     function doCreatAccount($input){
     	global $conn;
-    	$sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows > 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "帳號已註冊";
-            $rtn["data"] = "";
+    	$sql="SELECT `UserID` FROM `Users` WHERE `UserID`=?";
+        $arr = array($input['account']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount > 0){
+            errorCode("Account has been registered.");
         }
         else{
-            $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Permission`,`Color`,`Nickname`) VALUES('".$input['account']."','".$input['password']."',1,'\#ffffff','".$input['account']."')";
-            $resultNew=$conn->query($sql);
-            if(!$resultNew){
-                die($conn->error);
-            }
-            $sql="SELECT `UserID`,`Permission`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "資料庫異常，註冊失敗";
-                $rtn["data"] = "";
+            $sql="INSERT INTO  `Users`(`UserID`,`Password`,`Color`,`Nickname`) VALUES(?,?,?,?)";
+            $arr = array($input['account'], $input['password'],"#ffffff",$input['account']);
+            query($conn,$sql,$arr,"INSERT");
+        
+            $sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`=? AND `Password`=?";
+            $arr = array($input['account'], $input['password']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            if($resultCount <= 0){
+                errorCode("Failed to register,Database exception.");
             }
             else{
-                $row=$result->fetch_row();
-                $str = $row[0]."helen";
-                $token=md5($str);
-                $_SESSION[$token] = array("account"=>$row[0],"permission"=>$row[1]);
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"][0] =$token;
-                $rtn["data"][1] =$row[2];
-                $rtn["data"][2] =$row[3];
+                // $str = $result[0]."helen";
+                // $token=md5($str);
+                // $_SESSION[$token] = array("account"=>$row[0],"permission"=>$row[1]);
+                $rtn = successCode($result);
             }
         }
         echo json_encode($rtn);

@@ -12,15 +12,11 @@
     dataDB.errorCode = ""
     dataDB.data = "already log out!"
 	*/
-    function doLogOut($inputJS){
-        global $conn;
-        $token =$inputJS['token'];
-        unset($_SESSION[$token]);
-        session_destroy();
-		$rtn = array();
-		$rtn["status"] = true;
-		$rtn["errorCode"] = "";
-		$rtn["data"] = "already log out!";
+    function doLogOut($input){
+		// $token =$input['token'];
+        // unset($_SESSION[$token]);
+        // session_destroy();
+		$rtn = successCode("already log out!");
 		echo json_encode($rtn);
     }
 ?>
