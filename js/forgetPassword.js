@@ -17,9 +17,9 @@ $(document).ready(function () {
     $("#verify").click(function(){ 
         var btn=$('#verify');
         var email = $("#email").val(); $('#btnGetVerifyCode');
-        var preg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; //匹配Email 
+        var preg = /^\w+([-+.']\w+)*@(mail|email){1}\.ntou\.edu\.tw/; //匹配Email 
         if(email=='' || !preg.test(email)){ 
-            $("#chkmsg").html("請填寫正確的郵箱！"); 
+            $("#chkmsg").html("請填寫正確學校信箱！"); 
         }
         else{ 
                 $("#chkmsg").html(""); 

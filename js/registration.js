@@ -135,17 +135,19 @@ $(document).ready(function () {
             window.location.href = "../html/login.html";
         })
     });
+    let cmd = {};
+
     $("#verify").click(function(){ 
         var btn=$('#verify');
         var email = $("#email").val(); $('#btnGetVerifyCode');
-        var preg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; //匹配Email 
+        var preg = /^\w+([-+.']\w+)*@(mail|email){1}\.ntou\.edu\.tw/; //匹配Email 
         if(email=='' || !preg.test(email)){ 
             $("#chkmsg").html("請填寫正確的郵箱！"); 
         }
         else{ 
                 $("#chkmsg").html(""); 
                 let cmd = {};
-                cmd[ "act" ] = "sendMail";
+                cmd[ "act" ] = "sendMailRegister";
                 cmd[ "account"] = $('#email').val().split( "@" )[0];
                 console.log( cmd[ "account"] );
                 // $.post( "../index.php", cmd, function( dataDB )
@@ -234,7 +236,7 @@ function validateEmail(){
 // get value of input email
 var email=$("#email").val();
 // use reular expression
- var reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+ var reg = /^\w+([-+.']\w+)*@(mail|email){1}\.ntou\.edu\.tw/
  if(reg.test(email)){
      return true;
  }else{
