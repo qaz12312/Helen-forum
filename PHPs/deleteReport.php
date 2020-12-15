@@ -4,7 +4,8 @@
 	let cmd = {};
 	cmd["act"] = "deleteReport";
 	cmd["isPass"] = true / false; (通過審核/審核不通過)
-	cmd["articleID"] = "1";
+    cmd["articleID"] = "1";
+    cmd["account"] = "檢舉者";
 
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -58,7 +59,7 @@
             }
         }
         else {
-			$sql="DELETE FROM `Report` WHERE `ArticleID`='".$input['articleID']."'";
+			$sql="DELETE FROM `Report` WHERE `ArticleID`='".$input['articleID']."' AND `UserID`='".$input['account']."'";
 			$result=$conn->query($sql);
 			if(!$result){
 				die($conn->error);
