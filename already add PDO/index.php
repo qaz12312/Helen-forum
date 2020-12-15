@@ -5,10 +5,19 @@
     $input = $_POST;
     // session_start();
     switch ($input["act"]) {
-        // 獨立出去了，忘記密碼&註冊 : 轅
-        case "showAuthority": //【前端頁面(即系統)】查看權限(若為版主，則是所屬看板) -----劉
+        case "sendmailPwd": // 【user】忘記密碼 ----- 轅
+            require_once("sendmailPwd.php"); 
+            break;
+        case "verifyForgetPwd": // 【user】忘記密碼的驗證 ----- 轅
+            require_once("verifyPwd.php"); 
+            doVerifyPwd($input)
+            break;
+        case "showAuthority": //【前端頁面(即系統)】查看權限(若為版主，會有所屬看板) -----鈞
             require_once("showAuthority.php");
             doShowAuthority($input);
+            break;
+        case "sendMailRegister": // 【非user者】註冊 ----- 轅
+            require_once("sendmailRegister.php"); 
             break;
         case "logIn": //登入 -----鈞
             require_once("logIn.php");
