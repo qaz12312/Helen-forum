@@ -55,122 +55,74 @@
     </style>
 </head>
 <body>
-<div class= "topMenu">
-    <!-- 中間 -->
-    <div class="brand-centered">
-        <div class="search-container">
-            <input type="text" placeholder="Search..." name="search">
-            <button type="submit"><span class="glyphicon glyphicon-search"></span></i></button>
+    <div class= "topMenu">
+        <!-- 中間 -->
+        <div class="brand-centered">
+            <div class="search-container">
+                <input type="text" placeholder="Search..." name="search" id= "searchInputText">
+                <button type="submit" id= "searchBtn"><span class="glyphicon glyphicon-search"></span></i></button>
+            </div>
         </div>
-    </div>
-    
-    <div class="navbar-collapse collapse">
-        <!-- 靠左 -->
-        <ul class="nav navbar-nav navbar-left">
-            <li>
-                <div id="menuToggle">
-                    <input type="checkbox" />
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <ul id="menu">
-                        <a href="#"><li>美食版</li></a>
-                        <a href="#"><li>廢文版</li></a>
-                        <a href="#"><li>企鵝版</li></a>
-                        <a href="#"><li>漫威版</li></a>
-                        <a href="#">
-                            <li><h3 class="glyphicon glyphicon-plus"> __EDIT__ </h3></li>
-                        </a>
+        
+        <div class="navbar-collapse collapse">
+            <!-- 靠左 -->
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <div id="menuToggle">
+                        <input type="checkbox" />
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <ul id= "menu">
+                        </ul>
+                    </div>
+                </li>
+                <li style="padding-left: 12px;">    
+                    <a href="../html/home.html">
+                        <img class= "barLogo" src="../imgs/logo.png" alt="Helen">
+                        Helen
+                    </a>
+                </li>
+            </ul>
+            <!-- 靠右 -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                   <button type="button" class="btn btn-primary" id="logInBtn">
+                        <span class="glyphicon glyphicon-log-in"></span> 登入
+                    </button>
+                    <button type="button" class="btn btn-warning" id="logOutBtn">
+                        <span class="glyphicon glyphicon-log-out"></span> 登出
+                    </button>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span id= "head">&emsp;</span>
+                        <span class= "glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul id= "userDD" class="dropdown-menu" role="menu">
                     </ul>
-                </div>
-            </li>
-            <li>&emsp;</li>
-            <li>    
-                <a href="#">
-                <!-- <img style="margin-right: 10px; padding: 0;" src="logo.png" alt="Helen"> -->
-                Helen
-                </a>
-            </li>
-        </ul>
-        <!-- 靠右 -->
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-               <button type="button" class="btn btn-primary" id="Log-inBtn">
-                    <span class="glyphicon glyphicon-log-in"></span> 登入
-                </button>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span id= "head">&emsp;</span>
-                    <span class= "glyphicon glyphicon-chevron-down"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li class= "glyphicon glyphicon-user">
-                        <span> 00757015</span></li>
-                    <li class="divider"></li>
-                    <li class= "glyphicon glyphicon-edit">
-                        <a href="../html/PersonalProfile.html"> 個人資料</a></li>
-                    <li class= "glyphicon glyphicon-pencil">
-                        <a href="../html/publishArticle.html"> 發佈新文章</a></li>
-                    <li class= "glyphicon glyphicon-star-empty">
-                        <a href="../html/CollectionCatalog.html"> 我的收藏</a></li>
-                    <li class= "glyphicon glyphicon-time">
-                        <a href="../html/PostingRecord.html"> 發文紀錄</a></li>
-                    <li class= "glyphicon glyphicon-th-list">
-                        <a href="../html/manageBoard.html"> 管理看版</a></li>
-                    <li class= "glyphicon glyphicon-king">
-                        <a href="../html/moderator.html"> 管理版主</a></li>
-                    <li class= "glyphicon glyphicon-alert">
-                        <a href="../html/report.html"> 檢舉區</a></li>
-                    <li class= "glyphicon glyphicon-bullhorn">
-                        <a href="../html/sendAlert.html"> 發送通知</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-  </div>
-  <div class="topnav">
-    <div class="dropdown">
-    <button class="dropbtn" onclick="myFunction(), cross(this)">
-    <div class="bar1"></div>
-    <div class="bar2"></div>
-    <div class="bar3"></div>
-    </button>
-    <div class="dropdown-content" id="myDropdown">	<!-- 各大版-->
-      <a href="#">Link 1</a>	
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
-    <a href="#">+</a>
-    </div>
-    </div>
-    <div class="login">
-    <button>登入</button>
-    </div>
-    <div class="imgcontainer">
-      <i class="fa fa-user-circle" aria-hidden="true"></i>
-    </div>
-    <div class="search-container">
-      <input type="text" placeholder="Search.." name="search">
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </div>
-    
-  </div>
-    <div class="topnav">
+                </li>
+            </ul>
+        </div>
+      </div>
+      <div class="topnav">
         <a class="active" href="#">熱門</a>
         <a href="#">最新</a>
     </div>
+      
 
 <div class= "tabContent">
     <h2>Home</h2>
-    
+    <!-- <button class='addPost' id='addPost'>+ 發文</button> -->
     <div class="contentArea">
         <h3> 熱門</h3>
+        
             <div class= "content">
                 <div class= "postContent">
     
             <table class="table table-borderless">
                 <tr>
-                    <td>
+                    <!-- <td>
                         <div class="card">
                             <div class="card-body row">
                                 <span class='col-md-2'>
@@ -187,7 +139,7 @@
                                 </span>
                             </div>
                         </div>
-                    </td>
+                    </td> -->
                 </tr>
 
             
@@ -199,8 +151,6 @@
     </div> 
 </div>
 </div>
-
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
 </script>
 <script src="../js/bar.js"></script>
 <script src="../js/home.js"></script>

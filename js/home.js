@@ -1,27 +1,32 @@
-var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 ,"blockName":"美食版", "hasLike": 1, "hasKeep": 0}, 
-                { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 ,"blockName":"詢問版", "hasLike": 1, "hasKeep": 0}];
-// var articles = [];
+// var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 ,"boardName":"美食版", "hasLike": 1, "hasKeep": 0}, 
+//                 { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 ,"boardName":"詢問版", "hasLike": 1, "hasKeep": 0}];
+ var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisSearching = sessionStorage.getItem( "Helen-search" );
 var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
+var thisSort = sessionStorage.getItem( "Helen-sort" );
 var keepMenu;
-$(document).ready(function(){
-    // barInitial();
-  initial();
-  
+
+$(document).ready(async function(){
+    barInitial();
+    // initial();
+    console.log("start")
+    await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
+
+    $( ".topnav a" ).click( function()
+    {
+        $( ".topnav a" ).removeClass( "active" );
+        $( this ).addClass( "active" );
+        sessionStorage.setItem( "Helen-sort", $(this).text() );
+        location.reload();
+    });
   $('.addPost').click(function(){
     console.log("addPost")
     cmd={};
     cmd["account"] = sessionStorage.getItem("Helen-userID");
     window.location.href = "../html/publishArticle.html";
   });
-  $( ".topnav a" ).click( function()
-  {
-      $( ".topnav a" ).removeClass( "active" );
-      $( this ).addClass( "active" );
-      sessionStorage.setItem( "Helen-sort", $(this).text() );
-      location.reload();
-  });
+  
   $( ".articleTitle" ).parent().click( function() 
   {
       let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
@@ -31,13 +36,24 @@ $(document).ready(function(){
 
   $( "button" ).has( ".glyphicon-heart" ).click( function()
     {
+        if( !thisAccount )
+        {
+            swal({
+                title: "錯誤",
+                type: "error",
+                text: "您尚未登入，不能按愛心哦",
+
+            }).then( ( result ) => {}, ( dismiss ) => {});
+
+            return;
+        }
         let chosen = $( this ).find( "span" );
         let title = $( this ).closest( "tr" ).find( ".articleTitle" ).text();
         let thisArticle = articles.find( (element) => element.title == title );
 
         let cmd = {};
         cmd[ "act" ] = "heart";
-        cmd[ "accout" ] = thisAccount;
+        cmd[ "account" ] = thisAccount;
         cmd[ "articleID" ] = thisArticle.articleID;
 
         $.post( "../index.php", cmd, function( dataDB )
@@ -59,19 +75,21 @@ $(document).ready(function(){
                 {
                     $( chosen ).removeClass( "text-danger" );
                     $( chosen ).addClass( "text-light" );
-                    $( this ).addClass( "btn-danger" );
+                    $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
+                    $( chosen ).closest( "button" ).addClass( "btn-danger" );
                     
                     thisArticle.like = parseInt(thisArticle.like) + 1;
-                    $( chosen ).eq(1).html( thisArticle.like );
+                    $( chosen ).eq(1).html( " " +thisArticle.like );
                 }
                 else
                 {
-                    $( this ).removeClass( "btn-danger" );
+                    $( chosen ).closest( "button" ).removeClass( "btn-danger" );
+                    $( chosen ).closest( "button" ).addClass( "btn-secondary" );
                     $( chosen ).addClass( "text-danger" );
                     $( chosen ).removeClass( "text-light" );
 
                     thisArticle.like = parseInt(thisArticle.like) - 1;
-                    $( chosen ).eq(1).html( thisArticle.like );
+                    $( chosen ).eq(1).html( " " +thisArticle.like );
                 }
             }
         });
@@ -96,13 +114,24 @@ $(document).ready(function(){
         // }
     });
 
-    $( "button" ).has( ".glyphicon-star" ).click( function()
+    $( "button" ).has( ".glyphicon-star" ).click( async function()
     {
+        if( !thisAccount )
+        {
+            swal({
+                title: "錯誤",
+                type: "error",
+                text: "您尚未登入，不能按收藏哦",
+
+            }).then( ( result ) => {}, ( dismiss ) => {});
+
+            return;
+        }
         let chosen = $( this ).find( "span" );
         let title = $( this ).closest( "tr" ).find( ".articleTitle" ).text();
         let thisArticle = articles.find( (element) => element.title == title );
-
-        if( keepMenu === undefined ) keepMenu = getKeepMenu();
+        // getKeepMenu();
+        if( keepMenu === undefined ) keepMenu = await new Promise( ( resolve, reject ) => { getKeepMenu( resolve, reject );});
         if( keepMenu.length == 0 )
         {
             swal({
@@ -111,76 +140,10 @@ $(document).ready(function(){
                 text: "沒有可用的收藏分類哦",
 
             }).then(( result ) => {}, ( dismiss ) => {} );
+            return;
         }
 
-        // if( $( chosen ).hasClass( "text-warning" ) )
-        // {
-        //     swal({
-        //         title: "選擇收藏目錄",
-        //         input: 'select',
-        //         inputOptions: keepMenu,
-        //         showCancelButton: true,
-        //         confirmButtonText: "確定",
-        //         cancelButtonText: "取消",
-
-        //     }).then((result) => {
-        //         //
-        //         let status = true;
-        //         //
-        //         if( status == false )
-        //         {
-        //             swal({
-        //                 title: "錯誤！",
-        //                 type: "error",
-        //                 text: "dataDB.errorCode"
-            
-        //             }).then(( result ) => {}, ( dismiss ) => {} );
-        //         }
-        //         else
-        //         {
-        //             swal({
-        //                 title: "收藏成功<br/><small>&lt;" + keepMenu[result] + "&gt;</small>",
-        //                 type: "success",
-        //                 showConfirmButton: false,
-        //                 timer: 1000,
-                
-        //             }).then(( result ) => {}, ( dismiss ) => {
-        //                 $( chosen ).removeClass( "text-warning" );
-        //                 $( chosen ).addClass( "text-light" );
-        //                 $( this ).addClass( "btn-warning" );
-
-        //                 thisArticle.keep = parseInt( thisArticle.keep ) + 1;
-        //                 $( chosen ).eq(1).html( thisArticle.keep );
-        //             });
-        //         }
-
-        //     }, ( dismiss ) => {} );
-        // }
-        // else
-        // {
-        //     //
-        //     let status = true;
-        //     //
-        //     if( status == false )
-        //     {
-        //         swal({
-        //             title: "錯誤！",
-        //             type: "error",
-        //             text: "dataDB.errorCode",
-        
-        //         }).then(( result ) => {}, ( dismiss ) => {} );
-        //     }
-        //     else
-        //     {
-        //         $( this ).removeClass( "btn-warning" );
-        //         $( chosen ).addClass( "text-warning" );
-        //         $( chosen ).removeClass( "text-light" );
-
-        //         thisArticle.keep = parseInt( thisArticle.keep ) - 1;
-        //         $( chosen ).eq(1).html( thisArticle.keep );
-        //     }
-        // }
-        
+       
         if( $( chosen ).hasClass( "text-warning" ) )
         {
             swal({
@@ -195,7 +158,7 @@ $(document).ready(function(){
 
                 let cmd = {};
                 cmd[ "act" ] = "keep";
-                cmd[ "accout" ] = thisAccount;
+                cmd[ "account" ] = thisAccount;
                 cmd[ "articleID" ] = thisArticle.articleID;
                 cmd[ "dirName" ] = keepMenu[result];
 
@@ -223,10 +186,11 @@ $(document).ready(function(){
                         }).then(( result ) => {}, ( dismiss ) => {
                             $( chosen ).removeClass( "text-warning" );
                             $( chosen ).addClass( "text-light" );
-                            $( this ).addClass( "btn-warning" );
+                            $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
+                            $( chosen ).closest( "button" ).addClass( "btn-warning" );
     
                             thisArticle.keep = parseInt( thisArticle.keep ) + 1;
-                            $( chosen ).eq(1).html( thisArticle.keep );
+                            $( chosen ).eq(1).html( " " + thisArticle.keep );
                         });
                     }
                 });
@@ -237,7 +201,7 @@ $(document).ready(function(){
         {
             let cmd = {};
             cmd[ "act" ] = "keep";
-            cmd[ "accout" ] = thisAccount;
+            cmd[ "account" ] = thisAccount;
             cmd[ "articleID" ] = thisArticle.articleID;
             cmd[ "dirName" ] = "";
 
@@ -256,12 +220,13 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    $( this ).removeClass( "btn-warning" );
+                    $( chosen ).closest( "button" ).removeClass( "btn-warning" );
+                    $( chosen ).closest( "button" ).addClass( "btn-secondary" );
                     $( chosen ).addClass( "text-warning" );
                     $( chosen ).removeClass( "text-light" );
 
                     thisArticle.keep = parseInt( thisArticle.keep ) - 1;
-                    $( chosen ).eq(1).html( thisArticle.keep );
+                    $( chosen ).eq(1).html(" " + thisArticle.keep );
                 }
             });
         }
@@ -290,38 +255,42 @@ $(document).ready(function(){
 
       return e.which !== 13;
   });
+ 
 });
 
-async function initial()
+async function initial(res, rej)
 {
-    console.log("inital")
+    console.log("inital");
     
     if( !thisAccount ) thisAccount = "";
 
     if( !thisSearching )
     {
         await new Promise( (res, rej) => { forNormal(res, rej) });
+        // forNormal();
     }
     else
     {
         thisSearching = JSON.parse( thisSearching );
         await new Promise( (res, rej) => { forSearching(res, rej) });
     }
-    console.log("inital")
-    checkPermission();
-    console.log("inital")
+    
+    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
+
+    res(0);
+
 }
-function forNormal(res, rej)
+function forNormal( res, rej )
 {
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
     cmd[ "account"] = thisAccount;
-    cmd[ "boardName" ] = thisBoardName;
-    cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
+    cmd[ "sort" ] = (thisSort == "熱門") ? "hot" : "time";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
+        console.log(dataDB)
 
         if( dataDB.status == false )
         {
@@ -343,15 +312,15 @@ function forNormal(res, rej)
         else
         {
         
-            articles = dataDB.data.articleList;
+            articles = dataDB.data;
 
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
             );
-            $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
+            $( ".tabContent h3" ).html( thisSort );
             $( ".topnav a" ).removeClass( "active" );
-            $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
+            $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
 
             for( let i in articles )
@@ -361,7 +330,7 @@ function forNormal(res, rej)
                                     "<div class='card'>" +
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'>" + 
-                                                "<h5 style='background-color: orange; display:inline-block'>"+articles[i].blockName+"</h5>"+
+                                                "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h5>"+
                                             "</span>" +
                                             "<span class='col-md-6'>" +
                                                 "<span class='articleTitle'>" + articles[i].title + "</span>" +
@@ -384,13 +353,13 @@ function forNormal(res, rej)
                 if( articles[i].hasKeep == 1 )
                 {
                     oneRow += "<button type='button' class='btn btn-warning'>" +
-                                    "<span class='glyphicon glyphicon-heart text-light'></span><span class='text-light heartaa'> " 
+                                    "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
                                         + articles[i].like + "</span></button>";
                 }
                 else
                 {
                     oneRow += "<button type='button' class='btn btn-secondary'>" +
-                                    "<span class='glyphicon glyphicon-heart text-warning'></span><span class='text-warning heartaa'> " 
+                                    "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning heartaa'> " 
                                         + articles[i].keep + "</span></button>";
                 }
                                                 
@@ -431,9 +400,9 @@ function forNormal(res, rej)
         // "<button class='addPost' id='addPost'>+ 發文</button>"
         
         // );
-        // $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
+        // $( ".tabContent h3" ).html( thisSort );
         // $( ".topnav a" ).removeClass( "active" );
-        // $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
+        // $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
         // $( ".tabContent tbody" ).empty();
 
 
@@ -444,7 +413,7 @@ function forNormal(res, rej)
                                 // "<div class='card'>" +
                                 //     "<div class='card-body row'>" +
                                 //         "<span class='col-md-2'>" + 
-                                //             "<h5 style='background-color: orange; display:inline-block'>"+articles[i].blockName+"</h5>"+
+                                //             "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"</h5>"+
                                 //         "</span>" +
                                 //         "<span class='col-md-6'>" +
                                 //             "<span class='articleTitle'>" + articles[i].title + "</span>" +
@@ -484,6 +453,7 @@ function forNormal(res, rej)
 
     
 }
+
 function forSearching( res, rej)
 {
     let cmd = {};
@@ -525,9 +495,9 @@ function forSearching( res, rej)
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
             );
-            $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
+            $( ".tabContent h3" ).html( thisSort );
             $( ".topnav a" ).removeClass( "active" );
-            $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
+            $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
 
             for( let i in articles )
@@ -537,7 +507,7 @@ function forSearching( res, rej)
                                 "<div class='card'>" +
                                     "<div class='card-body row'>" +
                                         "<span class='col-md-2'>" + 
-                                            "<h5 style='background-color: orange; display:inline-block'>"+articles[i].blockName+"</h5>"+
+                                            "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"</h5>"+
                                         "</span>" +
                                         "<span class='col-md-6'>" +
                                             "<span class='articleTitle'>" + articles[i].title + "</span>" +
@@ -560,13 +530,13 @@ function forSearching( res, rej)
                 if( articles[i].hasKeep == 1 )
                 {
                     oneRow += "<button type='button' class='btn btn-warning'>" +
-                                    "<span class='glyphicon glyphicon-heart text-light'></span><span class='text-light heartaa'> " 
+                                    "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
                                         + articles[i].like + "</span></button>";
                 }
                 else
                 {
                     oneRow += "<button type='button' class='btn btn-secondary'>" +
-                                    "<span class='glyphicon glyphicon-heart text-warning'></span><span class='text-warning heartaa'> " 
+                                    "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning heartaa'> " 
                                         + articles[i].keep + "</span></button>";
                 }
                                                 
@@ -581,26 +551,22 @@ function forSearching( res, rej)
     });
 }
 
-function checkPermission()
+function checkPermission(res, rej)
 {
     if( !thisAccount )
     {
-        $( ".addPost" ).remove();;
-        return ;
+        $( ".addPost" ).remove();
     }
     else{
         console.log("yes")
     }
-        return ;
-    
-
-
+    res(0);
 }
 
   
 
 
-function getKeepMenu()
+function getKeepMenu(resolve,reject)
 {
   // return ["最愛", "漫威", "小說"];
 
@@ -611,6 +577,7 @@ function getKeepMenu()
   $.post( "../index.php", cmd, function( dataDB )
   {
       dataDB = JSON.parse( dataDB );
+      console.log( dataDB );
 
       if( dataDB.status == false)
       {
@@ -620,11 +587,15 @@ function getKeepMenu()
               text: dataDB.errorCode
           }).then(( result ) => {}, ( dismiss ) => {} );
 
-          return [];
+          reject([]);
       }
-      else
+
+      let menu = [];
+      for( let i in dataDB.data )
       {
-          return dataDB.data;
+          menu.push( dataDB.data[i].DirName );
       }
+      resolve(menu);
   });
+  
 }
