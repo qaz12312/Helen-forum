@@ -22,7 +22,7 @@
         dataDB.errorCode = "Article doesn't exit."
         dataDB.data = ""
     */
-    function doShowAritcleComment($input){
+    function doShowArticleComment($input){
         global $conn;
         $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `ArticleID`='".$input['articleID']."'";
         $result=$conn->query($sql);
