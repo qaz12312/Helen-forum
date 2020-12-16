@@ -716,6 +716,8 @@ function forSearching()
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
+        sessionStorage.setItem( "Helen-search", "" );
+        thisSearching = "";
 
         if( dataDB.status == false )
         {
