@@ -136,6 +136,18 @@ $( document ).ready( async function()
 
     $( "button" ).has( ".glyphicon-heart" ).click( function()
     {
+        if( !thisAccount )
+        {
+            swal({
+                title: "錯誤",
+                type: "error",
+                text: "您尚未登入，不能按愛心哦",
+
+            }).then( ( result ) => {}, ( dismiss ) => {});
+
+            return;
+        }
+
         let chosen = $( this ).find( "span" );
         let title = $( this ).closest( "tr" ).find( ".articleTitle" ).text();
         let thisArticle = articles.find( (element) => element.title == title );
@@ -186,11 +198,23 @@ $( document ).ready( async function()
 
     $( "button" ).has( ".glyphicon-star" ).click( function()
     {
+        if( !thisAccount )
+        {
+            swal({
+                title: "錯誤",
+                type: "error",
+                text: "您尚未登入，不能按收藏哦",
+
+            }).then( ( result ) => {}, ( dismiss ) => {});
+
+            return;
+        }
+
         let chosen = $( this ).find( "span" );
         let title = $( this ).closest( "tr" ).find( ".articleTitle" ).text();
         let thisArticle = articles.find( (element) => element.title == title );
 
-        if( keepMenu === undefined ) keepMenu = getKeepMenu();
+        if( keepMenu === undefined ) keepMenu = await new Promise( (resolve, reject) => { getKeepMenu( resolve, reject ); });
         if( keepMenu.length == 0 )
         {
             swal({
@@ -586,6 +610,8 @@ function checkPermission( resolve, reject )
                 "<span class='glyphicon glyphicon-pushpin'></span>" +
             "</button>"
         );
+
+        resolve(0);
         return;
     }
 
@@ -629,7 +655,7 @@ function checkPermission( resolve, reject )
     });
 }
 
-function getKeepMenu()
+function getKeepMenu( resolve, reject )
 {
     // return ["最愛", "漫威", "小說"];
 
@@ -640,6 +666,7 @@ function getKeepMenu()
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
+        console.log( dataDB );
 
         if( dataDB.status == false)
         {
@@ -649,12 +676,15 @@ function getKeepMenu()
                 text: dataDB.errorCode
             }).then(( result ) => {}, ( dismiss ) => {} );
 
-            return [];
+            reject([]);
         }
-        else
+
+        let menu = [];
+        for( let i in dataDB.data )
         {
-            return dataDB.data;
+            menu.push( dataDB.data[i].DirName );
         }
+        resolve(menu);
     });
 }
 
