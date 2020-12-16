@@ -8,6 +8,7 @@ let dataDB= {};
 // test End
 
 $(document).ready( function(){
+    barInitial();
     initial();
 
     $(".tabContent tr").find("td:first-child").on( "click", function(){
