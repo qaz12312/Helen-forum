@@ -11,10 +11,10 @@ var topArticleID;
 var keepMenu;
 var isModerator;
 
-$( document ).ready( function()
+$( document ).ready( async function()
 {
     barInitial();
-    initial();
+    await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
 
     $( ".topnav a" ).click( function()
     {
@@ -36,13 +36,10 @@ $( document ).ready( function()
             animation: false
 
             }).then(( result ) => {
-                let topArticleName = $( ".card" ).has( ".glyphicon-pushpin.top" ).find( ".articleTitle" ).eq( 0 ).text();
-
                 let cmd = {};
                 cmd[ "act" ] = "editBoard";
                 cmd[ "account" ] = thisAccount;
-                cmd[ "oldBoardName" ] = thisBoardName;
-                cmd[ "newBoardName" ] = "";
+                cmd[ "boardName" ] = thisBoardName;
                 cmd[ "rule" ] = result;
 
                 $.post( "../index.php", cmd, function( dataDB )
@@ -78,22 +75,6 @@ $( document ).ready( function()
                     }
                 });
 
-                // swal({
-                //     title: "已成功修改版規",
-                //     type: "success",
-                //     showConfirmButton: false,
-                //     timer: 1000,
-        
-                // }).then(( result ) => {}, ( dismiss ) => {
-                //     if ( result ) 
-                //     {
-                //         $( "#rule" ).html( "版規：" + escapeHtml(result).split("\n").join("<br/>") );
-                //     }
-                //     else
-                //     {
-                //         $( "#rule" ).html( "版規： 無");
-                //     }
-                // });
             }, ( dismiss ) => {} );
     });
 
@@ -103,37 +84,6 @@ $( document ).ready( function()
         
         var tempTr = this.closest( "tr" );
         var tempTbody = this.closest( "tbody" );
-
-        // let status = true;
-        // if( status == false )
-        // {
-        //     swal({
-        //         title: "置頂失敗",
-        //         type: "error",
-        //         text: "dataDB.errorCode"
-
-        //     }).then(( result ) => {}, ( dismiss ) => {} );
-        // }
-        // else
-        // {
-        //     swal({
-        //         title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
-        //         type: "success",
-        //         showConfirmButton: false,
-        //         timer: 1000,
-    
-        //     }).then(( result ) => {}, ( dismiss ) =>
-        //     {
-        //         if( dismiss )
-        //         {
-        //             $( ".pushpinBtn" ).removeClass( "top" );
-        //             $( this ).addClass( "top" );
-
-        //             tempTr.remove();
-        //             tempTbody.prepend( tempTr );
-        //         }
-        //     });
-        // }
         
         let cmd = {};
         cmd[ "act" ] = "editTopArticle";
@@ -141,7 +91,7 @@ $( document ).ready( function()
         cmd[ "articleID" ] = articles.find( (element) => element.title == $( ".articleTitle", tempTr ).text() ).articleID;
         cmd[ "boardName" ] = thisBoardName;
 
-        $.post( "../index.php", cmd, function( dateDB )
+        $.post( "../index.php", cmd, function( dataDB )
         {
             dataDB = JSON.parse( dataDB );
 
@@ -167,7 +117,7 @@ $( document ).ready( function()
                     if( dismiss )
                     {
                         $( ".pushpinBtn" ).removeClass( "top" );
-                        $( this ).addClass( "top" );
+                        $( ".pushpinBtn" , tempTr ).addClass( "top" );
 
                         tempTr.remove();
                         tempTbody.prepend( tempTr );
@@ -192,7 +142,7 @@ $( document ).ready( function()
 
         let cmd = {};
         cmd[ "act" ] = "heart";
-        cmd[ "accout" ] = thisAccount;
+        cmd[ "account" ] = thisAccount;
         cmd[ "articleID" ] = thisArticle.articleID;
 
         $.post( "../index.php", cmd, function( dataDB )
@@ -214,19 +164,21 @@ $( document ).ready( function()
                 {
                     $( chosen ).removeClass( "text-danger" );
                     $( chosen ).addClass( "text-light" );
-                    $( this ).addClass( "btn-danger" );
+                    $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
+                    $( chosen ).closest( "button" ).addClass( "btn-danger" );
                     
                     thisArticle.like = parseInt(thisArticle.like) + 1;
-                    $( chosen ).eq(1).html( thisArticle.like );
+                    $( chosen ).eq(1).html( " " + thisArticle.like );
                 }
                 else
                 {
-                    $( this ).removeClass( "btn-danger" );
-                    $( chosen ).addClass( "text-danger" );
                     $( chosen ).removeClass( "text-light" );
+                    $( chosen ).addClass( "text-danger" );
+                    $( chosen ).closest( "button" ).removeClass( "btn-danger" );
+                    $( chosen ).closest( "button" ).addClass( "btn-secondary" );
 
                     thisArticle.like = parseInt(thisArticle.like) - 1;
-                    $( chosen ).eq(1).html( thisArticle.like );
+                    $( chosen ).eq(1).html( " " + thisArticle.like );
                 }
             }
         });
@@ -263,7 +215,7 @@ $( document ).ready( function()
 
                 let cmd = {};
                 cmd[ "act" ] = "keep";
-                cmd[ "accout" ] = thisAccount;
+                cmd[ "account" ] = thisAccount;
                 cmd[ "articleID" ] = thisArticle.articleID;
                 cmd[ "dirName" ] = keepMenu[result];
 
@@ -291,10 +243,11 @@ $( document ).ready( function()
                         }).then(( result ) => {}, ( dismiss ) => {
                             $( chosen ).removeClass( "text-warning" );
                             $( chosen ).addClass( "text-light" );
-                            $( this ).addClass( "btn-warning" );
+                            $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
+                            $( chosen ).closest( "button" ).addClass( "btn-warning" );
     
                             thisArticle.keep = parseInt( thisArticle.keep ) + 1;
-                            $( chosen ).eq(1).html( thisArticle.keep );
+                            $( chosen ).eq(1).html( " " + thisArticle.keep );
                         });
                     }
                 });
@@ -305,7 +258,7 @@ $( document ).ready( function()
         {
             let cmd = {};
             cmd[ "act" ] = "keep";
-            cmd[ "accout" ] = thisAccount;
+            cmd[ "account" ] = thisAccount;
             cmd[ "articleID" ] = thisArticle.articleID;
             cmd[ "dirName" ] = "";
 
@@ -324,12 +277,13 @@ $( document ).ready( function()
                 }
                 else
                 {
-                    $( this ).removeClass( "btn-warning" );
                     $( chosen ).addClass( "text-warning" );
                     $( chosen ).removeClass( "text-light" );
+                    $( chosen ).closest( "button" ).removeClass( "btn-warning" );
+                    $( chosen ).closest( "button" ).addClass( "btn-secondary" );
 
                     thisArticle.keep = parseInt( thisArticle.keep ) - 1;
-                    $( chosen ).eq(1).html( thisArticle.keep );
+                    $( chosen ).eq(1).html( " " + thisArticle.keep );
                 }
             });
         }
@@ -360,7 +314,7 @@ $( document ).ready( function()
     });
 });
 
-async function initial()
+async function initial( res, rej )
 {
     if( !thisAccount ) thisAccount = "";
     if( !thisBoardName ) thisBoardName = "";
@@ -375,7 +329,9 @@ async function initial()
         await new Promise( ( resolve, reject ) => forSearching( resolve, reject ) );
     }
 
-    checkPermission();
+    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
+
+    res(0);
 }
 
 function forNormal( resolve, reject )
@@ -473,8 +429,8 @@ function forNormal( resolve, reject )
                 {
                     topArticle = topArticle.title;
 
-                    let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
-                    let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
+                    let tempTr = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( "tr" );
+                    let tempTbody = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( ".tabContent tbody" );
 
                     tempTr.remove();
                     tempTbody.prepend( tempTr );
@@ -619,7 +575,7 @@ function forSearching( resolve, reject )
     });
 }
 
-function checkPermission()
+function checkPermission( resolve, reject )
 {
     isModerator = false;
 
@@ -631,36 +587,6 @@ function checkPermission()
             "</button>"
         );
         return;
-    }
-    
-    let status = true;
-
-    if( status == true )
-    {
-        let boardName = ["美食"];
-        
-        if( boardName.indexOf( thisBoardName ) != -1 )
-        {
-            $( ".tabContent h2" ).append( 
-                "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
-                    "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
-                "</button>"
-            );
-
-            $( ".tabContent tbody tr" ).find( "td span:first" ).append(
-                "<button type='button' class='btn pushpinBtn'>" +
-                    "<span class='glyphicon glyphicon-pushpin'></span>" +
-                "</button>"
-            );
-
-            $( ".tabContent tbody tr" ).first().find( "button" ).first().replaceWith( 
-                "<button type='button' class='btn pushpinBtn top'>" +
-                    "<span class='glyphicon glyphicon-pushpin'></span>" +
-                "</button>"
-            );
-            
-            isModerator = true;
-        }
     }
 
     let cmd = {};
@@ -675,7 +601,7 @@ function checkPermission()
         {
             let boardName = dataDB.data.boardName;
             
-            if( boardName.indexOf( thisBoardName ) != -1 )
+            if( boardName.find( (element) => element.BoardName == thisBoardName ) != undefined )
             {
                 $( ".tabContent h2" ).append( 
                     "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
@@ -698,6 +624,8 @@ function checkPermission()
                 isModerator = true;
             }
         }
+
+        resolve(0);
     });
 }
 
