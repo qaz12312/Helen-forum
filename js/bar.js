@@ -1,4 +1,4 @@
-let userPermission= 0; // 0(訪客) 1(一般使用者) 2(版主) 3(admin)
+var userPermission= 0; // 0(訪客) 1(一般使用者) 2(版主) 3(admin)
 
 function barInitial(){
     if(sessionStorage.getItem("Helen-sort")== null){

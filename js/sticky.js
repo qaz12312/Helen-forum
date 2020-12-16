@@ -5,6 +5,7 @@ var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
 var thisSearching = sessionStorage.getItem( "Helen-search" );
+var thisSort = sessionStorage.getItem( "Helen-sort" );
 var rule;
 var topArticleID;
 var keepMenu;
@@ -383,7 +384,7 @@ function forNormal( resolve, reject )
     cmd[ "act" ] = "sortInBoard";
     cmd[ "account"] = thisAccount;
     cmd[ "boardName" ] = thisBoardName;
-    cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
+    cmd[ "sort" ] = ( thisSort == "熱門") ? "hot" : "time";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
@@ -413,9 +414,9 @@ function forNormal( resolve, reject )
             articles = dataDB.data.articleList;
 
             $( ".tabContent h2" ).html( thisBoardName + "版" );
-            $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
+            $( ".tabContent h3" ).html( thisSort );
             $( ".topnav a" ).removeClass( "active" );
-            $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
+            $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
             $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
 
@@ -536,9 +537,9 @@ function forSearching( resolve, reject )
             articles = dataDB.data.articleList;
 
             $( ".tabContent h2" ).html( thisBoardName + "版" );
-            $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
+            $( ".tabContent h3" ).html( thisSort );
             $( ".topnav a" ).removeClass( "active" );
-            $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
+            $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
             $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
 
