@@ -14,7 +14,7 @@
             break;
         case "verifyForgetPwd": // 【user】忘記密碼的驗證 ----- 轅
             require_once("verifyPwd.php"); 
-            doVerifyPwd($input)
+            doVerifyPwd($input);
             break;
         case "showAuthority": //【前端頁面(即系統)】查看權限(若為版主，會有所屬看板) -----鈞
             require_once("showAuthority.php");
@@ -177,9 +177,6 @@
         case "removeTopArticle": //【版主】移除置頂文章 -----伶
             require_once("removeTopArticle.php");
             doRemoveTopArticle($input);
-            break;
-        case "sendMail": // 【系統】寄email -----轅
-            require_once("sendMail.php");
             break;
     }
 ?>
