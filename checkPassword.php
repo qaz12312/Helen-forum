@@ -18,7 +18,7 @@
 		dataDB.errorCode = "Could not find the user."
 		dataDB.data = "" 
 	*/
-    function doLogIn($input){
+    function doCheckPassword($input){
         global $conn;
         
 		// $token =$input['token'];

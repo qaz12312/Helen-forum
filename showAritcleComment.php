@@ -52,7 +52,7 @@
                     $keep = query($conn,$sql,$arr,"SELECT");
                     $keepCount = count($keep);
                     $arr[$i] = array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
-                }else
+            }else
                     $arr[$i] = array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5], "hasHeart" => "", "hasKeep" =>"");
             }
             $rtn = successCode($arr);
