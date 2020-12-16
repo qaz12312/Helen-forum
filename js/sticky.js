@@ -4,6 +4,7 @@
 var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
+var thisSearching = sessionStorage.getItem( "Helen-search" );
 var rule;
 var topArticleID;
 var keepMenu;
@@ -449,6 +450,21 @@ function initial()
     if( !thisAccount ) thisAccount = "";
     if( !thisBoardName ) thisBoardName = "";
 
+    if( !thisSearching )
+    {
+        forNormal();
+    }
+    else
+    {
+        thisSearching = JSON.parse( thisSearching );
+        forSearching();
+    }
+
+    checkPermission();
+}
+
+function forNormal()
+{
     let cmd = {};
     cmd[ "act" ] = "sortInBoard";
     cmd[ "account"] = thisAccount;
@@ -685,8 +701,135 @@ function initial()
     //         }
     //     }
     // }
-    
-    checkPermission();
+}
+
+function forSearching()
+{
+    let cmd = {};
+    cmd[ "act" ] = "searchBoard";
+    cmd[ "account"] = thisAccount;
+    cmd[ "searchBoard" ] = thisBoardName;
+    cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
+    cmd[ "content" ] = thisSearching.content;
+    cmd[ "hashtag" ] = thisSearching.hashtag;
+
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
+
+        if( dataDB.status == false )
+        {
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode,
+
+            }).then(( result ) => {}, ( dismiss ) =>
+            {
+                if ( dismiss )
+                {
+                    $( "body" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>500 Internal Server Error</h1>";
+                    $( "body" ).append( httpStatus );
+                }
+            });
+        }
+        else
+        {
+            rule = dataDB.data.rule;
+            topArticleID = dataDB.data.topArticleID;
+            articles = dataDB.data.articleList;
+
+            $( ".tabContent h2" ).html( 
+                thisBoardName + "版" + 
+                "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
+                    "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
+                "</button>" 
+            );
+            $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
+            $( ".topnav a" ).removeClass( "active" );
+            $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
+
+            $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
+
+            $( ".tabContent tbody" ).empty();
+
+            for( let i in articles )
+            {
+                let oneRow = "<tr>" +
+                                "<td>" +
+                                    "<div class='card'>" +
+                                        "<div class='card-body row'>" +
+                                            "<span class='col-md-2'>" + 
+                                                "<button type='button' class='btn pushpinBtn'>" +
+                                                    "<span class='glyphicon glyphicon-pushpin'></span>" +
+                                                "</button>" +
+                                            "</span>" +
+                                            "<span class='col-md-6'>" +
+                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
+                                            "</span>" +
+                                            "<span class='col-md-4'>";
+
+                if( articles[i].hasLike == 1 )
+                {
+                    oneRow += "<button type='button' class='btn btn-danger'>" +
+                                    "<span class='glyphicon glyphicon-heart text-light'></span><span class='text-light heartaa'> " 
+                                        + articles[i].like + "</span></button>";
+                }
+                else
+                {
+                    oneRow += "<button type='button' class='btn btn-secondary'>" +
+                                    "<span class='glyphicon glyphicon-heart text-danger'></span><span class='text-danger heartaa'> " 
+                                        + articles[i].like + "</span></button>";
+                }
+
+                if( articles[i].hasKeep == 1 )
+                {
+                    oneRow += "<button type='button' class='btn btn-warning'>" +
+                                    "<span class='glyphicon glyphicon-heart text-light'></span><span class='text-light heartaa'> " 
+                                        + articles[i].like + "</span></button>";
+                }
+                else
+                {
+                    oneRow += "<button type='button' class='btn btn-secondary'>" +
+                                    "<span class='glyphicon glyphicon-heart text-warning'></span><span class='text-warning heartaa'> " 
+                                        + articles[i].keep + "</span></button>";
+                }
+                                                
+                oneRow += "</span></div></div></td></tr>";
+
+                $( ".tabContent tbody" ).append( oneRow );
+            }
+
+            if( topArticleID != "" )
+            {
+                let topArticle = articles.find( (element) => element.articleID == topArticleID );
+
+                if( topArticle !== undefined )
+                {
+                    topArticle = topArticle.title;
+
+                    $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" ).find( ".pushpinBtn").addClass( "top" );
+
+                    let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
+                    let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
+
+                    tempTr.remove();
+                    tempTbody.prepend( tempTr );
+                }
+
+                if( articles.length == 0 )
+                {
+                    let isEmpty = "<tr>" +
+                                    "<td>" +
+                                        "文章列表為空";
+                                    "</td>" +
+                                "</tr>";
+                    $( ".tabContent tbody" ).append( isEmpty );
+                }
+            }
+        }
+    });
 }
 
 function checkPermission()
