@@ -457,9 +457,6 @@ function initial()
 
     $.post( "../index.php", cmd, function( dataDB )
     {
-        console.log( dataDB );
-        console.log( thisAccount );
-        console.log( thisBoardName );
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
@@ -688,7 +685,8 @@ function initial()
     //         }
     //     }
     // }
-    // checkPermission();
+    
+    checkPermission();
 }
 
 function checkPermission()
@@ -733,7 +731,6 @@ function checkPermission()
 
     $.post( "../index.php", cmd, function( dataDB )
     {
-        console.log( dataDB );
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
