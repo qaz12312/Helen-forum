@@ -9,7 +9,7 @@
 	dataDB = JSON.parse(data);
 	dataDB.status = true:
     dataDB.errorCode = ""
-    dataDB.data // 0(訪客)、1(一般使用者)、2(版主)、3(admin)
+    dataDB.data.permisson // 0(訪客)、1(一般使用者)、2(版主)、3(admin)
     如果是版主: dataDB.data.boardName[0] //旅遊
                 dataDB.data.boardName[1] //星座
                 .....
@@ -31,11 +31,11 @@
                     die($conn->error);
                 }
                 if($result2->num_rows <= 0){
-                    $rtn["data"] = 0;
+                    $rtn["data"]["permisson"] = 0;
                 }else if($result2[0]){
-                    $rtn["data"] = 3;
+                    $rtn["data"]["permisson"] = 3;
                 }else{
-                    $rtn["data"] = 1;
+                    $rtn["data"]["permisson"] = 1;
                 }
             }
             else{
