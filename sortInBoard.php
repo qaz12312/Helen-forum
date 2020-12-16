@@ -71,9 +71,8 @@
                 $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[1],"rule"=>$result2[0]);
                 $rtn = successCode($arr);
             }
-        } else {
+        } else 
             errorCode("Failed to sort in board.");
-        }
         echo json_encode($rtn);
     }
 ?>

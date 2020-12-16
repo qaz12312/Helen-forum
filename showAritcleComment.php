@@ -39,23 +39,24 @@
             foreach($result as $row){
             for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
-            $articleID=$row[3];
-            if(isset($input['account'])){
-                $userID=$input['account'];
-                    $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
-                    $arr = array($articleID, $input['account']);
-                    $heart = query($conn,$sql,$arr,"SELECT");
-                    $heartCount = count($heart);
+                $articleID=$row[3];
+                if(isset($input['account'])){
+                    $userID=$input['account'];
+                        $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
+                        $arr = array($articleID, $input['account']);
+                        $heart = query($conn,$sql,$arr,"SELECT");
+                        $heartCount = count($heart);
 
-                    $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?" ;
-                    $arr = array($articleID, $input['account']);
-                    $keep = query($conn,$sql,$arr,"SELECT");
-                    $keepCount = count($keep);
-                    $arr[$i] = array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
-            }else
-                    $arr[$i] = array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5], "hasHeart" => "", "hasKeep" =>"");
+                        $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?" ;
+                        $arr = array($articleID, $input['account']);
+                        $keep = query($conn,$sql,$arr,"SELECT");
+                        $keepCount = count($keep);
+                        $arr[$i] = array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
+                }else
+                        $arr[$i] = array("title"=>$row[0],"content"=>$row[1],"blockName"=>$row[2],"articleID"=>$row[3],"like"=>$row[4],"keep"=>$row[5], "hasHeart" => "", "hasKeep" =>"");
+                }
+                $rtn = successCode($arr);
             }
-            $rtn = successCode($arr);
         }
         echo json_encode($rtn);
     }

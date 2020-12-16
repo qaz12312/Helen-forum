@@ -61,9 +61,8 @@
                 }
                 $rtn = successCode($arr);
             }
-        }else{
+        }else
             errorCode("Failed to sort.");
-        }
         echo json_encode($rtn);
     }
 ?>
