@@ -84,6 +84,8 @@ $(document).ready( function(){
 });
 
 function initial(){
+    // if(!checkPermission()) return; // 未登入
+
     // no Front Text
     sessionStorage.setItem("Helen-keepDir", "尬意");
     // test End
@@ -138,11 +140,7 @@ function initial(){
 }
 
 function checkPermission(){
-    let perm = sessionStorage.getItem( "Helen-permission" );
-    console.log( "Permission:　"+ perm );
-
-    if( perm && perm.valueOf() >= 1 ) return true;
-
+    if(sessionStorage.getItem("Helen-account")) return true;
     else{
         swal({
             title: "載入頁面失敗",

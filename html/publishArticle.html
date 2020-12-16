@@ -75,8 +75,8 @@
         <!-- 中間 -->
         <div class="brand-centered">
             <div class="search-container">
-                <input type="text" placeholder="Search..." name="search">
-                <button type="submit"><span class="glyphicon glyphicon-search"></span></i></button>
+                <input type="text" placeholder="Search..." name="search" id= "searchInputText">
+                <button type="submit" id= "searchBtn"><span class="glyphicon glyphicon-search"></span></i></button>
             </div>
         </div>
         
@@ -90,29 +90,32 @@
                         <span></span>
                         <span></span>
                         <ul id= "menu">
-                            <a href="#"><li>美食版</li></a>
+                            <!-- <a href="#"><li>美食版</li></a>
                             <a href="#"><li>廢文版</li></a>
                             <a href="#"><li>企鵝版</li></a>
                             <a href="#"><li>漫威版</li></a>
-                            <a href="#">
+                            <a href="../html/manageBoard.html">
                                 <li><h3 class="glyphicon glyphicon-plus"> A D D</h3></li>
-                            </a>
+                            </a> -->
                         </ul>
                     </div>
                 </li>
-                <li>&emsp;</li>
-                <li>    
-                    <a href="#">
-                    <!-- <img style="margin-right: 10px; padding: 0;" src="logo.png" alt="Helen"> -->
-                    Helen
+                <!-- <li>&emsp;</li> -->
+                <li style="padding-left: 12px;">    
+                    <a href="../html/home.html">
+                        <img class= "barLogo" src="../imgs/logo.png" alt="Helen">
+                        Helen
                     </a>
                 </li>
             </ul>
             <!-- 靠右 -->
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                   <button type="button" class="btn btn-primary" id="Log-inBtn">
+                   <button type="button" class="btn btn-primary" id="logInBtn">
                         <span class="glyphicon glyphicon-log-in"></span> 登入
+                    </button>
+                    <button type="button" class="btn btn-warning" id="logOutBtn">
+                        <span class="glyphicon glyphicon-log-out"></span> 登出
                     </button>
                 </li>
                 <li class="dropdown">
@@ -120,26 +123,26 @@
                         <span id= "head">&emsp;</span>
                         <span class= "glyphicon glyphicon-chevron-down"></span>
                     </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li class= "glyphicon glyphicon-user">
-                            <span> 00757015</span></li>
+                    <ul id= "userDD" class="dropdown-menu" role="menu">
+                        <!-- <li class= "glyphicon glyphicon-user">
+                            <span> Cola</span></li>
                         <li class="divider"></li>
                         <li class= "glyphicon glyphicon-edit">
-                            <a href="../html/Person.html"> 個人資料</a></li>
+                            <a href="../html/PersonalProfile.html"> 個人資料</a></li>
                         <li class= "glyphicon glyphicon-pencil">
                             <a href="../html/publishArticle.html"> 發佈新文章</a></li>
                         <li class= "glyphicon glyphicon-star-empty">
-                            <a href="../html/Person.html"> 我的收藏</a></li>
+                            <a href="../html/CollectionCatalog.html"> 我的收藏</a></li>
                         <li class= "glyphicon glyphicon-time">
-                            <a href="../html/Person.html"> 發文紀錄</a></li>
+                            <a href="../html/PostingRecord.html"> 發文紀錄</a></li>
+                        <li class= "glyphicon glyphicon-alert">
+                            <a href="../html/report.html"> 檢舉區</a></li>
                         <li class= "glyphicon glyphicon-th-list">
                             <a href="../html/manageBoard.html"> 管理看版</a></li>
                         <li class= "glyphicon glyphicon-king">
                             <a href="../html/moderator.html"> 管理版主</a></li>
-                        <li class= "glyphicon glyphicon-alert">
-                            <a href="../html/report.html"> 檢舉區</a></li>
                         <li class= "glyphicon glyphicon-bullhorn">
-                            <a href="../html/sendAlert.html"> 發送通知</a></li>
+                            <a href="../html/sendAlert.html"> 發送通知</a></li> -->
                     </ul>
                 </li>
             </ul>

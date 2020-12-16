@@ -54,6 +54,13 @@
   padding: 10px;
 }
 
+.barLogo{
+  /* width: 25px; */
+  height: 25px;
+  /* margin-right: 10px; */
+  padding: 0px;
+}
+
 #head{
   font-size: 40px;
   padding: 3px 8px 10px 8px;
