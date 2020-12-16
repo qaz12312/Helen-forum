@@ -255,6 +255,15 @@ $( document ).ready( function()
         let thisArticle = articles.find( (element) => element.title == title );
 
         if( keepMenu === undefined ) keepMenu = getKeepMenu();
+        if( keepMenu.length == 0 )
+        {
+            swal({
+                title: "錯誤",
+                type: "error",
+                text: "沒有可用的收藏分類哦",
+
+            }).then(( result ) => {}, ( dismiss ) => {} );
+        }
 
         // if( $( chosen ).hasClass( "text-warning" ) )
         // {
@@ -448,6 +457,9 @@ function initial()
 
     $.post( "../index.php", cmd, function( dataDB )
     {
+        console.log( dataDB );
+        console.log( thisAccount );
+        console.log( thisBoardName );
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
@@ -676,7 +688,7 @@ function initial()
     //         }
     //     }
     // }
-    checkPermission();
+    // checkPermission();
 }
 
 function checkPermission()
@@ -721,6 +733,7 @@ function checkPermission()
 
     $.post( "../index.php", cmd, function( dataDB )
     {
+        console.log( dataDB );
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
@@ -747,7 +760,31 @@ function checkPermission()
 
 function getKeepMenu()
 {
-    return ["最愛", "漫威", "小說"];
+    // return ["最愛", "漫威", "小說"];
+
+    let cmd = {};
+    cmd[ "act" ] = "showDirList";
+    cmd[ "account" ] = thisAccount;
+
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
+
+        if( dataDB.status == false)
+        {
+            swal({
+                title: "取得收藏資分類失敗",
+                type: "error",
+                text: dataDB.errorCode
+            }).then(( result ) => {}, ( dismiss ) => {} );
+
+            return [];
+        }
+        else
+        {
+            return dataDB.data;
+        }
+    });
 }
 
 function escapeHtml(str)
