@@ -406,13 +406,13 @@ function forNormal( resolve, reject )
                 if( articles[i].hasKeep == 1 )
                 {
                     oneRow += "<button type='button' class='btn btn-warning'>" +
-                                    "<span class='glyphicon glyphicon-heart text-light'></span><span class='text-light heartaa'> " 
+                                    "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
                                         + articles[i].like + "</span></button>";
                 }
                 else
                 {
                     oneRow += "<button type='button' class='btn btn-secondary'>" +
-                                    "<span class='glyphicon glyphicon-heart text-warning'></span><span class='text-warning heartaa'> " 
+                                    "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning heartaa'> " 
                                         + articles[i].keep + "</span></button>";
                 }
                                                 
@@ -529,13 +529,13 @@ function forSearching( resolve, reject )
                 if( articles[i].hasKeep == 1 )
                 {
                     oneRow += "<button type='button' class='btn btn-warning'>" +
-                                    "<span class='glyphicon glyphicon-heart text-light'></span><span class='text-light heartaa'> " 
+                                    "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
                                         + articles[i].like + "</span></button>";
                 }
                 else
                 {
                     oneRow += "<button type='button' class='btn btn-secondary'>" +
-                                    "<span class='glyphicon glyphicon-heart text-warning'></span><span class='text-warning heartaa'> " 
+                                    "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning heartaa'> " 
                                         + articles[i].keep + "</span></button>";
                 }
                                                 
