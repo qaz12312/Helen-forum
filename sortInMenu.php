@@ -19,7 +19,10 @@
             dataDB.data[i].like //第i筆文章的總愛心數
             dataDB.data[i].keep//第i筆文章的總收藏數
             dataDB.data[i].time //第i筆文章的時間
+            dataDB.data[i].hasLike//是否按過愛心
+            dataDB.data[i].hasKeep //是否收藏
         )
+
     否則
         dataDB.errorCode = "Without any article now." / "Failed to sort."
         dataDB.data = ""
@@ -37,10 +40,9 @@
             if ($resultCount <= 0) {
                 errorCode("Without any article now.");
             } else {
-                $arr = array();
-                foreach($result as $row){
-                // for($i=0;$i<$resultCount;$i++){
-                //     $row = $result[$i];
+                $articleList = array();
+                for($i=0;$i<$resultCount;$i++){
+                    $row = $result[$i];
                     $articleID = $row['ArticleID'];
                     if(isset($input['account'])){
                         $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
@@ -53,9 +55,9 @@
                         $keep = query($conn,$sql,$arr,"SELECT");
                         $keepCount = count($keep);
 
-                        $arr[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
+                        $articleList[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                     }else
-                        $arr[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasHeart" => "", "hasKeep" =>"");
+                        $articleList[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasLike" => "", "hasKeep" =>"");
                 }
                 $rtn = successCode($arr);
             }

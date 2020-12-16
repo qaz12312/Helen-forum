@@ -19,6 +19,8 @@
             dataDB.data[i].like //第i筆文章的總愛心數
             dataDB.data[i].keep//第i筆文章的總收藏數
             dataDB.data[i].time//第i筆文章的時間
+             dataDB.data[i].hasLike//是否按過愛心
+            dataDB.data[i].hasKeep //是否收藏
         )
         dataDB.data.topArticleID //置頂文章
         dataDB.data.rule // 板規
@@ -48,8 +50,8 @@
             } else {
                 $articleList = array();
                 foreach($result as $row){
-                // for($i=0;$i<$resultCount;$i++){
-                //     $row = $result[$i];
+                for($i=0;$i<$resultCount;$i++){
+                    $row = $result[$i];
                     $articleID = $row['ArticleID'];
                     if(isset($input['account'])){
                         $sql="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
@@ -62,10 +64,10 @@
                         $keep = query($conn,$sql,$arr,"SELECT");
                         $keepCount = count($keep);
     
-                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID , "like" => $row[2], "keep" => $row[3], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
+                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID , "like" => $row[2], "keep" => $row[3], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                     }
                     else{
-                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID , "like" => $row[2], "keep" => $row[3], "hasHeart" => "", "hasKeep" =>"");
+                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID , "like" => $row[2], "keep" => $row[3], "hasLike" => "", "hasKeep" =>"");
                     }
                 }
                 $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[1],"rule"=>$result2[0]);
