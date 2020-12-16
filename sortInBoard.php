@@ -65,10 +65,8 @@
                         $keepCount = count($keep);
     
                         $articleList[$i] = array("title" => $row[0], "articleID" => $articleID , "like" => $row[2], "keep" => $row[3], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
-                    }
-                    else{
+                    } else
                         $articleList[$i] = array("title" => $row[0], "articleID" => $articleID , "like" => $row[2], "keep" => $row[3], "hasLike" => "", "hasKeep" =>"");
-                    }
                 }
                 $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[1],"rule"=>$result2[0]);
                 $rtn = successCode($arr);

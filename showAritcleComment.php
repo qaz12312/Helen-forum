@@ -37,12 +37,11 @@
         else{
             $arr=array();
             foreach($result as $row){
-            // for($i=0;$i<$resultCount;$i++){
-            //     $row = $result[$i];
+            for($i=0;$i<$resultCount;$i++){
+                $row = $result[$i];
             $articleID=$row[3];
             if(isset($input['account'])){
                 $userID=$input['account'];
-                if(isset($input['account'])){
                     $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
                     $arr = array($articleID, $input['account']);
                     $heart = query($conn,$sql,$arr,"SELECT");
