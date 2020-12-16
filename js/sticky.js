@@ -136,7 +136,7 @@ $( document ).ready( function()
         // }
         
         let cmd = {};
-        cmd[ "act" ] = "TopArticleChange";
+        cmd[ "act" ] = "editTopArticle";
         cmd[ "account" ] = thisAccount;
         cmd[ "articleID" ] = articles.find( (element) => element.title == $( ".articleTitle", tempTr ).text() ).articleID;
         cmd[ "boardName" ] = thisBoardName;
