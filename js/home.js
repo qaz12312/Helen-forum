@@ -1,16 +1,16 @@
-// var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 ,"list":"美食版"}, 
-//                 { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 ,"list":"詢問版"}];
-var articles = [];
+var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 ,"blockName":"美食版", "hasLike": 1, "hasKeep": 0}, 
+                { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 ,"blockName":"詢問版", "hasLike": 1, "hasKeep": 0}];
+// var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisSearching = sessionStorage.getItem( "Helen-search" );
 var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
 var keepMenu;
-var isModerator;
 $(document).ready(function(){
+    // barInitial();
   initial();
   
   $('.addPost').click(function(){
-    if( !isModerator ) return;
+    console.log("addPost")
     cmd={};
     cmd["account"] = sessionStorage.getItem("Helen-userID");
     window.location.href = "../html/publishArticle.html";
@@ -292,25 +292,26 @@ $(document).ready(function(){
   });
 });
 
-function initial()
+async function initial()
 {
+    console.log("inital")
     
     if( !thisAccount ) thisAccount = "";
-    if( !thisBoardName ) thisBoardName = "";
 
     if( !thisSearching )
     {
-        forNormal();
+        await new Promise( (res, rej) => { forNormal(res, rej) });
     }
     else
     {
         thisSearching = JSON.parse( thisSearching );
-        forSearching();
+        await new Promise( (res, rej) => { forSearching(res, rej) });
     }
- 
-  checkPermission();
+    console.log("inital")
+    checkPermission();
+    console.log("inital")
 }
-function forNormal()
+function forNormal(res, rej)
 {
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
@@ -341,8 +342,7 @@ function forNormal()
         }
         else
         {
-            rule = dataDB.data.rule;
-            topArticleID = dataDB.data.topArticleID;
+        
             articles = dataDB.data.articleList;
 
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
@@ -361,7 +361,7 @@ function forNormal()
                                     "<div class='card'>" +
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'>" + 
-                                                "<h5 style='background-color: orange; display:inline-block'>"+articles[i].list+"</h5>"+
+                                                "<h5 style='background-color: orange; display:inline-block'>"+articles[i].blockName+"</h5>"+
                                             "</span>" +
                                             "<span class='col-md-6'>" +
                                                 "<span class='articleTitle'>" + articles[i].title + "</span>" +
@@ -399,34 +399,10 @@ function forNormal()
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            if( topArticleID != "" )
-            {
-                let topArticle = articles.find( (element) => element.articleID == topArticleID );
 
-                if( topArticle !== undefined )
-                {
-                    topArticle = topArticle.title;
-
-                    $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" ).find( ".pushpinBtn").addClass( "top" );
-
-                    let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
-                    let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
-
-                    tempTr.remove();
-                    tempTbody.prepend( tempTr );
-                }
-
-                if( articles.length == 0 )
-                {
-                    let isEmpty = "<tr>" +
-                                    "<td>" +
-                                        "文章列表為空";
-                                    "</td>" +
-                                "</tr>";
-                    $( ".tabContent tbody" ).append( isEmpty );
-                }
-            }
         }
+
+        res(0);
     });
 
     // let status = true;
@@ -449,22 +425,17 @@ function forNormal()
     // }
     // else
     // {
-    //     rule = "dataDB.data.rule";
-    //     topArticleID = "123";
 
-    //     $( ".tabContent h2" ).html( 
-    //         thisBoardName + "版" + 
-    //             "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
-    //                 "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
-    //             "</button>" 
-    //     );
-    //     $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
-    //     $( ".topnav a" ).removeClass( "active" );
-    //     $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
 
-    //     $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
+        // $( ".tabContent h2" ).html(  "Home"  +"</br>"+
+        // "<button class='addPost' id='addPost'>+ 發文</button>"
+        
+        // );
+        // $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
+        // $( ".topnav a" ).removeClass( "active" );
+        // $( ".topnav a:contains(" + sessionStorage.getItem( "Helen-sort" ) + ")" ).addClass( "active" );
+        // $( ".tabContent tbody" ).empty();
 
-    //     $( ".tabContent tbody" ).empty();
 
     //     for( let i in articles )
     //     {
@@ -473,7 +444,7 @@ function forNormal()
                                 // "<div class='card'>" +
                                 //     "<div class='card-body row'>" +
                                 //         "<span class='col-md-2'>" + 
-                                //             "<h5 style='background-color: orange; display:inline-block'>"+articles[i].list+"</h5>"+
+                                //             "<h5 style='background-color: orange; display:inline-block'>"+articles[i].blockName+"</h5>"+
                                 //         "</span>" +
                                 //         "<span class='col-md-6'>" +
                                 //             "<span class='articleTitle'>" + articles[i].title + "</span>" +
@@ -511,36 +482,9 @@ function forNormal()
     //         $( ".tabContent tbody" ).append( oneRow );
     //     }
 
-    //     if( topArticleID != "" )
-    //     {
-    //         let topArticle = articles.find( (element) => element.articleID == topArticleID );
-
-    //         if( topArticle !== undefined )
-    //         {
-    //             topArticle = topArticle.title;
-
-    //             $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" ).find( ".pushpinBtn").addClass( "top" );
-
-    //             let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
-    //             let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
-
-    //             tempTr.remove();
-    //             tempTbody.prepend( tempTr );
-    //         }
-
-    //         if( articles.length == 0 )
-    //         {
-    //             let isEmpty = "<tr>" +
-    //                             "<td>" +
-    //                                 "文章列表為空";
-    //                             "</td>" +
-    //                         "</tr>";
-    //             $( ".tabContent tbody" ).append( isEmpty );
-    //         }
-    //     }
-    // }
+    
 }
-function forSearching()
+function forSearching( res, rej)
 {
     let cmd = {};
     cmd[ "act" ] = "searchBoard";
@@ -575,8 +519,6 @@ function forSearching()
         }
         else
         {
-            rule = dataDB.data.rule;
-            topArticleID = dataDB.data.topArticleID;
             articles = dataDB.data.articleList;
 
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
@@ -595,7 +537,7 @@ function forSearching()
                                 "<div class='card'>" +
                                     "<div class='card-body row'>" +
                                         "<span class='col-md-2'>" + 
-                                            "<h5 style='background-color: orange; display:inline-block'>"+articles[i].list+"</h5>"+
+                                            "<h5 style='background-color: orange; display:inline-block'>"+articles[i].blockName+"</h5>"+
                                         "</span>" +
                                         "<span class='col-md-6'>" +
                                             "<span class='articleTitle'>" + articles[i].title + "</span>" +
@@ -633,103 +575,25 @@ function forSearching()
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            if( topArticleID != "" )
-            {
-                let topArticle = articles.find( (element) => element.articleID == topArticleID );
 
-                if( topArticle !== undefined )
-                {
-                    topArticle = topArticle.title;
-
-                    $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" ).find( ".pushpinBtn").addClass( "top" );
-
-                    let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
-                    let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
-
-                    tempTr.remove();
-                    tempTbody.prepend( tempTr );
-                }
-
-                if( articles.length == 0 )
-                {
-                    let isEmpty = "<tr>" +
-                                    "<td>" +
-                                        "文章列表為空";
-                                    "</td>" +
-                                "</tr>";
-                    $( ".tabContent tbody" ).append( isEmpty );
-                }
-            }
         }
+        res(0);
     });
 }
 
 function checkPermission()
 {
-    isModerator = false;
     if( !thisAccount )
     {
-        $( ".addPost" ).css( "visibility", "hidden" );
-        return;
+        $( ".addPost" ).remove();;
+        return ;
     }
-
-    // let status = true;
-
-    // if( status == false )
-    // {
-    //     $( ".addPost" ).css( "visibility", "hidden" );
-    // }
-    // else
-    // {
-    //     let permission = "2";
-    //     let color = "";
-    //     let nickname = "";
-    //     let boardName = ["美食"];
-
-    //     if( boardName.indexOf( thisBoardName ) == -1 )
-    //     {
-    //         $( ".addPost" ).css( "visibility", "hidden" );
-    //     }
-    //     else
-    //     {
-    //         isModerator = true;
-    //     }
-    // }
-
-    let cmd = {};
-    cmd[ "act" ] = "showAuthority";
-    cmd[ "account" ] = thisAccount;
-
-    $.post( "../index.php", cmd, function( dataDB )
-    {
-        dataDB = JSON.parse( dataDB );
-
-        if( dataDB.status == false )
-        {
-            $( ".addPost" ).css( "visibility", "hidden" );
-        }
-        else
-        {
-            let boardName = dataDB.data.boardName;
-            
-            if( boardName.indexOf( thisBoardName ) == -1 )
-            {
-                $( ".addPost" ).css( "visibility", "hidden" );
-            }
-            else
-            {
-                isModerator = true;
-            }
-        }
-    });
-  // if( thisAccount == null )
-    // {
-        
-    //     $( ".tabContent button" ).has( ".addPost" ).css( "visibility", "hidden" );
-
-    //     return;
-    // }
+    else{
+        console.log("yes")
+    }
+        return ;
     
+
 
 }
 
