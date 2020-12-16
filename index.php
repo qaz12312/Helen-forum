@@ -75,8 +75,8 @@
             require_once("./PHPs/sortInMenu.php");
             doSortMenu($input);
             break;
-        case "showAritcleComment": //【訪客】檢視文章&留言 -----劉
-            require_once("./PHPs/showAritcleComment.php");
+        case "showArticleComment": //【訪客】檢視文章&留言 -----劉
+            require_once("./PHPs/showArticleComment.php");
             doShowAritcleComment($input);
             break;
         case "heart": //【user】點擊愛心&取消 -----轅
