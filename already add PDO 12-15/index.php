@@ -30,6 +30,10 @@
         case "editPersonalInfo": // 【user】修改個人資料(密碼/暱稱/顏色) -----鈞
             require_once("editPersonalInfo.php");
             break;
+        case "checkPassword": //【user】修改密碼前的確認密碼
+            require_once("checkPassword.php");
+            doCheckPassword($input);
+            break;
         case "showBoardList": //【訪客】主頁的顯示所有board -----劉
             require_once("showBoardList.php");
             doBoardList($input);
