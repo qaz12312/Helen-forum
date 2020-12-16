@@ -12,6 +12,7 @@ var isModerator;
 
 $( document ).ready( function()
 {
+    barInitial();
     initial();
 
     $( ".topnav a" ).click( function()
