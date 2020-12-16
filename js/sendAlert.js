@@ -1,15 +1,57 @@
 $(document).ready(function () {
         
     initial();
-    let cmd={}
+    
     $("#SentAlert-inBtn").click(function () {
-        var value = $('#who').val();
+        
         console.log(value)
        
 
         var comment = $.trim($("#comment").val());
             if(comment != ""){
+                $.post( "../index.php", cmd, function( dataDB )
+    {
+            console.log( dataDB );
+            dataDB = JSON.parse( dataDB );
+            
+            if( dataDB.status == false )
+            {
+                swal({
+                    title: "載入頁面失敗",
+                    type: "error",
+                    text: dataDB.errorCode
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        $( "body" ).empty();
+                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                        $( "body" ).append( httpStatus );
+                    }
+                });
+            }
+        else
+        {
+            permission = dataDB.data.permission;
+            if( permission != 2 )
+            {
+                swal({
+                    title: "載入頁面失敗",
+                    type: "error",
+                    text: "您沒有權限瀏覽此頁面"
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        $( "body" ).empty();
+                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                        $( "body" ).append( httpStatus );
+                    }
+                });
                 
+            }
+            
+        }
+        
+    });
                 
                 console.log( "send" );
                     let status = true;
@@ -150,11 +192,7 @@ function initial(){
         $(".tabContent").find("h2").text("Helen－發送通知");
         $(".tabContent").find("p").text("This is Admin only.");
     }
-    if(sessionStorage.getItem("Helen-act")== "sendNotification"){
-        $(".tabContent").find("h2").text("Helen－發送通知");
-        $(".tabContent").find("p").text("This is Admin only.");
-        
-    }
+    
 }
 
 function checkPermission()

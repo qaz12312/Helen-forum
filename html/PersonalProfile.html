@@ -151,26 +151,7 @@
             <!--<img src="imgs/logo.jpg" width="150px" line-height="100px" />-->
             <div type="text" id="color" name="color" >
               <script>
-              $('#color').colpick({
-               layout:'hex',
-               submit:0,
-               colorScheme:'dark',
-               onChange:function(hsb,hex,rgb,el,bySetColor){
-                let cmd = {};
-                cmd["act"] = "modifyPersonalInfo";
-                cmd[ "account" ] =sessionStorage.getItem("UserID");
-                cmd["option"] = "color";
-                //cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
-                cmd["new"] = hex;
-                console.log(hex)
-                $(el).css('border-color','#'+hex);
-                //if(!bySetColor) $(el).val(hex);
-               }
-              }).keyup(function(){
-               $(this).colpickSetColor(this.value);
-               
-                
-              });
+              
               </script>
             
           </div>
@@ -194,14 +175,16 @@
           <div class="InputWrap">
             <label for="password">密碼:</label>
             <div row>
-              <input type="text" id="password"  disabled=false>
+              <input type="password" id="password"  disabled=false>
               <input type="button" value="Edit" class="PasswordEditBtn" id="editPw">
               <span id="pwMsg" disabled=false></span>
             </div>
           </div>
           <div class="InputWrap2" id="InputWrap2" style="display: none;">
             <div row>
-              <input type="text" id="validatePW"  >
+              <input type="text" id="validatePW" placeholder="請輸入新密碼" >
+              <span id="checkPw" disabled=false></span>
+              <input type="text" id="validatePW" placeholder="確認密碼" >
               <span id="checkPw" disabled=false></span>
             </div>
           </div>

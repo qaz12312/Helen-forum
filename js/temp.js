@@ -72,15 +72,15 @@ $( document ).ready( function()
         document.getElementById('password').disabled = !document.getElementById('password').disabled;
         
         document.getElementById('editPw').disabled=true
-        document.getElementById("editPw").value = '驗證密碼' 
-        document.getElementById("password").setAttribute("placeholder","請輸入原始密碼");
+        document.getElementById("editPw").value = 'save' 
+        document.getElementById("password").setAttribute("placeholder",value);
+        document.getElementById('InputWrap2').style.display='block'
         
     }
     else{
         let cmd = {};
-            cmd["act"] = "verify";
-            cmd[ "account" ] =sessionStorage.getItem("UserID");
-            //cmd["token"] = "userId-Time";(email裡的)
+            cmd["act"] = "modifyPersonalInfo";
+            
         // $.post("./index.php", cmd, function (data) {
             //     dataDB = JSON.parse(data);
             //     if (dataDB.statue == false) {
@@ -95,29 +95,29 @@ $( document ).ready( function()
             //             confirmButtonColor: '#eda2b6'
             //         })
             //     }
-            //     else {//密碼正確
+            //     else {//登入成功
                     
             swal({
                 title: 'Congratulation!!',
                 type: 'success',
-                text: '驗證成功',
+                text: '更改password成功',
                 showConfirmButton: false,
                 customClass: 'animated rotateOutUpLeft',
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#eda2b6',
                 timer: 2000
-            }).then(
-                function () { },
-                function (dismiss) {
-                    document.getElementById('password').disabled = !document.getElementById('password').disabled;
-                    document.getElementById("editPw").value = 'Edit'
-                    $("#checkPw").html("");
-                    $("#pwMsg").html("");
-                    document.getElementById('InputWrap2').style.display='block'
-                }
-            )
-            
-            
+            })
+            cmd[ "account" ] =sessionStorage.getItem("UserID");
+            cmd["option"] = "password" ;
+            //cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
+            cmd["new"] = document.getElementById("password").value;
+            console.log(document.getElementById("password").value)
+            document.getElementById('password').disabled = !document.getElementById('password').disabled;
+            document.getElementById('InputWrap2').style.display='none'
+
+            document.getElementById("editPw").value = 'Edit'
+            $("#checkPw").html("");
+            $("#pwMsg").html("");
     //     }
     // });
         
@@ -177,7 +177,7 @@ $( document ).ready( function()
         if(passwd()){
 
             $("#pwMsg").html("<p class='text-success'>Validated</p>");
-            document.getElementById('editPw').disabled=false
+            
         }
         else{
 
@@ -185,18 +185,30 @@ $( document ).ready( function()
         }
         
     });
-    
+    $("#validatePW").keyup(function(){
+        if(con_passwrd() && passwd()){
+
+            $("#checkPw").html("<p class='text-success'>Validated</p>");
+            document.getElementById('editPw').disabled=false
+
+        }
+        else{
+
+        $("#checkPw").html("<p class='text-danger'>Password are not Matching</p>");
+        }
+        
+    });
 });
 
-// function con_passwrd(){
-//     var conpass = $('#validatePW').val();
-//     var passwrdstr = $('#password').val();
-//     if(passwrdstr != conpass){
-//         return false;
-//     }else{
-//         return true;
-//     } 
-// }
+function con_passwrd(){
+    var conpass = $('#validatePW').val();
+    var passwrdstr = $('#password').val();
+    if(passwrdstr != conpass){
+        return false;
+    }else{
+        return true;
+    } 
+}
 function passwd(){
     var passwrdstr = $('#password').val();    
     if(passwrdstr.length<3){

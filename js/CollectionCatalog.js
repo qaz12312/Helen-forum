@@ -19,11 +19,14 @@ $( document ).ready( function()
             cmd["account"] = sessionStorage.getItem("Helen-userID");
             cmd["articleID"] = CollectionCatalog[dirIndex].dirID;
             cmd["old"] =$(this).parents('.Page').find("span").text();
+
+
             console.log($(this));
             
-
+            
             swal({
             title: "修改收藏目錄名稱",
+            input: "textarea",
             input: "textarea",
             inputPlaceholder: "請輸入文字...",
             showCancelButton: true,
@@ -67,14 +70,8 @@ $( document ).ready( function()
                 //         }).then(( result ) => {}, ( dismiss ) => {
                 //             if ( result ) 
                 //             {
-                //                   let cmd = {};
-                //                  cmd["act"] = "editDir";
-                //                  cmd["account"] = sessionStorage.getItem("Helen-userID");
-                //                  cmd["articleID"] = CollectionCatalog[dirIndex].dirID;
-                //                  cmd["old"] =$(this).parents('.Page').find("span").text();
-                //                  console.log($(this));
                 //                  CollectionCatalog[ dirIndex ].title=result;
-                //                  console.log(CollectionCatalog[ dirIndex ].title)
+                //                  console.log(CollectionCatalog[ dirIndex ].title)   
                 //                  cmd["new"] =result;
                 //                  location.reload();
                 //             }
@@ -509,13 +506,29 @@ function initial()
 
 function checkPermission()
 {
-    // let perm = sessionStorage.getItem( "Helen-permission" );
-    // console.log( perm );
+    let perm = sessionStorage.getItem( "Helen-permission" );
+    console.log( "Permission:　"+ perm );
 
-    // if( perm ) return ( perm.valueOf() >= 3 ); 
-    // else return false;
+    if( perm && perm.valueOf() >= 1 ) return true;
 
-    return true;
+    else 
+    {
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {
+            if ( result ) 
+            {
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
+            }
+        });
+
+        return false;
+    }
+    
 }
 
 

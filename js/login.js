@@ -51,7 +51,7 @@ $(document).ready(function () {
                 }
                 else {//登入成功
                     //console.log("log in sucess")
-                    leaveUserDetails(dataDB.data[0], dataDB.data[1], dataDB.data[2], dataDB.data[3], dataDB.data[4]);
+                    leaveUserDetails(dataDB.data[0], dataDB.data[1], dataDB.data[2]);
                     swal({
                         title: 'Welcome To Helen',
                         type: 'success',
@@ -148,8 +148,10 @@ function Restrict() {
     return true;
 }
 
-function leaveUserDetails(UserID, Password) {
-    sessionStorage.setItem("Helen-UserID", UserID);
-    sessionStorage.setItem("Helen-Password", Password);
+function leaveUserDetails(account, color ,nickname) {
+    sessionStorage.setItem("Helen-account", account);
+    sessionStorage.setItem("Helen-color", color);
+    sessionStorage.setItem("Helen-nickname", nickname);
+
 
 }
