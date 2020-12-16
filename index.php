@@ -179,8 +179,5 @@
             require_once("./PHPs/removeTopArticle.php");
             doRemoveTopArticle($input);
             break;
-        case "sendMail": // 【系統】寄email -----轅
-            require_once("./PHPs/sendMail.php");
-            break;
     }
 ?>
