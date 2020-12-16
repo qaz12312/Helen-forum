@@ -647,7 +647,7 @@ function checkPermission()
                 "</button>"
             );
 
-            let Trs = $( ".tabContent tbody tr" ).find( "td span:first" ).append(
+            $( ".tabContent tbody tr" ).find( "td span:first" ).append(
                 "<button type='button' class='btn pushpinBtn'>" +
                     "<span class='glyphicon glyphicon-pushpin'></span>" +
                 "</button>"
@@ -663,42 +663,42 @@ function checkPermission()
         }
     }
 
-    // let cmd = {};
-    // cmd[ "act" ] = "showAuthority";
-    // cmd[ "account" ] = thisAccount;
+    let cmd = {};
+    cmd[ "act" ] = "showAuthority";
+    cmd[ "account" ] = thisAccount;
 
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
 
-    //     if( dataDB.status == true )
-    //     {
-    //         let boardName = dataDB.data.boardName;
+        if( dataDB.status == true )
+        {
+            let boardName = dataDB.data.boardName;
             
-    //         if( boardName.indexOf( thisBoardName ) != -1 )
-    //         {
-    //             $( ".tabContent h2" ).append( 
-    //                 "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
-    //                     "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
-    //                 "</button>"
-    //             );
+            if( boardName.indexOf( thisBoardName ) != -1 )
+            {
+                $( ".tabContent h2" ).append( 
+                    "<button style='float:right' type='button' class='btn btn-default btn-lg'>" +
+                        "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
+                    "</button>"
+                );
     
-    //             let Trs = $( ".tabContent tbody tr" ).find( "td span:first" ).append(
-    //                 "<button type='button' class='btn pushpinBtn'>" +
-    //                     "<span class='glyphicon glyphicon-pushpin'></span>" +
-    //                 "</button>"
-    //             );
+                let Trs = $( ".tabContent tbody tr" ).find( "td span:first" ).append(
+                    "<button type='button' class='btn pushpinBtn'>" +
+                        "<span class='glyphicon glyphicon-pushpin'></span>" +
+                    "</button>"
+                );
     
-    //             $( ".tabContent tbody tr" ).first().find( "button" ).first().replaceWith( 
-    //                 "<button type='button' class='btn pushpinBtn top'>" +
-    //                     "<span class='glyphicon glyphicon-pushpin'></span>" +
-    //                 "</button>"
-    //             );
+                $( ".tabContent tbody tr" ).first().find( "button" ).first().replaceWith( 
+                    "<button type='button' class='btn pushpinBtn top'>" +
+                        "<span class='glyphicon glyphicon-pushpin'></span>" +
+                    "</button>"
+                );
 
-    //             isModerator = true;
-    //         }
-    //     }
-    // });
+                isModerator = true;
+            }
+        }
+    });
 }
 
 function getKeepMenu()
