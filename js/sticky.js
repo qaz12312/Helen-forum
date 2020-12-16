@@ -223,6 +223,8 @@ $( document ).ready( async function()
                 text: "沒有可用的收藏分類哦",
 
             }).then(( result ) => {}, ( dismiss ) => {} );
+
+            return;
         }
 
         if( $( chosen ).hasClass( "text-warning" ) )
@@ -623,7 +625,7 @@ function checkPermission( resolve, reject )
     {
         dataDB = JSON.parse( dataDB );
 
-        if( dataDB.status == true )
+        if( dataDB.status == true && dataDB.data.boardName != undefined )
         {
             let boardName = dataDB.data.boardName;
             
