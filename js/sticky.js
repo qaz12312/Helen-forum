@@ -424,7 +424,6 @@ function forNormal( resolve, reject )
 
             for( let i in articles )
             {
-                console.log( articles[i] );
                 let oneRow = "<tr>" +
                                 "<td>" +
                                     "<div class='card'>" +

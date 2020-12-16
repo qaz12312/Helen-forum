@@ -1,4 +1,4 @@
-var articles = [];
+var articles = {};
 var thisBoardName = sessionStorage.getItem( 'Helen-boardName' );
 var thisAccount = sessionStorage.getItem( 'Helen-account' );
 
@@ -24,9 +24,9 @@ $( document ).ready( async function()
     $( ".tabContent button" ).on( "click", function()
     {
         let thisArticleTitle = $(this).closest( "tr" ).find( "td:first-child" ).text();
-        let thisArticle = articles.findIndex(
-            (element) => {
-                return element !== undefined && element[0].title == thisArticleTitle;
+        let thisArticle = Object.keys( articles ).find( ( key ) => 
+        {
+            return article[ key ][0].title == thisArticleTitle;
         });
 
         if( $(this).text().trim() == "原因" )
@@ -34,12 +34,12 @@ $( document ).ready( async function()
             let reasonsQueue = [];
             let steps = [];
             
-            for( let i in articles[thisArticle] )
+            for( let i in articles[ thisArticle ] )
             {
                 reasonsQueue.push(
                 { 
                     title: "檢舉原因<br /><small>&lt;" + articles[ thisArticle ][i].title + "&gt;</small>",
-                    html: escapeHtml(articles[ thisArticle ][i].reason).split( "\n" ).join( "<br/>" ),
+                    html: escapeHtml( articles[ thisArticle ][i].reason ).split( "\n" ).join( "<br/>" ),
                     showCancelButton: true,
                     confirmButtonText: "Next &rarr;",
                     cancelButtonText: "取消",
