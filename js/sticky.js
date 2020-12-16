@@ -1,6 +1,3 @@
-// var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222, "hasLike": 1, "hasKeep": 0 }, 
-//                 { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188, "hasLike": 0, "hasKeep": 1 }];
-
 var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
