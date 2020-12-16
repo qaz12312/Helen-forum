@@ -1,5 +1,5 @@
 # 後端 - Helen
-https://www.youtube.com/watch?v=L1cDgzaKv7g&list=PLUIJPCYQHhgywXtQ5-GJiow7bbbdk6zQx&index=1
+
 ## 前端接口
 + [index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
     + 裡面有cmd["act"]的值
