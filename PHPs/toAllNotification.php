@@ -9,7 +9,7 @@
     dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = ""
+		dataDB.info = ""
 		dataDB.data = "Successfully send notice to everyone."
 	否則
 		dataDB.errorCode = "Without any user." / "Failed to send Notification to everyone,Database exception."
@@ -17,41 +17,27 @@
 	*/
     function doToAllNotification($input){    
         global $conn;
-        $totalUser="SELECT `UserID` FROM `Users`";
-        $result1=$conn->query($totalUser);
-        if(!$result1){
-            die($conn->error);
-        }
-        if($result1->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Without any user.";
-            $rtn["data"] = "";
+        $sql="SELECT `UserID` FROM `Users`";
+        $result = query($conn,$sql,array(),"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            $rtn = successCode("Without any user.");
         }
         else{
-            for($i=0;$i<$result1->num_rows;$i++){
-                $row=$result1->fetch_row();
-                $new="INSERT INTO `Notice`(`UserID`,`Content`) VALUES('".$row[0]."','".$input['content']."')";
-                $resultNew=$conn->query($new);
-                if(!$resultNew){
-                    die($conn->error);
-                }
-                $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`=$row[0] AND`Content`='".$input['content']."'";
-                $result=$conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
-                if($result->num_rows <= 0){
-                    $rtn = array();
-                    $rtn["status"] = false;
-                    $rtn["errorCode"] = "Failed to send Notification to everyone,Database exception.";
-                    $rtn["data"] = "";
+            foreach($result as $userID){
+                $sql="INSERT INTO `Notice`(`UserID`,`Content`) VALUES(?,?)";
+                $arr = array($userID[0], $input['content']);
+                $result = query($conn,$sql,$arr,"INSERT");
+        
+                $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`=? AND`Content`=?";
+                $arr = array($userID[0], $input['content']);
+                $result = query($conn,$sql,$arr,"SELECT");
+                $resultCount = count($result);
+                if($resultCount <= 0){
+                    errorCode("Failed to send Notification to everyone,Database exception.");
                 }
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-	        $rtn["data"] = "Successfully send notice to everyone.";
+            $rtn = successCode("Successfully send notice to everyone.");
         }
         echo json_encode($rtn);
     }

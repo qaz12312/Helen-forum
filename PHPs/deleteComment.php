@@ -11,7 +11,7 @@
     dataDB.status
     若 status = true:
         dataDB.status = true
-        dataDB.errorCode = ""
+        dataDB.info = ""
         dataDB.data= "Successfully deleted this comment."
     否則 status = false:
         dataDB.status = false
@@ -20,39 +20,29 @@
     */
     function doDeleteComment($input){
         global $conn;
-        $sqlcheck="SELECT `ArticleID` FROM `Comments` NATURAL JOIN `Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";  
-        $result=$conn->query($sqlcheck);
-        if(!$result){
-            die($conn->error);
-        } 
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Comment doesn't exit.";
-            $rtn["data"] = "";
+        $sql="SELECT `ArticleID` FROM `Comments` NATURAL JOIN `Users`  WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";  
+        $arr = array($input['articleID'], $input['account'], $input['floors']);
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+        
+        if($resultCount <= 0){
+            errorCode("Comment doesn't exit.");
         }
         else{    
-            $del="DELETE FROM `Comments` WHERE  `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
-            $result=$conn->query($del);
-                if(!$result){
-                    die($conn->error);
-                }
-            $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor`,`TagFloor` FROM `Comments` WHERE `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
-            if($result->num_rows > 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to delete,Database exception.";
-                $rtn["data"] = "";
+            $sql="DELETE FROM `Comments` WHERE  `AuthorID`=? AND`Floor`=?";
+            $arr = array($input['account'], $input['floors']);
+			query($conn,$sql,$arr,"DELETE");
+            
+            $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor` FROM `Comments` WHERE `AuthorID`=? AND`Floor`=?";
+            $arr = array($input['account'], $input['floors']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+
+            if($resultCount > 0){
+                errorCode("Failed to delete,Database exception.");
             }
             else{
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = "Successfully deleted this comment.";
+                $rtn = successCode("Successfully deleted this comment.");
             }
         }
         echo json_encode($rtn);

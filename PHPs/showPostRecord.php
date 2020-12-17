@@ -9,14 +9,12 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.errorCode = ""
+        dataDB.info = ""
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title //第i筆文章的標題
             dataDB.data[i].blockName //第i筆文章的所屬看板
             dataDB.data[i].articleID
-            dataDB.data[i].like //第i筆文章的總愛心數
-            dataDB.data[i].keep//第i筆文章的總收藏數
         ) 
     否則
             dataDB.errorCode = "No article right now."
@@ -24,28 +22,21 @@
     */
     function doShowPostRecord($input){
         global $conn;
-        $sql="SELECT `BlockName`,`Title`,`ArticleID` FROM `Article`  WHERE `AuthorID`='".$input['account']."'order by `Times` DESC";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "No article right now.";
-            $rtn["data"] = "";
+        $sql="SELECT `BlockName`,`Title`,`ArticleID` FROM `Article`  WHERE `AuthorID`=? order by `Times` DESC";
+        $arr = array($input['account']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            $rtn = successCode("No article right now.");
         }
         else{
             $arr=array();
-            for($i=0;$i<$result->num_rows;$i++){
-                $row=$result->fetch_row();
-                $log=array("blockName"=>"$row[0]","title"=>"$row[1]","articleID"=>"$row[2]");
-                $arr[$i]=$log;
+            // foreach($result as $row){
+            for($i=0;$i<$resultCount;$i++){
+                $row = $result[$i];
+                $arr[$i]=array("blockName"=>$row[0],"title"=>$row[1],"articleID"=>$row[2]);
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
+            $rtn = successCode("Successfully show person's article records.",$arr);
         }
         echo json_encode($rtn);
     }

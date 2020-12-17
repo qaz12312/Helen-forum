@@ -9,15 +9,11 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	status = true
-    dataDB.errorCode = ""
+    dataDB.info = ""
     dataDB.data = "already log out!"
 	*/
     function doLogOut($input){
-        global $conn;
-		$rtn = array();
-		$rtn["status"] = true;
-		$rtn["errorCode"] = "";
-		$rtn["data"] = "already log out!";
+		$rtn = successCode("already log out!");
 		echo json_encode($rtn);
     }
 ?>

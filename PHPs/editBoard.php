@@ -10,6 +10,7 @@
             
             若 status = true:
                 dataDB.data = 更新後的版
+                dataDB.info = ""
                 dataDB.status = true
             否則 status = false:
                 dataDB.status = false
@@ -18,40 +19,28 @@
          */
     function doEditBoard($input){
         global $conn;
-        $sqlcheck="SELECT `BoardName` FROM `Board` WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."' ";  
-        $result=$conn->query($sqlcheck);
-        if(!$result){
-            die($conn->error);
-        } 
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Delete without permission.";
-            $rtn["data"] = "";
+        $sql="SELECT `BoardName` FROM `Board` WHERE `BoardName`=? AND `UserID`=? ";  
+        $arr = array($input['boardName'], $input['account']);
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+        if($resultCount <= 0){
+            errorCode("Delete without permission.");
         }
         else{
-            $updateSql="UPDATE `Board` SET `Rule`='".$input['rule']."'where `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."'";
-            $result=$conn->query($updateSql);
-            if(!$result){
-                die($conn->error);
-            }
-            $sql ="SELECT `BoardName` FROM `Board` NATURAL JOIN`Users` WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."'AND `Rule`='".$input['rule']."'" ;
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to found the update board.";
-                $rtn["data"] = "";
+            $sql="UPDATE `Board` SET `Rule`=? where `BoardName`=? AND `UserID`=?";
+            $arr = array($input['rule'], $input['boardName'],$input['account'] );
+            query($conn,$sql,$arr,"UPDATE");
+            
+            $sql ="SELECT `BoardName`, `Rule` FROM `Board` JOIN `Users` ON Board.UserID=Users.UserID WHERE `BoardName`=? AND Board.UserID=? AND `Rule`=?" ;
+            $arr = array($input['boardName'], $input['account'], $input['rule']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            // print_r($result);
+			$resultCount = count($result);
+            if($resultCount <= 0){
+                errorCode("Failed to found the update board.");
             }
             else{
-                $row=$result->fetch_row();
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = $row;
+                $rtn = successCode("Successfully edited this board.",$result);
             }
         }
         echo json_encode($rtn);

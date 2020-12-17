@@ -10,8 +10,8 @@
     dataDB.status
     若 status = true:
         dataDB.status = true
-        dataDB.errorCode = ""
-        dataDB.data= "Successfully deleted this folder."
+        dataDB.info = "Successfully deleted this folder."
+        dataDB.data= ""
     否則 status = false:
         dataDB.status = false
         dataDB.errorCode = "This folder doesn't exit." / "Failed to delete,Database exception."
@@ -20,37 +20,27 @@
     function doDeleteDir($input)
     {
         global $conn;
-        $sqlcheck = "SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $input['account'] . "' ";
-        $result = $conn->query($sqlcheck);
-        if (!$result) {
-            die($conn->error);
-        }
-        if ($result->num_rows <= 0) {
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "This folder doesn't exit.";
-            $rtn["data"] = "";
+        $sql = "SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
+        $arr = array($input['dirName'], $input['account'] );
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+        
+        if ($resultCount <= 0) {
+            errorCode("This folder doesn't exit.");
         } else {
-            $delkeep = "DELETE FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $input['account'] . "'";
-            $result = $conn->query($delkeep);
-            if (!$result) {
-                die($conn->error);
-            }
-            $sql = "SELECT `DirName` FROM `KeepDir` WHERE `DirName`='" . $input['dirName'] . "' AND `UserID`='" . $input['account'] . "'";
-            $result = $conn->query($sql);
-            if (!$result) {
-                die($conn->error);
-            }
-            if ($result->num_rows > 0) {
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to delete,Database exception.";
-                $rtn["data"] = "";
+            $sql = "DELETE FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
+            $arr = array($input['dirName'], $input['account']);
+			query($conn,$sql,$arr,"DELETE");
+            
+            $sql = "SELECT `DirName` FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
+            $arr = array($input['dirName'],  $input['account']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+
+            if ($resultCount > 0) {
+                errorCode("Failed to delete,Database exception.");
             } else {
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = "Successfully deleted this folder.";
+                $rtn = successCode("Successfully deleted this folder.");
             }
         }
         echo json_encode($rtn);

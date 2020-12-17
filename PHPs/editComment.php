@@ -12,7 +12,7 @@
     dataDB.status
     若 status = true:
     dataDB.status = true
-    dataDB.errorCode = ""
+    dataDB.info = ""
     dataDB.data = 更新後的留言
     否則 status = false:
     dataDB.status = false
@@ -21,40 +21,28 @@
     */
     function doEditComment($input){
         global $conn;
-        $sqlcheck="SELECT `ArticleID` FROM `Comments` NATURAL JOIN`Users`  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";  
-        $result=$conn->query($sqlcheck);
-        if(!$result){
-            die($conn->error);
-        } 
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Update without permission.";
-            $rtn["data"] = "";
+        $sql="SELECT `ArticleID` FROM `Comments` NATURAL JOIN`Users`  WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";  
+        $arr = array($input['articleID'], $input['account'], $input['floors']);
+		$result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        
+        if($resultCount <= 0){
+            errorCode("Update without permission.");
         }
         else{    
-            $updateSql="UPDATE `Comments` SET `Content`='".$input['detail']."' WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
-            $result=$conn->query($updateSql);
-            if(!$result){
-                die($conn->error);
-            }
-            $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID  WHERE `ArticleID`='".$input['articleID']."' AND `AuthorID`='".$input['account']."' AND`Floor`='".$input['floors']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                die($conn->error);
-            }
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to found the update comment.";
-                $rtn["data"] = "";
+            $sql="UPDATE `Comments` SET `Content`=? WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";
+            $arr = array($input['detail'], $input['articleID'], $input['account'], $input['floors']);
+            query($conn,$sql,$arr,"UPDATE");
+
+            $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID  WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";
+            $arr = array($input['articleID'], $input['account'], $input['floors']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            if($resultCount <= 0){
+                errorCode("Failed to found the update comment.");
             }
             else{
-                $rtn = array();
-                $row=$result->fetch_row();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = $row;
+                $rtn = successCode("Successfully edited this comment.",$result);
             }
         }
         echo json_encode($rtn);

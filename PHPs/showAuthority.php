@@ -8,44 +8,38 @@
 	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status = true:
-    dataDB.errorCode = ""
-    dataDB.data.permisson // 0(訪客)、1(一般使用者)、2(版主)、3(admin)
-    如果是版主: dataDB.data.boardName[0] //旅遊
+    dataDB.info = ""
+    dataDB.data.permission // 0(訪客)、1(一般使用者)、2(版主)、3(admin)
+    如果是2 or 3: dataDB.data.boardName[0] //旅遊
                 dataDB.data.boardName[1] //星座
                 .....
 	*/
     function doShowAuthority($input){
         global $conn;
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='".$input['account']."'";
-            $result = $conn->query($sql);
-            if(!$result){
-                die($conn->error);
+        $rtn = array();
+        $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`=? AND `UserID` not in ('admin')";
+        $arr = array($input['account']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            $sql="SELECT `IsAdmin` FROM `Users` WHERE `UserID`=?";
+            $arr = array($input['account']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            if($resultCount <= 0){
+                $rtn = successCode("",array("permission"=>0));
+            }else if($result[0][0]){
+                $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='admin'";
+                $result = query($conn,$sql,array(),"SELECT");
+                $rtn = successCode("",array("permission"=>3,"boardName"=>$result));
+            }else{
+                $rtn = successCode("",array("permission"=>1));
             }
-            if($result->num_rows <= 0){
-                $sql="SELECT `IsAdmin` FROM `Users` WHERE `UserID`='".$input['account']."'";
-                $result2 = $conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
-                if($result2->num_rows <= 0){
-                    $rtn["data"]["permisson"] = 0;
-                }else if($result2[0]){
-                    $rtn["data"]["permisson"] = 3;
-                }else{
-                    $rtn["data"]["permisson"] = 1;
-                }
-            }
-            else{
-                $row = array();
-                $rtn["data"] = 2;
-                for($i=0;$i<$result->num_rows;$i++){
-                    $row=$result->fetch_row();
-                    $rtn["data"]["boardName"][$i]=$row[0];
-                }
-            }
+        }
+        else{
+            $arr = array("permission"=>2,"boardName"=>$result);
+            $rtn = successCode("",$arr);
+        }
 		echo json_encode($rtn);
     }
 ?>

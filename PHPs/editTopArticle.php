@@ -1,63 +1,50 @@
 <?php
-        /* 
+    /* 
 	前端 to 後端:
 	let cmd = {};
-	cmd["act"] = "TopArticleChange";
+	cmd["act"] = "editTopArticle";
 	cmd["articleID"] = 1;
 	cmd["boardName"] = "美食";
 	cmd["account"] = "admin";
 	
-        後端 to 前端:
+    後端 to 前端:
 	dataDB.status
 	若 status = true:
 		dataDB.status = true
-		dataDB.errorCode = ""
+		dataDB.info = ""
 		dataDB.data[0]	// TopArticleID
 		dataDB.data[1]  // title
 	否則 status = false:
 		dataDB.status = false
 		dataDB.errorCode ="Update without permission." / "Failed to set Top article."
 		dataDB.data = ""
-         */
-        function doEditTopArticle($input){
+    */
+    function doEditTopArticle($input){
 		global $conn;
-        $sqlcheck="SELECT `BoardName` FROM `Board` WHERE `BoardName`='".$input['boardName']."' AND `UserID`='".$input['account']."' ";  
-		$result=$conn->query($sqlcheck);
-		if(!$result){
-			die($conn->error);
-		} 
-		if($result->num_rows <= 0){
-			$rtn = array();
-			$rtn["status"] = false;
-			$rtn["errorCode"] = "Update without permission.";
-			$rtn["data"] = "";
+		$sql="SELECT `BoardName` FROM `Board` WHERE `BoardName`=? AND `UserID`=? ";  
+		$arr = array($input['boardName'], $input['account']);
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+		if($resultCount <= 0){
+			errorCode("Update without permission.");
 		}
 		else{
-		  $edit="UPDATE `Board` SET `TopArticleID`='".$input['articleID']."' WHERE `BoardName`='".$input['boardName']."'";
-		  $result=$conn->query($edit);
-          if(!$result){
-            die($conn->error);
-          }
-		  $sql="SELECT `TopArticleID`, `Title` FROM `Board` JOIN `Article` ON Board.BoardName = Article.BlockName WHERE `TopArticleID`='".$input['articleID']."'";
-		  $result=$conn->query($sql);
-          if(!$result){
-            die($conn->error);
-          }
-          if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to set Top article.";
-            $rtn["data"] = "";
-          }
-          else{
-			$row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = $row;
-          }
+			$sql="UPDATE `Board` SET `TopArticleID`=? WHERE `BoardName`=?";
+			$arr = array($input['articleID'], $input['boardName']);
+			query($conn,$sql,$arr,"UPDATE");
+
+			$sql="SELECT `TopArticleID` FROM `Board` WHERE `TopArticleID`=? AND `BoardName`=?";
+			$arr = array($input['articleID'], $input['boardName']);
+			$result = query($conn,$sql,$arr,"SELECT");
+			$resultCount = count($result);
+			if($resultCount <= 0){
+				errorCode("Failed to set Top article.");
+			}
+			else{
+				$rtn = successCode("Successfully edited this topArticle.",$result);
+			}
 		}
-        echo json_encode($rtn);
+		echo json_encode($rtn);
 	}
 ?>
 

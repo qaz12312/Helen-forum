@@ -11,35 +11,35 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = "Successfully remove article in keepDir."
+		dataDB.info = "Successfully remove article in keepDir."
 		dataDB.data = ""
 	否則
 		dataDB.errorCode = "Failed to remove article in keepDir,Database exception."
 		dataDB.data = "" 
      */
     function doRemoveKeepArticle($input){ // 將文章從收藏資料夾移除
-    	global $conn;
-        $del="DELETE FROM `FollowKeep` WHERE  `DirName`='".$input['dirName']."' AND`UserID`='".$input['account']. "'AND`ArticleID`='".$input['articleID']."'";
-        $result=$conn->query($del);
-            if(!$result){
-                die($conn->error);
-            }
-        $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`='".$input['articleID']."' AND`UserID`='".$input['account']."'AND`DirName`='".$input['dirName']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
+        global $conn;
+        $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=?";
+        $arr = array($input['articleID'], $input['account'], $input['dirName']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            errorCode("Keep article not exist in ".$input['dirName'].".");
         }
-        if($result->num_rows > 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to remove article in keepDir,Database exception.";
-            $rtn["data"] = "";
+
+        $sql="DELETE FROM `FollowKeep` WHERE  `DirName`=? AND`UserID`=? AND`ArticleID`=?";
+        $arr = array($input['dirName'], $input['account'], $input['articleID']);
+        query($conn,$sql,$arr,"DELETE");
+            
+        $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=?";
+        $arr = array($input['articleID'], $input['account'], $input['dirName']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount > 0){
+            errorCode("Failed to remove article in keepDir,Database exception.");
         }
         else{
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-			$rtn["data"] = "Successfully remove article in keepDir.";
+            $rtn = successCode("Successfully remove article in keepDir.");
         }
         echo json_encode($rtn);
     }

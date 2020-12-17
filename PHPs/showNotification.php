@@ -9,10 +9,10 @@
     dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = ""
+		dataDB.info = ""
 		dataDB.data[i] //有i筆通知
 		(
-			dataDB.data.time]	// Time
+			dataDB.data.time	// Time
 			dataDB.data.content	// Content
 		)
 	否則
@@ -21,28 +21,21 @@
 	*/
     function doShowNotification($input){
         global $conn;
-        $sql="SELECT `Times`,`Content` FROM `Notice` WHERE `UserID`='".$input['account']."' order by `Times`DESC ";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "No notifications right now.";
-            $rtn["data"] = "";
+        $sql="SELECT `Times`,`Content` FROM `Notice` WHERE `UserID`=? order by `Times`DESC ";
+        $arr = array($input['account']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            $rtn = successCode("No notifications right now.");
         }
         else{
             $arr=array();
-            for($i=0;$i<$result->num_rows;$i++){
-                $row=$result->fetch_row();
-                $log=array("time"=>"$row[0]","content"=>"$row[1]");
-                $arr[$i]=$log;
+            // foreach($result as $row){
+            for($i=0;$i<$resultCount;$i++){
+                $row = $result[$i];
+                $arr[$i]=array("time"=>$row[0],"content"=>$row[1]);
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
+            $rtn = successCode("Successfully show person's notices.",$arr);
         }
         echo json_encode($rtn);
     }

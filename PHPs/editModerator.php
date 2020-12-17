@@ -1,4 +1,6 @@
-<?php 
+<?php  
+//  doSendNotification()
+
     /* 
         前端 to 後端:
         let cmd = {};
@@ -11,11 +13,10 @@
         dataDB.status
         若 status = true:
             dataDB.status = true
-            dataDB.errorCode = ""
+            dataDB.info = ""
             dataDB.data="Successfully modified moderator." 
         否則 status = false:
             dataDB.status = false
-            dataDB.errorCode = ""
             dataDB.errorCode= "Update without permission." /"Failed to found the update Moderator."/"Failed to appoint moderator."
     */
     function doEditModerator($input){
@@ -23,75 +24,54 @@
         $check= true;
         if(isset($input['oldBoardName'])){
             global $conn;
-            $sqlcheck="SELECT `UserID` FROM `Board` WHERE `BoardName` = '".$input['oldBoardName']."' AND `UserID`='".$input['account']."' ";  
-            $result=$conn->query($sqlcheck);
-            if(!$result){
-                die($conn->error);
-            } 
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Update without permission.";
-                $rtn["data"] = "";
+            $sql="SELECT `UserID` FROM `Board` WHERE `BoardName` = ? AND `UserID`=? ";  
+            $arr = array($input['oldBoardName'], $input['account']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            if($resultCount <= 0){
+                errorCode("Update without permission.");
             }
             else{
-                $updateSql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = '".$input['oldBoardName']."'";
-                $result=$conn->query($updateSql);
-                if(!$result){
-                    die($conn->error);
+                $sql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = ?";
+                $arr = array($input['oldBoardName']);
+                query($conn,$sql,$arr,"UPDATE");
+
+                $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`WHERE `BoardName`=? AND`UserID`='admin' " ;
+                // $result=$conn->query($sql);
+                $arr = array($input['oldBoardName']);
+                $result = query($conn,$sql,$arr,"SELECT");
+                $resultCount = count($result);
+                if($resultCount <= 0){
+                    errorCode("Failed to found the update Moderator.");
                 }
-                $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`WHERE `BoardName`='".$input['oldBoardName']."' AND`UserID`='admin' " ;
-                $result=$conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
-                if($result->num_rows <= 0){
-                    $rtn = array();
-                    $rtn["status"] = false;
-                    $rtn["errorCode"] = "Failed to found the update Moderator.";
-                    $rtn["data"] = "";
-                    $check= false;
-                }
+            doSendNotification(array("recipient" => $input['account'], "content" => "Oops - You are no longer the moderator in 【".$input['oldBoardName']."】."));
             }
         }
         if(isset($input['newBoardName'])){
             global $conn;
-            $sqlcheck="SELECT `UserID` FROM `Board` WHERE `BoardName` = '".$input['newBoardName']."' AND `UserID`='admin' ";  
-            $result=$conn->query($sqlcheck);
-            if(!$result){
-                die($conn->error);
-            } 
-            if($result->num_rows <= 0){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Update without permission.";
-                $rtn["data"] = "";
+            $sql="SELECT `UserID` FROM `Board` WHERE `BoardName` =? AND `UserID`='admin' ";  
+            $arr = array($input['newBoardName']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            if($resultCount <= 0){
+                errorCode("Update without permission.");
             }
             else{
-                $updateSql2="UPDATE `Board` SET `UserID`='".$input['account']."' WHERE `BoardName` = '".$input['newBoardName']."'";
-                $result=$conn->query($updateSql2);
-                if(!$result){
-                    die($conn->error);
+                $sql="UPDATE `Board` SET `UserID`=? WHERE `BoardName` =?";
+                $arr = array($input['account'], $input['newBoardName']);
+                query($conn,$sql,$arr,"UPDATE");
+                
+                $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`  WHERE `BoardName` =? AND`UserID`=?" ;
+                $arr = array($input['newBoardName'], $input['account']);
+                $result = query($conn,$sql,$arr,"SELECT");
+                if($resultCount <= 0){
+                    errorCode("Failed to appoint moderator,Database exception.");
                 }
-                $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`  WHERE `BoardName` = '".$input['newBoardName']."' AND`UserID`='".$input['account']."' " ;
-                $result=$conn->query($sql);
-                if(!$result){
-                    die($conn->error);
-                }
-                if($result->num_rows <= 0){
-                    $rtn = array();
-                    $rtn["status"] = false;
-                    $rtn["errorCode"] = "Failed to appoint moderator,Database exception.";
-                    $rtn["data"] = "";
-                    $check= false;
-                }
+                doSendNotification(array("recipient" => $input['account'], "content" => "Congratulation  - You are the moderator in 【".$input['oldBoardName']."】 :)"));
             }
         }
         if($check){
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] ="Successfully modified moderator.";
+            $rtn = successCode("Successfully modified moderator.");
         }
         echo json_encode($rtn);
     }

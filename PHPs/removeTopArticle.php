@@ -9,29 +9,27 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = ""
+		dataDB.info = ""
 		dataDB.data = "Successfully remove top article in board."
 	否則
 		dataDB.errorCode = "Failed to remove top article in board,Database exception." 
 		dataDB.data = "" 
 	*/
 	function doRemoveTopArticle($input){ //移除置頂文章
-    	global $conn;
-		$sql="UPDATE `Board` SET `TopArticleID`= NULL WHERE `BoardName`='".$input['boardName']."'";
-		$result=$conn->query($sql);
-		if(!$result){
-			$rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to remove top article in board,Database exception.";
-			$rtn["data"] = "";
-			echo json_encode($rtn);
-			die($conn->error);
+		global $conn;
+		$sql="SELECT `TopArticleID` FROM `Board` WHERE `BoardName`=?";  
+		$arr = array($input['boardName']);
+		$result = query($conn,$sql,$arr,"SELECT");
+		// $resultCount = count($result[0]);
+		// print_r($resultCount);
+		if($result[0][0] == NULL){
+			errorCode("Has no top article.");
 		}
-		else{
-			$rtn = array();
-			$rtn["status"] = true;
-			$rtn["errorCode"] = "";
-			$rtn["data"] = "Successfully remove top article in board.";
+		else {
+			$sql="UPDATE `Board` SET `TopArticleID`= NULL WHERE `BoardName`=?";
+			$arr = array($input['boardName']);
+			query($conn,$sql,$arr,"UPDATE");
+			$rtn = successCode("Successfully remove top article in board.");
 		}
 		echo json_encode($rtn);
 	}

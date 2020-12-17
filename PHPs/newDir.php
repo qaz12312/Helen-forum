@@ -9,28 +9,38 @@
 	後端 to 前端
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = ""
+		dataDB.info = ""
 		dataDB.data = "Successfully new the dir.";
 	否則
 		dataDB.errorCode = "Failed to upload dir,Database exception.";
 		dataDB.data = "";
 	*/
     function doNewDir($input){
-        global $conn;
-        $new="INSERT INTO  `KeepDir`(`UserID`,`DirName`) VALUES('".$input['account']."','".$input['dirName']."')";
-        $resultNew=$conn->query($new);
-        if(!$resultNew){
-			$rtn = array();
-		    $rtn["status"] = false;
-		    $rtn["errorCode"] ="Failed to upload dir,Database exception.";
-			$rtn["data"] = "";
-			echo json_encode($rtn);
-            die($conn->error);
+		global $conn;
+		$sql="SELECT `DirName` FROM `KeepDir` WHERE `UserID` = ? AND `DirName` = ?";
+		$arr = array($input['account'], $input['dirName']);
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+
+        if($resultCount > 0){
+            errorCode("Folder exist.");
 		}
-		$rtn = array();
-		$rtn["status"] = true;
-		$rtn["errorCode"] = "";
-		$rtn["data"] = "Successfully new the dir.";
+		else{
+        	$sql="INSERT INTO `KeepDir`(`UserID`,`DirName`) VALUES(?,?)";
+        	$arr = array($input['account'], $input['dirName']);
+			query($conn,$sql,$arr,"INSERT");
+
+			$sql="SELECT `DirName` FROM `KeepDir` WHERE `UserID` = ? AND `DirName` = ?";
+			$arr = array($input['account'], $input['dirName']);
+			$result = query($conn,$sql,$arr,"SELECT");
+			$resultCount = count($result);
+			if($resultCount <= 0){
+				errorCode("Failed to upload folder ,Database exception.");
+			}
+			else{
+				$rtn = successCode("Successfully new the dir.");
+			}
+		}
         echo json_encode($rtn);
     }
 ?>

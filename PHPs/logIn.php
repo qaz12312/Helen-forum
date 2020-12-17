@@ -10,7 +10,7 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = ""
+		dataDB.info = ""
 		dataDB.data[0] // account:"00757007"
 		dataDB.data[1] // color:"#ffffff"
 		dataDB.data[2] // nickname:"00757007"
@@ -20,23 +20,15 @@
 	*/
     function doLogIn($input){
     	global $conn;
-    	$sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`='".$input['account']."' AND `Password`='".$input['password']."'";
-	    $result = $conn->query($sql);
-	    if(!$result){
-	        die($conn->error);
-	    }
-	    if($result->num_rows <= 0){
-	        $rtn = array();
-	        $rtn["status"] = false;
-	        $rtn["errorCode"] = "Could not find the user.";
-	        $rtn["data"] = "";
+    	$sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`=? AND `Password`=?";
+	    $arr = array($input['account'],$input['password'] );
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+	    if($resultCount <= 0){
+			errorCode("Could not find the user.");
 	    }
 	    else{
-			$row=$result->fetch_row();
-	        $rtn = array();
-	        $rtn["status"] = true;
-	        $rtn["errorCode"] = "";
-			$rtn["data"] =$row;
+			$rtn = successCode("Successfully log in.",$result[0]);
 	    }
 		echo json_encode($rtn);
     }

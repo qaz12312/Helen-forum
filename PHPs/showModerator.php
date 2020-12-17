@@ -8,7 +8,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.errorCode = ""
+        dataDB.info = ""
         dataDB.data[i] //有i筆版資訊
         (
         dataDB.data[i].account 
@@ -21,28 +21,20 @@
     */
     function doShowModerator($input){
         global $conn;
-        $sql ="SELECT `UserID`, `Color`, `BoardName` FROM `Board` NATURAL JOIN `Users` order by `UserID` ASC " ;
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to show Moderator. ";
-            $rtn["data"] = "";
+        $sql="SELECT `UserID`, `Color`, `BoardName` FROM `Board` NATURAL JOIN `Users` order by `UserID` ASC ";
+        $result = query($conn,$sql,array(),"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            $rtn = successCode("this system didn't have board.");
         }
         else{
             $arr=array();
-            for($i=0;$i<$result->num_rows;$i++){
-                $row=$result->fetch_row();
-                $log=array("account"=>"$row[0]","userColor"=>"$row[1]","boardName"=>"$row[2]");
-                $arr[$i]=$log;
+            // foreach($result as $row){
+            for($i=0;$i<$resultCount;$i++){
+                $row = $result[$i];
+                $arr[$i]=array("account"=>$row[0],"userColor"=>$row[1],"boardName"=>$row[2]);
             }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
+            $rtn = successCode("Successfully show board's manager list.",$arr);
         }
         echo json_encode($rtn);
     }

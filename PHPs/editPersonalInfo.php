@@ -11,8 +11,8 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-         dataDB.status = true
-        dataDB.errorCode = ""
+        dataDB.status = true
+        dataDB.info = ""
         dataDB.data = "success to change the (password/nickname/color)"
     否則 status = false:
         dataDB.status = false
@@ -37,32 +37,18 @@
 <?php
     function doChangeInfo($input,$optionAttr){
         global $conn;
-        $sql="SELECT `UserID` FROM `Users` WHERE `UserID`='".$input['account']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Cannot find the user.Failed to Update personal information in ".$input["option"].".You need to login again.";
-            $rtn["data"] = "";
+        $sql="SELECT `UserID` FROM `Users` WHERE `UserID`=?";
+        $arr = array($input['account']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            errorCode("Cannot find the user.Failed to Update personal information in ".$input["option"].".You need to login again.");
         }
         else{
-            $sql="UPDATE `Users` SET `".$optionAttr."`='".$input['new']."' WHERE `UserID` ='".$input['account']."'";
-            $result=$conn->query($sql);
-            if(!$result){
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Failed to Update personal information in ".$input["option"].".You need to login again.";
-                $rtn["data"] = "";
-                die($conn->error);
-            }else{
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = "Success to change the ".$input["option"];
-            }
+            $sql="UPDATE `Users` SET `".$optionAttr."`=? WHERE `UserID` =?";
+            $arr = array($input['new'], $input['account']);
+            query($conn,$sql,$arr,"UPDATE");
+            $rtn = successCode("Success to change the ".$input["option"]);
         }
         echo json_encode($rtn);
     }

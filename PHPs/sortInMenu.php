@@ -10,7 +10,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 dataDB.status = true:
-        dataDB.errorCode = ""
+        dataDB.info = "Without any article now. / Successfully sort in home."
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title //第i筆文章的標題
@@ -19,60 +19,50 @@
             dataDB.data[i].like //第i筆文章的總愛心數
             dataDB.data[i].keep//第i筆文章的總收藏數
             dataDB.data[i].time //第i筆文章的時間
+            dataDB.data[i].hasLike//是否按過愛心
+            dataDB.data[i].hasKeep //是否收藏
         )
+
     否則
-        dataDB.errorCode = "Without any article now." / "Failed to sort."
+        dataDB.errorCode = "Failed to sort."
         dataDB.data = ""
     */ 
-    function doSortMenu($input)
-    {
+    function doSortMenu($input){
         global $conn;
         if ($input['sort'] == "time" || $input['sort'] == "hot") {
             if ($input['sort'] == "time") {
-                $sql1 = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `Times` DESC";
-                $result = $conn->query($sql1);
-                if (!$result) {
-                    die($conn->error);
-                }
-            } else if ($input['sort'] == "hot") {
-                $sql1 = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `cntHeart` DESC";
-                $result = $conn->query($sql1);
-                if (!$result) {
-                    die($conn->error);
-                }
+                $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `Times` DESC";
+            } else{
+                $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `cntHeart` DESC";
             }
-            if ($result->num_rows <= 0) {
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Without any article now.";
-                $rtn["data"] = "";
+            $result = query($conn,$sql,array(),"SELECT");
+            $resultCount = count($result);
+            if ($resultCount <= 0) {
+                $rtn = successCode("Without any article now.");
             } else {
-                $arr = array();
-                for ($i = 0; $i < $result->num_rows; $i++) {
-                    $row = $result->fetch_row();
-                    $sqlHeart ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[2]."'AND`UserID`='".$input['account']."'" ;
-                    $heart = $conn->query($sqlHeart);
-                    if (!$heart) {
-                        die($conn->error);
-                    }
-                    $sqlKeep ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[2]."'AND`UserID`='".$input['account']."'" ;
-                    $keep = $conn->query($sqlKeep);
-                    if (!$keep) {
-                        die($conn->error);
-                    }
-                    $log = array("title" => "$row[0]", "blockName" => "$row[1]", "articleID" => "$row[2]", "like" => "$row[3]", "keep" => "$row[4]", "hasHeart" => ( $heart->num_rows>0 ? 1 : 0), "hasKeep" => ($keep->num_rows>0 ? 1 : 0 ));
-                    $arr[$i] = $log;
+                $articleList = array();
+                for($i=0;$i<$resultCount;$i++){
+                    $row = $result[$i];
+                    $articleID = $row['ArticleID'];
+                    if(isset($input['account'])){
+                        $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
+                        $arr = array($articleID, $input['account']);
+                        $heart = query($conn,$sql,$arr,"SELECT");
+                        $heartCount = count($heart);
+
+                        $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?" ;
+                        $arr = array($articleID, $input['account']);
+                        $keep = query($conn,$sql,$arr,"SELECT");
+                        $keepCount = count($keep);
+
+                        $articleList[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
+                    }else
+                        $articleList[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasLike" => "", "hasKeep" =>"");
                 }
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = $arr;
+                $rtn = successCode("Successfully sort in home.",$articleList);
             }
         }else{
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to sort.";
-            $rtn["data"] = "";
+            errorCode("Failed to sort.");
         }
         echo json_encode($rtn);
     }

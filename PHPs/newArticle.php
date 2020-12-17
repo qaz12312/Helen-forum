@@ -2,7 +2,7 @@
 	/* 
 	前端 to 後端:
 	let cmd = {};
-	cmd["act"] = "addArticle";
+	cmd["act"] = "newArticle";
 	cmd["account"] = "AuthorID";
 	cmd["blockName"] ="美食";
 	cmd["title"] = "Title";
@@ -14,7 +14,7 @@
 	dataDB.status
     若 status = true:
         dataDB.status = true
-		dataDB.errorCode = ""
+		dataDB.info = ""
 		dataDB.data[0]	// ArticleID
 		dataDB.data[1]	// Title
 		dataDB.data[2]	// Content
@@ -29,31 +29,27 @@
 	*/
     function doNewArticle($input){
         global $conn;
-        $new="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) 
-        VALUES('".$input['account']."','".$input['title']."','".$input['content']."','".$input['picture']."','".$input['hashTag']."','".$input['blockName']."')";
-        $resultNew=$conn->query($new);
-        if(!$resultNew){
-            die($conn->error);
-        }
+        $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
+        $arr = array($input['account'], $input['title'], $input['content'], $input['picture'], $input['hashTag'], $input['blockName']);
+		$result = query($conn,$sql,$arr,"INSERT");
+		$rtn = successCode("Successfully new the Article.");
+		
+		/*
+
+		流水號問題!!!!!!!!!!!!!!!!!
+
         $articleID=mysqli_insert_id($conn);//取得流水號
-        $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color` FROM `Article` NATURAL JOIN`Users` WHERE `ArticleID`=$articleID";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to upload article,Database exception.";
-            $rtn["data"] = "";
+        $sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color` FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `ArticleID`=?";
+        $arr = array($articleID);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            errorCode("Failed to upload article,Database exception.");
         }
         else{
-            $row=$result->fetch_row();
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] = $row;
-        }
+            $rtn = successCode("Successfully new the Article.",$result[0]);
+		}
+		*/
         echo json_encode($rtn);
     }
 ?>

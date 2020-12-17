@@ -1,4 +1,5 @@
 <?php
+// ??????
     /* 前端 to 後端:
     let cmd = {};
     cmd["act"] = "searchMenu";
@@ -10,7 +11,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.errorCode = ""
+        dataDB.info = ""
         dataDB.data[i] //有i筆文章
         (
         dataDB.data[i].title //第i筆文章的標題
@@ -31,51 +32,41 @@
         //搜尋標題+內容
         if ($input['sort'] == "time" || $input['sort'] == "hot") {
             if ($input['sort'] == "time") {
-                $sql3 = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `Content` LIKE '%" . $input['searchWord'] . "%' OR `Title` LIKE '%" . $input['searchWord'] . "%' ORDER BY `Times` DESC";
-                $result = $conn->query($sql3);
-                if (!$result) {
-                    die($conn->error);
-                }
-            }else if ($input['sort'] == "hot") {
-                $sql3 = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `Content` LIKE '%" . $input['searchWord'] . "%' OR `Title` LIKE '%" . $input['searchWord'] . "%' ORDER BY `cntHeart` DESC";
-                $result = $conn->query($sql3);
-                if (!$result) {
-                    die($conn->error);
-                }
-            }
-
-            if ($result->num_rows <= 0) {    //找不到文章
-                $rtn = array();
-                $rtn["status"] = false;
-                $rtn["errorCode"] = "Don't have any article.";
-                $rtn["data"] = "";
+                $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `Content` LIKE '%?%' OR `Title` LIKE '%?%' ORDER BY `Times` DESC";
             } else {
-                $arr = array();
-                for ($i = 0; $i < $result->num_rows; $i++) {    //回傳找到的文章(包含關鍵字)
-                    $row = $result->fetch_row();
-                    $sqlHeart ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
-                    $heart = $conn->query($sqlHeart);
-                    if (!$heart) {
-                        die($conn->error);
+                $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `Content` LIKE '%?%' OR `Title` LIKE '%?%' ORDER BY `cntHeart` DESC";
+            }
+            $arr = array($input['searchWord'], $input['searchWord']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+            if ($resultCount <= 0) {    //找不到文章
+                $rtn = successCode("Don't have any article.");
+            } else {
+                $articleList = array();
+                // foreach($result as $row){
+                for($i=0;$i<$resultCount;$i++){//回傳找到的文章(包含關鍵字)
+                    $row = $result[$i];
+                    $articleID = $row['ArticleID'];
+                    if(isset($input['account'])){
+                        $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
+                        $arr = array($articleID, $input['account']);
+                        $heart = query($conn,$sql,$arr,"SELECT");
+                        $heartCount = count($heart);
+                        
+                        $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?" ;
+                        $arr = array($articleID, $input['account']);
+                        $keep = query($conn,$sql,$arr,"SELECT");
+                        $keepCount = count($keep);
+
+                        $articleList[$i] = array("title" => $row[0],"boardName" => $row[1],"articleID" => $articleID,"like" => $row[2], "keep" => $row[3], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                     }
-                    $sqlKeep ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`='".$row[1]."'AND`UserID`='".$input['account']."'" ;
-                    $keep = $conn->query($sqlKeep);
-                    if (!$keep) {
-                        die($conn->error);
-                    }
-                    $log = array("title" => "$row[0]",  "boardName" => "$row[1]", "like" => "$row[2]", "keep" => "$row[3]", "hasHeart" => ( $heart->num_rows>0 ? 1 : 0), "hasKeep" => ($keep->num_rows>0 ? 1 : 0 ));
-                    $arr[$i] = $log;
+                    else
+                    $articleList[$i] = array("title" => $row[0],"boardName" => $row[1],"articleID" => $articleID,"like" => $row[2], "keep" => $row[3], "hasHeart" => "", "hasKeep" => "");
                 }
-                $rtn = array();
-                $rtn["status"] = true;
-                $rtn["errorCode"] = "";
-                $rtn["data"] = $arr;
+                $rtn = successCode("Successfully search in menu",$articleList);
             }
         } else {
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "Failed to search in menu.";
-            $rtn["data"] = "";
+            errorCode("Failed to search in menu.");
         }
         echo json_encode($rtn);
     }

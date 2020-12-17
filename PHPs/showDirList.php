@@ -9,11 +9,10 @@
     dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = ""
+		dataDB.info = ""
 		dataDB.data[i]	// 資料夾名稱
 		(
-			dataDB.data[0]
-			dataDB.data[1]
+			dataDB.data[0].Dirname
 			...
 		)
 	否則
@@ -22,27 +21,15 @@
 	*/
     function doShowDirList($input){
         global $conn;
-        $sql="SELECT `DirName` FROM `KeepDir` where `UserID` = '".$input['account']."'";
-        $result=$conn->query($sql);
-        if(!$result){
-            die($conn->error);
-        }
-        if($result->num_rows <= 0){
-            $rtn = array();
-            $rtn["status"] = false;
-            $rtn["errorCode"] = "User didn't create any folder.";
-            $rtn["data"] = "";
+        $sql="SELECT `DirName` FROM `KeepDir` where `UserID` = ?";
+        $arr = array($input['account']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($result);
+        if($resultCount <= 0){
+            $rtn = successCode("User didn't create any folder.");
         }
         else{
-            $arr=array();
-            for($i=0;$i<$result->num_rows;$i++){
-                $row=$result->fetch_row();
-                $arr[$i]=$row[0];
-            }
-            $rtn = array();
-            $rtn["status"] = true;
-            $rtn["errorCode"] = "";
-            $rtn["data"] =$arr;
+            $rtn = successCode("Successfully show dirctionaryName list.",$result);
         }
         echo json_encode($rtn);
     }
