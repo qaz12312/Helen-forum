@@ -70,9 +70,9 @@
             require_once("sortInMenu.php");
             doSortMenu($input);
             break;
-        case "showAritcleComment": //【訪客】檢視文章&留言 -----劉
-            require_once("showAritcleComment.php");
-            doShowAritcleComment($input);
+        case "showArticleComment": //【訪客】檢視文章&留言 -----劉
+            require_once("showArticleComment.php");
+            doShowArticleComment($input);
             break;
         case "heart": //【user】點擊愛心&取消 -----轅
             require_once("changeHeart.php");
