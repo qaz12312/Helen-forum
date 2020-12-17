@@ -48,7 +48,7 @@
         $alert = 'Message Sent! Thank you for contacting us.';
         $rtn = successCode($alert);
     } catch (Exception $e){
-        errorCode("【sendmailPwd.php】failed: ". $e->getMessage());
+        errorCode("【sendMailPwd.php】failed: ". $e->getMessage());
     }
     echo json_encode($rtn);
 ?>
