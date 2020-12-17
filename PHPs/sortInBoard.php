@@ -12,8 +12,8 @@
     dataDB.status
     若 status = true:
         dataDB.data[i] //有i筆文章
+        dataDB.info
         (
-            dataDB.errorCode
             dataDB.data[i].title //第i筆文章的標題
             dataDB.data[i].articleID
             dataDB.data[i].like //第i筆文章的總愛心數
@@ -46,10 +46,14 @@
             $result2Count = count($result);
 
             if ($resultCount <= 0) {
-                errorCode("Without any article in board now.");
-            } else {
+                $rtn = successCode("Without any article in board now.");
+            } 
+            else {
+                // print_r($result);
+                // echo "<br/><br/>";
+                // print_r($result2);
                 $articleList = array();
-                foreach($result as $row){
+                // foreach($result as $row){
                 for($i=0;$i<$resultCount;$i++){
                     $row = $result[$i];
                     $articleID = $row['ArticleID'];
@@ -64,15 +68,16 @@
                         $keep = query($conn,$sql,$arr,"SELECT");
                         $keepCount = count($keep);
     
-                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID , "like" => $row[2], "keep" => $row[3], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
+                        $articleList[$i] = array("title" => $row['Title'], "articleID" => $articleID , "like" => $row['cntHeart'], "keep" => $row['cntKeep'], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                     } else
-                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID , "like" => $row[2], "keep" => $row[3], "hasLike" => "", "hasKeep" =>"");
+                        $articleList[$i] = array("title" => $row['Title'], "articleID" => $articleID , "like" => $row['cntHeart'], "keep" => $row['cntKeep'], "hasLike" => NULL, "hasKeep" =>NULL);
                 }
-                $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[1],"rule"=>$result2[0]);
-                $rtn = successCode($arr);
+                 $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[0]['TopArticleID'],"rule"=>$result2[0]['Rule']);
+                 $rtn = successCode("Successfully sort in board.",$arr);
             }
-        } else 
+        } else {
             errorCode("Failed to sort in board.");
+        }
         echo json_encode($rtn);
     }
 ?>

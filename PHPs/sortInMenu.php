@@ -10,7 +10,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 dataDB.status = true:
-        dataDB.errorCode = ""
+        dataDB.info = "Without any article now. / Successfully sort in home."
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title //第i筆文章的標題
@@ -24,7 +24,7 @@
         )
 
     否則
-        dataDB.errorCode = "Without any article now." / "Failed to sort."
+        dataDB.errorCode = "Failed to sort."
         dataDB.data = ""
     */ 
     function doSortMenu($input){
@@ -38,7 +38,7 @@
             $result = query($conn,$sql,array(),"SELECT");
             $resultCount = count($result);
             if ($resultCount <= 0) {
-                errorCode("Without any article now.");
+                $rtn = successCode("Without any article now.");
             } else {
                 $articleList = array();
                 for($i=0;$i<$resultCount;$i++){
@@ -59,10 +59,11 @@
                     }else
                         $articleList[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasLike" => "", "hasKeep" =>"");
                 }
-                $rtn = successCode($arr);
+                $rtn = successCode("Successfully sort in home.",$articleList);
             }
-        }else
+        }else{
             errorCode("Failed to sort.");
+        }
         echo json_encode($rtn);
     }
 ?>

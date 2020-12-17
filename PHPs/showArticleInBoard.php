@@ -1,5 +1,5 @@
 <?php
-    /* 不需要此php
+    /* 
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "showArticleInBoard";
@@ -9,7 +9,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.errorCode = ""
+        dataDB.info = ""
         dataDB.data.articleList[i] //有i筆文章
         (
             dataDB.data.articleList[i].title //第i筆文章的標題
@@ -36,17 +36,17 @@
         $result2Count = count($result);
         
         if($resultCount <= 0 ){
-            errorCode("Article not in this board.");
+            $rtn = successCode("Article not in this board.");
         }
         else{
             $articleList = array();
-            foreach($result as $row){
-            // for($i=0;$i<$resultCount;$i++){
-            //     $row = $result[$i];
+            // foreach($result as $row){
+            for($i=0;$i<$resultCount;$i++){
+                $row = $result[$i];
                 $articleList[$i]=array("title"=>$row[0],"articleID"=>$row[1],"like"=>$row[2],"keep"=>$row[3]);
             }
-            $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[1],"rule"=>$result2[0]);
-            $rtn = successCode($arr);
+            $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[0][1],"rule"=>$result2[0][0]);
+            $rtn = successCode("Successfully article in board.",$arr);
          }
         echo json_encode($rtn);
     }
