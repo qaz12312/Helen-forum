@@ -26,7 +26,7 @@ $( document ).ready( async function()
         let thisArticleTitle = $(this).closest( "tr" ).find( "td:first-child" ).text();
         let thisArticle = Object.keys( articles ).find( ( key ) => 
         {
-            return article[ key ][0].title == thisArticleTitle;
+            return articles[ key ][0].title == thisArticleTitle;
         });
 
         if( $(this).text().trim() == "原因" )
@@ -101,9 +101,10 @@ $( document ).ready( async function()
                             }).then((result) => {}, ( dismiss ) => {});
     
                             $(chosen).closest( "tr" ).remove();
-                            articles.splice( thisArticle, 1 );
+                            delete articles[ thisArticle ];
     
-                            if( articles.length == 0 )
+                            console.log($.isEmptyObject(articles));
+                            if( $.isEmptyObject(articles) )
                             {
                                 let emptyMessage = "<tr>" + 
                                                         "<td colspan='4'>檢舉文章列表為空</td>" +
@@ -157,9 +158,10 @@ $( document ).ready( async function()
                             }).then((result) => {}, ( dismiss ) => {});
     
                             $(chosen).closest( "tr" ).remove();
-                            articles.splice( thisArticle, 1 );
+                            delete articles[ thisArticle ];
     
-                            if( articles.length == 0 )
+                            console.log($.isEmptyObject(articles));
+                            if( $.isEmptyObject(articles) )
                             {
                                 let emptyMessage = "<tr>" + 
                                                         "<td colspan='4'>檢舉文章列表為空</td>" +
@@ -203,7 +205,8 @@ async function initial( res, rej )
 
             articles = dataDB.data;
 
-            if( articles.length == 0 )
+            console.log($.isEmptyObject(articles));
+            if( $.isEmptyObject(articles) )
             {
                 let emptyMessage = "<tr>" + 
                                         "<td colspan='4'>檢舉文章列表為空</td>" +
@@ -237,7 +240,6 @@ async function initial( res, rej )
                 content.append( oneRow );
             }
         }
-
         res(0);
     });
 }
@@ -252,25 +254,30 @@ function checkPermission( resolve, reject )
             text: "您沒有權限瀏覽此頁面",
             
         }).then(( result ) => {
-            $( "body" ).empty();
-            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( "body" ).append( httpStatus );
+            if ( result )
+            {
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
+            }
 
         }, ( dismiss ) => {
-            $( "body" ).empty();
-            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( "body" ).append( httpStatus );
+            if ( dismiss )
+            {
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
+            }
         });
 
-        reject(0);
+        resolve(0);
+
+        return;
     }
 
     let cmd = {};
     cmd[ "act" ] = "showAuthority";
     cmd[ "account" ] = thisAccount;
-
-    let permission, color, nickname, boardName = [];
-    let thisBoardName = thisBoardName;
 
     $.post( "../index.php", cmd, function( dataDB )
     {
@@ -284,45 +291,51 @@ function checkPermission( resolve, reject )
                 text: "dataDB.errorCode",
     
             }).then(( result ) => {
+                if ( result )
+                {
                     $( "body" ).empty();
                     let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
                     $( "body" ).append( httpStatus );
+                }
     
             }, ( dismiss ) => {
-                $( "body" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
-            });
-            
-            reject(0);
-        }
-        else
-        {
-            permission = "2";
-            boardName = ["美食"];
-            
-            if( boardName.find( (element) => element.BoardName == thisBoardName ) != undefined )
-            {
-                swal({
-                    title: "載入頁面失敗",
-                    type: "error",
-                    text: "您沒有權限瀏覽此頁面"
-                }).then(( result ) => {
-                        $( "body" ).empty();
-                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                        $( "body" ).append( httpStatus );
-    
-                }, ( dismiss ) => {
+                if ( dismiss )
+                {
                     $( "body" ).empty();
                     let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
                     $( "body" ).append( httpStatus );
-                });
-    
-                reject(0);
-            }
+                }
+            });
+            
+            resolve(0);
+        }
+        else if( dataDB.data.boardName == undefined || dataDB.data.boardName.find( (element) => element.BoardName == thisBoardName ) == undefined )
+        {
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: "您沒有權限瀏覽此頁面"
+            }).then(( result ) => {
+                if ( result )
+                {
+                    $( "body" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                    $( "body" ).append( httpStatus );
+                }
+
+            }, ( dismiss ) => {
+                if ( dismiss )
+                {
+                    $( "body" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                    $( "body" ).append( httpStatus );
+                }
+            });
     
             resolve(0);
         }
+    
+        resolve(0);
     });
 }
 

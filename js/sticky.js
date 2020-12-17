@@ -128,6 +128,7 @@ $( document ).ready( async function()
     {
         let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
         sessionStorage.setItem( "Helen-articleID", thisArticle.articleID );
+        sessionStorage.removeItem( "Helen-sort" );
         location.href =  "../html/post.html";
     });
 
@@ -193,7 +194,7 @@ $( document ).ready( async function()
         });
     });
 
-    $( "button" ).has( ".glyphicon-star" ).click( function()
+    $( "button" ).has( ".glyphicon-star" ).click( async function()
     {
         if( !thisAccount )
         {
@@ -430,7 +431,7 @@ function forNormal( resolve, reject )
                 {
                     oneRow += "<button type='button' class='btn btn-warning'>" +
                                     "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
-                                        + articles[i].like + "</span></button>";
+                                        + articles[i].keep + "</span></button>";
                 }
                 else
                 {
@@ -444,14 +445,12 @@ function forNormal( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            if( topArticleID != "" )
+            if( topArticleID !== undefined )
             {
                 let topArticle = articles.find( (element) => element.articleID == topArticleID );
 
                 if( topArticle !== undefined )
                 {
-                    topArticle = topArticle.title;
-
                     let tempTr = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( "tr" );
                     let tempTbody = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( ".tabContent tbody" );
 
@@ -488,7 +487,7 @@ function forSearching( resolve, reject )
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
-        sessionStorage.setItem( "Helen-search", "" );
+        sessionStorage.removeItem( "Helen-search" );
         thisSearching = "";
 
         if( dataDB.status == false )
@@ -553,7 +552,7 @@ function forSearching( resolve, reject )
                 {
                     oneRow += "<button type='button' class='btn btn-warning'>" +
                                     "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
-                                        + articles[i].like + "</span></button>";
+                                        + articles[i].keep + "</span></button>";
                 }
                 else
                 {
@@ -567,16 +566,14 @@ function forSearching( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            if( topArticleID != "" )
+            if( topArticleID !== undefined )
             {
                 let topArticle = articles.find( (element) => element.articleID == topArticleID );
 
                 if( topArticle !== undefined )
                 {
-                    topArticle = topArticle.title;
-
-                    let tempTr = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( "tr" );
-                    let tempTbody = $( "span.articleTitle:contains('" + topArticle + "')" ).closest( ".tabContent tbody" );
+                    let tempTr = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( "tr" );
+                    let tempTbody = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( ".tabContent tbody" );
 
                     tempTr.remove();
                     tempTbody.prepend( tempTr );
@@ -648,6 +645,14 @@ function checkPermission( resolve, reject )
 
                 isModerator = true;
             }
+            else
+            {
+                $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
+                    "<button type='button' class='btn pushpinBtn top'>" +
+                        "<span class='glyphicon glyphicon-pushpin'></span>" +
+                    "</button>"
+                );
+            }
         }
         else
         {
@@ -673,7 +678,6 @@ function getKeepMenu( resolve, reject )
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
-        console.log( dataDB );
 
         if( dataDB.status == false)
         {
@@ -681,9 +685,15 @@ function getKeepMenu( resolve, reject )
                 title: "取得收藏資分類失敗",
                 type: "error",
                 text: dataDB.errorCode
-            }).then(( result ) => {}, ( dismiss ) => {} );
+            }).then(( result ) => {
+                if( result )
+                    reject([]);
 
-            reject([]);
+            }, ( dismiss ) => {
+                if( dismiss )
+                    reject([]);
+
+            });
         }
 
         let menu = [];

@@ -37,7 +37,7 @@ $(document).ready(function () {
                 //console.log("connect success");
                 //console.log(data);
                 dataDB = JSON.parse(data);
-                if (dataDB.statue == false) {
+                if (dataDB.status == false) {
                     dataDB.data = ""
                     swal({
                         title: 'OOPS...',
