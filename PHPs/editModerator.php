@@ -1,8 +1,4 @@
-<?php 
-
-
-// 同時要寄送通知 !!!!!!!!!!!!!!!
-  
+<?php  
 //  doSendNotification()
 
     /* 

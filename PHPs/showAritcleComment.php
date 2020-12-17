@@ -1,7 +1,4 @@
 <?php
-
-// nickname, color!!!!!!!!!!!!!!!!!
-
     /* 
     前端 to 後端:
     let cmd = {};
