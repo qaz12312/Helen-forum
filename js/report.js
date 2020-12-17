@@ -63,6 +63,8 @@ $( document ).ready( async function()
         }
         else if( $(this).text().trim() == "刪除" )
         {
+            let chosen = this;
+
             swal({
                 title: "確定要刪除此篇文章嗎？<br /><small>&lt;" + articles[ thisArticle ][0].title + "&gt;</small>",
                 showCancelButton: true,
@@ -98,7 +100,7 @@ $( document ).ready( async function()
                                 
                             }).then((result) => {}, ( dismiss ) => {});
     
-                            $(this).closest( "tr" ).remove();
+                            $(chosen).closest( "tr" ).remove();
                             articles.splice( thisArticle, 1 );
     
                             if( articles.length == 0 )
@@ -115,6 +117,8 @@ $( document ).ready( async function()
         }
         else if( $(this).text().trim() == "取消" )
         {
+            let chosen = this;
+
             swal({
                 title: "確定要取消檢舉此篇文章嗎？<br /><small>&lt;" + articles[ thisArticle ][0].title + "&gt;</small>",
                 showCancelButton: true,
@@ -152,7 +156,7 @@ $( document ).ready( async function()
     
                             }).then((result) => {}, ( dismiss ) => {});
     
-                            $(this).closest( "tr" ).remove();
+                            $(chosen).closest( "tr" ).remove();
                             articles.splice( thisArticle, 1 );
     
                             if( articles.length == 0 )
@@ -233,6 +237,8 @@ async function initial( res, rej )
                 content.append( oneRow );
             }
         }
+
+        res(0);
     });
 }
 
@@ -295,7 +301,7 @@ function checkPermission( resolve, reject )
             permission = "2";
             boardName = ["美食"];
             
-            if( boardName.indexOf( thisBoardName ) == -1 )
+            if( boardName.find( (element) => element.BoardName == thisBoardName ) != undefined )
             {
                 swal({
                     title: "載入頁面失敗",

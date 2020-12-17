@@ -397,7 +397,7 @@ function forNormal( resolve, reject )
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
-            $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
+            $( "#rule" ).html( "版規：" + escapeHtml(rule).split("\n").join("<br/>") );
 
             $( ".tabContent tbody" ).empty();
 
@@ -519,7 +519,7 @@ function forSearching( resolve, reject )
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
-            $( "#rule" ).html( "版規：" + rule.split("\n").join("<br/>") );
+            $( "#rule" ).html( "版規：" + escapeHtml(rule).split("\n").join("<br/>") );
 
             $( ".tabContent tbody" ).empty();
 
@@ -648,6 +648,14 @@ function checkPermission( resolve, reject )
 
                 isModerator = true;
             }
+        }
+        else
+        {
+            $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
+                "<button type='button' class='btn pushpinBtn top'>" +
+                    "<span class='glyphicon glyphicon-pushpin'></span>" +
+                "</button>"
+            );
         }
 
         resolve(0);
