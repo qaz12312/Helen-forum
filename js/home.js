@@ -3,7 +3,6 @@
  var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisSearching = sessionStorage.getItem( "Helen-search" );
-var thisBoardName = sessionStorage.getItem( "Helen-boardName" );
 var thisSort = sessionStorage.getItem( "Helen-sort" );
 var keepMenu;
 
@@ -459,7 +458,6 @@ function forSearching( res, rej)
     let cmd = {};
     cmd[ "act" ] = "searchBoard";
     cmd[ "account"] = thisAccount;
-    cmd[ "searchBoard" ] = thisBoardName;
     cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
     cmd[ "content" ] = thisSearching.content;
     cmd[ "hashtag" ] = thisSearching.hashtag;
