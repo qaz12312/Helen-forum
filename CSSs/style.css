@@ -54,7 +54,7 @@ body{
 }
 .star{
   position: absolute;
-  background: url("../imgs/img.jpg") no-repeat;
+  background: url("../Imgs/img.jpg") no-repeat;
   background-position: left;
   background-size: 50%;
   height: 90px;
@@ -124,7 +124,7 @@ body{
 }
 .heart{
   position: absolute;
-  background: url("../imgs/img.png") no-repeat;
+  background: url("../Imgs/img.png") no-repeat;
   background-position: left;
   background-size: 2900%;
   height: 90px;

@@ -16,7 +16,7 @@ $(document).ready( function(){
             let articleIndex = $(".tabContent tr").index(this.closest("tr"));
             sessionStorage.setItem("Helen-articleID", articles[articleIndex].articleID);
             sessionStorage.setItem("Helen-act", "postPage");
-            location.href =  "../html/post.html";
+            location.href =  "../HTMLs/post.html";
         }
     });
 

@@ -202,7 +202,7 @@ $( document ).ready( function()
                         //                  sessionStorage.setItem("Helen-act", "showArticleInDir");
                         //                  sessionStorage.setItem("Helen-dirID", CollectionCatalog[dirIndex].dirID);
                         //                  sessionStorage.setItem("Helen-dirName", CollectionCatalog[dirIndex].title);
-                        //                  window.location.href = "../html/sub.html";
+                        //                  window.location.href = "../HTMLs/sub.html";
                         //             }
                         //         }
                         //     )
@@ -236,7 +236,7 @@ $( document ).ready( function()
                                     sessionStorage.setItem("Helen-dirID", CollectionCatalog[dirIndex].dirID);
                                     sessionStorage.setItem("Helen-dirName", CollectionCatalog[dirIndex].title);
                                     console.log(dirIndex)
-                                    window.location.href = "../html/sub.html";
+                                    window.location.href = "../HTMLs/sub.html";
                                 }
                             }
                         )

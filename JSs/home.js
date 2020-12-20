@@ -23,14 +23,14 @@ $(document).ready(async function(){
     console.log("addPost")
     cmd={};
     cmd["account"] = sessionStorage.getItem("Helen-userID");
-    window.location.href = "../html/publishArticle.html";
+    window.location.href = "../HTMLs/publishArticle.html";
   });
   
   $( ".articleTitle" ).parent().click( function() 
   {
       let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
       sessionStorage.setItem( "Helen-articleID", thisArticle.articleID );
-      location.href =  "../html/post.html";
+      location.href =  "../HTMLs/post.html";
   });
 
   $( "button" ).has( ".glyphicon-heart" ).click( function()

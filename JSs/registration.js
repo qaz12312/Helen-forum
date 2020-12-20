@@ -111,7 +111,7 @@ $(document).ready(function () {
                         function () { },
                         function (dismiss) {
                             if (dismiss === 'timer') {
-                                window.location.href = "../html/login.html";
+                                window.location.href = "../HTMLs/login.html";
                             }
                         }
                     )
@@ -132,7 +132,7 @@ $(document).ready(function () {
             confirmButtonText: '確定',
             width: 500,
         }).then(function () {
-            window.location.href = "../html/login.html";
+            window.location.href = "../HTMLs/login.html";
         })
     });
     let cmd = {};

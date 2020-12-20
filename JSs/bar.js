@@ -15,13 +15,13 @@ function barInitial(){
 
     for(var i= 0; i< boards.length; i++){
         var oneBoard= boards[i];
-        $("#menu").append("<a href=\"../html/sticky.html\"><li>"+
+        $("#menu").append("<a href=\"../HTMLs/sticky.html\"><li>"+
                             oneBoard+ 
                             "版</li></a>");
     }
     
     if(userPermission>= 3) // admin 可新增看版
-        $("#menu").append("<a href=\"../html/manageBoard.html\">"+
+        $("#menu").append("<a href=\"../HTMLs/manageBoard.html\">"+
                         "<li><h3 class=\"glyphicon glyphicon-plus\">"+
                         " A D D</h3></li></a>");
 
@@ -58,25 +58,25 @@ function barInitial(){
                             "</span></li>")
         $("#userDD").append("<li class= \"divider\"></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-edit\">"+
-                            "<a href=\"../html/PersonalProfile.html\"> 個人資料</a></li>")
+                            "<a href=\"../HTMLs/PersonalProfile.html\"> 個人資料</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-pencil\">"+
-                            "<a href=\"../html/publishArticle.html\"> 發佈新文章</a></li>")
+                            "<a href=\"../HTMLs/publishArticle.html\"> 發佈新文章</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-star-empty\">"+
-                            "<a href=\"../html/CollectionCatalog.html\"> 我的收藏</a></li>")
+                            "<a href=\"../HTMLs/CollectionCatalog.html\"> 我的收藏</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-time\">"+
-                            "<a href=\"../html/PostingRecord.html\"> 發文紀錄</a></li>")
+                            "<a href=\"../HTMLs/PostingRecord.html\"> 發文紀錄</a></li>")
 
         if(userPermission>= 2){ // 版主
             $("#userDD").append("<li class= \"glyphicon glyphicon-alert\">"+
-                                "<a href=\"../html/report.html\"> 檢舉區</a></li>")
+                                "<a href=\"../HTMLs/report.html\"> 檢舉區</a></li>")
         }
         if(userPermission>= 3){
             $("#userDD").append("<li class= \"glyphicon glyphicon-th-list\">"+
-                                "<a href=\"../html/manageBoard.html\"> 管理看版</a></li>")
+                                "<a href=\"../HTMLs/manageBoard.html\"> 管理看版</a></li>")
             $("#userDD").append("<li class= \"glyphicon glyphicon-king\">"+
-                                "<a href=\"../html/moderator.html\"> 管理版主</a></li>")
+                                "<a href=\"../HTMLs/moderator.html\"> 管理版主</a></li>")
             $("#userDD").append("<li class= \"glyphicon glyphicon-bullhorn\">"+
-                                "<a href=\"../html/sendAlert.html\"> 發送通知</a></li>")
+                                "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>")
         }
     }
 }
@@ -120,15 +120,15 @@ function setSearchData(){
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if(sessionStorage.getItem("Helen-boardName")== null){
-        location.href= "../html/home.html";
+        location.href= "../HTMLs/home.html";
     }else{
-        location.href= "../html/sticky.html";
+        location.href= "../HTMLs/sticky.html";
     }
 }
 
 // 登入/登出按紐
 $("#logInBtn").click(function(){
-    location.href=  "../html/login.html";
+    location.href=  "../HTMLs/login.html";
 });
 $("#logOutBtn").click(function(){
     let cmd= {};
@@ -157,7 +157,7 @@ $("#logOutBtn").click(function(){
                     if (dismiss === 'timer') {
                         userPermission= 0;
                         sessionStorage.clear();
-                        location.href=  "../html/home.html";
+                        location.href=  "../HTMLs/home.html";
                     }
                 }
             )

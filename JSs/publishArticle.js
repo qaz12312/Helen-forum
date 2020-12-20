@@ -104,14 +104,14 @@ $("#publishBtn").on("click", function(){
             // ?依最新排序的首頁
             // sessionStorage.setItem("Helen-act", "home");
             sessionStorage.setItem("Helen-sort", "最新");
-            location.href =  "../html/home.html";
+            location.href =  "../HTMLs/home.html";
         // }
     // })
 })
 
 $("#cancelPublish").on("click", function(){
     console.log("Back To HOME Page.")
-    location.href =  "../html/home.html";
+    location.href =  "../HTMLs/home.html";
 })
 
 $("#inputHashtag").keypress(function (event){

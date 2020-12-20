@@ -15,7 +15,7 @@ $( document ).ready( function()
         {
             let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
             sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
-            location.href =  "../html/Person.html";
+            location.href =  "../HTMLs/Person.html";
         }
     } );
 
@@ -112,7 +112,7 @@ $( document ).ready( function()
                             if (dismiss === 'timer') {
                                 sessionStorage.setItem("Helen-act", "editArticle");
                                 sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
-                            window.location.href = "../html/publishArticle.html";
+                            window.location.href = "../HTMLs/publishArticle.html";
                             }
                         }
                     )

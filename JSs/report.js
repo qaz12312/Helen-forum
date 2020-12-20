@@ -14,7 +14,7 @@ $( document ).ready( async function()
         if( thisArticleID != undefined )
         {
             sessionStorage.setItem( "Helen-articleID", thisArticleID );
-            location.href =  "../html/post.html";
+            location.href =  "../HTMLs/post.html";
         }
     } );
 

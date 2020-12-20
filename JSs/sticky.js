@@ -179,7 +179,7 @@ $( document ).ready( async function()
         let thisArticleID = articles.find( (element) => element.title == $( ".articleTitle", this ).text() ).articleID;
         sessionStorage.setItem( "Helen-articleID", thisArticleID );
         sessionStorage.setItem( "Helen-sort", "熱門" );
-        location.href =  "../html/post.html";
+        location.href =  "../HTMLs/post.html";
     });
 
     $( "button" ).has( ".glyphicon-heart" ).click( function()
