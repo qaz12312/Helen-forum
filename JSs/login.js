@@ -33,9 +33,11 @@ $(document).ready(function () {
             cmd["act"] = "logIn";
             cmd["account"] = act;
             cmd["password"] = pw;
-            $.post("../index.php", cmd, function (data) {
+            $.post("./index.php", cmd, function (data) {
+                //console.log("connect success");
+                //console.log(data);
                 dataDB = JSON.parse(data);
-                if (dataDB.statue == false) {
+                if (dataDB.status == false) {
                     dataDB.data = ""
                     swal({
                         title: 'OOPS...',
@@ -49,7 +51,7 @@ $(document).ready(function () {
                 }
                 else {//登入成功
                     //console.log("log in sucess")
-                    leaveUserDetails(dataDB.data[0], dataDB.data[1], dataDB.data[2], dataDB.data[3], dataDB.data[4]);
+                    leaveUserDetails(dataDB.data[0], dataDB.data[1], dataDB.data[2]);
                     swal({
                         title: 'Welcome To Helen',
                         type: 'success',
@@ -60,7 +62,7 @@ $(document).ready(function () {
                         function () { },
                         function (dismiss) {
                             if (dismiss === 'timer') {
-                                window.location.href = "./HTMLs/registration.html";
+                                window.location.href = "../html/home.html";
                             }
                         }
                     )
@@ -82,7 +84,7 @@ $(document).ready(function () {
             function () { },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    window.location.href = "./HTMLs/registration.html";
+                    window.location.href = "./registration.html";
                 }
             }
         )
@@ -99,7 +101,7 @@ $(document).ready(function () {
             function () { },
             function (dismiss) {
                 if (dismiss === 'timer') {
-                    window.location.href = "./HTMLs/forgetPassword.html";
+                    window.location.href = "./forgetPassword.html";
                 }
             }
         )
@@ -146,8 +148,10 @@ function Restrict() {
     return true;
 }
 
-function leaveUserDetails(UserID, Password) {
-    sessionStorage.setItem("Helen-UserID", UserID);
-    sessionStorage.setItem("Helen-Password", Password);
+function leaveUserDetails(account, color ,nickname) {
+    sessionStorage.setItem("Helen-account", account);
+    sessionStorage.setItem("Helen-color", color);
+    sessionStorage.setItem("Helen-nickname", nickname);
+
 
 }
