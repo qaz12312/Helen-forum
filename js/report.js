@@ -9,14 +9,12 @@ $( document ).ready( async function()
 
     $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function()
     {
-        if( $(this).text() != "檢舉文章列表為空" )
-        {
-            let thisArticle = articles.findIndex(
-                (element) => {
-                    return element !== undefined && element[0].title == $( this ).text();
-            });
+        let thisArticleID = Object.keys( articles ).find( ( key ) => articles[ key ][0].title == $(this).text() );
+        console.log( thisArticleID );
 
-            sessionStorage.setItem( "Helen-articleID", thisArticle );
+        if( thisArticleID != undefined )
+        {
+            sessionStorage.setItem( "Helen-articleID", thisArticleID );
             location.href =  "../html/post.html";
         }
     } );
@@ -38,7 +36,8 @@ $( document ).ready( async function()
             {
                 reasonsQueue.push(
                 { 
-                    title: "檢舉原因<br /><small>&lt;" + articles[ thisArticle ][i].title + "&gt;</small>",
+                    title: "檢舉原因<br /><small>&lt;" + articles[ thisArticle ][i].title + "&gt;&emsp;</small>" +
+                           "<small><cite>" + articles[ thisArticle ][i].time + "</cite></small>",
                     html: escapeHtml( articles[ thisArticle ][i].reason ).split( "\n" ).join( "<br/>" ),
                     showCancelButton: true,
                     confirmButtonText: "Next &rarr;",
@@ -97,6 +96,8 @@ $( document ).ready( async function()
                             swal({
                                 title: "已成功刪除文章！<br /><small>&lt;" + articles[ thisArticle ][0].title + "&gt;</small>",
                                 type: "success",
+                                showConfirmButton: false,
+                                timer: 1000,
                                 
                             }).then((result) => {}, ( dismiss ) => {});
     
@@ -153,7 +154,9 @@ $( document ).ready( async function()
                         {
                             swal({
                                 title: "已成功取消檢舉文章！<br /><small>&lt;" + articles[ thisArticle ][0].title + "&gt;</small>",
-                                type: "success"
+                                type: "success",
+                                showConfirmButton: false,
+                                timer: 1000,
     
                             }).then((result) => {}, ( dismiss ) => {});
     

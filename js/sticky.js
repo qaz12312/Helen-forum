@@ -212,15 +212,41 @@ $( document ).ready( async function()
         let title = $( this ).closest( "tr" ).find( ".articleTitle" ).text();
         let thisArticle = articles.find( (element) => element.title == title );
 
-        if( keepMenu === undefined ) keepMenu = await new Promise( (resolve, reject) => { getKeepMenu( resolve, reject ); });
+        if( keepMenu === undefined ) 
+        {
+            let result = await new Promise( (resolve, reject) => { getKeepMenu( resolve, reject ); });
+
+            if( result === undefined )
+                return;
+            else
+                keepMenu = result;
+        }
+
         if( keepMenu.length == 0 )
         {
             swal({
-                title: "錯誤",
-                type: "error",
+                title: "警告",
+                type: "warning",
                 text: "沒有可用的收藏分類哦",
+                showCancelButton: true,
+                confirmButtonText: "\u002b 分類",
+                cancelButtonText: "取消",
 
-            }).then(( result ) => {}, ( dismiss ) => {} );
+            }).then(( result ) => 
+            {
+                swal({
+                    title: "新增收藏分類",
+                    input: "text",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+                    
+                }).then( ( result ) =>
+                {
+                    
+                }, ( dismiss ) => {});
+                
+            }, ( dismiss ) => {} );
 
             return;
         }
