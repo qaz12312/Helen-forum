@@ -1,0 +1,285 @@
+body{
+	background: #9da9be;
+}
+.tablink {
+	background-color: rgb(102, 97, 134);
+	color: white;
+	float: center;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding-left: 25px;
+	
+	font-size: 20px;
+	width: 32%;
+  }
+  
+.tablink:hover {
+	border-color: rgb(230, 184, 36);
+	border-radius: 10%;
+  }
+  #addPost {
+		width: 130px;
+		height: 40px;
+		font-size: 16px;
+		background-color: rgb(192, 142, 109);
+		color: white;
+		color: rgb(240, 234, 227);
+		border: none;
+		margin: 20px;
+	}
+  /*star*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
+.star-btn{
+  position: relative;
+  top:20px;
+  left: 60%;
+  width: 50px;
+  height: 25px;
+  transform: translate(-50%,-50%);
+}
+.starContent{
+  padding: 13px 16px;
+  display: flex;
+  border: 2px solid #eae2e1;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 125px;
+  
+  height: 25px;
+}
+.starContent.star-active{
+  border-color: #8d8ed6d5;
+  background:#8d8ed6d5;
+}
+.star{
+  position: absolute;
+  background: url("../imgs/img.jpg") no-repeat;
+  background-position: left;
+  background-size: 50%;
+  height: 90px;
+  width: 90px;
+  top: 50%;
+  left: 21%;
+  transform: translate(-50%,-50%);
+}
+.starText{
+	position: relative;
+  font-size: 21px;
+  margin-left: 30px;
+  color: grey;
+  font-family: 'Montserrat',sans-serif;
+}
+.starnumb:before{
+  content: 'no';
+  font-size: 21px;
+  margin-left: 7px;
+  font-weight: 600;
+  color: #9C9496;
+  font-family: sans-serif;
+}
+.starnumb.star-active:before{
+  content: 'yes';
+  color: #000;
+}
+.feartText.star-active{
+  color: #000;
+}
+.star.star-active{
+  animation: animate .8s steps(28) 1;
+  background-position: right;
+}
+@keyframes animate {
+  0%{
+    background-position: left;
+  }
+  100%{
+    background-position: right;
+  }
+}
+/*star*/
+/*heart*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
+.heart-btn{
+  position: relative;
+  top:20px;
+  left: 60%;
+  width: 50px;
+  height: 25px;
+  transform: translate(-50%,-50%);
+}
+.heartContent{
+  padding: 13px 16px;
+  display: flex;
+  border: 2px solid #eae2e1;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 125px;
+  
+  height: 25px;
+}
+.heartContent.heart-active{
+  border-color: #f9b9c4;
+  background: #fbd0d8;
+}
+.heart{
+  position: absolute;
+  background: url("../imgs/img.png") no-repeat;
+  background-position: left;
+  background-size: 2900%;
+  height: 90px;
+  width: 90px;
+  top: 50%;
+  left: 21%;
+  transform: translate(-50%,-50%);
+}
+.heartText{
+	position: relative;
+  font-size: 21px;
+  margin-left: 30px;
+  color: grey;
+  font-family: 'Montserrat',sans-serif;
+}
+.numb:before{
+  content: '12';
+  font-size: 21px;
+  margin-left: 7px;
+  font-weight: 600;
+  color: #9C9496;
+  font-family: sans-serif;
+}
+.numb.heart-active:before{
+  content: '13';
+  color: #000;
+}
+.feartText.heart-active{
+  color: #000;
+}
+.heart.heart-active{
+  animation: animate .8s steps(28) 1;
+  background-position: right;
+}
+@keyframes animate {
+  0%{
+    background-position: left;
+  }
+  100%{
+    background-position: right;
+  }
+}
+/*heart*/
+.tabContent{
+	color:  #3c537c;
+	background: #9da9be;
+	text-align: center;
+	font-size: 20px;
+	font-family: poppins;/*字型*/
+	font-weight: bold;
+	padding: 10%;
+}
+.tabContent h2{
+	letter-spacing: 10px;
+	font-size: 50px;
+}
+.tabContent p{
+	padding: 2%;
+    line-height: 20px;/*每一行之間的空間*/
+    letter-spacing: 10px;
+}
+
+#commentTable a{
+  text-decoration: none;
+  color: #545871;
+  letter-spacing: 0px;
+}
+#commentTable a:hover{
+  cursor: pointer;
+}
+
+.logo{
+	width: 150px;
+}
+.head{
+  background-color: #3c537c;
+  color: white;
+  text-shadow: -2px 1px 0 #000, 1px 1px 0 #000,2px -1px 0 #000,-1px -1px 0 #000; 
+  width: 50px;
+  height: 50px;
+}
+.contentArea{
+	text-align: left;
+	border-radius: 10px;
+	background: #545871;
+	color:  #c0c6cc;
+	padding: 5%;
+}
+
+.content{
+	text-align: center;
+	border-radius: 10px;
+	background: #e0d4bc;
+	color: #545871;
+	letter-spacing: 2px;
+	padding: 5%;
+}
+
+.postContent{
+	border-radius: 10px;
+	background: #fff;
+	padding: 5%;
+}
+.postContent span{
+	letter-spacing: 0px;
+}
+.postContent h5{
+	color: #fff;
+	border-radius: 10px;
+	padding: 10%;
+}
+.postContent button{
+	width: 75px;
+	margin-right: 3%;
+}
+.glyphicon-pushpin{
+	color: whitesmoke;
+}
+.pushpinBtn {
+  border-radius: 30px; width:35px !important; background-color: gray;
+}
+.pushpinBtn.top { background-color: brown !important;}
+
+.textInput{
+	width: 100%;
+}
+textarea{
+	width: 100%;
+}
+
+.card{
+	position: relative;
+}
+.card:hover{
+	
+	background: glyphicon;
+	border-radius: 5px;
+	box-shadow: 3px 3px 10px;
+}
+.postTitle{
+	cursor: pointer;
+}
+table{
+	width: 100%;
+}
+td{
+	height: 50px;
+}
+
+button{
+	width: 125px;
+}
+.form-control{
+	font-size: 20px;
+}
+.content p{
+    letter-spacing: 0px;
+}
