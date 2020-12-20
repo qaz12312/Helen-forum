@@ -82,53 +82,103 @@ $( document ).ready( async function()
         var tempTr = this.closest( "tr" );
         var tempTbody = this.closest( "tbody" );
         
-        let cmd = {};
-        cmd[ "act" ] = "editTopArticle";
-        cmd[ "account" ] = thisAccount;
-        cmd[ "articleID" ] = articles.find( (element) => element.title == $( ".articleTitle", tempTr ).text() ).articleID;
-        cmd[ "boardName" ] = thisBoardName;
-
-        $.post( "../index.php", cmd, function( dataDB )
+        if( $( this ).hasClass( "top" ) )
         {
-            dataDB = JSON.parse( dataDB );
+            swal({
+                title: "確定要取消置頂這篇文章嗎?<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
+                type: "question",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
 
-            if( dataDB.status == false )
+            }).then(( result ) =>
             {
-                swal({
-                    title: "置頂失敗",
-                    type: "error",
-                    text: dataDB.errorCode,
-
-                }).then(( result ) => {}, ( dismiss ) => {} );
-            }
-            else
-            {
-                swal({
-                    title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
-                    type: "success",
-                    showConfirmButton: false,
-                    timer: 1000,
-        
-                }).then(( result ) => {}, ( dismiss ) =>
+                let cmd = {};
+                cmd[ "act" ] = "removeTopArticle";
+                cmd[ "boardName" ] = thisBoardName;
+    
+                $.post( "../index.php", cmd, function( dataDB )
                 {
-                    if( dismiss )
+                    dataDB = JSON.parse( dataDB );
+        
+                    if( dataDB.status == false )
                     {
-                        $( ".pushpinBtn" ).removeClass( "top" );
-                        $( ".pushpinBtn" , tempTr ).addClass( "top" );
-
-                        tempTr.remove();
-                        tempTbody.prepend( tempTr );
+                        swal({
+                            title: "取消置頂失敗",
+                            type: "error",
+                            text: dataDB.errorCode,
+        
+                        }).then(( result ) => {}, ( dismiss ) => {} );
+                    }
+                    else
+                    {
+                        swal({
+                            title: "已取消置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
+                            type: "success",
+                            showConfirmButton: false,
+                            timer: 1000,
+                
+                        }).then(( result ) => {}, ( dismiss ) =>
+                        {
+                            if( dismiss )
+                            {
+                                $( ".pushpinBtn" ).removeClass( "top" );
+                            }
+                        });
                     }
                 });
-            }
-        });
+            }, ( dismiss ) => {});
+        }
+        else
+        {
+            let cmd = {};
+            cmd[ "act" ] = "editTopArticle";
+            cmd[ "account" ] = thisAccount;
+            cmd[ "articleID" ] = articles.find( (element) => element.title == $( ".articleTitle", tempTr ).text() ).articleID;
+            cmd[ "boardName" ] = thisBoardName;
+    
+            $.post( "../index.php", cmd, function( dataDB )
+            {
+                dataDB = JSON.parse( dataDB );
+    
+                if( dataDB.status == false )
+                {
+                    swal({
+                        title: "置頂失敗",
+                        type: "error",
+                        text: dataDB.errorCode,
+    
+                    }).then(( result ) => {}, ( dismiss ) => {} );
+                }
+                else
+                {
+                    swal({
+                        title: "已成功置頂<br/><small>&lt;" + $( ".articleTitle", tempTr ).text() + "&gt;<small>",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 1000,
+            
+                    }).then(( result ) => {}, ( dismiss ) =>
+                    {
+                        if( dismiss )
+                        {
+                            $( ".pushpinBtn" ).removeClass( "top" );
+                            $( ".pushpinBtn" , tempTr ).addClass( "top" );
+    
+                            tempTr.remove();
+                            tempTbody.prepend( tempTr );
+                        }
+                    });
+                }
+            });
+        }
     });
 
     $( ".articleTitle" ).parent().click( function() 
     {
-        let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
-        sessionStorage.setItem( "Helen-articleID", thisArticle.articleID );
-        sessionStorage.removeItem( "Helen-sort" );
+        let thisArticleID = articles.find( (element) => element.title == $( ".articleTitle", this ).text() ).articleID;
+        sessionStorage.setItem( "Helen-articleID", thisArticleID );
+        sessionStorage.setItem( "Helen-sort", "熱門" );
         location.href =  "../html/post.html";
     });
 
@@ -241,9 +291,58 @@ $( document ).ready( async function()
                     confirmButtonText: "確定",
                     cancelButtonText: "取消",
                     
-                }).then( ( result ) =>
+                }).then( async ( result ) =>
                 {
-                    
+                    let dirName = result;
+
+                    while( dirName == "" )
+                    {
+                        let dismissing = await swal({
+
+                            title: "請輸入收藏分類名稱",
+                            type: "warning",
+                            input: "text",
+                            showCancelButton: true,
+                            confirmButtonText: "確定",
+                            cancelButtonText: "取消",
+
+                        }).then((result) =>
+                        {
+                            dirName = result;
+                            return false
+
+                        }, ( dismiss ) =>
+                        {
+                            return true;
+                        });
+
+                        if( dismissing ) break;
+                    }
+
+                    let cmd = {};
+                    cmd[ "act" ] = "newDir";
+                    cmd[ "account" ] = thisAccount;
+                    cmd[ "dirName" ] = dirName;
+
+                    $.post( "../index.php", cmd, function( dataDB )
+                    {
+                        dataDB = JSON.parse( dataDB );
+
+                        if( dataDB.status == false )
+                        {
+                            swal({
+                                title: "新增收藏分類失敗",
+                                type: "error",
+                                text: dataDB.errorCode,
+
+                            }).then(( result ) => {}, ( dismiss ) => {});
+                        }
+                        else
+                        {
+                            keepMenu.push( dirName );
+                        }
+                    });
+
                 }, ( dismiss ) => {});
                 
             }, ( dismiss ) => {} );
@@ -254,7 +353,7 @@ $( document ).ready( async function()
         if( $( chosen ).hasClass( "text-warning" ) )
         {
             swal({
-                title: "選擇收藏目錄",
+                title: "選擇收藏分類",
                 input: 'select',
                 inputOptions: keepMenu,
                 showCancelButton: true,
@@ -285,7 +384,7 @@ $( document ).ready( async function()
                     else
                     {
                         swal({
-                            title: "收藏成功<br/><small>&lt;" + keepMenu[result] + "&gt;</small>",
+                            title: "收藏成功<br/><small>&lt;" + keepMenu[result] + " &larr; " + thisArticle.title + "&gt;</small>",
                             type: "success",
                             showConfirmButton: false,
                             timer: 1000,
@@ -473,7 +572,7 @@ function forNormal( resolve, reject )
 
             if( topArticleID !== undefined )
             {
-                let topArticle = articles.find( (element) => element.articleID == topArticleID );
+                let topArticle = articles.find( (element) => element.articleID === topArticleID );
 
                 if( topArticle !== undefined )
                 {
@@ -550,7 +649,6 @@ function forSearching( resolve, reject )
 
             for( let i in articles )
             {
-                console.log( articles[i] );
                 let oneRow = "<tr>" +
                                 "<td>" +
                                     "<div class='card'>" +
@@ -625,7 +723,7 @@ function checkPermission( resolve, reject )
 {
     isModerator = false;
 
-    if( !thisAccount )
+    if( !thisAccount && topArticleID !== null && topArticleID !== undefined)
     {
         $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
             "<button type='button' class='btn pushpinBtn top'>" +
@@ -663,15 +761,18 @@ function checkPermission( resolve, reject )
                     "</button>"
                 );
     
-                $( ".tabContent tbody tr" ).first().find( "button" ).first().replaceWith( 
-                    "<button type='button' class='btn pushpinBtn top'>" +
-                        "<span class='glyphicon glyphicon-pushpin'></span>" +
-                    "</button>"
-                );
+                if( topArticleID !== null && topArticleID !== undefined )
+                {
+                    $( ".tabContent tbody tr" ).first().find( "button" ).first().replaceWith( 
+                        "<button type='button' class='btn pushpinBtn top'>" +
+                            "<span class='glyphicon glyphicon-pushpin'></span>" +
+                        "</button>"
+                    );
+                }
 
                 isModerator = true;
             }
-            else
+            else if( topArticleID !== null && topArticleID !== undefined )
             {
                 $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
                     "<button type='button' class='btn pushpinBtn top'>" +
@@ -680,7 +781,7 @@ function checkPermission( resolve, reject )
                 );
             }
         }
-        else
+        else if( topArticleID !== null && topArticleID !== undefined )
         {
             $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
                 "<button type='button' class='btn pushpinBtn top'>" +

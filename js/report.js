@@ -10,7 +10,6 @@ $( document ).ready( async function()
     $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function()
     {
         let thisArticleID = Object.keys( articles ).find( ( key ) => articles[ key ][0].title == $(this).text() );
-        console.log( thisArticleID );
 
         if( thisArticleID != undefined )
         {
@@ -36,8 +35,8 @@ $( document ).ready( async function()
             {
                 reasonsQueue.push(
                 { 
-                    title: "檢舉原因<br /><small>&lt;" + articles[ thisArticle ][i].title + "&gt;&emsp;</small>" +
-                           "<small><cite>" + articles[ thisArticle ][i].time + "</cite></small>",
+                    title: "檢舉原因&emsp;<cite>" + articles[ thisArticle ][i].time + "</cite><br />" +
+                           "<small>&lt;" + articles[ thisArticle ][i].title + "&gt;</small>",
                     html: escapeHtml( articles[ thisArticle ][i].reason ).split( "\n" ).join( "<br/>" ),
                     showCancelButton: true,
                     confirmButtonText: "Next &rarr;",
@@ -104,7 +103,6 @@ $( document ).ready( async function()
                             $(chosen).closest( "tr" ).remove();
                             delete articles[ thisArticle ];
     
-                            console.log($.isEmptyObject(articles));
                             if( $.isEmptyObject(articles) )
                             {
                                 let emptyMessage = "<tr>" + 
@@ -163,7 +161,6 @@ $( document ).ready( async function()
                             $(chosen).closest( "tr" ).remove();
                             delete articles[ thisArticle ];
     
-                            console.log($.isEmptyObject(articles));
                             if( $.isEmptyObject(articles) )
                             {
                                 let emptyMessage = "<tr>" + 
@@ -208,7 +205,6 @@ async function initial( res, rej )
 
             articles = dataDB.data;
 
-            console.log($.isEmptyObject(articles));
             if( $.isEmptyObject(articles) )
             {
                 let emptyMessage = "<tr>" + 
