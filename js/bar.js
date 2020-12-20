@@ -212,7 +212,7 @@ function getBoards(){
     // });
     
     //Test
-    boards= ["美食", "廢文", "八卦", "企鵝", "漫威"];
+    boards= ["美食", "廢文", "八卦", "企鵝", "漫威", "星座", "旅遊"];
     //Test End
 
     if(boards.length== 0){
