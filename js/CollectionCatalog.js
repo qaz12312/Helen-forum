@@ -49,7 +49,7 @@ $( document ).ready(async function()
                                 if( result == false )
                                 {
                                     swal({
-                                        title: "移除失敗<br /><small>&lt;"
+                                        title: "修改失敗<br /><small>&lt;"
                                         //  + CollectionCatalog[ dirIndex ].title
                                           + "&gt;</small>",
                                         type: "error",
@@ -61,7 +61,7 @@ $( document ).ready(async function()
                                 {
                                         
                                     swal({
-                                        title: "已成功移除收藏文章！<br /><small>&lt;"
+                                        title: "已成功修改收藏文章！<br /><small>&lt;"
                                         + CollectionCatalog[ dirIndex ].title
                                         + "&gt;</small>",
                                         type: "success",
@@ -104,64 +104,65 @@ $( document ).ready(async function()
     $( document ).on( "click", ".delete", function()
     {
         let dirIndex = $("div .Page").index(this.closest(".Page"));
-           let cmd = {};
-            cmd["act"] = "deleteDir";
-            cmd["account"] = sessionStorage.getItem("Helen-account");
-            cmd["dirName"] = $(this).parents('.Page').find("span").text();
+          
             
-            $.post( "../index.php", cmd, function( dataDB ){
-                dataDB = JSON.parse( dataDB );
-                        
-                        swal({
-                            title: "確定要刪除此收藏目錄嗎？<br /><span style='color:#FF0000'>會連同裡面整個刪除喔!!</span><br /><small>&lt;"
-                            + CollectionCatalog[ dirIndex ].DirName
-                            + "&gt;</small>",
-                            showCancelButton: true,
-                            confirmButtonText: "確定",
-                            cancelButtonText: "取消",
-                            animation: false,
-                            type: 'warning'
+            
+            swal({
+                title: "確定要刪除此收藏目錄嗎？<br /><span style='color:#FF0000'>會連同裡面整個刪除喔!!</span><br /><small>&lt;"
+                + CollectionCatalog[ dirIndex ].DirName
+                + "&gt;</small>",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                animation: false,
+                type: 'warning'
 
-                        }).then(( result ) => {
-                            if ( result ) 
+            }).then(( result ) => 
+            {
+                if ( result ) 
+                {
+                    let cmd = {};
+                    cmd["act"] = "deleteDir";
+                    cmd["account"] = sessionStorage.getItem("Helen-account");
+                    cmd["dirName"] = $(this).parents('.Page').find("span").text();
+                    $.post( "../index.php", cmd, function( dataDB )
+                    {
+                        dataDB = JSON.parse( dataDB );
+
+                        if( dataDB.status == false )
+                        {
+                            swal({
+                                title: "移除失敗<br /><small>&lt;" + CollectionCatalog[ dirIndex ].DirName + "&gt;</small>",
+                                type: "error",
+                                text: dataDB.errorCode,
+    
+                            }).then((result) => {}, ( dismiss ) => {});
+                        }
+                        else
+                        {
+                            swal({
+                                title: "已成功移除收藏文章！<br /><small>&lt;" + CollectionCatalog[ dirIndex ].DirName + "&gt;</small>",
+                                type: "success",
+                                showConfirmButton: false,
+                                timer: 1000,
+    
+                            }).then((result) => {}, ( dismiss ) => {});
+    
+                            $(this).parents('.Page').remove();
+                            location.reload();//重整
+    
+                            if( $.isEmptyObject(articles) )
                             {
-                                console.log(result)
-                                if( result == false )
-                                {
-                                    swal({
-                                        title: "移除失敗<br /><small>&lt;"
-                                        //  + CollectionCatalog[ dirIndex ].title
-                                          + "&gt;</small>",
-                                        type: "error",
-                                        // text: dataDB.errorCode,
-                                        animation: false
-                                    });
-                                }
-                                else
-                                {
-                                        
-                                    swal({
-                                        title: "已成功移除收藏文章！<br /><small>&lt;"
-                                        + CollectionCatalog[ dirIndex ].title
-                                        + "&gt;</small>",
-                                        type: "success",
-                                    }).then(( result ) => {
-                                        if ( result ) 
-                                        {
-                                            $(this).parents('.Page').remove();
-                                            location.reload();//重整
-                                        }
-                                        
-                                    });
-
-                                 }
-                                        }
-                                    }, function( dismiss ) {
-                                        console.log("cancel")
-                                        if ( dismiss === 'cancel' );
-                                    });
-                        
-            });
+                                let emptyMessage = "<tr>" + 
+                                                        "<td colspan='4'>收藏文章列表為空</td>" +
+                                                    "</tr>";
+                                $( ".tabContent tbody" ).append( emptyMessage );
+                            }
+                        }
+                    });
+                }
+            }, ( dismiss ) => {});
+            
     });
     
     $("#CollectionCatalog button").on( "click",  function(){
@@ -318,7 +319,7 @@ function checkPermission(res, rej)
     {
         return false;
     }
-    console.log("yes")
+    
     res(0);
     
     
