@@ -2,7 +2,7 @@
     /* 
     前端 to 後端:
     let cmd = {};
-    cmd["act"] = "showAritcleComment";
+    cmd["act"] = "showArticleComment";
     cmd["articleID"] = "ArticleID";
     cmd["account"] = "00757003";    // 訪客不用傳ㄋ
     s
@@ -27,7 +27,7 @@
         dataDB.errorCode = "Article doesn't exit."
         dataDB.data = ""
     */
-    function doShowAritcleComment($input){
+    function doShowArticleComment($input){
         global $conn;
         $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?";
         $arr = array($input['articleID']);
