@@ -18,7 +18,7 @@
         dataDB.errorCode = "Failed to send notification,Database exception."
         dataDB.data = ""
     */
-    function doSendNotification($input){
+    function doSendNotification($input,$print=1){
         global $conn;
         $sql="INSERT INTO `Notice`(`UserID`,`Content`) VALUES(?,?)";
         $arr = array($input['recipient'], $input['content']);
@@ -32,7 +32,8 @@
             errorCode("Failed to send notification,Database exception.");
         }
         else{
-            $rtn = successCode("Successfully send the notice.");
+			if($print)
+				$rtn = successCode("Successfully send the notice.");
         }
         echo json_encode($rtn);
     }
