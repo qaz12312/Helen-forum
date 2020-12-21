@@ -23,7 +23,12 @@
             $rtn = successCode("Without any user except moderator now.");
         }
         else{
-            $rtn = successCode("Successfully show user list.",$result);
+			$arr=array();
+			for($i=0;$i<$resultCount;$i++){
+                $row = $result[$i];
+                $arr[$i]=array("userID"=>$row[0]);
+            }
+            $rtn = successCode("Successfully show user list.",$arr);
         }
         echo json_encode($rtn);
     }

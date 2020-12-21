@@ -23,7 +23,12 @@
             $rtn = successCode("Without any board now.");
         }
         else{
-            $rtn = successCode("Successfully show boardName list.",$result);
+			$arr=array();
+			for($i=0;$i<$resultCount;$i++){
+                $row = $result[$i];
+                $arr[$i]=array("boardName"=>$row[0]);
+            }
+            $rtn = successCode("Successfully show boardName list.",$arr);
         }
         echo json_encode($rtn);
     }
