@@ -22,54 +22,72 @@
     function doEditModerator($input){
         global $conn;
         $check= true;
-        if(isset($input['oldBoardName'])){
+		 if(isset($input['newBoardName'])){
             global $conn;
-            $sql="SELECT `UserID` FROM `Board` WHERE `BoardName` = ? AND `UserID`=? ";  
-            $arr = array($input['oldBoardName'], $input['account']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
+			$sql_check="SELECT `BoardName` FROM `Board` WHERE `BoardName`= ?";
+			$arr = array($input['newBoardName']);
+			$result = query($conn,$sql_check,$arr,"SELECT");
+			$resultCount = count($result);
             if($resultCount <= 0){
-                errorCode("Update without permission.");
+				$check = false;
+                errorCode("This boardname doesn't exist");
             }
-            else{
-                $sql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = ?";
-                $arr = array($input['oldBoardName']);
-                query($conn,$sql,$arr,"UPDATE");
+			else{
+				if(isset($input['oldBoardName'])){
+					global $conn;
+					$sql="SELECT `UserID` FROM `Board` WHERE `BoardName` = ? AND `UserID`=? ";  
+					$arr = array($input['oldBoardName'], $input['account']);
+					$result = query($conn,$sql,$arr,"SELECT");
+					$resultCount = count($result);
+					if($resultCount <= 0){
+						$check = false;
+						errorCode("Update without permission.");
+					}
+					else{
+						$sql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = ?";
+						$arr = array($input['oldBoardName']);
+						query($conn,$sql,$arr,"UPDATE");
 
-                $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`WHERE `BoardName`=? AND`UserID`='admin' " ;
-                // $result=$conn->query($sql);
-                $arr = array($input['oldBoardName']);
-                $result = query($conn,$sql,$arr,"SELECT");
-                $resultCount = count($result);
-                if($resultCount <= 0){
-                    errorCode("Failed to found the update Moderator.");
-                }
-            doSendNotification(array("recipient" => $input['account'], "content" => "Oops - You are no longer the moderator in 【".$input['oldBoardName']."】."));
-            }
-        }
-        if(isset($input['newBoardName'])){
-            global $conn;
-            $sql="SELECT `UserID` FROM `Board` WHERE `BoardName` =? AND `UserID`='admin' ";  
-            $arr = array($input['newBoardName']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-            if($resultCount <= 0){
-                errorCode("Update without permission.");
-            }
-            else{
-                $sql="UPDATE `Board` SET `UserID`=? WHERE `BoardName` =?";
-                $arr = array($input['account'], $input['newBoardName']);
-                query($conn,$sql,$arr,"UPDATE");
-                
-                $sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`  WHERE `BoardName` =? AND`UserID`=?" ;
-                $arr = array($input['newBoardName'], $input['account']);
-                $result = query($conn,$sql,$arr,"SELECT");
-                if($resultCount <= 0){
-                    errorCode("Failed to appoint moderator,Database exception.");
-                }
-                doSendNotification(array("recipient" => $input['account'], "content" => "Congratulation  - You are the moderator in 【".$input['oldBoardName']."】 :)"));
-            }
-        }
+						$sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`WHERE `BoardName`=? AND`UserID`='admin' " ;
+						// $result=$conn->query($sql);
+						$arr = array($input['oldBoardName']);
+						$result = query($conn,$sql,$arr,"SELECT");
+						$resultCount = count($result);
+						if($resultCount <= 0){
+							$check = false;
+							errorCode("Failed to found the update Moderator.");
+						}
+						doSendNotification(array("recipient" => $input['account'], "content" => "Oops - You are no longer the moderator in 【".$input['oldBoardName']."】."));
+					}
+				}
+				if(isset($input['newBoardName'])){
+					global $conn;
+					$sql="SELECT `UserID` FROM `Board` WHERE `BoardName` =? AND `UserID`='admin' ";  
+					$arr = array($input['newBoardName']);
+					$result = query($conn,$sql,$arr,"SELECT");
+					$resultCount = count($result);
+					if($resultCount <= 0){
+						$check = false;
+						errorCode("Update without permission.");
+					}
+					else{
+						$sql="UPDATE `Board` SET `UserID`=? WHERE `BoardName` =?";
+						$arr = array($input['account'], $input['newBoardName']);
+						query($conn,$sql,$arr,"UPDATE");
+						
+						$sql ="SELECT `UserID`,`Color`,`BoardName` FROM `Board`NATURAL JOIN`Users`  WHERE `BoardName` =? AND`UserID`=?" ;
+						$arr = array($input['newBoardName'], $input['account']);
+						$result = query($conn,$sql,$arr,"SELECT");
+						if($resultCount <= 0){
+							$check = false;
+							errorCode("Failed to appoint moderator,Database exception.");
+						}
+						doSendNotification(array("recipient" => $input['account'], "content" => "Congratulation  - You are the moderator in 【".$input['oldBoardName']."】 :)"));
+					}
+				}
+			}
+		 }
+
         if($check){
             $rtn = successCode("Successfully modified moderator.");
         }
