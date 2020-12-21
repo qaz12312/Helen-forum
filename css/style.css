@@ -189,11 +189,15 @@ body{
 
 #commentTable a{
   text-decoration: none;
-  color: #545871;
+  /* color: #545871; */
   letter-spacing: 0px;
 }
 #commentTable a:hover{
   cursor: pointer;
+}
+.deleteComment{
+  float: right;
+  width: 40px;
 }
 
 .logo{
