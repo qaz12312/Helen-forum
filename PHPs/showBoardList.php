@@ -16,7 +16,7 @@
 	*/
     function doBoardList($input){
         global $conn;
-        $sql="SELECT `BoardName` FROM `Board`";
+        $sql="SELECT `BoardName`,`Rule` FROM `Board`";
         $result = query($conn,$sql,array(),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
@@ -26,7 +26,7 @@
 			$arr=array();
 			for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
-                $arr[$i]=array("boardName"=>$row[0]);
+                $arr[$i]=array("boardName"=>$row[0],"rule"=>$row[1]);
             }
             $rtn = successCode("Successfully show boardName list.",$arr);
         }

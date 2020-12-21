@@ -20,6 +20,12 @@ echo $encodeletter;
 echo base64_decode($encodeletter); //解密
 ?>
 ```
+### token
+```
+$str = accountID."010helen";
+$token = base64_encode($str);
+$_SESSION[$token] = array("account"=>accountID,"permission"=>1/2/3,"ip"=>ip位址,"log"=>log操作紀錄);
+```
 
 ### 紀錄dir
 + old version 12-14 : 12/14日完成的
