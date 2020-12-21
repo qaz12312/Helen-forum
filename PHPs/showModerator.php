@@ -21,7 +21,7 @@
     */
     function doShowModerator($input){
         global $conn;
-        $sql="SELECT `UserID`, `Color`, `BoardName` FROM `Board` NATURAL JOIN `Users` order by `UserID` ASC ";
+        $sql="SELECT `UserID`, `Color`, `BoardName` FROM `Board` NATURAL JOIN `Users` WHERE `UserID` NOT IN('admin') order by `UserID` ASC `BoardName` ASC";
         $result = query($conn,$sql,array(),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
