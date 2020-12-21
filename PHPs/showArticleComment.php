@@ -17,6 +17,7 @@
         dataDB.data.comment[i].floor //第i筆留言的樓層
         dataDB.data.comment[i].nickname
         dataDB.data.comment[i].color
+        dataDB.data.comment[i].time
         ) 
         dataDB.data.title //第i筆文章的標題
         dataDB.data.like //第i筆文章的總愛心數
@@ -55,7 +56,7 @@
             }else
                 $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5], "hasHeart" => "", "hasKeep" =>"");
 
-            $sql ="SELECT `Nickname`, `Color`,`Content`,`Floor` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ;
+            $sql ="SELECT `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ;
             $arr3 = array($articleID);
             $comment = query($conn,$sql,$arr3,"SELECT");
             $commentCount = count($comment);
@@ -66,7 +67,7 @@
             else{
                 for($i=0;$i<$commentCount;$i++){
                     $row = $comment[$i];
-                    $arr2[$i]=array("nickname"=>$row[0],"color"=>$row[1],"content"=>$row[2],"Floor"=>$row[3] );
+                    $arr2[$i]=array("nickname"=>$row[0],"color"=>$row[1],"content"=>$row[2],"floor"=>$row[3],"time"=>$row[4]);
                 }
             }
             $arr['comment']=$arr2;
