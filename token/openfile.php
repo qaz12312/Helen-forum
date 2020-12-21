@@ -6,7 +6,7 @@
     */
     // log
     function writeLog($info){
-        $TxtFileName = "../Data/Record/".$info["account"]."/".$info["time"].".txt";
+        $TxtFileName = "./Data/Record/".$info["account"]."/".$info["time"].".txt";
         //以讀寫方式打寫指定檔案，如果檔案不存則建立
         if( ($TxtRes=fopen ($TxtFileName,"a")) === FALSE){
             echo("建立可寫檔案：".$TxtFileName."失敗");
