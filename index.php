@@ -174,9 +174,9 @@
             doRemoveTopArticle($input);
             break;
         case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
-     		require_once("showAllUser.php"); 
-    	 	doShowAllUser($input);
-    		break;
+     	require_once("showAllUser.php"); 
+     	doShowAllUser($input);
+   		break;
     }
     $conn = null;
 ?>
