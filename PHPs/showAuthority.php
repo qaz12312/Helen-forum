@@ -16,7 +16,6 @@
 	*/
     function doShowAuthority($input){
         global $conn;
-        $rtn = array();
         $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`=? AND `UserID` not in ('admin')";
         $arr = array($input['account']);
         $result = query($conn,$sql,$arr,"SELECT");
