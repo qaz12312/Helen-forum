@@ -11,10 +11,6 @@
 	若 status = true:
 		dataDB.info = ""
 		dataDB.data[i]	// 資料夾名稱
-		(
-			dataDB.data[0].Dirname
-			...
-		)
 	否則
 		dataDB.errorCode = "User didn't create any folder.";
 		dataDB.data = ""
