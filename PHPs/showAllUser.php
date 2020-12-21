@@ -28,7 +28,7 @@
                 $row = $result[$i];
                 $arr[$i]=array("userID"=>$row[0]);
             }
-            $rtn = successCode("Successfully show user list.",$result);
+            $rtn = successCode("Successfully show user list.",$arr);
         }
         echo json_encode($rtn);
     }

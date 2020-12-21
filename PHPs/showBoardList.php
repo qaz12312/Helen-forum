@@ -28,7 +28,7 @@
                 $row = $result[$i];
                 $arr[$i]=array("boardName"=>$row[0]);
             }
-            $rtn = successCode("Successfully show boardName list.",$result);
+            $rtn = successCode("Successfully show boardName list.",$arr);
         }
         echo json_encode($rtn);
     }
