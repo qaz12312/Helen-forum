@@ -22,7 +22,7 @@ echo base64_decode($encodeletter); //解密
 ```
 
 ### 紀錄dir
-+ PHPs : 目前在master的版本，最穩定版
 + old version 12-14 : 12/14日完成的
-+ 
-+ add token : 
++ PHPs : 目前在master的版本，最穩定版，12/17日完成的
++ add token : account、permission、登入ip、操作紀錄檔
++ 加解密 : passward、account
