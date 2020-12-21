@@ -20,6 +20,8 @@
         dataDB.data.comment[i].time
         ) 
         dataDB.data.title //第i筆文章的標題
+        dataDB.data.content 
+        dataDB.data.time
         dataDB.data.like //第i筆文章的總愛心數
         dataDB.data.keep//第i筆文章的總收藏數
         dataDB.data.nickname
@@ -30,7 +32,7 @@
     */
     function doShowArticleComment($input){
         global $conn;
-        $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?";
+        $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?";
         $arr = array($input['articleID']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
@@ -52,9 +54,9 @@
                 $arr = array($articleID, $input['account']);
                 $keep = query($conn,$sql,$arr,"SELECT");
                 $keepCount = count($keep);
-                $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
+                $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5],"time"=>$result[0][6],"hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
             }else
-                $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5], "hasHeart" => "", "hasKeep" =>"");
+                $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5],"time"=>$result[0][6], "hasHeart" => "", "hasKeep" =>"");
 
             $sql ="SELECT `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ;
             $arr3 = array($articleID);
