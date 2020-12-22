@@ -9,7 +9,7 @@ cmd["act"] = "searchBoard";
 cmd["searchBoard"] = "美食";
 cmd["account"]="00757033";
 cmd["searchWord"] = "好吃";
-cmd["sort"] = "time/hot";
+cmd["sort"] = "time/hot/collect";
 
 後端 to 前端:
 dataDB = JSON.parse(data);
@@ -38,7 +38,7 @@ function doSearchBoard($input){
         errorCode("This boardname doesn't exist");
     }
 	else{
-        if ($input['sort'] == "time" || $input['sort'] == "hot") {
+        if ($input['sort'] == "time" || $input['sort'] == "hot"|| $input['sort'] == "collect" ) {
             $sql = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE ";
             $arrsize = count($input["searchWord"]);
             $sql = $sql .str_repeat("`Content` LIKE ? OR ",  $arrsize-1);
@@ -47,8 +47,10 @@ function doSearchBoard($input){
             $sql = $sql . "`Title` LIKE  ?  AND `BoardName` =?";
             if ($input['sort'] == "time") 
                 $sql = $sql . " ORDER BY `Times` DESC;";
-            else
+            else if ($input['sort'] == "hot")
                 $sql = $sql . " ORDER BY `cntHeart` DESC;";
+            else
+                $sql = $sql . " ORDER BY `cntKeep` DESC;";
             $i = 0;
             for($j=0;$j<2;$j++){
                 foreach($input["searchWord"] as $value){
