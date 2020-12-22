@@ -32,9 +32,10 @@
             errorCode("Failed to send notification,Database exception.");
         }
         else{
-			if($print)
+			if($print){
 				$rtn = successCode("Successfully send the notice.");
+				echo json_encode($rtn);
+			}
         }
-        echo json_encode($rtn);
     }
 ?>
