@@ -29,7 +29,7 @@
     function doSearchMenu($input){
         global $conn;
         //搜尋標題+內容
-        if ($input['sort'] == "time" || $input['sort'] == "hot") {
+        if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect") {
             $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE";
             $arrsize = count($input["searchWord"]);
             $sql = $sql .str_repeat("`Content` LIKE ? OR ",  $arrsize-1);
@@ -38,8 +38,10 @@
             $sql = $sql . "`Title` LIKE  ?  AND `BoardName` =?";
             if ($input['sort'] == "time") 
                 $sql = $sql . " ORDER BY `Times` DESC;";
-            else
+            else if ($input['sort'] == "hot")
                 $sql = $sql . " ORDER BY `cntHeart` DESC;";
+            else
+                $sql = $sql . " ORDER BY `cntKeep` DESC;";
             $i = 0;
             for($j=0;$j<2;$j++){
                 foreach($input["searchWord"] as $value){
