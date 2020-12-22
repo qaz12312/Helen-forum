@@ -29,8 +29,8 @@
             errorCode("Update without permission.");
         }
         else{
-            $sql="UPDATE `KeepDir` SET `DirName`=?,`UserID`=? WHERE `UserID`=?";
-            $arr = array($input['new'], $input['account'],$input['account']);
+            $sql="UPDATE `KeepDir` SET `DirName`=? WHERE `UserID`=? AND`DirName`=?";
+            $arr = array($input['new'],$input['account'],$input['old']);
             query($conn,$sql,$arr,"UPDATE");
 
             $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`=?  AND`DirName`=?";
