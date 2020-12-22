@@ -51,17 +51,19 @@ function query($conn,$sql,$input,$option){
     // log
     function writeRecord($info){
         $TxtFileName = "./Data/Record/".$info["account"]."/".$info["time"].".txt";
-        //以讀寫方式打寫指定檔案，如果檔案不存則建立
         if( ($file=fopen ($TxtFileName,"a")) === FALSE){
             return "建立可寫檔案：".$TxtFileName."失敗";
             exit();
         }
-        if(!fwrite ($file,$info["info"]."\n")){ //將資訊寫入檔案
+        $date = date_create('now', new DateTimeZone('Asia/Taipei'));
+        $time = date_format($date, 'Y-m-d H:i:s');
+        $str = "【".$time."】 ".$info["info"]."\n";
+        if(!fwrite ($file,$str)){
             fclose($file);
             return "嘗試向檔案".$TxtFileName."寫入".$StrConents."失敗！";
             exit();
         }
-        fclose ($file); //關閉指標
+        fclose ($file);
     }
     /*
     account // 資料夾名稱
