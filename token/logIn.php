@@ -31,7 +31,7 @@
 			// token
 			$date = date_create('now', new DateTimeZone('Asia/Taipei'));
 			$time = date_format($date, 'Y-m-d H-i-s');
-			writeRecord(array("account"=>$row[0],"time"=>$time,"info"=>"log in"));
+			writeRecord($row[0],$time,"---\nlog in");
 			$str = $result[0]."010helen";
 			$token = base64_encode($str);
 			$per = showAuthority($row[0]);

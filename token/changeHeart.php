@@ -33,13 +33,13 @@
 				$sql = "INSERT INTO `FollowHeart`(`ArticleID`,`UserID`) VALUES(?,?)";
 				$arr = array($input['articleID'],$userInfo['account']);
 				query($conn,$sql,$arr,"INSERT");
-				writeRecord(array("account"=>$userInfo["account"],"time"=>$userInfo["log"],"info"=>"add heart for articleID:".$input['articleID']));
+				writeRecord($userInfo["account"],$userInfo["log"],"add heart for articleID:".$input['articleID']);
 				$rtn = successCode("Successfully added this heart.");
 			} else {	//DELETE HEART
 				$sql = "DELETE FROM `FollowHeart` WHERE `UserID`=? AND `ArticleID`=?";
 				$arr = array($input['account'],$input['articleID']);
 				query($conn,$sql,$arr,"DELETE");
-				writeRecord(array("account"=>$userInfo["account"],"time"=>$userInfo["log"],"info"=>"cancel heart for articleID:".$input['articleID']));
+				writeRecord($userInfo["account"],$userInfo["log"],"cancel heart for articleID:".$input['articleID']);
 				$rtn = successCode("Successfully deleted this heart.");
 			}
 		}

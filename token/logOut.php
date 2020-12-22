@@ -15,7 +15,7 @@
     function doLogOut($input){
 		$token =$input['token'];
 		$info = $_SESSION[$token];
-		writeRecord(array("account"=>$info["account"],"time"=>$info["log"],"info"=>"log out"));
+		writeRecord($info["account"],$info["log"],"log out");
         unset($_SESSION[$token]);
         session_destroy();
 		$rtn = successCode("Successfully log out!");
