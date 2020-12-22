@@ -77,7 +77,7 @@ CREATE TABLE FollowKeep (
 	AddTime datetime DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (ArticleID, UserID),
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)   ON DELETE CASCADE,
-	FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON DELETE CASCADE
+	FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON UPDATE CASCADE ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Notice;
@@ -110,3 +110,4 @@ CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`cntKeep`,`Times
 SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowKeep.UserID),`Times`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
 GROUP BY `ArticleID` ;
+
