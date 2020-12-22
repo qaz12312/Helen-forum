@@ -9,8 +9,8 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	status = true
-    dataDB.info = ""
-    dataDB.data = "already log out!"
+    dataDB.info = "already log out!"
+    dataDB.data = ""
 	*/
     function doLogOut($input){
 		$rtn = successCode("already log out!");
