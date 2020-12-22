@@ -3,14 +3,14 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "logOut";
-	cmd["token"] = "c93b3e8ab496d786030fbf8a17c3da51";
+	cmd["token"]
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status
 	status = true
-    dataDB.errorCode = ""
-    dataDB.data = "Successfully log out!"
+    dataDB.info = "Successfully log out!"
+    dataDB.data = ""
 	*/
     function doLogOut($input){
 		$token =$input['token'];

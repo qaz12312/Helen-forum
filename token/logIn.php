@@ -3,8 +3,8 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "logIn";
-	cmd["account"] = "00757007";
-	cmd["password"] = "00757007";
+	cmd["account"] = "00757007";(base64加密後)
+	cmd["password"] = "00757007";(base64加密後)
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -15,13 +15,13 @@
 		dataDB.data[1] // color:"#ffffff"
 		dataDB.data[2] // nickname:"00757007"
 	否則
-		dataDB.errorCode = "Could not find the user."
+		dataDB.errorCode = "【SQL XXXX-query】failed: ..." / "【query XXXX-execute】failed: ..." / "Could not find the user."
 		dataDB.data = "" 
 	*/
     function doLogIn($input){
     	global $conn;
     	$sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`=? AND `Password`=?";
-	    $arr = array($input['account'],$input['password'] );
+		$arr = array(base64_decode($input['account']),base64_decode($input['password']) );
 		$result = query($conn,$sql,$arr,"SELECT");
 		$resultCount = count($result);
 	    if($resultCount <= 0){

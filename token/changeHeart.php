@@ -13,7 +13,7 @@
 		dataDB.info = "Successfully added this heart. / Successfully deleted this heart."
 		dataDB.data = ""
 	否則 
-		dataDB.errorCode =  "【SQL XXXX-query】failed: ..." / "【query XXXX-execute】failed: ..."
+		dataDB.errorCode = "【SQL XXXX-query】failed: ..." / "【query XXXX-execute】failed: ..." / "token doesn't exist."
 		dataDB.data = ""
 	*/
 	function doAddDeleteHeart($input)
