@@ -177,7 +177,11 @@
 	case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
 		require_once("showAllUser.php");
 		doShowAllUser($input);
-		break;
+        break;
+    case "checkPassword":	//【版主】顯示非版主, 非Admin的使用者
+        require_once("checkPassword.php");
+        doCheckPassword($input);
+        break;
     }
     $conn = null;
 ?>
