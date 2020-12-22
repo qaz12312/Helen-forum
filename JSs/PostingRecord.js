@@ -1,149 +1,112 @@
 //PostingRecord
-var articles = [];
 
-let dataDB = {};
- dataDB["data"] = [ { "title": "美國隊長好帥!!!", "blockName": "漫威版", "articleID": "123"} ];
-$( document ).ready( function() 
+var thisAccount = sessionStorage.getItem( "Helen-account" );
+
+ $( document ).ready(async function() 
 {
-    initial();
+    await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
 
-    $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function()
+    $( document ).on( "click", ".btn-danger", function()
     {
-        console.log( $(this).text() );
-
-        if( $(this).text() != "沒發文紀錄喔！" )
-        {
             let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
-            sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
-            location.href =  "../HTMLs/Person.html";
-        }
-    } );
-
-    $( ".tabContent button" ).on( "click", function()
-    {
-        // console.log( $( ".tabContent tr" ).index( this.closest( "tr" ) ) );
-
-        let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
-        if( $(this).text().trim() == "刪除" )
-        {
-            console.log( "delete" );
-            let status = true;
-            console.log( status );
-            // let cmd = {};
-            // cmd[ "act" ] = "deleteArticle";
-            // cmd["account"] = sessionStorage.getItem( "UserID" );
-            // cmd["articleID"] =articles[ thisArticle ].articleID;         // console.log("delete")
-
-                // $.post( "../index.php", cmd, function( dataDB ){
-                //     dataDB = JSON.parse( dataDB );
-
             
-                    swal({
-                        title: "確定要刪除此篇文章嗎？<br /><small>&lt;" 
-                        + articles[ thisArticle ].title
-                        +"&gt;</small>",
-                        showCancelButton: true,
-                        confirmButtonText: "確定",
-                        cancelButtonText: "取消",
-                        animation: false
+            
+                   console.log(thisArticle)
 
-                        }).then(( result ) => {
-                            if ( result ) 
+                  swal({
+                    title: "確定要刪除此篇文章嗎？<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+                    animation: false,
+    
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        let cmd = {};
+                        cmd[ "act" ] = "deleteArticle";
+                        cmd["account"] = sessionStorage.getItem( "Helen-account" );
+                        cmd["articleID"] =  articles[ thisArticle ].articleID;
+                        $.post( "../index.php", cmd, function( dataDB ){
+                            dataDB = JSON.parse( dataDB );
+    
+                            if( dataDB.status == false )
                             {
-                                //console.log( "status " + status );
-                                if( status == false )
-                                {
-                                    swal({
-                                        title: "刪除失敗<br />" 
-                                        + articles[ thisArticle ].title
-                                        + "&gt;</small>",
-                                        type: "error",
-                                        text: dataDB.errorCode,
-                                        animation: false
-                                    })
-                                }
-                                else
-                                {
-                                    swal({
-                                        title: "已成功刪除文章！<br />" 
-                                        + articles[ thisArticle ]
-                                        + "&gt;</small>",
-                                        type: "success",
-                                    })
-                                    location.reload();
-                                    $(this).closest( "tr" ).remove();
-                
-                                    articles.splice( thisArticle, 1 );
-                                    if( articles.length == 0 )
-                                        {
-                                            console.log( "length==0" );
-                                            let emptyMessage = "<tr>" + 
-                                                                    "<td colspan='2'>沒發文紀錄喔！</td>" +
-                                                                "</tr>";
-                                            $( ".tabContent tbody" ).append( emptyMessage );
-                                        }
-                                }
-                                
+                                swal({
+                                    title: "刪除失敗<br /><small>&lt;" + articles[ thisArticle ].title +"&gt;</small>",
+                                    type: "error",
+                                    text: dataDB.errorCode,
+        
+                                }).then((result) => {}, ( dismiss ) => {});
                             }
-                        }, function( dismiss ) {
-                            if ( dismiss === 'cancel' );
+                            else
+                            {
+                                swal({
+                                    title: "已成功刪除文章！<br /><small>&lt;" + articles[ thisArticle ].title+ "&gt;</small>",
+                                    type: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                    
+                                }).then((result) => {}, ( dismiss ) => {});
+        
+                                location.reload();
+                                delete articles[ thisArticle ];
+        
+                                if( $.isEmptyObject(articles) )
+                                {
+                                    let emptyMessage = "<tr>" + 
+                                                            "<td colspan='4'>發文紀錄列表為空</td>" +
+                                                        "</tr>";
+                                    $( ".tabContent tbody" ).append( emptyMessage );
+                                }
+                            }
                         });
-                    // });
-                
-            }
-                else if( $(this).text().trim() == "編輯" )
-                {
-                    // cmd["act"]= "editArticle";
-                    // cmd["account"]= sessionStorage.getItem("Helen-userID")
-                    // cmd["articleID"]= articles[ thisArticle ].articleID;
-                    // $.post("../index.php", cmd, function(){
-                    // var dataDB= JSON.parse(dataDB);
-                    console.log( "edit" );
-                    swal({
-                        title: '歡迎',
-                        type: 'info',
-                        text: '本訊息1秒後自動關閉',
-                        width: 400,
-                        showConfirmButton: false,
-                        timer: 1000,
-                    }).then(
-                        function () { },
-                        function (dismiss) {
-                            if (dismiss === 'timer') {
-                                sessionStorage.setItem("Helen-act", "editArticle");
-                                sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
-                            window.location.href = "../HTMLs/publishArticle.html";
-                            }
-                        }
-                    )
-                //  });
-                }
-        });
-
+                    }
+                }, ( dismiss ) => {});
     });
+    $( document ).on( "click", ".btn-default", function()
+    {
+        let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );     
+        sessionStorage.setItem("Helen-act", "editArticle");
+        sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
+        window.location.href = "../HTMLs/publishArticle.html";
+        
+    });
+    
+    $( document ).on( "click", ".articleTitle", function()
+    { 
+        let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );     
+      sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
+      location.href =  "../HTMLs/post.html";
+  });
+    
+   
+   
+    
+});
 
-function initial()
+async function initial(res, rej)
 {
 
-    //checkPermission();
+    
     let cmd = {};
     cmd[ "act" ] = "showPostRecord";
-    cmd["account"] = sessionStorage.getItem("UserID");
+    cmd["account"] = sessionStorage.getItem("Helen-account");
 
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
-
-    //     if( dataDB.status == false )
-    //     {
-    //         swal({
-    //             title: "載入頁面失敗",
-    //             type: "error",
-    //             text: dataDB.errorCode
-    //         })
-    //     }
-    //     else
-    //     {
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
+        
+        if( dataDB.status == false )
+        {
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode
+            })
+        }
+        else
+        {
             let content = $( ".postContent tbody" );
             content.empty();
         
@@ -163,15 +126,15 @@ function initial()
             {
             
                 let oneRow = "<tr>" + 
-                                "<td>" + dataDB.data[i].blockName + "</td>" +
-                                "<td>" + dataDB.data[i].title + "</td>" +
+                                "<td>" + dataDB.data[i].blockName + "版"+"</td>" +
+                                "<td>" +"<span class='articleTitle'>"+ dataDB.data[i].title +"</span>"+ "</td>" +
                                 "<td>" +
                                     "<button type='button' class='btn btn-default'>" +
                                         "<span class='glyphicon glyphicon-book'></span> 編輯" +
                                     "</button>" +
                                 "</td>" +
                                 "<td>" +
-                                    "<button type='button' class='btn'>" +
+                                    "<button type='button' class='btn btn-danger'>" +
                                         "<span class='glyphicon glyphicon-trash'></span> 刪除" +
                                     "</button>" +
                                 "</td>" +
@@ -181,30 +144,18 @@ function initial()
                 content.append( oneRow );
             }     
                 
-        //}
-    //} );
+        }
+    } );
+    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
+
+    res(0);
 
 
 }
-    function checkPermission()
-    {
-        let perm = sessionStorage.getItem( "Helen-permission" );
-        console.log( "Permission:　"+ perm );
-        if( perm && perm.valueOf() >= 1 ) return true;
-        else{
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: "請先登入！"
-            }).then(( result ) => {
-                if ( result ){
-                    $( "body" ).empty();
-                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                    $( "body" ).append( httpStatus );
-                }
-            });
-    
-            return false;
-        }
-    }
+function checkPermission(res, rej)
+{
+    if(!thisAccount)
+        return false
+    res(0);
+}
     
