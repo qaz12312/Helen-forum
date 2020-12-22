@@ -26,22 +26,34 @@
         dataDB.errorCode = "Don't have any article." / "Failed to search in menu."
         dataDB.data = ""
     */
-    function doSearchMenu($input)
-    {
+    function doSearchMenu($input){
         global $conn;
         //搜尋標題+內容
         if ($input['sort'] == "time" || $input['sort'] == "hot") {
-            if ($input['sort'] == "time") {
-                $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `Content` LIKE '%?%' OR `Title` LIKE '%?%' ORDER BY `Times` DESC";
-            } else {
-                $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `Content` LIKE '%?%' OR `Title` LIKE '%?%' ORDER BY `cntHeart` DESC";
+            $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE";
+            $arrsize = count($input["searchWord"]);
+            $sql = $sql .str_repeat("`Content` LIKE ? OR ",  $arrsize-1);
+            $sql = $sql . "`Content` LIKE ? OR  ";
+            $sql = $sql .str_repeat("`Title` LIKE  ? OR ",  $arrsize-1);
+            $sql = $sql . "`Title` LIKE  ?  AND `BoardName` =?";
+            if ($input['sort'] == "time") 
+                $sql = $sql . " ORDER BY `Times` DESC;";
+            else
+                $sql = $sql . " ORDER BY `cntHeart` DESC;";
+            $i = 0;
+            for($j=0;$j<2;$j++){
+                foreach($input["searchWord"] as $value){
+                $search[$i++] = "%".$value."%";
+                }
             }
-            $arr = array($input['searchWord'], $input['searchWord']);
-            $result = query($conn,$sql,$arr,"SELECT");
+            $search[$i] = "%".$input['searchBoard']."%";
+            $arr = $search;
+            $result = query($conn, $sql, $arr, "SELECT");
             $resultCount = count($result);
-            if ($resultCount <= 0) {    //找不到文章
-                $rtn = successCode("Don't have any article.");
-            } else {
+            if ($resultCount <= 0) { //找不到文章
+                $rtn =successCode("Don't have any article in board.");
+            } 
+            else {
                 $articleList = array();
                 // foreach($result as $row){
                 for($i=0;$i<$resultCount;$i++){//回傳找到的文章(包含關鍵字)
@@ -61,13 +73,13 @@
                         $articleList[$i] = array("title" => $row[0],"boardName" => $row[1],"articleID" => $articleID,"like" => $row[2], "keep" => $row[3], "hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                     }
                     else
-                    $articleList[$i] = array("title" => $row[0],"boardName" => $row[1],"articleID" => $articleID,"like" => $row[2], "keep" => $row[3], "hasHeart" => "", "hasKeep" => "");
+                        $articleList[$i] = array("title" => $row[0],"boardName" => $row[1],"articleID" => $articleID,"like" => $row[2], "keep" => $row[3], "hasHeart" => "", "hasKeep" => "");
                 }
                 $rtn = successCode("Successfully search in menu",$articleList);
             }
-        } else {
-            errorCode("Failed to search in menu.");
         }
-        echo json_encode($rtn);
+        else 
+            errorCode("Failed to search in menu.");
+    echo json_encode($rtn);
     }
 ?>
