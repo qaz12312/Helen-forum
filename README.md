@@ -8,20 +8,20 @@ git clone https://github.com/ytchao0234/softwareEngineeringProject.git
 ```
 
 ### 文章模組
-+ [publishArticle.html  發表文章](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/publishArticle.html)
++ [publishArticle.html  發表文章](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/publishArticle.html)
 ### 瀏覽文章模組
 
 ### 看板模組
-+ [manageBoard.html  看板](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/manageBoard.html)
++ [manageBoard.html  看板](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/manageBoard.html)
 ### 版主管理模組
- + [moderator.html  版主](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/moderator.html)
+ + [moderator.html  版主](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/moderator.html)
 ### 管理者管理模組
 
 ### 個資模組
-+ [Person.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/Person.html)
++ [Person.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/Person.html)
 ---
-+ [post.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/post.html)
-+ [report.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/report.html)
-+ [sendAlert.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/sendAlert.html)
-+ [sticky.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/sticky.html)
-+ [sub.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/HTMLs/sub.html)
++ [post.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/post.html)
++ [report.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/report.html)
++ [sendAlert.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/sendAlert.html)
++ [sticky.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/sticky.html)
++ [sub.html](https://github.com/ytchao0234/softwareEngineeringProject/blob/master/HTMLs/sub.html)
