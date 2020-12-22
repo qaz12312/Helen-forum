@@ -4,7 +4,7 @@
 	let cmd = {};
 	cmd["act"] = "newBoard";
 	cmd["boardName"] = "企鵝"
-
+    cmd["rule"] = "Rule"
 	後端 to 前端:
 	dataDB.status
     若 status = true:
@@ -30,7 +30,7 @@
         }
         else{
             $sql="INSERT INTO `Board`(`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES(?,?,?,?)";
-            $arr = array($input['boardName'],"admin",NULL,NULL);
+            $arr = array($input['boardName'],"admin",$input['rule'],NULL);
             query($conn,$sql,$arr,"INSERT");
 
             $sql="SELECT `BoardName`,`Rule`,`TopArticleID` FROM `Board`  JOIN`Users` ON Users.UserID =Board.UserID WHERE `BoardName`=? AND Users.UserID=?";
