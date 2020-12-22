@@ -53,7 +53,7 @@
 						$check = false;
 						errorCode("Failed to appoint moderator,Database exception.");
 					}
-					doSendNotification(array("recipient" => $input['account'], "content" => "Congratulation  - You are the moderator in 【".$input['newBoardName']."】 :)"),0);
+					$check=doSendNotification(array("recipient" => $input['account'], "content" => "Congratulation  - You are the moderator in 【".$input['newBoardName']."】 :)"),0);
 				}
 			}
 		}
@@ -81,7 +81,7 @@
 					$check = false;
 					errorCode("Failed to found the update Moderator.");
 				}
-				doSendNotification(array("recipient" => $input['account'], "content" => "Oops - You are no longer the moderator in 【".$input['oldBoardName']."】."),0);
+				$check=doSendNotification(array("recipient" => $input['account'], "content" => "Oops - You are no longer the moderator in 【".$input['oldBoardName']."】."),0);
 			}
 		}
         if($check){

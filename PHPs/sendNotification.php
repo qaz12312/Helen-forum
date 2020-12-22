@@ -35,7 +35,9 @@
 			if($print){
 				$rtn = successCode("Successfully send the notice.");
 				echo json_encode($rtn);
-			}
+            }
+            else
+            return true;
         }
     }
 ?>
