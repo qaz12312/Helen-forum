@@ -6,13 +6,39 @@ $( document ).ready( async function()
     barInitial();
     // await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
 
-    $( ".glyphicon-trash" ).parent().click()
+    $( "button" ).click( function()
+    {
+        let content = $(this).text().trim();
+
+        if( content == "刪除" )
+        {
+            console.log("[" + $( this ).closest( "tr" ).find( "td" ).first().text() + "]");
+
+            let cmd = {};
+            cmd[ "act" ] = "deleteBoard";
+            cmd[ "boardName" ] = $( this ).closest( "tr" ).find( "td" ).first().text();
+        }
+        else if( content == "新增看板" )
+        {
+            
+        }
+        else if( content == "確定" )
+        {
+            
+        }
+        else if( content == "取消" )
+        {
+            
+        }
+    });
 });
 
 async function initial( res, rej )
 {
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
     await new Promise( ( resolve, reject ) => manageBoard( resolve, reject ) );
+
+    res(0);
 }
 
 function manageBoard( resolve, reject )
