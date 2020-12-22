@@ -7,7 +7,7 @@
 
 + 記得到[Trello](https://trello.com/b/2amh64r0/helen)做紀錄
 
-### 有問題可以先上[Trello](https://trello.com/b/2amh64r0/helen)相關連結的`問題集`看~
+### 有問題可以先上[Trello](https://trello.com/b/2amh64r0/helen)相關連結的`後端問題集`看~
 
 
 
