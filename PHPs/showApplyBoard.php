@@ -9,7 +9,7 @@
 	dataDB.status
 	若 status = true:
 		dataDB.info = ""
-		dataDB.data[i] //有i筆通知
+		dataDB.data[i] //i=userid
 		(
 			dataDB.data.time	// Time
 			dataDB.data.content	// Content

@@ -120,3 +120,9 @@ SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowKeep.UserID),
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
 GROUP BY `ArticleID` ;
 
+# 總留言數
+DROP  VIEW IF EXISTS HomeComment;
+CREATE VIEW HomeComment (`ArticleID`, `cntComment`) AS
+SELECT `ArticleID`, COUNT(Comments.Content)
+FROM `Article`  LEFT JOIN `Comments` USING (ArticleID)  
+GROUP BY `ArticleID`;
