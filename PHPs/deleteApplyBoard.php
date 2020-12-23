@@ -19,7 +19,7 @@
 	*/
     function doDeleteApplyBoard($input){ //審核被檢舉文章
         global $conn;
-        $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=?AND　`Content`=?";  
+        $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=? AND`Content`=?";  
         $arr = array($input['account'],$input['content']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
@@ -27,7 +27,7 @@
             errorCode("This user apply doesn't exit.");
         }
         else{
-            $sql="DELETE FROM `Issue` WHERE `UserID`=?";
+            $sql="DELETE FROM `Issue` WHERE `UserID`=? AND`Content`=?";
             $arr = array($input['account'],$input['content']);
             query($conn,$sql,$arr,"DELETE");
             $rtn = successCode("Successfully deleted all this user's apply.");

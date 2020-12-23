@@ -96,7 +96,7 @@ $( document ).ready( async function()
             if( dataDB.status == false )
             {
                 swal({
-                    title: "新增看板失敗<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
+                    title: "修改看板失敗<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
                     type: "error",
                     text: dataDB.errorCode,
                     confirmButtonText: "確定",
@@ -106,7 +106,7 @@ $( document ).ready( async function()
             else
             {
                 swal({
-                    title: "新增看板成功<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
+                    title: "修改看板成功<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
                     type: "success",
                     showConfirmButton: false,
                     timer: 1000,
@@ -254,6 +254,7 @@ async function initial( res, rej )
     {
         userList = error;
     });
+    console.log( userList );
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch( ( error ) =>
     {
         res(1);
@@ -270,6 +271,7 @@ function getUserList( resolve, reject )
 
     $.post( "../index.php", cmd, function( dataDB )
     {
+        console.log( dataDB )
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
@@ -347,7 +349,7 @@ function moderatorInitial( resolve, reject )
         
             for( let j in userList )
             {
-                userOptions += "<option value='" + userList[j].userID + "'>" + userList[j].userID + "</option>";
+                userOptions += "<option value='" + userList[j] + "'>" + userList[j] + "</option>";
             }
         
             let addNewModerator = "<tr>" +
