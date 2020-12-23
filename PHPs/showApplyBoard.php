@@ -28,13 +28,9 @@
         }
         else{
             $arr=array();
-            for($i=0;$i<$resultCount;$i++){
+			for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
-                $idx = strval($row[0]);
-                if(!isset($arr[$idx])){
-                    $arr[$idx] = [];
-                }
-                array_push($arr[$idx],array("content"=>$row[1],"times"=>$row[2]));
+                $arr[$i]=array("userID"=>$row[0],"content"=>$row[1],"times"=>$row[2]);
             }
             $rtn = successCode("Successfully show apply.",$arr);
         }

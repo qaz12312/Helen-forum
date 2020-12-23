@@ -4,7 +4,7 @@
 	let cmd = {};
 	cmd["act"] = "deleteApplyBoard";
 	cmd["account"] = "00757033";
-
+    cmd["content"] = "00757033";
 	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status
@@ -19,8 +19,8 @@
 	*/
     function doDeleteApplyBoard($input){ //審核被檢舉文章
         global $conn;
-        $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=?";  
-        $arr = array($input['account']);
+        $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=?AND　`Content`=?";  
+        $arr = array($input['account'],$input['content']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
@@ -28,7 +28,7 @@
         }
         else{
             $sql="DELETE FROM `Issue` WHERE `UserID`=?";
-            $arr = array($input['account']);
+            $arr = array($input['account'],$input['content']);
             query($conn,$sql,$arr,"DELETE");
             $rtn = successCode("Successfully deleted all this user's apply.");
         }
