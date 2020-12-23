@@ -108,14 +108,18 @@ CREATE TABLE KeepDir (
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
-DROP TABLE IF EXISTS Issue;
-CREATE TABLE Issue (
+DROP TABLE IF EXISTS Calendar;
+CREATE TABLE Calendar (
 	UserID varchar(101) NOT NULL,
-    Content text,
-    Times datetime DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (UserID, Times),
+	Title varchar(255) NOT NULL,
+    Start varchar(101) NOT NULL,
+    END varchar(101) NOT NULL,
+    Text text,
+    IsValid boolean default false,
+    PRIMARY KEY (UserID, Title),
     FOREIGN KEY (UserID) REFERENCES Users (UserID)
-) CHARSET=utf8mb4 ;
+)	CHARSET=utf8mb4 ;
+
 
 # 總愛心數
 DROP VIEW IF EXISTS HomeHeart;
