@@ -16,41 +16,53 @@ $( document ).ready( async function()
             let deleteBoardName = chosen.find( "td" ).first().text();
             deleteBoardName = deleteBoardName.split( "版" )[0];
 
-            let cmd = {};
-            cmd[ "act" ] = "deleteBoard";
-            cmd[ "boardName" ] = deleteBoardName;
+            swal({
+                title: "確定要刪除此看板嗎？<br /><small>&lt;" + deleteBoardName + "版&gt;</small>",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#F09900",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                animation: false,
 
-            $.post( "../index.php", cmd, function( dataDB )
-            {
-                dataDB = JSON.parse( dataDB );
+            }).then(( result ) => {
+                let cmd = {};
+                cmd[ "act" ] = "deleteBoard";
+                cmd[ "boardName" ] = deleteBoardName;
 
-                if( dataDB.status == false )
+                $.post( "../index.php", cmd, function( dataDB )
                 {
-                    swal({
-                        title: "刪除看板失敗",
-                        type: "error",
-                        text: data.errorCode,
-                        confirmButtonText: "確定",
+                    dataDB = JSON.parse( dataDB );
 
-                    }).then(( result ) => {}, ( dismiss ) => {});
-                }
-                else if( dataDB.status == true )
-                {
-                    swal({
-                        title: "刪除看板成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
-                        type: "success",
-                        showConfirmButton: false,
-                        timer: 1000,
-
-                    }).then(( result ) => {}, ( dismiss ) =>
+                    if( dataDB.status == false )
                     {
-                        let id = boardList.findIndex((element) => element.boardName == cmd.boardName );
-                        boardList.splice( id, 1 );
-                        chosen.remove();
-                    });
-                }
-            });
-        }
+                        swal({
+                            title: "刪除看板失敗",
+                            type: "error",
+                            text: data.errorCode,
+                            confirmButtonText: "確定",
+
+                        }).then(( result ) => {}, ( dismiss ) => {});
+                    }
+                    else if( dataDB.status == true )
+                    {
+                        swal({
+                            title: "刪除看板成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                            type: "success",
+                            showConfirmButton: false,
+                            timer: 1000,
+
+                        }).then(( result ) => {}, ( dismiss ) =>
+                        {
+                            let id = boardList.findIndex((element) => element.boardName == cmd.boardName );
+                            boardList.splice( id, 1 );
+                            chosen.remove();
+                        });
+                    }
+                });
+            }, ( dismiss ) => {});
+    }
+
         else if( content == "新增看板" )
         {
             let addingQueue = [];
@@ -275,14 +287,14 @@ function checkPermission( resolve, reject )
             
         }).then(( result ) =>
         {
-            $( "body" ).empty();
+            $( ".tabContent" ).empty();
             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( "body" ).append( httpStatus );
+            $( ".tabContent" ).append( httpStatus );
 
         }, ( dismiss ) => {
-            $( "body" ).empty();
+            $( ".tabContent" ).empty();
             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( "body" ).append( httpStatus );
+            $( ".tabContent" ).append( httpStatus );
         });
         resolve(0);
 
@@ -302,19 +314,19 @@ function checkPermission( resolve, reject )
             swal({
                 title: "載入頁面失敗",
                 type: "error",
-                text: "dataDB.errorCode",
+                text: dataDB.errorCode,
                 confirmButtonText: "確定",
     
             }).then(( result ) =>
             {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
     
             }, ( dismiss ) => {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
             });
             
             resolve(0);
@@ -329,14 +341,14 @@ function checkPermission( resolve, reject )
 
             }).then(( result ) =>
             {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
     
             }, ( dismiss ) => {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
             });
     
             resolve(0);
