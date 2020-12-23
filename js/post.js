@@ -1,4 +1,5 @@
 let hasReport= false;
+let comments= [];
 
 $(document).ready(async function(){
     barInitial();
@@ -24,7 +25,7 @@ $(document).ready(async function(){
 async function initial(res, rej){
     let articleID= sessionStorage.getItem("Helen-articleID");
     let cmd = {};
-    let tagRe= /(@B\d+)/g;
+    let tagRe= /(@\d+波)/g;
     cmd["act"]= "showArticleComment";
     cmd["articleID"]= articleID;
 
@@ -40,9 +41,7 @@ async function initial(res, rej){
         }
         else{
             let article= dataDB.data;
-            let comments= article.comment;
-            console.log(article);
-            console.log(comments);
+            comments= article.comment;
 
             $(".tabContent").find("h2").text(article.title); // 文章標題
             $("#authorDiv").parent().html("<div id= \"authorDiv\" class= \"head\" style=\"float:left;\"></div>"+
@@ -427,14 +426,16 @@ $("#commentTable").on("click", "button", function(){
 
 // 點擊樓層tag
 $("#commentTable").on("click", "a", function(){
-    let commentIndex= $(this).text().trim().substring(2);
+    let tagStr= $(this).text().trim();
+    let commentIndex= tagStr.substring(1, tagStr.length- 1);
     commentIndex= parseInt(commentIndex);
+    console.log(commentIndex);
 
-    let comments= dataDB.data.comment;
+    // let comments= dataDB.data.comment;
     let floorComment= comments.find((element)=> element.floor== commentIndex);
 
     if(floorComment){
-        let tagRe= /(@B\d+)/g;
+        let tagRe= /(@\d+波)/g;
         let oldStr= floorComment.content;
         var newStr= oldStr.replace(tagRe, "<a>"+ "$1"+ "</a>");
         
