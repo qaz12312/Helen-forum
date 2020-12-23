@@ -1,43 +1,32 @@
 $(document).ready(function () {
+    barInitial();
     initial();
 
-    $("#email").keyup(function(){
-        
-    if(validateEmail()){
-        
-        $("#email").css("border","2px solid green");
-        
-        $("#emailMsg").html("<p class='text-success'>Validated</p>");
-    }else{
-        
-        $("#email").css("border","2px solid red");
-        $("#emailMsg").html("<p class='text-danger'>Un-validated</p>");
-    }
-    });
-    $("#password").keyup(function(){
-        if(passwd()){
-            $("#password").css("border","2px solid green");
+    
+    $("#password").keyup(function () {
+        if (passwd()) {
+            $("#password").css("border", "2px solid green");
             $("#pwMsg").html("<p class='text-success'>Validated</p>");
         }
-        else{
-        $("#password").css("border","2px solid red");
-        $("#pwMsg").html("<p class='text-danger'>Password must be greater than 3</p>");
+        else {
+            $("#password").css("border", "2px solid red");
+            $("#pwMsg").html("<p class='text-danger'>Password must be greater than 3</p>");
         }
-        
+
     });
-    $("#validatePW").keyup(function(){
-        if(con_passwrd()){
-            $("#validatePW").css("border","2px solid green");
+    $("#validatePW").keyup(function () {
+        if (con_passwrd()) {
+            $("#validatePW").css("border", "2px solid green");
             $("#checkPw").html("<p class='text-success'>Validated</p>");
         }
-        else{
-        $("#validatePW").css("border","2px solid red");
-        $("#checkPw").html("<p class='text-danger'>Password are not Matching</p>");
+        else {
+            $("#validatePW").css("border", "2px solid red");
+            $("#checkPw").html("<p class='text-danger'>Password are not Matching</p>");
         }
-        
+
     });
 
-    
+
     $("#createBtn").click(function () {
         let uid = $("#email").val(),
             pw = $("#password").val(),
@@ -82,17 +71,17 @@ $(document).ready(function () {
         }
         else {
             let cmd = {};
-            cmd["act"]="SignUp"
-            cmd[ "account" ] = $("#account").val();
-            cmd[ "password" ] = $("#password").val("");
-            $.post("../index.php", cmd, function (data) {
-                dataDB = JSON.parse(data);
-                if (data.statue == false) {
-                    dataDB.data=""
+            cmd["act"] = "sendMailRegister";
+            cmd["account"] = $('#email').val();
+            cmd["password"] = $("#password").val();
+            cmd["option"] = "create";
+            $.post("../index.php", cmd, function (dataDB) {
+                dataDB = JSON.parse(dataDB);
+                if (dataDB.status == false) {
                     swal({
                         title: 'ERROR',
                         type: 'error',
-                        text: data.errorCode,
+                        text: dataDB.errorCode,
                         animation: false,
                         customClass: 'animated rotateOutUpLeft',
                         confirmButtonText: 'okay!',
@@ -100,11 +89,10 @@ $(document).ready(function () {
                     })
                 }
                 else {
-                    leaveUserDetails(dataDB.data[0], dataDB.data[1], dataDB.data[2], dataDB.data[3], dataDB.data[4]);
                     swal({
                         title: '完成!',
                         type: 'success',
-                        html: '創建成功\n歡迎使用LM Search \U+1F60A',
+                        html: '創建成功\n歡迎使用Helen ',
                         showConfirmButton: false,
                         timer: 1300,
                     }).then(
@@ -135,75 +123,100 @@ $(document).ready(function () {
             window.location.href = "../HTMLs/login.html";
         })
     });
-    let cmd = {};
 
-    $("#verify").click(function(){ 
-        var btn=$('#verify');
-        var email = $("#email").val(); $('#btnGetVerifyCode');
-        var preg = /^\w+([-+.']\w+)*@(mail|email){1}\.ntou\.edu\.tw/; //匹配Email 
-        if(email=='' || !preg.test(email)){ 
-            $("#chkmsg").html("請填寫正確的郵箱！"); 
-        }
-        else{ 
-                $("#chkmsg").html(""); 
-                let cmd = {};
-                cmd[ "act" ] = "sendMailRegister";
-                cmd[ "account"] = $('#email').val().split( "@" )[0];
-                console.log( cmd[ "account"] );
-                // $.post( "../index.php", cmd, function( dataDB )
-                // {
-                //     dataDB = JSON.parse( dataDB );
-
-                //     if( dataDB.status == false )
-                //     {
-                //         $(".showAlert").text(dataDB.errorCode);
-                //     }
-                //     else{
-                //         $(".showAlert").text(dataDB.data);
-                //     }
-                
-                //     });
-                
-                time(btn);
-                // $.post("sendmail.php",{mail:email},function(msg){ 
-                //     if(msg=="noreg"){ 
-                //         $("#chkmsg").html("該郵箱尚未註冊！"); 
-                //         $("#sub_btn").removeAttr("disabled").val('提 交').css("cursor","pointer"); 
-                //     }
-                    
-                // }); 
+    $("#verify").click(function () {
+        var btn = $('#verify');
+        // if(document.getElementById('name').disabled == false){
+        // document.getElementById('creatBtn').disabled = !document.getElementById('creatBtn').disabled;
+        // }
+        $("#chkmsg").html("");
+        let cmd = {};
+        cmd["act"] = "sendMailRegister";
+        cmd["account"] = $('#email').val();
+        cmd["option"] = "verify";
+        $.post("../index.php", cmd, function (dataDB) {
+            dataDB = JSON.parse(dataDB);
+            if (dataDB.status == false) {
+                swal({
+                    title: 'ERROR',
+                    type: 'error',
+                    text: dataDB.errorCode,
+                    animation: false,
+                    customClass: 'animated rotateOutUpLeft',
+                    confirmButtonText: 'okay!',
+                    confirmButtonColor: '#eda2b6',
+                    timer: 1300,
+                })
             }
-    }); 
-    setTimeout("document.getElementById('alert').innerHTML=html",5000)
+            else {
+                console.log($(".createBtn").disabled)
+                swal({
+                    title: "請輸入驗證碼",
+                    input: "textarea",
+                    input: "textarea",
+                    inputPlaceholder: "請輸入文字...",
+                    showCancelButton: true,
+                    confirmButtonText: "確認",
+                    cancelButtonText: "取消",
+                    inputPlaceholder: $(this).parents('.Page').find("span").text(),
+                    animation: false
+
+                }).then((result) => {
+                    console.log(result)
+                    if (result == dataDB.data) {
+                        console.log("123")
+                        swal({
+                            title: "驗證成功",
+                            type: "success",
+                            showConfirmButton: false,
+                            timer: 1000,
+
+                        })
+                        document.getElementById('createBtn').disabled = !document.getElementById('createBtn').disabled;
+                    }
+                    else {
+
+                        swal({
+                            title: "驗證失敗",
+                            type: "warning",
+                            showConfirmButton: false,
+                            timer: 2000,
+
+                        }).then(
+                            function () { },
+                            function (dismiss) {
+                                if (dismiss === 'timer') {
+                                    window.location.href = "../HTMLs/registration.html";
+                                }
+                            }
+                        )
+
+                    }
+                });
+
+            }
+
+        });
+    });
 });
 
 
 function initial() {
-    let cmd = {};
-    cmd["act"]="SignUp"
-    cmd[ "account" ] = $("#account").val();
-    cmd[ "password" ] = $("#password").val("");
-    $("#email").val("");
-    $("#password").val("");
-    $("#validatePW").val("");
+    // let cmd = {};
+    // cmd["act"] = "SignUp"
+    // cmd["account"] = $("#account").val();
+    // cmd["password"] = $("#password").val("");
+    // $("#email").val("");
+    // $("#password").val("");
+    // $("#validatePW").val("");
 }
 function Restrict() {
-    
-    if (!validateEmail()) {
+
+     if (!passwd()) {
         swal({
             title: 'OOPS...',
             type: 'error',
-            html:'信箱錯誤',
-            confirmButtonText: 'okay!',
-            confirmButtonColor: '#8a54a2'
-        })
-        return false;
-    }
-    else if (!passwd()) {
-        swal({
-            title: 'OOPS...',
-            type: 'error',
-            html:'密碼字數只能在3~20內!!!!',
+            html: '密碼字數只能在3~20內!!!!',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#7a96a2'
         })
@@ -213,7 +226,7 @@ function Restrict() {
         swal({
             title: 'OOPS...',
             type: 'error',
-            html:'Password are not Matching &#9888;',
+            html: 'Password are not Matching &#9888;',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#252621'
         })
@@ -222,61 +235,22 @@ function Restrict() {
     return true;
 }
 
-
-
-function leaveUserDetails(UserID, Password, Permissions, Color, Nickname) {
-    sessionStorage.setItem("Helen-UserID", UserID);
-    sessionStorage.setItem("Helen-Password", Password);
-    sessionStorage.setItem("Helen-Permissions", Permissions);
-    sessionStorage.setItem("Helen-Color", Color);
-    sessionStorage.setItem("Helen-Nickname", Nickname);
-}
-function validateEmail(){
-
-// get value of input email
-var email=$("#email").val();
-// use reular expression
- var reg = /^\w+([-+.']\w+)*@(mail|email){1}\.ntou\.edu\.tw/
- if(reg.test(email)){
-     return true;
- }else{
-     return false;
- }
-}
-function con_passwrd(){
+function con_passwrd() {
     var conpass = $('#validatePW').val();
     var passwrdstr = $('#password').val();
-    if(passwrdstr != conpass){
+    if (passwrdstr != conpass) {
         return false;
-    }else{
-        return true;
-    } 
-}
-function passwd(){
-    
-    var passwrdstr = $('#password').val();    
-    if(passwrdstr.length<3){
-        return false;
-    }else{
-        return true;
-    } 
-}
-// ^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$(較強的密碼)
-
-
-var wait=60
-function time(o) {
-$(o).find("span").text("");
-    if (wait == 0) {
-        $(o).attr("disabled", false);
-        
-        o.find("span").text("獲取驗證碼");
-        wait = 60;
     } else {
-        $(o).attr("disabled", true);
-        o.find("span").text(" "+wait + "秒後可重新發送");
-        console.log(wait)
-        wait--;
-        setTimeout(function () {time(o);},1000);
+        return true;
     }
 }
+function passwd() {
+
+    var passwrdstr = $('#password').val();
+    if (passwrdstr.length < 3) {
+        return false;
+    } else {
+        return true;
+    }
+}
+// ^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$(較強的密碼)

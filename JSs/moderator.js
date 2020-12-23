@@ -173,7 +173,7 @@ $( document ).ready( async function()
         cmd[ "account"] = $(this).closest( "td" ).prev().prev().find("input[list='userList']").val();
         cmd[ "newBoardName"] = chosen.val();
 
-        if( cmd.account === "" )
+        if( cmd.account === "" || userList.indexOf( cmd.account ) == -1 )
         {
             let ending = swal({
                 title: "請選擇使用者帳號",
@@ -449,14 +449,14 @@ function checkPermission( resolve, reject )
             
         }).then(( result ) =>
         {
-            $( "body" ).empty();
+            $( ".tabContent" ).empty();
             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( "body" ).append( httpStatus );
+            $( ".tabContent" ).append( httpStatus );
 
         }, ( dismiss ) => {
-            $( "body" ).empty();
+            $( ".tabContent" ).empty();
             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( "body" ).append( httpStatus );
+            $( ".tabContent" ).append( httpStatus );
         });
 
         reject(1);
@@ -477,19 +477,19 @@ function checkPermission( resolve, reject )
             swal({
                 title: "載入頁面失敗",
                 type: "error",
-                text: "dataDB.errorCode",
+                text: dataDB.errorCode,
                 confirmButtonText: "確定",
     
             }).then(( result ) =>
             {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
     
             }, ( dismiss ) => {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
             });
             
             reject(1);
@@ -504,14 +504,14 @@ function checkPermission( resolve, reject )
 
             }).then(( result ) =>
             {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
     
             }, ( dismiss ) => {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
             });
     
             reject(1);

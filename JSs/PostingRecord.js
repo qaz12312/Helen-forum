@@ -4,6 +4,7 @@ var thisAccount = sessionStorage.getItem( "Helen-account" );
 
  $( document ).ready(async function() 
 {
+    barInitial();
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
 
     $( document ).on( "click", ".btn-danger", function()

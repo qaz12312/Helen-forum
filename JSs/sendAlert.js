@@ -1,5 +1,6 @@
 thisAccount=sessionStorage.getItem( "Helen-account" );
 $(document).ready(async function () {
+    //barInitial();
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
     $("#SentAlert-inBtn").click(function () {
         
@@ -108,6 +109,7 @@ function checkPermission(resolve, reject)
 
     $.post( "../index.php", cmd, function( dataDB )
     {
+        
         dataDB = JSON.parse( dataDB );
         
         if( dataDB.status == false )

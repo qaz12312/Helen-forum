@@ -3,7 +3,7 @@ var CollectionCatalog = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 $( document ).ready(async function() 
 {
-    //barInitial();
+    barInitial();
     
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
     //initial()

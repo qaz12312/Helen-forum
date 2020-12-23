@@ -1,8 +1,11 @@
 //PersonalProfile
 var thisAccount = sessionStorage.getItem( "Helen-account" );
-$( document ).ready( function() 
+$( document ).ready(function() 
 {
-    initial();
+    
+    barInitial();
+    initiall();
+    
     value = document.getElementById("name").value;
     document.querySelector('.PersonEditBtn').addEventListener('click',
     function () {
@@ -20,6 +23,8 @@ $( document ).ready( function()
             cmd["option"] = "nickname";
             cmd[ "account" ] =sessionStorage.getItem("Helen-account");
             cmd[ "new" ] =document.getElementById("name").value;
+            
+            console.log(cmd[ "new" ])
             $.post( "../index.php", cmd, function( dataDB ){
                 dataDB = JSON.parse( dataDB );
                 if (dataDB.status  == false) {
@@ -46,9 +51,8 @@ $( document ).ready( function()
                         confirmButtonColor: '#eda2b6',
                         timer: 2000
                     })
-                    
-                    
-                    console.log(document.getElementById("name").value)
+                    //sessionStorage.setItem("Helen-nickname")=document.getElementById("name").value;
+                    sessionStorage.setItem("Helen-nickname", document.getElementById("name").value)
                     document.getElementById('name').disabled = !document.getElementById('name').disabled;
                     document.getElementById("edit").value = 'Edit'
                 }
@@ -162,6 +166,7 @@ $( document ).ready( function()
                                                                 confirmButtonColor: '#eda2b6',
                                                                 timer: 2000
                                                             })
+                                                           
                                                             location.reload();//重整
                                                         }
 
@@ -196,38 +201,45 @@ $( document ).ready( function()
                     });
             }
         });
-    $('#color').colpick({
-        layout:'hex',
-        submit:0,
-        colorScheme:'dark',
-        onChange:function(hsb,hex,rgb,el,bySetColor){
-            let cmd = {};
-            cmd["act"] = "editPersonalInfo";
-            cmd[ "account" ] =sessionStorage.getItem("Helen-account");
-            cmd["option"] = "color";
-            cmd["new"] = '#'+hex;
-            $.post( "../index.php", cmd, function( dataDB ){
-                dataDB = JSON.parse( dataDB );
-                if (dataDB.status == false) {
-                    dataDB.data = ""
-                    swal({
-                        title: 'OOPS...',
-                        type: 'error',
-                        text: 'Failed to Update personal information in color ',
-                        animation: false,
-                        customClass: 'animated rotateOutUpLeft',
-                        confirmButtonText: 'okay!',
-                        confirmButtonColor: '#eda2b6'
-                    })
-                }
-                else {
-                    $("#color").css("border-right", "100px solid "+ '#'+hex);
+        $('#color').colpick({
+            layout:'hex',
+            submit:0,
+            colorScheme:'dark',
+            onChange:function(hsb,hex,rgb,el,bySetColor){
+                let cmd = {};
+                cmd["act"] = "editPersonalInfo";
+                cmd[ "account" ] =sessionStorage.getItem("Helen-account");
+                cmd["option"] = "color";
+                cmd["new"] = '#'+hex;
+                $.post( "../index.php", cmd, function( dataDB ){
+                    dataDB = JSON.parse( dataDB );
+                    if (dataDB.status == false) {
+                        dataDB.data = ""
+                        swal({
+                            title: 'OOPS...',
+                            type: 'error',
+                            text: 'Failed to Update personal information in color ',
+                            animation: false,
+                            customClass: 'animated rotateOutUpLeft',
+                            confirmButtonText: 'okay!',
+                            confirmButtonColor: '#eda2b6'
+                        })
                     }
-            }).keyup(function(){
-                $(this).colpickSetColor(this.value); 
-            });
-        }
-    });
+                    else {
+                        
+                        sessionStorage.setItem("Helen-color",'#'+hex )
+                        console.log('#'+hex)
+                        $("#color").css("border-right", "100px solid "+ '#'+hex);
+                        location.reload();//重整
+                        }
+                    })
+                // }).keyup(function(){
+                //     $(this).colpickSetColor(this.value); 
+                // });
+            }
+        });
+    
+
     $("#password").keyup(function(){
         if(passwd()){
             document.getElementById('editPw').disabled=false
@@ -253,47 +265,17 @@ function ChangeDisabled(value){
     　  document.getElementById('name').disabled=true;　// 變更欄位為禁用
     　}
 }
-function initial()
+function initiall(resolve, reject)
 {
-    checkPermission()
+    checkPermission();
     let  color, nickname;
     
-    //permission = dataDB.data.permission; 
     color = sessionStorage.getItem("Helen-color");
     nickname = sessionStorage.getItem("Helen-nickname");
     $("#color").css("border-right", "100px solid "+ color);
     document.getElementById("name").setAttribute("placeholder",nickname);
     document.getElementById("email").setAttribute("placeholder",thisAccount+"@mail.ntou.edu.tw");
 
-    
-    // let cmd = {};
-    
-    // cmd[ "act" ] = "editPersonalInfo";
-    // cmd[ "account" ] = sessionStorage.getItem("Helen-account");
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
-    //     console.log(dataDB)
-
-    //     console.log(cmd[ "account" ]);
-    //     console.log(color);
-
-    //         permission = dataDB.data.permission;
-    //         console.log(permission)
-    //         color = sessionStorage.getItem("Helen-color");
-    //         nickname = sessionStorage.getItem("Helen-nickname");
-
-            
-    //        $("#color").css("border-right", "100px solid "+ color);
-           
-    //        // $(el).css('border-color',color);
-    //        //document.getElementById("color"). $(el).css('border-color',color);
-    //        document.getElementById("name").setAttribute("placeholder",nickname);
-    //        document.getElementById("email").setAttribute("placeholder",thisAccount+"@mail.ntou.edu.tw");
-    //         //$(".InputWrap").find("fname").placeholder(nickname);
-            
-        
-    // });
 }
     
 
