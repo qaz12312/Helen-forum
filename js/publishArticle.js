@@ -177,7 +177,7 @@ async function initial(res, rej){
     //後 -> 前：{"文章所屬看版", "文章標題", "文章內容", [文章的hastags], ?圖片?}
     if(sessionStorage.getItem("Helen-act")== "editArticle"){
         let cmd= {};
-        cmd["act"]= "editArticle";
+        cmd["act"]= "showArticleComment";
         cmd["account"]= sessionStorage.getItem("Helen-account");
         cmd["articleID"]= sessionStorage.getItem("Helen-articleID");
 
@@ -192,15 +192,15 @@ async function initial(res, rej){
                 });
             }
             else{
-                articleData= dataDB.data
+                article= dataDB.data
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
-                $("#chooseBoard").find("option[text= '" + articleData.boardName+ "版']").attr("selected", true);
+                $("#chooseBoard").find("option[text= '" + article.blockName+ "版']").attr("selected", true);
                 //依 text 為"看版名(美食版)"的項選中
-                $("#articleTitle").val()= articleData.articleTitle;
-                $("#articleContent").val()= articleData.content;
-                hashtags= articleData.hashtag;
+                $("#articleTitle").val()= article.title;
+                $("#articleContent").val()= article.content;
+                hashtags= article.hashtag;
                 printHashtag();
             }
         })
