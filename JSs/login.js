@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    barInitial();
     initial();
     $("#Log-inBtn").click(function () {
         let act = $("#account").val(),
@@ -33,10 +34,10 @@ $(document).ready(function () {
             cmd["act"] = "logIn";
             cmd["account"] = act;
             cmd["password"] = pw;
-            $.post( "../index.php", cmd, function( dataDB )
-            {
-                
-                dataDB = JSON.parse( dataDB );
+            $.post("../index.php", cmd, function (data) {
+                //console.log("connect success");
+                //console.log(data);
+                dataDB = JSON.parse(data);
                 if (dataDB.status == false) {
                     dataDB.data = ""
                     swal({
@@ -152,6 +153,4 @@ function leaveUserDetails(account, color ,nickname) {
     sessionStorage.setItem("Helen-account", account);
     sessionStorage.setItem("Helen-color", color);
     sessionStorage.setItem("Helen-nickname", nickname);
-
-
 }

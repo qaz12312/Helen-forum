@@ -62,12 +62,12 @@
 </head>
 
 <body>
-<div class= "topMenu">
+  <div class= "topMenu">
     <!-- 中間 -->
     <div class="brand-centered">
         <div class="search-container">
-            <input type="text" placeholder="Search..." name="search">
-            <button type="submit"><span class="glyphicon glyphicon-search"></span></i></button>
+            <input type="text" placeholder="Search..." name="search" id= "searchInputText">
+            <button type="submit" id= "searchBtn"><span class="glyphicon glyphicon-search"></span></i></button>
         </div>
     </div>
     
@@ -80,30 +80,25 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    <ul id="menu">
-                        <a href="#"><li>美食版</li></a>
-                        <a href="#"><li>廢文版</li></a>
-                        <a href="#"><li>企鵝版</li></a>
-                        <a href="#"><li>漫威版</li></a>
-                        <a href="#">
-                            <li><h3 class="glyphicon glyphicon-plus"> __EDIT__ </h3></li>
-                        </a>
+                    <ul id= "menu">
                     </ul>
                 </div>
             </li>
-            <li>&emsp;</li>
-            <li>    
-                <a href="#">
-                <!-- <img style="margin-right: 10px; padding: 0;" src="../Imgs/logo.png" alt="Helen"> -->
-                Helen
+            <li style="padding-left: 12px;">    
+                <a href="../HTMLs/home.html">
+                    <img class= "barLogo" src="../imgs/logo.png" alt="Helen">
+                    Helen
                 </a>
             </li>
         </ul>
         <!-- 靠右 -->
         <ul class="nav navbar-nav navbar-right">
             <li>
-               <button type="button" class="btn btn-primary" id="Log-inBtn">
+               <button type="button" class="btn btn-primary" id="logInBtn">
                     <span class="glyphicon glyphicon-log-in"></span> 登入
+                </button>
+                <button type="button" class="btn btn-warning" id="logOutBtn">
+                    <span class="glyphicon glyphicon-log-out"></span> 登出
                 </button>
             </li>
             <li class="dropdown">
@@ -111,31 +106,13 @@
                     <span id= "head">&emsp;</span>
                     <span class= "glyphicon glyphicon-chevron-down"></span>
                 </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li class= "glyphicon glyphicon-user">
-                        <span> 00757015</span></li>
-                    <li class="divider"></li>
-                    <li class= "glyphicon glyphicon-edit">
-                        <a href="../HTMLs/PersonalProfile.html"> 個人資料</a></li>
-                    <li class= "glyphicon glyphicon-pencil">
-                        <a href="../HTMLs/publishArticle.html"> 發佈新文章</a></li>
-                    <li class= "glyphicon glyphicon-star-empty">
-                        <a href="../HTMLs/CollectionCatalog.html"> 我的收藏</a></li>
-                    <li class= "glyphicon glyphicon-time">
-                        <a href="../HTMLs/PostingRecord.html"> 發文紀錄</a></li>
-                    <li class= "glyphicon glyphicon-th-list">
-                        <a href="../HTMLs/manageBoard.html"> 管理看版</a></li>
-                    <li class= "glyphicon glyphicon-king">
-                        <a href="../HTMLs/moderator.html"> 管理版主</a></li>
-                    <li class= "glyphicon glyphicon-alert">
-                        <a href="../HTMLs/report.html"> 檢舉區</a></li>
-                    <li class= "glyphicon glyphicon-bullhorn">
-                        <a href="../HTMLs/sendAlert.html"> 發送通知</a></li>
+                <ul id= "userDD" class="dropdown-menu" role="menu">
                 </ul>
             </li>
         </ul>
     </div>
   </div>
+
   <div id="PersonalProfile" class="tabContent" >
     <h2>個人資料</h2>
     <p>Welcome To Helen</p>
@@ -148,11 +125,9 @@
         <br>
         
           <div class="FormWrap" style="text-align: center;">
-            <!--<img src="imgs/logo.jpg" width="150px" line-height="100px" />-->
+           
             <div type="text" id="color" name="color" >
-              <script>
               
-              </script>
             
           </div>
           <br>
@@ -188,15 +163,7 @@
               <span id="checkPw" disabled=false></span>
             </div>
           </div>
-          <!--
-          <div class="InputWrap">
-            <label for="password">確認密碼:</label>
-            <div row>
-            <input type="text" id="validatePW"   style="display: none;" >
-            <span id="checkPw" disabled=false></span>
-            </div>
-          </div>
-          -->
+         
           </div>
           <br>
         
@@ -208,8 +175,6 @@
   </div>
 
 
-  <script type="text/javascript">
-  </script>
 
   </script>
 </body>
