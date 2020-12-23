@@ -9,10 +9,11 @@
 	dataDB.status
 	若 status = true:
 		dataDB.info = ""
-		dataDB.data[i] //i=userid
+		dataDB.data[i] 
 		(
-			dataDB.data.time	// Time
-			dataDB.data.content	// Content
+            dataDB.data[i].userID //
+			dataDB.data[i].time	// Time
+			dataDB.data[i].content	// Content
 		)
 	否則
 		dataDB.errorCode = "No notifications right now."
@@ -24,7 +25,7 @@
         $result = query($conn,$sql,array(),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
-            $rtn = successCode("Don't have any apply.");
+            $rtn = successCode("Don't have any apply.",array());
         }
         else{
             $arr=array();
