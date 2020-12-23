@@ -21,6 +21,7 @@
         ) 
         dataDB.data.title //第i筆文章的標題
         dataDB.data.content 
+        dataDB.data.blockName
         dataDB.data.time
         dataDB.data.like //第i筆文章的總愛心數
         dataDB.data.keep//第i筆文章的總收藏數
