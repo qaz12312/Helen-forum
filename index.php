@@ -6,12 +6,11 @@
     $conn = connSql();
     $input = $_POST;
     switch ($input["act"]) {
-        case "sendMailPwd": // 【user】忘記密碼
+        case "sendMailPwd": // 【user】忘記密碼的寄送email
             require_once("./PHPs/sendMailPwd.php"); 
             break;
-        case "verifyForgetPwd": // 【user】忘記密碼的驗證
-            require_once("./PHPs/verifyPwd.php"); 
-            doVerifyPwd($input);
+        case "forgetPwd": // 【user】忘記密碼的驗證+修改
+            require_once("./PHPs/forgetPwd.php"); 
             break;
         case "showAuthority": //【前端頁面(即系統)】查看權限(若為版主，會有所屬看板)
             require_once("./PHPs/showAuthority.php");
