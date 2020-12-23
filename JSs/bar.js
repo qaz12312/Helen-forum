@@ -120,7 +120,7 @@ function setSearchData(){
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if(sessionStorage.getItem("Helen-boardName")== null){
-        location.href= "../HTMLs/home.html";
+        location.href= "../home.html";
     }else{
         location.href= "../HTMLs/sticky.html";
     }
@@ -157,7 +157,7 @@ $("#logOutBtn").click(function(){
                     if (dismiss === 'timer') {
                         userPermission= 0;
                         sessionStorage.clear();
-                        location.href=  "../HTMLs/home.html";
+                        location.href=  "../home.html";
                     }
                 }
             )
