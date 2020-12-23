@@ -33,10 +33,10 @@ $(document).ready(function () {
             cmd["act"] = "logIn";
             cmd["account"] = act;
             cmd["password"] = pw;
-            $.post("./index.php", cmd, function (data) {
-                //console.log("connect success");
-                //console.log(data);
-                dataDB = JSON.parse(data);
+            $.post( "../index.php", cmd, function( dataDB )
+            {
+                
+                dataDB = JSON.parse( dataDB );
                 if (dataDB.status == false) {
                     dataDB.data = ""
                     swal({
