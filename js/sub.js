@@ -1,15 +1,15 @@
 var articles = [];
 
 /* no php test */
-let dataDB= {};
-    dataDB["data"]= [{"articleID": "123", "title": "美國隊長也太帥了吧!"}, 
-                    {"articleID": "456", "title": "求校隊女籃ig"}, 
-                    {"articleID": "789", "title": "#詢問 大一資工課程"}];
+// let dataDB= {};
+//     dataDB["data"]= [{"articleID": "123", "title": "美國隊長也太帥了吧!"}, 
+//                     {"articleID": "456", "title": "求校隊女籃ig"}, 
+//                     {"articleID": "789", "title": "#詢問 大一資工課程"}];
 // test End
 
-$(document).ready( function(){
+$(document).ready(async function(){
     barInitial();
-    initial();
+    await new Promise((resolve, reject) => initial(resolve, reject));
 
     $(".tabContent tr").find("td:first-child").on( "click", function(){
         if($(this).text() != "還沒有收藏文章呦！"){
@@ -29,12 +29,12 @@ $(document).ready( function(){
             cmd["articleID"] = articles[articleIndex].articleID;
             cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
 
-            // $.post( "../index.php", cmd, function( dataDB ){
-            //     dataDB = JSON.parse( dataDB );
+            $.post( "../index.php", cmd, function( dataDB ){
+                dataDB = JSON.parse( dataDB );
 
                 swal({
                     title: "確定要刪除此篇文章嗎？<br /><small>&lt;"
-                    //  + articles[ articleIndex ].title
+                     + articles[ articleIndex ].title
                       + "&gt;</small>",
                     showCancelButton: true,
                     confirmButtonText: "確定",
@@ -44,22 +44,22 @@ $(document).ready( function(){
                     }).then(( result ) => {
                         if ( result ) 
                         {
-                            // if( status == false )
-                            // {
-                            //     swal({
-                            //         title: "移除失敗<br /><small>&lt;"
-                            //         //  + articles[ articleIndex ].title
-                            //           + "&gt;</small>",
-                            //         type: "error",
-                            //         // text: dataDB.errorCode,
-                            //         animation: false
-                            //     });
-                            // }
-                            // else
-                            // {
+                            if( status == false )
+                            {
+                                swal({
+                                    title: "移除失敗<br /><small>&lt;"
+                                    //  + articles[ articleIndex ].title
+                                      + "&gt;</small>",
+                                    type: "error",
+                                    // text: dataDB.errorCode,
+                                    animation: false
+                                });
+                            }
+                            else
+                            {
                                 swal({
                                     title: "已成功移除收藏文章！<br /><small>&lt;"
-                                    //  + articles[ articleIndex ].title
+                                     + articles[ articleIndex ].title
                                       + "&gt;</small>",
                                     type: "success",
                                 })
@@ -74,21 +74,25 @@ $(document).ready( function(){
                                                         "</tr>";
                                     $( ".tabContent tbody" ).append( emptyMessage );
                                 }
-                            // }
+                            }
                         }
                     }, function( dismiss ) {
                         if ( dismiss === 'cancel' );
                 });
-            // });
+            });
         }
     });
 });
 
-function initial(){
+async function initial(res, rej){
     // if(!checkPermission()) return; // 未登入
+    let r = await new Promise((resolve, reject) => checkPermission(resolve, reject)
+         // 未登入
+    );
 
+    if(!r) return;
     // no Front Text
-    sessionStorage.setItem("Helen-keepDir", "尬意");
+    // sessionStorage.setItem("Helen-keepDir", "尬意");
     // test End
 
     var keepDir= sessionStorage.getItem("Helen-keepDir");
@@ -100,17 +104,17 @@ function initial(){
     cmd["account"] = sessionStorage.getItem("Helen-userID");
     cmd["dirName"] = keepDir;
 
-    // $.post( "../index.php", cmd, function(dataDB){
-    //     dataDB= JSON.parse(dataDB);
+    $.post( "../index.php", cmd, function(dataDB){
+        dataDB= JSON.parse(dataDB);
 
-    //     if(dataDB.status== false){
-    //         swal({
-    //             title: "載入頁面失敗",
-    //             type: "error",
-    //             text: dataDB.errorCode
-    //         })
-    //     }
-    //     else{
+        if(dataDB.status== false){
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode
+            })
+        }
+        else{
             let content = $( ".tabContent tbody" );
             content.empty();
         
@@ -136,12 +140,15 @@ function initial(){
 
                 content.append(oneRow);
             }
-    //     }
-    // });
+        }
+    });
+    res(0);
 }
 
-function checkPermission(){
-    if(sessionStorage.getItem("Helen-account")) return true;
+async function checkPermission(resolve, reject){
+    if(sessionStorage.getItem("Helen-account")){
+        resolve(true);
+    }
     else{
         swal({
             title: "載入頁面失敗",
@@ -154,7 +161,6 @@ function checkPermission(){
                 $( "body" ).append( httpStatus );
             }
         });
-
-        return false;
+        resolve(false);
     }
 }
