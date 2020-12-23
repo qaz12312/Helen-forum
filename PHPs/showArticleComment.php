@@ -73,7 +73,7 @@
                 $commentCount = count($comment);
                 $arr2=array();
                 if($commentCount <= 0){
-                    $arr2[0] = successCode("No comment.");
+                    $arr2[0] = successCode("No comment.",array());
                 }
                 else{
                     for($i=0;$i<$commentCount;$i++){
