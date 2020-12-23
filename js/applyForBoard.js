@@ -8,52 +8,37 @@ $( document ).ready( async function()
 
     $( ".tabContent button" ).on( "click", function()
     {
-        let applicant = $(this).closest( "tr" ).find( "td:first-child" ).text();
-        let thisArticle = Object.keys( applications ).find( ( key ) => 
+        let thisTr = $(this).closest( "tr" );
+        console.log( typeof thisTr[0] );
+        let thisApplicant = thisTr.find( "td:first-child" ).text();
+        let thisApplcationID = thisTr[0].rowIndex;
+        let thisBoardName = applications[ thisApplcationID ].boardName;
+        let thisTime = applications[ thisApplcationID ].time;
+        let thisContent = applications[ thisApplcationID ].content;
+
+        if( $(this).text().trim() == "申請原因" )
         {
-            return applications[ key ][0].title == thisArticleTitle;
-        });
+            if( !thisContent ) thisContent = "無";
 
-        if( $(this).text().trim() == "原因" )
-        {
-            let reasonsQueue = [];
-            let steps = [];
-            
-            for( let i in applications[ thisArticle ] )
-            {
-                reasonsQueue.push(
-                { 
-                    title: "申請原因&emsp;<cite>" + applications[ thisArticle ][i].time + "</cite><br />" +
-                           "<small>&lt;" + applications[ thisArticle ][i].title + "&gt;</small>",
-                    html: escapeHtml( applications[ thisArticle ][i].reason ).split( "\n" ).join( "<br/>" ),
-                    showCancelButton: true,
-                    confirmButtonText: "Next &rarr;",
-                    cancelButtonText: "取消",
-                    animation: false,
-                });
+            swal({ 
+                title: "申請原因&emsp;<cite>" + thisTime + "</cite><br />" +
+                        "<small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
+                html: escapeHtml( thisContent ).split( "\n" ).join( "<br/>" ),
+                confirmButtonText: "確定",
+                animation: false,
 
-                steps.push( parseInt(i) + 1 );
-            }
-
-            swal.setDefaults( { progressSteps: steps } );
-
-            swal.queue( reasonsQueue ).then( ( result ) => 
-            {
-                swal.setDefaults( { progressSteps: false } );
-
-            }, ( dismiss ) =>
-            {
-                swal.setDefaults( { progressSteps: false } );
-            });
+            }).then((result) => {}, ( dismiss ) => {});
 
         }
-        else if( $(this).text().trim() == "刪除" )
+        else if( $(this).text().trim() == "移除" )
         {
             let chosen = this;
 
             swal({
-                title: "確定要刪除此篇文章嗎？<br /><small>&lt;" + applications[ thisArticle ][0].title + "&gt;</small>",
+                title: "確定要移除此使用者的申請嗎？<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
+                type: "warning",
                 showCancelButton: true,
+                confirmButtonColor: "#F09900",
                 confirmButtonText: "確定",
                 cancelButtonText: "取消",
                 animation: false,
@@ -62,67 +47,10 @@ $( document ).ready( async function()
                 if ( result ) 
                 {
                     let cmd = {};
-                    cmd[ "act" ] = "deleteReport";
-                    cmd[ "articleID" ] = thisArticle;
-                    cmd[ "isPass" ] = "true";
+                    cmd[ "act" ] = "deleteApplyBoard";
+                    cmd[ "account" ] = thisApplicant;
+                    cmd[ "content" ] = thisBoardName + thisContent;
                     
-                    $.post( "../index.php", cmd, function( dataDB ){
-                        dataDB = JSON.parse( dataDB );
-
-                        if( dataDB.status == false )
-                        {
-                            swal({
-                                title: "刪除失敗<br /><small>&lt;" + applications[ thisArticle ][0].title + "&gt;</small>",
-                                type: "error",
-                                text: dataDB.errorCode,
-    
-                            }).then((result) => {}, ( dismiss ) => {});
-                        }
-                        else
-                        {
-                            swal({
-                                title: "已成功刪除文章！<br /><small>&lt;" + applications[ thisArticle ][0].title + "&gt;</small>",
-                                type: "success",
-                                showConfirmButton: false,
-                                timer: 1000,
-                                
-                            }).then((result) => {}, ( dismiss ) => {});
-    
-                            $(chosen).closest( "tr" ).remove();
-                            delete applications[ thisArticle ];
-    
-                            if( $.isEmptyObject(applications) )
-                            {
-                                let emptyMessage = "<tr>" + 
-                                                        "<td colspan='4'>檢舉文章列表為空</td>" +
-                                                    "</tr>";
-                                $( ".tabContent tbody" ).append( emptyMessage );
-                            }
-                        }
-                    });
-                }
-            }, ( dismiss ) => {});
-        }
-        else if( $(this).text().trim() == "取消" )
-        {
-            let chosen = this;
-
-            swal({
-                title: "確定要取消檢舉此篇文章嗎？<br /><small>&lt;" + applications[ thisArticle ][0].title + "&gt;</small>",
-                showCancelButton: true,
-                confirmButtonText: "確定",
-                cancelButtonText: "取消",
-                animation: false
-
-            }).then(( result ) => 
-            {
-                if ( result ) 
-                {
-                    let cmd = {};
-                    cmd[ "act" ] = "deleteReport";
-                    cmd[ "isPass" ] = "false";
-                    cmd[ "articleID" ] = thisArticle;
-
                     $.post( "../index.php", cmd, function( dataDB )
                     {
                         dataDB = JSON.parse( dataDB );
@@ -130,32 +58,35 @@ $( document ).ready( async function()
                         if( dataDB.status == false )
                         {
                             swal({
-                                title: "取消檢舉失敗<br /><small>&lt;" + applications[ thisArticle ][0].title + "&gt;</small>",
+                                title: "移除失敗<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
                                 type: "error",
                                 text: dataDB.errorCode,
+                                confirmButtonText: "確定",
     
                             }).then((result) => {}, ( dismiss ) => {});
                         }
                         else
                         {
                             swal({
-                                title: "已成功取消檢舉文章！<br /><small>&lt;" + applications[ thisArticle ][0].title + "&gt;</small>",
+                                title: "已成功移除此申請！<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
                                 type: "success",
                                 showConfirmButton: false,
                                 timer: 1000,
-    
-                            }).then((result) => {}, ( dismiss ) => {});
-    
-                            $(chosen).closest( "tr" ).remove();
-                            delete applications[ thisArticle ];
-    
-                            if( $.isEmptyObject(applications) )
+                                
+                            }).then((result) => {}, ( dismiss ) =>
                             {
-                                let emptyMessage = "<tr>" + 
-                                                        "<td colspan='4'>檢舉文章列表為空</td>" +
-                                                    "</tr>";
-                                $( ".tabContent tbody" ).append( emptyMessage );
-                            }
+                                thisTr.remove();
+                                delete applications[ thisApplcationID ];
+        
+                                if( applications.length == 0 )
+                                {
+                                    let emptyMessage = "<tr>" + 
+                                                            "<td colspan='4'>申請看板列表為空</td>" +
+                                                        "</tr>";
+                                                        
+                                    $( ".tabContent tbody" ).append( emptyMessage );
+                                }
+                            });
                         }
                     });
                 }
@@ -166,73 +97,130 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
-    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
-    ( error ) =>
+    // await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    // ( error ) =>
+    // {
+    //     res(1);
+    // });
+
+    // let cmd = {};
+    // cmd[ "act" ] = "showApplyBoard";
+
+    // $.post( "../index.php", cmd, function( dataDB )
+    // {
+    //     dataDB = JSON.parse( dataDB );
+
+    //     if( dataDB.status == false )
+    //     {
+    //         swal({
+    //             title: "載入頁面失敗",
+    //             type: "error",
+    //             text: dataDB.errorCode,
+    //             confirmButtonText: "確定",
+
+    //         }).then((result) => {}, ( dismiss ) => {});
+    //     }
+    //     else
+    //     {
+    //         $( ".tabContent h2" ).html( thisBoardName + "版－審核看板申請" );
+    //         let content = $( ".tabContent tbody" );
+    //         content.empty();
+
+    //         applications = dataDB.data;
+
+    //         if( applications.length == 0 )
+    //         {
+    //             let emptyMessage = "<tr>" + 
+    //                                     "<td colspan='4'>申請看板列表為空</td>" +
+    //                                 "</tr>";
+    //             content.append( emptyMessage );
+
+    //             return;
+    //         }
+
+    //         for( let i in applications )
+    //         {
+    //             let temp = applications[i].content.split( "版" );
+    //             applications[i].boardName = temp[0] + "版";
+    //             applications[i].content = temp[1];
+
+    //             let oneRow = "<tr class='row'>" + 
+    //                                 "<td class='col-md-3'>" + applications[i].account + "</td>" +
+    //                                 "<td class='col-md-3'>" + applications[i].time + "</td>" +
+    //                                 "<td class='col-md-3'>" +
+    //                                     "<button type='button' class='btn btn-default btn-warning'>" +
+    //                                         "<span class='glyphicon glyphicon-book'></span> 申請原因" +
+    //                                     "</button>" +
+    //                                 "</td>" +
+    //                                 "<td class='col-md-2'>" +
+    //                                     "<button type='button' class='btn btn-primary'>" +
+    //                                         "<span class='glyphicon glyphicon-trash'></span> 移除" +
+    //                                     "</button>" +
+    //                                 "</td>" +
+    //                             "</tr>";
+
+    //             content.append( oneRow );
+    //         }
+    //     }
+    //     res(0);
+    // });
+
+    let status = true;
+
+    if( status == false )
     {
-        res(1);
-    });
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "dataDB.errorCode",
+            confirmButtonText: "確定",
 
-    let cmd = {};
-    cmd[ "act" ] = "showReport";
-    cmd[ "boardName" ] = thisBoardName;
-
-    $.post( "../index.php", cmd, function( dataDB )
+        }).then((result) => {}, ( dismiss ) => {});
+    }
+    else
     {
-        dataDB = JSON.parse( dataDB );
+        let content = $( ".tabContent tbody" );
+        content.empty();
 
-        if( dataDB.status == false )
+        applications = [{"account": "00757000", "time": "0000-00-00 00:00:00", "content": "美食版我想要分享美食給大家"},
+                        {"account": "00757001", "time": "0000-00-00 00:00:01", "content": "星座版"},
+                        {"account": "00757002", "time": "0000-00-00 00:00:02", "content": "aa版<script>alert('申請aa版辣');</script>"}];
+        // applications = [];
+
+        if( applications.length == 0 )
         {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: "dataDB.errorCode"
-
-            }).then((result) => {}, ( dismiss ) => {});
-        }
-        else
-        {
-            $( ".tabContent h2" ).html( thisBoardName + "版－檢舉區" );
-            let content = $( ".tabContent tbody" );
-            content.empty();
-
-            applications = dataDB.data;
-
-            if( $.isEmptyObject(applications) )
-            {
-                let emptyMessage = "<tr>" + 
-                                        "<td colspan='4'>檢舉文章列表為空</td>" +
-                                    "</tr>";
-                content.append( emptyMessage );
-
-                return;
-            }
-
-            for( let i in applications )
-            {
-                let oneRow = "<tr>" + 
-                                "<td>" + applications[i][0].title + "</td>" +
-                                "<td>" +
-                                    "<button type='button' class='btn btn-default btn-warning'>" +
-                                        "<span class='glyphicon glyphicon-book'></span> 原因" +
-                                    "</button>" +
-                                "</td>" +
-                                "<td>" +
-                                    "<button type='button' class='btn btn-danger'>" +
-                                        "<span class='glyphicon glyphicon-trash'></span> 刪除" +
-                                    "</button>" +
-                                "</td>" +
-                                "<td>" +
-                                    "<button type='button' class='btn'>" +
-                                        "<span class='glyphicon glyphicon-remove'></span> 取消" +
-                                    "</button>" +
-                                "</td>" +
+            let emptyMessage = "<tr>" + 
+                                    "<td colspan='4'>申請看板列表為空</td>" +
                                 "</tr>";
+            content.append( emptyMessage );
 
-                content.append( oneRow );
-            }
+            return;
         }
-        res(0);
-    });
+
+        for( let i in applications )
+        {
+            applications[i].boardName = applications[i].content.split( "版" )[0] + "版";
+            applications[i].content = applications[i].content.replace( applications[i].boardName, "" );
+
+            let oneRow = "<tr class='row'>" + 
+                                "<td class='col-md-3'>" + applications[i].account + "</td>" +
+                                "<td class='col-md-3'>" + applications[i].boardName + "</td>" +
+                                "<td class='col-md-3'>" +
+                                    "<button type='button' class='btn btn-default btn-warning'>" +
+                                        "<span class='glyphicon glyphicon-book'></span> 申請原因" +
+                                    "</button>" +
+                                "</td>" +
+                                "<td class='col-md-3'>" +
+                                    "<button type='button' class='btn btn-info'>" +
+                                        "<span class='glyphicon glyphicon-trash'></span> 移除" +
+                                    "</button>" +
+                                "</td>" +
+                            "</tr>";
+
+            content.append( oneRow );
+        }
+    }
+    res(0);
 }
 
 function checkPermission( resolve, reject )
@@ -245,20 +233,14 @@ function checkPermission( resolve, reject )
             text: "您沒有權限瀏覽此頁面",
             
         }).then(( result ) => {
-            if ( result )
-            {
-                $( "body" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
-            }
+            $( "body" ).empty();
+            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+            $( "body" ).append( httpStatus );
 
         }, ( dismiss ) => {
-            if ( dismiss )
-            {
-                $( "body" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
-            }
+            $( "body" ).empty();
+            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+            $( "body" ).append( httpStatus );
         });
 
         reject(1);
@@ -282,20 +264,14 @@ function checkPermission( resolve, reject )
                 text: "dataDB.errorCode",
     
             }).then(( result ) => {
-                if ( result )
-                {
-                    $( "body" ).empty();
-                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                    $( "body" ).append( httpStatus );
-                }
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
     
             }, ( dismiss ) => {
-                if ( dismiss )
-                {
-                    $( "body" ).empty();
-                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                    $( "body" ).append( httpStatus );
-                }
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
             });
             
             reject(1);
@@ -308,20 +284,14 @@ function checkPermission( resolve, reject )
                 text: "您沒有權限瀏覽此頁面",
                 
             }).then(( result ) => {
-                if ( result )
-                {
-                    $( "body" ).empty();
-                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                    $( "body" ).append( httpStatus );
-                }
-
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
+    
             }, ( dismiss ) => {
-                if ( dismiss )
-                {
-                    $( "body" ).empty();
-                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                    $( "body" ).append( httpStatus );
-                }
+                $( "body" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( "body" ).append( httpStatus );
             });
     
             reject(1);

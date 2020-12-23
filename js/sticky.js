@@ -48,7 +48,9 @@ $( document ).ready( async function()
                         swal({
                             title: "修改版規失敗",
                             type: "error",
-                            text: dataDB.errorCode
+                            text: dataDB.errorCode,
+                            confirmButtonText: "確定",
+                            
                         }).then(( result ) => {}, ( dismiss ) => {} );
                     }
                     else
@@ -108,6 +110,7 @@ $( document ).ready( async function()
                             title: "取消置頂失敗",
                             type: "error",
                             text: dataDB.errorCode,
+                            confirmButtonText: "確定",
         
                         }).then(( result ) => {}, ( dismiss ) => {} );
                     }
@@ -148,6 +151,7 @@ $( document ).ready( async function()
                         title: "置頂失敗",
                         type: "error",
                         text: dataDB.errorCode,
+                        confirmButtonText: "確定",
     
                     }).then(( result ) => {}, ( dismiss ) => {} );
                 }
@@ -216,7 +220,7 @@ $( document ).ready( async function()
                 swal({
                     title: "錯誤！",
                     type: "error",
-                    text: "dataDB.errorCode"
+                    text: dataDB.errorCode,
         
                 }).then(( result ) => {}, ( dismiss ) => {} );
             }
@@ -337,6 +341,7 @@ $( document ).ready( async function()
                                 title: "新增收藏分類失敗",
                                 type: "error",
                                 text: dataDB.errorCode,
+                                confirmButtonText: "確定",
 
                             }).then(( result ) => {}, ( dismiss ) => {});
                         }
@@ -504,14 +509,15 @@ function forNormal( resolve, reject )
                 title: "載入頁面失敗",
                 type: "error",
                 text: dataDB.errorCode,
+                confirmButtonText: "確定",
 
             }).then(( result ) => {}, ( dismiss ) =>
             {
                 if ( dismiss )
                 {
-                    $( "body" ).empty();
+                    $( ".tabContent" ).empty();
                     let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>500 Internal Server Error</h1>";
-                    $( "body" ).append( httpStatus );
+                    $( ".tabContent" ).append( httpStatus );
                 }
             });
         }
@@ -624,14 +630,15 @@ function forSearching( resolve, reject )
                 title: "載入頁面失敗",
                 type: "error",
                 text: dataDB.errorCode,
+                confirmButtonText: "確定",
 
             }).then(( result ) => {}, ( dismiss ) =>
             {
                 if ( dismiss )
                 {
-                    $( "body" ).empty();
+                    $( ".tabContent" ).empty();
                     let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>500 Internal Server Error</h1>";
-                    $( "body" ).append( httpStatus );
+                    $( ".tabContent" ).append( httpStatus );
                 }
             });
         }
@@ -814,7 +821,9 @@ function getKeepMenu( resolve, reject )
             swal({
                 title: "取得收藏資分類失敗",
                 type: "error",
-                text: dataDB.errorCode
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
+
             }).then(( result ) => {
                 if( result )
                     reject([]);
