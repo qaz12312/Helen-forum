@@ -1,11 +1,12 @@
-$(document).ready(function () {
+$(document).ready(async function () {
     barInitial();
-    checkPermission();
+    await new Promise( ( resolve, reject ) => { checkPermission( resolve, reject ); });
+
     $("#password").keyup(function () {
         if (passwd()) {
             $("#password").css("border", "2px solid green");
             $("#pwMsg").html("<p class='text-success'>Validated</p>");
-            document.getElementById('validatePW').disabled = !document.getElementById('validatePW').disabled;
+            document.getElementById('validatePW').disabled = false;
 
         }
         else {
@@ -23,15 +24,15 @@ $(document).ready(function () {
             $("#validatePW").css("border", "2px solid red");
             $("#checkPw").html("<p class='text-danger'>Password are not Matching</p>");
         }
+        
         if(Restrict())
-        {
-            document.getElementById('final').disabled = !document.getElementById('final').disabled;
+    {
+        document.getElementById('final').disabled = false;
 
-        }
-
+    }
     });
     
-
+    
     $("#backBtn").click(function () {
         swal({
             title: 'OPPS!',
@@ -48,22 +49,54 @@ $(document).ready(function () {
         })
     });
     $("#final").click(function () {
+        var url = location.href;
+        var ans; 
+        if(url.indexOf('?')!=-1)
+        {
+            var perm = url.split('?')[1];
+            ans = perm.split('=')[1];
+        }
+        let cmd = {};
+        cmd["act"] = "forgetPwd";
+        cmd["option"] = "change";
+        cmd["token"] = ans;
+        cmd["pwd"] = $('#validatePW').val();
+        $.post("../index.php", cmd, function (dataDB) {
+            dataDB = JSON.parse(dataDB);
+            if (dataDB.status == false) {
+                swal({
+                    title: "網址過期",
+                    type: "error",
+                    text: dataDB.errorCode,
         
+                }).then(( result ) => {
+                    if ( result )
+                    {
+                        window.location.href = "../HTMLs/forgetPassword.html";
+                    }
         
-        swal({
-            title: 'Welcome To Helen',
-            type: 'success',
-            text: '本訊息1秒後自動關閉',
-            showConfirmButton: false,
-            timer: 1000,
-        }).then(
-            function () { },
-            function (dismiss) {
-                if (dismiss === 'timer') {
-                    window.location.href = "../HTMLs/login.html";
-                }
+                
+                });
             }
-        )
+            else{
+                swal({
+                    title: 'Welcome To Helen',
+                    type: 'success',
+                    text: '本訊息1秒後自動關閉',
+                    showConfirmButton: false,
+                    timer: 1000,
+                }).then(
+                    function () { },
+                    function (dismiss) {
+                        if (dismiss === 'timer') {
+                            window.location.href = "../HTMLs/login.html";
+                        }
+                    }
+                )
+            }
+        });
+        
+ 
     });
 });
 
@@ -99,33 +132,52 @@ function passwd() {
     }
 }
 // ^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$(較強的密碼)
-function checkPermission()
+function checkPermission(res, rej)
 {
-    console.log("0")
-    let cmd = {};
-        cmd["act"] = "verifyForgetPwd";
         var url = location.href;
         var ans; 
-            if(url.indexOf('?')!=-1)
-            {
-                var perm = url.split('?')[1];
-                var ans = perm.split('=')[1];
-            }
-        cmd["token"] =ans;
-            $.post("../index.php", cmd, function (dataDB) {
-                if (dataDB.status == false) {
-                    console.log("1")
-                    $( ".tabContent" ).empty();
-                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                    $( ".tabContent" ).append( httpStatus );
-                    
-                }
-                else{
-                    console.log("2")
-                    return true
-                }
+        if(url.indexOf('?')!=-1)
+        {
+            var perm = url.split('?')[1];
+            ans = perm.split('=')[1];
+        }
+        let cmd = {};
+        cmd["act"] = "forgetPwd";
+        cmd["option"] = "verify";
+        cmd["token"] = ans;
+        $.post("../index.php", cmd, function (dataDB) {
+            dataDB = JSON.parse(dataDB);
+            if (dataDB.status == false) {
+                swal({
+                    title: "載入頁面失敗",
+                    type: "error",
+                    text: dataDB.errorCode,
+        
+                }).then(( result ) => {
+                    if ( result )
+                    {
+                        $( ".tabContent" ).empty();
+                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                        $( ".tabContent" ).append( httpStatus );
+                    }
+        
+                }, ( dismiss ) => {
+                    if ( dismiss )
+                    {
+                        $( ".tabContent" ).empty();
+                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                        $( ".tabContent" ).append( httpStatus );
+                    }
+                });
                 
-        });
-    
-    
+                res(0);
+                console.log("1....")
+                
+                
+            }
+            else{
+                return true;
+            }     
+    });
+    res(0);
 }
