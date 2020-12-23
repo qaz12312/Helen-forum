@@ -1,5 +1,6 @@
-# 後端 - Helen
-
+# 前端 - Helen
+### 記得到[Trello](https://trello.com/b/2amh64r0/helen)做紀錄
+### 有問題可以先上[Trello](https://trello.com/b/2amh64r0/helen)相關連結的`前端問題集`看
 ## 頁面
 ### 登入模組
 + [logIn.html  登入](https://github.com/ytchao0234/softwareEngineeringProject/blob/frontEnd/html/logIn.html)
