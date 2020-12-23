@@ -3,10 +3,10 @@ var borads= [];
 var hashtags= [];
 
 //this is test data for edit article
-let articleData= {boardName: "美食版", 
-                articleTitle: "測試文章標題",
-                content: "測試測試測試測試測試測試測試測試測試測試測試測試", 
-                hashtag: ["過", "聒聒", "00123"]};
+// let articleData= {boardName: "美食版", 
+//                 articleTitle: "測試文章標題",
+//                 content: "測試測試測試測試測試測試測試測試測試測試測試測試", 
+//                 hashtag: ["過", "聒聒", "00123"]};
 //test End
 
 document.querySelector("html").classList.add('js');
@@ -81,32 +81,34 @@ $("#publishBtn").on("click", function(){
         cmd["act"]= "editArticle";
     }
     else{ //發布文章
-        let cmd= {};
-        cmd["act"]= "addArticle";
+        cmd["act"]= "newArticle";
     }
-    cmd["userID"]= sessionStorage.getItem("Helen-userID")
-    cmd["articleTitle"]= titleStr;
-    cmd["boardName"]= $("#chooseBoard :selected").val();//text()
+    cmd["account"]= sessionStorage.getItem("Helen-account")
+    cmd["title"]= titleStr;
+    let chooseStr= $("#chooseBoard :selected").val();
+    cmd["blockName"]= chooseStr.substring(0, chooseStr.length- 1);//text()
     cmd["content"]= contentStr;
-    cmd["hashtag"]= hashtags;
+    cmd["hashTag"]= hashtags;
+    cmd["picture"]= "Image"; // no picture
+    console.log(cmd);
     
-    // $.post("../index.php", cmd, function(){
-        // var dataDB= JSON.parse(dataDB);
-        // if(dataDB.status== false){
-        //     swal({
-        //         title: "發佈文章失敗，請稍後重試！",
-        //         type: "error",
-        //         text: dataDB.errorCode,
-        //         animation: false
-        //     });
-        // }
-        // else{
+    $.post("../index.php", cmd, function(dataDB){
+        var dataDB= JSON.parse(dataDB);
+        if(dataDB.status== false){
+            swal({
+                title: "發佈文章失敗，請稍後重試！",
+                type: "error",
+                text: dataDB.errorCode,
+                animation: false
+            });
+        }
+        else{
             // ?依最新排序的首頁
-            // sessionStorage.setItem("Helen-act", "home");
+            sessionStorage.setItem("Helen-act", "home");
             sessionStorage.setItem("Helen-sort", "最新");
             location.href =  "../html/home.html";
-        // }
-    // })
+        }
+    })
 })
 
 $("#cancelPublish").on("click", function(){
@@ -179,17 +181,17 @@ async function initial(res, rej){
         cmd["account"]= sessionStorage.getItem("Helen-account");
         cmd["articleID"]= sessionStorage.getItem("Helen-articleID");
 
-        // $.post("../index.php", cmd, function(dataDB){
-        //     dataDB= JSON.parse(dataDB);
+        $.post("../index.php", cmd, function(dataDB){
+            dataDB= JSON.parse(dataDB);
 
-        //     if(dataDB.status == false){
-        //         swal({
-        //             title: "載入頁面失敗",
-        //             type: "error",
-        //             text: dataDB.errorCode
-        //         });
-        //     }
-        //     else{
+            if(dataDB.status == false){
+                swal({
+                    title: "載入頁面失敗",
+                    type: "error",
+                    text: dataDB.errorCode
+                });
+            }
+            else{
                 articleData= dataDB.data
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
@@ -200,13 +202,13 @@ async function initial(res, rej){
                 $("#articleContent").val()= articleData.content;
                 hashtags= articleData.hashtag;
                 printHashtag();
-        //     }
-        // })
+            }
+        })
     }
     res(0);
 }
 
-async function checkPermission(resolve, reject){
+function checkPermission(resolve, reject){
     if(sessionStorage.getItem("Helen-account")){
         resolve(true);
     }
