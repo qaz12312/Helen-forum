@@ -1,10 +1,10 @@
 var thisAccount = sessionStorage.getItem( "Helen-account" );
-var boardList = sessionStorage.getItem( "Helen-boards" );
+var boardList = [];
 
 $( document ).ready( async function()
 {
     barInitial();
-    // await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
+    await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
 
     $( "button" ).click( function()
     {
@@ -76,8 +76,6 @@ $( document ).ready( async function()
         }
         else if( content == "新增看板" )
         {
-            let addingBlock = $( this ).closest( "tr" );
-
             let addingQueue = [];
             let steps = [1, 2];
 
@@ -128,66 +126,86 @@ $( document ).ready( async function()
 
                 if( result[0] === false ) return;
 
+                // let cmd = {};
+                // cmd[ "act" ] = "newBoard";
+                // cmd[ "boardName" ] = result[0];
+                // cmd[ "rule" ] = result[1];
+
+                // $.post( "../index.php", cmd, function( dataDB )
+                // {
+                //     dataDB = JSON.parse( dataDB );
+
+                //     if( dataDB.status == false )
+                //     {
+                //         swal({
+                //             title: "新增看版失敗<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                //             type: "error",
+                //             text: data.errorCode,
+                //             confirmButtonText: "確定",
+                            
+                //         }).then(( result ) => {}, ( dismiss ) => {});
+                //     }
+                //     else
+                //     {
+                //         swal({
+                //             title: "新增看版成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                //             type: "success",
+                //             showConfirmButton: false,
+                //             timer: 1000,
+
+                //         }).then(( result ) => {}, ( dismiss ) =>
+                //         {
+                //             if( dismiss )
+                //             {
+                //                 location.reload();
+                //             }
+                //         });
+                //     }
+                // });
+                let cmd = {};
+                cmd[ "act" ] = "newBoard";
+                cmd[ "boardName" ] = result[0];
+                cmd[ "rule" ] = result[1];
                 
+                let status = true;
+                if( status == false )
+                {
+                    swal({
+                        title: "新增看版失敗<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                        type: "error",
+                        text: "data.errorCode",
+                        confirmButtonText: "確定",
+                        
+                    }).then(( result ) => {}, ( dismiss ) => {});
+                }
+                else
+                {
+                    swal({
+                        title: "新增看版成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 1000,
+
+                    }).then(( result ) => {}, ( dismiss ) =>
+                    {
+                        if( dismiss )
+                        {
+                            location.reload();
+                        }
+                    });
+                }
 
             }, ( dismiss ) =>
             {
                 swal.setDefaults( { progressSteps: false } );
             });
-
-            // swal({
-            //     title: "新增看板名稱"
-            // })
-            // let deleteBoardName = chosen.find( "td" ).first().text();
-            // deleteBoardName = deleteBoardName.split( "版" )[0];
-
-            // let cmd = {};
-            // cmd[ "act" ] = "deleteBoard";
-            // cmd[ "boardName" ] = deleteBoardName;
-
-            // $.post( "../index.php", cmd, function( dataDB )
-            // {
-            //     dataDB = JSON.parse( dataDB );
-
-            //     if( dataDB.status == false )
-            //     {
-            //         swal({
-            //             title: "刪除看板失敗",
-            //             type: "error",
-            //             text: data.errorCode,
-            //             confirmButtonText: "確定",
-
-            //         }).then(( result ) => {}, ( dismiss ) => {});
-            //     }
-            //     else if( dataDB.status == true )
-            //     {
-            //         swal({
-            //             title: "刪除看板成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
-            //             type: "success",
-            //             showConfirmButton: false,
-            //             timer: 1000,
-
-            //         }).then(( result ) => {}, ( dismiss ) =>
-            //         {
-            //             chosen.remove();
-            //         });
-            //     }
-            // });
-        }
-        else if( content == "確定" )
-        {
-            
-        }
-        else if( content == "取消" )
-        {
-            
         }
     });
 });
 
 async function initial( res, rej )
 {
-    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
+    // await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
     await new Promise( ( resolve, reject ) => manageBoard( resolve, reject ) );
 
     res(0);
@@ -195,27 +213,101 @@ async function initial( res, rej )
 
 function manageBoard( resolve, reject )
 {
-    let cmd = {};
-    cmd[ "act" ] = "showBoardList";
+    // let cmd = {};
+    // cmd[ "act" ] = "showBoardList";
 
-    $.post( "../index.php", cmd, function( dataDB )
+    // $.post( "../index.php", cmd, function( dataDB )
+    // {
+    //     dataDB = JSON.parse( dataDB );
+
+    //     if( dataDB.status == false )
+    //     {
+    //         swal({
+    //             title: "錯誤",
+    //             type: "error",
+    //             text: data.errorCode,
+    //             confirmButtonText: "確定",
+
+    //         }).then(( result ) => {}, ( dismiss ) => {});
+    //     }
+    //     else
+    //     {
+    //         boardList = dataDB.data;
+
+    //         $( ".tabContent tbody" ).empty();
+    //         $( ".tabContent tbody" ).append( "<tr><td colspan='4'>" + 
+    //                                             "<button type='button' class='btn btn-success'>" + 
+    //                                                 "<span class='glyphicon glyphicon-plus'></span> 新增看板</span>" +
+    //                                          "</button></td></tr>" );
+    //         let content = "";
+
+    //         for( let i in boardList )
+    //         {
+    //             let rule = ( boardList[i].rule ) ? boardList[i].rule : '無';
+
+    //             content += "<tr class='row'>" + 
+    //                             "<td class='col-md-3'>" + boardList[i].boardName + "版</td>" + 
+    //                             "<td class='col-md-6'><h6>" + rule + "</h6></td>" +
+    //                             "<td class='col-md-3'>" +
+    //                                 "<button type='button' class='btn btn-success'>" + 
+    //                                     "<span class='glyphicon glyphicon-plus'> 刪除</span>" + 
+    //                                 "</button>" +
+    //                             "</td>" +
+    //                        "</tr>";
+    //         }
+
+    //         $( ".tabContent tbody" ).append( content );
+    //     }
+
+    //     resolve(0);
+    // });
+
+    let status = true;
+
+    if( status == false )
     {
-        dataDB = JSON.parse( dataDB );
+        swal({
+            title: "錯誤",
+            type: "error",
+            text: "data.errorCode",
+            confirmButtonText: "確定",
 
-        if( dataDB.status == false )
-        {
-            swal({
-                title: "錯誤",
-                type: "error",
-                text: data.errorCode,
+        }).then(( result ) => {}, ( dismiss ) => {});
+    }
+    else
+    {
+        boardList = [{ "boardName": "美食", "rule": "吃吃喝喝" },
+                     { "boardName": "穿搭", "rule": "每天都要每每ㄉ" },
+                     { "boardName": "廢文", "rule": "我愛講廢話" },
+                     { "boardName": "八卦", "rule": "長舌聚集地"},
+                     { "boardName": "132", "rule": ""}];
 
-            }).then(( result ) => {}, ( dismiss ) => {});
-        }
-        else
+        $( ".tabContent tbody" ).empty();
+        $( ".tabContent tbody" ).append( "<tr><td colspan='4'>" + 
+                                            "<button type='button' class='btn btn-success'>" + 
+                                                "<span class='glyphicon glyphicon-plus'></span> 新增看板</span>" +
+                                            "</button></td></tr>" );
+        let content = "";
+
+        for( let i in boardList )
         {
-            
+            let rule = ( boardList[i].rule ) ? boardList[i].rule : '無';
+
+            content += "<tr class='row'>" + 
+                            "<td class='col-md-3'>" + boardList[i].boardName + "版</td>" + 
+                            "<td class='col-md-6'><h6>" + rule + "</h6></td>" +
+                            "<td class='col-md-3'>" +
+                                "<button type='button' class='btn btn-danger'>" + 
+                                    "<span class='glyphicon glyphicon-trash'> 刪除</span>" + 
+                                "</button>" +
+                            "</td>" +
+                        "</tr>";
         }
-    });
+
+        $( ".tabContent tbody" ).append( content );
+    }
+
+    resolve(0);
 }
 
 function checkPermission( resolve, reject )
