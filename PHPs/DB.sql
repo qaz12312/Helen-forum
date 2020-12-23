@@ -97,6 +97,15 @@ CREATE TABLE KeepDir (
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
+DROP TABLE IF EXISTS Issue;
+CREATE TABLE Issue (
+	UserID varchar(101) NOT NULL,
+    Content text,
+    Times datetime DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (UserID, Times),
+    FOREIGN KEY (UserID) REFERENCES Users (UserID)
+) CHARSET=utf8mb4 ;
+
 # 總愛心數
 DROP VIEW IF EXISTS HomeHeart;
 CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`cntHeart`,`Times`) AS 
