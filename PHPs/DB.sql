@@ -60,6 +60,17 @@ FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
 FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
+DROP TABLE IF EXISTS Calendar;
+CREATE TABLE Calendar (
+	UserID varchar(101) NOT NULL,
+	Title varchar(255) NOT NULL,
+    Start varchar(101) NOT NULL,
+    END varchar(101) NOT NULL,
+    Text text,
+    PRIMARY KEY (UserID, Title),
+    FOREIGN KEY (UserID) REFERENCES Users (UserID)
+)	CHARSET=utf8mb4 ;
+
 DROP TABLE IF EXISTS FollowHeart;
 CREATE TABLE FollowHeart (
 	ArticleID bigint(255) NOT NULL,
