@@ -9,7 +9,7 @@
     dataDB.status
     若 status = true:
         dataDB.info = "success to verify"
-        dataDB.data = account
+        dataDB.data = token
     否則
         dataDB.errorCode = "fail to verify"
         dataDB.data = ""
