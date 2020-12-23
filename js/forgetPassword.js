@@ -1,57 +1,50 @@
 $(document).ready(function () {
-    $("#email").keyup(function(){    
-        if(validateEmail()){
-            
-            $("#email").css("border","2px solid green");
-            
-            $("#emailMsg").html("<p class='text-success'>Validated</p>");
-        }else{
-            
-            $("#email").css("border","2px solid red");
-            $("#emailMsg").html("<p class='text-danger'>Un-validated</p>");
-        }
-    });
-   
-  
-
+    barInitial();
     $("#verify").click(function(){ 
         var btn=$('#verify');
         var email = $("#email").val(); $('#btnGetVerifyCode');
-        var preg = /^\w+([-+.']\w+)*@(mail|email){1}\.ntou\.edu\.tw/; //匹配Email 
-        if(email=='' || !preg.test(email)){ 
-            $("#chkmsg").html("請填寫正確學校信箱！"); 
+        if(email==''){ 
+            $("#chkmsg").html("請輸入學校信箱！"); 
         }
         else{ 
                 $("#chkmsg").html(""); 
                 let cmd = {};
-                cmd[ "act" ] = "sendMail";
-                cmd[ "account"] = $('#email').val().split( "@" )[0];
-                console.log( cmd[ "account"] );
+                cmd[ "act" ] = "sendMailPwd";
+                cmd[ "account"] = $('#email').val();
                 $.post( "../index.php", cmd, function( dataDB )
                 {
                     dataDB = JSON.parse( dataDB );
 
                     if( dataDB.status == false )
                     {
-                        $(".showAlert").text(dataDB.errorCode);
+                        swal({
+                            title: "驗證失敗",
+                            type: "success",
+                            text: dataDB.errorCode,
+                            showConfirmButton: false,
+                            timer: 1000,
+    
+                        })
                     }
                     else{
-                        $(".showAlert").text(dataDB.data);
+                        swal({
+                            title: "驗證成功",
+                            type: "success",
+                            text: dataDB.errorCode,
+                            showConfirmButton: false,
+                            timer: 3000,
+    
+                        })
+                        
                     }
                 
                     });
                 
                 time(btn);
-                // $.post("sendmail.php",{mail:email},function(msg){ 
-                //     if(msg=="noreg"){ 
-                //         $("#chkmsg").html("該郵箱尚未註冊！"); 
-                //         $("#sub_btn").removeAttr("disabled").val('提 交').css("cursor","pointer"); 
-                //     }
-                    
-                // }); 
+                
             }
     }); 
-    setTimeout("document.getElementById('alert').innerHTML=html",5000)
+    
 });
      
 var wait=60

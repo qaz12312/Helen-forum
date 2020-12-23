@@ -1,8 +1,11 @@
 //PersonalProfile
 var thisAccount = sessionStorage.getItem( "Helen-account" );
-$( document ).ready( function() 
+$( document ).ready(function() 
 {
-    initial();
+    
+    barInitial();
+    initiall();
+    
     value = document.getElementById("name").value;
     document.querySelector('.PersonEditBtn').addEventListener('click',
     function () {
@@ -19,9 +22,12 @@ $( document ).ready( function()
             cmd["act"] = "editPersonalInfo";
             cmd["option"] = "nickname";
             cmd[ "account" ] =sessionStorage.getItem("Helen-account");
+            cmd[ "new" ] =document.getElementById("name").value;
+            
+            console.log(cmd[ "new" ])
             $.post( "../index.php", cmd, function( dataDB ){
                 dataDB = JSON.parse( dataDB );
-                if (dataDB.statue == false) {
+                if (dataDB.status  == false) {
                     dataDB.data = ""
                     swal({
                         title: 'OOPS...',
@@ -45,9 +51,8 @@ $( document ).ready( function()
                         confirmButtonColor: '#eda2b6',
                         timer: 2000
                     })
-                    
-                    cmd[ "new" ] =document.getElementById("name").value;
-                    console.log(document.getElementById("name").value)
+                    //sessionStorage.setItem("Helen-nickname")=document.getElementById("name").value;
+                    sessionStorage.setItem("Helen-nickname", document.getElementById("name").value)
                     document.getElementById('name').disabled = !document.getElementById('name').disabled;
                     document.getElementById("edit").value = 'Edit'
                 }
@@ -56,138 +61,144 @@ $( document ).ready( function()
     });
     document.querySelector('.PasswordEditBtn').addEventListener('click',
     function () {
-    const div = document.createElement('div');
-    var value = document.getElementById("password").value;  
-    
+        const div = document.createElement('div');
+        var value = document.getElementById("password").value;  
+        if(document.getElementById('password').disabled == true){
+            document.getElementById('password').disabled = !document.getElementById('password').disabled;
+            document.getElementById('editPw').disabled=true
+            document.getElementById("editPw").value = '驗證密碼' 
+            document.getElementById("password").setAttribute("placeholder","請輸入原始密碼");
+            
+        }
+        else{
+            
+            let cmd = {};
+                cmd["act"] = "checkPassword";
+                cmd[ "account" ] =sessionStorage.getItem("Helen-account");
+                cmd["password"] = value;
+                console.log(value)
+                $.post( "../index.php", cmd, function( dataDB ){
+                    dataDB = JSON.parse( dataDB );
+                        if (dataDB.status  == false) {
+                            dataDB.data = ""
+                            swal({
+                                title: 'OOPS...',
+                                type: 'error',
+                                text: '驗證失敗 ',
+                                animation: false,
+                                customClass: 'animated rotateOutUpLeft',
+                                confirmButtonText: 'okay!',
+                                confirmButtonColor: '#eda2b6'
+                            })
+                            location.reload();//重整
+                        }
+                        else { 
+                            swal({
+                                title: 'Congratulation!!',
+                                type: 'success',
+                                text: '驗證成功',
 
-    console.log(document.getElementById('password').disabled)
-    if(document.getElementById('password').disabled == true){
-        document.getElementById('password').disabled = !document.getElementById('password').disabled;
-        
-        document.getElementById('editPw').disabled=true
-        document.getElementById("editPw").value = '驗證密碼' 
-        document.getElementById("password").setAttribute("placeholder","請輸入原始密碼");
-        
-    }
-    else{
-        let cmd = {};
-            cmd["act"] = "editPersonalInfo";
-            cmd[ "account" ] =sessionStorage.getItem("Helen-account");
-            $.post( "../index.php", cmd, function( dataDB ){
-                dataDB = JSON.parse( dataDB );
-                    if (dataDB.statue == false) {
-                        dataDB.data = ""
-                        swal({
-                            title: 'OOPS...',
-                            type: 'error',
-                            text: '驗證失敗 ',
-                            animation: false,
-                            customClass: 'animated rotateOutUpLeft',
-                            confirmButtonText: 'okay!',
-                            confirmButtonColor: '#eda2b6'
-                        })
-                
-                    }
-                    else { 
-                        swal({
-                            title: 'Congratulation!!',
-                            type: 'success',
-                            text: '驗證成功',
-
-                            showConfirmButton: false,
-                            customClass: 'animated rotateOutUpLeft',
-                            confirmButtonText: 'okay!',
-                            confirmButtonColor: '#eda2b6',
-                            timer: 2000
-                        }).then(
-                            
-                            function () { },
-                            function (dismiss) {
-                                console.log("驗證成功");
-                                document.getElementById('password').disabled = !document.getElementById('password').disabled;
-                                document.getElementById("editPw").value = 'Edit'
-                                let cmd = {};
-                                cmd["act"] = "editPersonalInfo";
-                                cmd["option"] = "password";
-                                cmd["account"] = sessionStorage.getItem("Helen-account");
-                                $.post("../index.php", cmd, function (data) {
-                                    dataDB = JSON.parse(data);
-                                    if (dataDB.statue == false) {
-                                        dataDB.data = ""
-                                        swal({
-                                            title: 'OOPS...',
-                                            type: 'error',
-                                            text: '更改password失敗 ',
-                                            animation: false,
-                                            customClass: 'animated rotateOutUpLeft',
-                                            confirmButtonText: 'okay!',
-                                            confirmButtonColor: '#eda2b6'
-                                        })
-                                    }
-                                    else {
-                                        let yourQueue = [];
-                                        let steps = [];
-                                        let yourDataArray=["新密碼","確認密碼"];
-                                        for( let i = 0; i <= 1; i++ )
-                                        {
-                                            yourQueue.push(
-                                            { 
-                                                title: yourDataArray[i],
+                                showConfirmButton: false,
+                                customClass: 'animated rotateOutUpLeft',
+                                confirmButtonText: 'okay!',
+                                confirmButtonColor: '#eda2b6',
+                                timer: 2000
+                            }).then(
+                                function () { },
+                                function (dismiss) {
+                                    console.log("驗證成功");
+                                    document.getElementById('password').disabled = !document.getElementById('password').disabled;
+                                    document.getElementById("editPw").value = 'Edit'
+                                            let yourQueue = [];
+                                            let steps = [];
+                                            let yourDataArray=["新密碼","確認密碼"];
+                                            for( let i = 0; i <= 1; i++ )
+                                            {
+                                                yourQueue.push(
+                                                { 
+                                                    title: yourDataArray[i],
+                                                    
+                                                    showCancelButton: true,
+                                                    confirmButtonText: "Next &rarr;",
+                                                    cancelButtonText: "取消",
+                                                    input: "text",
+                                                });
+                                            
+                                                steps.push( parseInt(i) + 1 );
+                                            }
+                                            
+                                            swal.setDefaults( { progressSteps: steps } );
+                                            
+                                            swal.queue( yourQueue ).then( ( result ) => 
+                                            {
                                                 
-                                                showCancelButton: true,
-                                                confirmButtonText: "Next &rarr;",
-                                                cancelButtonText: "取消",
-                                                input: "text",
+                                                if( result[0]==result[1] )
+                                                {
+                                                    let cmd = {};
+                                                    cmd["act"] = "editPersonalInfo";
+                                                    cmd["option"] = "password";
+                                                    cmd["account"] = sessionStorage.getItem("Helen-account");
+                                                    cmd["new"]=result[0];
+                                                    $.post( "../index.php", cmd, function( dataDB )
+                                                    {
+                                                        dataDB = JSON.parse( dataDB );
+                                                        if (dataDB.status  == false) {
+                                                            dataDB.data = ""
+                                                            swal({
+                                                                title: 'OOPS...',
+                                                                type: 'error',
+                                                                text: '更改password失敗 ',
+                                                                animation: false,
+                                                                customClass: 'animated rotateOutUpLeft',
+                                                                confirmButtonText: 'okay!',
+                                                                confirmButtonColor: '#eda2b6'
+                                                            })
+                                                            location.reload();//重整
+                                                        }
+                                                        else{
+                                                            swal({
+                                                                title: 'Congratulation!!',
+                                                                type: 'success',
+                                                                text: 'success to change the password',
+                                                                showConfirmButton: false,
+                                                                customClass: 'animated rotateOutUpLeft',
+                                                                confirmButtonText: 'okay!',
+                                                                confirmButtonColor: '#eda2b6',
+                                                                timer: 2000
+                                                            })
+                                                           
+                                                            location.reload();//重整
+                                                        }
+
+                                                    
+                                                    
+                                                    });
+                                                }
+                                                else{
+                                                    swal({
+                                                        title: 'OOPS...',
+                                                        type: 'error',
+                                                        text: 'The New and Confirm passwords do not match ',
+                                                        animation: false,
+                                                        customClass: 'animated rotateOutUpLeft',
+                                                        confirmButtonText: 'okay!',
+                                                        confirmButtonColor: '#eda2b6',
+                                                        timer: 2000
+                                                    })
+                                                    location.reload();//重整
+                                                }
+                                                
+                                                swal.setDefaults( { progressSteps: false } );
+                                            }, (dismiss) =>
+                                            {
+                                                swal.setDefaults( { progressSteps: false } );
                                             });
                                         
-                                            steps.push( parseInt(i) + 1 );
-                                        }
-                                        
-                                        swal.setDefaults( { progressSteps: steps } );
-                                        
-                                        swal.queue( yourQueue ).then( ( result ) => 
-                                        {
-                                            if( result[0]==result[1] )
-                                            {
-                                                swal({
-                                                    title: 'Congratulation!!',
-                                                    type: 'success',
-                                                    text: 'success to change the password',
-                                                    showConfirmButton: false,
-                                                    customClass: 'animated rotateOutUpLeft',
-                                                    confirmButtonText: 'okay!',
-                                                    confirmButtonColor: '#eda2b6',
-                                                    timer: 2000
-                                                })
-                                                
-                                                document.getElementById("password").setAttribute("placeholder","");
-                                                
-                                                cmd["new"]=result[1] ;
-                                                console.log(cmd["new"])
-                                            }
-                                            else{
-                                                swal({
-                                                    title: 'opps!!',
-                                                    type: 'warning',
-                                                    text: 'Failed to Update personal information in password',
-                                                    showConfirmButton: false,
-                                                    customClass: 'animated rotateOutUpLeft',
-                                                    confirmButtonText: 'okay!',
-                                                    confirmButtonColor: '#eda2b6',
-                                                    timer: 2000
-                                                })
-                                            }
-                                            swal.setDefaults( { progressSteps: false } );
-                                        }, (dismiss) =>
-                                        {
-                                            swal.setDefaults( { progressSteps: false } );
-                                        });
-                                    }
-                                });
-                            }
-                        )
-                    }
-                });
+                                    
+                                }
+                            )
+                        }
+                    });
             }
         });
         $('#color').colpick({
@@ -199,10 +210,10 @@ $( document ).ready( function()
                 cmd["act"] = "editPersonalInfo";
                 cmd[ "account" ] =sessionStorage.getItem("Helen-account");
                 cmd["option"] = "color";
+                cmd["new"] = '#'+hex;
                 $.post( "../index.php", cmd, function( dataDB ){
                     dataDB = JSON.parse( dataDB );
-
-                    if (dataDB.statue == false) {
+                    if (dataDB.status == false) {
                         dataDB.data = ""
                         swal({
                             title: 'OOPS...',
@@ -215,80 +226,56 @@ $( document ).ready( function()
                         })
                     }
                     else {
-                        cmd["new"] = hex;
-                        console.log(hex)
-                        $(el).css('border-color',hex);
+                        
+                        sessionStorage.setItem("Helen-color",'#'+hex )
+                        console.log('#'+hex)
+                        $("#color").css("border-right", "100px solid "+ '#'+hex);
+                        location.reload();//重整
                         }
-                    }).keyup(function(){
-                        $(this).colpickSetColor(this.value); 
-                    });
+                    })
+                // }).keyup(function(){
+                //     $(this).colpickSetColor(this.value); 
+                // });
             }
         });
-        $("#password").keyup(function(){
-            if(passwd()){
-                document.getElementById('editPw').disabled=false
-            }
-            else{
     
-            }
-            
-        });
+
+    $("#password").keyup(function(){
+        if(passwd()){
+            document.getElementById('editPw').disabled=false
+        }
+
+    });
 });
 function passwd(){
     var passwrdstr = $('#password').val();    
     if(passwrdstr.length<3){
         return false;
-    }else{
+    }
+    else{
         return true;
     } 
 }
 function ChangeDisabled(value){
-　if(value=='1'){
-    
-　document.getElementById('name').disabled=false;　// 變更欄位為可用
-document.getElementById("email").setAttribute("onClict",value);
-    
-
-　}else{
-　document.getElementById('name').disabled=true;　// 變更欄位為禁用
-
-　}
+    　if(value=='1'){    
+    　  document.getElementById('name').disabled=false;　// 變更欄位為可用
+        document.getElementById("email").setAttribute("onClict",value);
+    　}
+    else{
+    　  document.getElementById('name').disabled=true;　// 變更欄位為禁用
+    　}
 }
-function initial()
+function initiall(resolve, reject)
 {
-    checkPermission()
-    let cmd = {};
-    let permission, color, nickname;
-    cmd[ "act" ] = "editPersonalInfo";
-    cmd[ "account" ] = sessionStorage.getItem("Helen-account");
+    checkPermission();
+    let  color, nickname;
+    
     color = sessionStorage.getItem("Helen-color");
-    
+    nickname = sessionStorage.getItem("Helen-nickname");
+    $("#color").css("border-right", "100px solid "+ color);
+    document.getElementById("name").setAttribute("placeholder",nickname);
+    document.getElementById("email").setAttribute("placeholder",thisAccount+"@mail.ntou.edu.tw");
 
-    
-
-    $.post( "../index.php", cmd, function( dataDB )
-    {
-        dataDB = JSON.parse( dataDB );
-        console.log(dataDB)
-
-        console.log(cmd[ "account" ]);
-        console.log(color);
-
-            permission = dataDB.data.permission;
-            color = sessionStorage.getItem("Helen-color");
-            nickname = sessionStorage.getItem("Helen-nickname");
-
-            
-           $("#color").css("border-right", "100px solid "+ color);
-           
-           // $(el).css('border-color',color);
-           //document.getElementById("color"). $(el).css('border-color',color);
-           document.getElementById("name").setAttribute("placeholder",nickname);
-           document.getElementById("email").setAttribute("placeholder",thisAccount+"@mail.ntou.edu.tw");
-            //$(".InputWrap").find("fname").placeholder(nickname);
-            
-        
-    });
 }
     
 

@@ -3,7 +3,7 @@ var CollectionCatalog = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 $( document ).ready(async function() 
 {
-    //barInitial();
+    barInitial();
     
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
     //initial()
@@ -12,14 +12,6 @@ $( document ).ready(async function()
     $( document ).on( "click", ".edit", function()
     {
             let dirIndex = $("div .Page").index(this.closest(".Page"));
-             let cmd = {};
-            cmd["act"] = "editDir";
-            cmd["account"] = sessionStorage.getItem("Helen-account");
-            cmd["old"] =$(this).parents('.Page').find("span").text();
-            console.log($(this));
-            $.post( "../index.php", cmd, function( dataDB ){
-                dataDB = JSON.parse( dataDB );
-            
             swal({
             title: "修改收藏目錄名稱",
             input: "textarea",
@@ -32,58 +24,61 @@ $( document ).ready(async function()
             animation: false
                 
             }).then(( result ) => {
-                
-                
-                if(values.includes(result)==true)
-                {
-                    alert("收藏目錄已存在");
-                    return false
-                }
-                
-                
-                else
-                {
-                    if ( result ) 
-                            {
-                                console.log(result)
-                                if( result == false )
-                                {
-                                    swal({
-                                        title: "修改失敗<br /><small>&lt;"
-                                        //  + CollectionCatalog[ dirIndex ].title
-                                          + "&gt;</small>",
-                                        type: "error",
-                                        // text: dataDB.errorCode,
-                                        animation: false
-                                    });
-                                }
-                                else
-                                {
-                                        
-                                    swal({
-                                        title: "已成功修改收藏文章！<br /><small>&lt;"
-                                        + CollectionCatalog[ dirIndex ].title
-                                        + "&gt;</small>",
-                                        type: "success",
-                                    }).then(( result ) => {
-                                        if ( result ) 
-                                        {
-                                            $(this).parents('.Page').remove();
-                                            location.reload();//重整
-                                        }
-                                        
-                                    });
-
-                                 }
-                             }
-                            }
-                        }, function( dismiss ) {
-                            console.log("cancel")
-                            if ( dismiss === 'cancel' );
-                            
+                let cmd = {};
+                cmd["act"] = "editDir";
+                cmd["account"] = sessionStorage.getItem("Helen-account");
+                cmd["old"] =$(this).parents('.Page').find("span").text();
+                cmd["new"]=result
+                $.post( "../index.php", cmd, function( dataDB ){
+                dataDB = JSON.parse( dataDB );
+                    if(values.includes(result)==true)
+                    {
+    
+                        swal({
+                            title: "收藏目錄已存在<br />",
+                            type: "error",
+                            animation: false
                         });
-                        
-            });
+                        return false
+                    }
+                    else
+                    {
+                        if( dataDB.status == false )
+                        {
+                                    
+                            swal({
+                                title: "修改失敗<br /><small>&lt;"
+                                 + CollectionCatalog[ dirIndex ].title
+                                    + "&gt;</small>",
+                                type: "error",
+                                 text: dataDB.errorCode,
+                                animation: false
+                            });
+                        }
+                        else
+                        {
+                            console.log(result)
+                                
+                            swal({
+                                title: "已成功修改收藏文章！<br /><small>&lt;"
+                                + result
+                                + "&gt;</small>",
+                                type: "success",
+                            }).then(( result ) => {
+                                if ( result ) 
+                                {
+                                    $(this).parents('.Page').remove();
+                                    location.reload();//重整
+                                }
+                                
+                            });
+
+                        }
+                    }
+                });
+            
+            }, ( dismiss ) => {} );           
+            
     });
     $( document ).on( "click", ".more", function()
     {
@@ -99,7 +94,7 @@ $( document ).ready(async function()
             sessionStorage.setItem("Helen-act", "showArticleInDir");
             sessionStorage.setItem("Helen-dirID", CollectionCatalog.dirIndex);
             sessionStorage.setItem("Helen-DirName", CollectionCatalog[dirIndex].DirName);
-            location.href = "../html/sub.html";
+            location.href = "../HTMLs/sub.html";
     });
     $( document ).on( "click", ".delete", function()
     {
@@ -153,10 +148,11 @@ $( document ).ready(async function()
     
                             if( $.isEmptyObject(articles) )
                             {
-                                let emptyMessage = "<tr>" + 
-                                                        "<td colspan='4'>收藏文章列表為空</td>" +
-                                                    "</tr>";
-                                $( ".tabContent tbody" ).append( emptyMessage );
+                                let emptyMessage = "<div class='title' style='position: relative;'>收藏目錄為空"+   
+                                        "</div>"+
+                                        "<div class='title' style='position: relative;'>快來增加你的收藏:)"+   
+                                        "</div>";
+                                content2.append( emptyMessage );
                             }
                         }
                     });
@@ -190,9 +186,9 @@ $( document ).ready(async function()
                     if( dataDB.status == false  )
                         {
                             swal({
-                                title: "新增收藏目錄失敗<br /><small>&lt;",
+                                title: "新增收藏目錄失敗",
                                 type: "error",
-                                text: "dataDB.errorCode"
+                                text: dataDB.errorCode
                             });
                         }
                         else
@@ -265,9 +261,23 @@ async function initial(res, rej)
         }
         else
         {
-            
-                $(".row").empty()
+                let content = $( ".row" );
+                let content2 = $( ".title" );
+                content.empty();
                 CollectionCatalog=dataDB.data;
+                if( CollectionCatalog.length == 0 )
+                {
+                    let emptyMessage = "<div class='title' style='position: relative;'>收藏目錄為空"+   
+                                        "</div>"+
+                                        "<div class='title' style='position: relative;'>快來增加你的收藏"+   
+                                        "</div>";
+                    content2.append( emptyMessage );
+
+                    return;
+                }
+
+                //$(".row").empty()
+                
 
                 for( let i in CollectionCatalog )
                 {
