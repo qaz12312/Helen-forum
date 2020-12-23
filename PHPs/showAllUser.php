@@ -26,7 +26,7 @@
 			$arr=array();
 			for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
-                $arr[$i]=array("userID"=>$row[0]);
+                $arr[$i]=$row[0];
             }
             $rtn = successCode("Successfully show user list.",$arr);
         }
