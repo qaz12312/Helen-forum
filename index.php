@@ -1,17 +1,10 @@
 <?php
-<<<<<<< HEAD
     require_once("./home.html");
-=======
->>>>>>> frontEnd
     require_once("./PHPs/connectDB.php");
     require_once("./PHPs/tools.php");
     require_once("./PHPs/sendNotification.php");
     $conn = connSql();
     $input = $_POST;
-<<<<<<< HEAD
-=======
-    // session_start();
->>>>>>> frontEnd
     switch ($input["act"]) {
         case "sendMailPwd": // 【user】忘記密碼
             require_once("./PHPs/sendMailPwd.php"); 
@@ -77,15 +70,9 @@
             require_once("./PHPs/sortInMenu.php");
             doSortMenu($input);
             break;
-<<<<<<< HEAD
         case "showArticleComment": //【訪客】檢視文章&留言
             require_once("./PHPs/showArticleComment.php");
             doShowArticleComment($input);
-=======
-        case "showAritcleComment": //【訪客】檢視文章&留言
-            require_once("./PHPs/showAritcleComment.php");
-            doShowAritcleComment($input);
->>>>>>> frontEnd
             break;
         case "heart": //【user】點擊愛心&取消
             require_once("./PHPs/changeHeart.php");
@@ -187,7 +174,6 @@
             require_once("./PHPs/removeTopArticle.php");
             doRemoveTopArticle($input);
             break;
-<<<<<<< HEAD
 	case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
 		require_once("./PHPs/showAllUser.php");
 		doShowAllUser($input);
@@ -208,12 +194,6 @@
         require_once("./PHPs/deleteApplyBoard.php");
         doDeleteApplyBoard($input);
         break;
-=======
-        case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
-        	require_once("showAllUser.php"); 
-        	doShowAllUser($input);
-    		break;
->>>>>>> frontEnd
     }
     $conn = null;
 ?>
