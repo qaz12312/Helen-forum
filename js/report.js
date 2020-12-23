@@ -178,7 +178,11 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
-    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
+    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    ( error ) =>
+    {
+        res(1);
+    });
 
     let cmd = {};
     cmd[ "act" ] = "showReport";
@@ -269,7 +273,7 @@ function checkPermission( resolve, reject )
             }
         });
 
-        resolve(0);
+        reject(1);
 
         return;
     }
@@ -306,14 +310,15 @@ function checkPermission( resolve, reject )
                 }
             });
             
-            resolve(0);
+            reject(1);
         }
         else if( dataDB.data.boardName == undefined || dataDB.data.boardName.find( (element) => element.BoardName == thisBoardName ) == undefined )
         {
             swal({
                 title: "載入頁面失敗",
                 type: "error",
-                text: "您沒有權限瀏覽此頁面"
+                text: "您沒有權限瀏覽此頁面",
+                
             }).then(( result ) => {
                 if ( result )
                 {
@@ -331,7 +336,7 @@ function checkPermission( resolve, reject )
                 }
             });
     
-            resolve(0);
+            reject(1);
         }
     
         resolve(0);
