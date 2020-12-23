@@ -26,7 +26,7 @@ $( document ).ready( async function()
         swal({
             title: "版規",
             input: "textarea",
-            inputPlaceholder: "請輸入文字...",
+            inputPlaceholder: "請輸入版規...",
             showCancelButton: true,
             confirmButtonText: "送出",
             cancelButtonText: "取消",
@@ -90,6 +90,7 @@ $( document ).ready( async function()
                 showCancelButton: true,
                 confirmButtonText: "確定",
                 cancelButtonText: "取消",
+                animation: false,
 
             }).then(( result ) =>
             {
@@ -182,14 +183,15 @@ $( document ).ready( async function()
         location.href =  "../HTMLs/post.html";
     });
 
-    $( "button" ).has( ".glyphicon-heart" ).click( function()
+    $( "button" ).has( ".glyphicon-heart" ).click( async function()
     {
         if( !thisAccount )
         {
-            swal({
+            await swal({
                 title: "錯誤",
                 type: "error",
                 text: "您尚未登入，不能按愛心哦",
+                confirmButtonText: "確定",
 
             }).then( ( result ) => {}, ( dismiss ) => {});
 
@@ -248,10 +250,11 @@ $( document ).ready( async function()
     {
         if( !thisAccount )
         {
-            swal({
+            await swal({
                 title: "錯誤",
                 type: "error",
                 text: "您尚未登入，不能按收藏哦",
+                confirmButtonText: "確定",
 
             }).then( ( result ) => {}, ( dismiss ) => {});
 
@@ -723,7 +726,7 @@ function checkPermission( resolve, reject )
 {
     isModerator = false;
 
-    if( !thisAccount && topArticleID !== null && topArticleID !== undefined)
+    if( !thisAccount && topArticleID !== null && topArticleID !== undefined )
     {
         $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
             "<button type='button' class='btn pushpinBtn top'>" +

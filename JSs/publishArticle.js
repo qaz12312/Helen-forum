@@ -30,9 +30,9 @@ fileInput.addEventListener( "change", function( event ) {
     the_return.innerHTML = fileStr;
 });
 
-$(document).ready(function(){
+$(document).ready(async function(){
     barInitial();
-    initial();
+    await new Promise((resolve, reject) => initial(resolve, reject));
 })
 
 $("#publishBtn").on("click", function(){
@@ -153,8 +153,12 @@ function printHashtag(){
     $("#hashtags").append(temp);
 }
 
-function initial(){
-    // if(!checkPermission()) return; // 未登入
+async function initial(res, rej){
+    let r = await new Promise((resolve, reject) => checkPermission(resolve, reject)
+         // 未登入
+    );
+
+    if(!r) return;
 
     //selector 載入所有看版(從 session)
     let boardData= sessionStorage.getItem("Helen-boards");
@@ -199,10 +203,13 @@ function initial(){
         //     }
         // })
     }
+    res(0);
 }
 
-function checkPermission(){
-    if(sessionStorage.getItem("Helen-account")) return true;
+async function checkPermission(resolve, reject){
+    if(sessionStorage.getItem("Helen-account")){
+        resolve(true);
+    }
     else{
         swal({
             title: "載入頁面失敗",
@@ -215,7 +222,6 @@ function checkPermission(){
                 $( "body" ).append( httpStatus );
             }
         });
-
-        return false;
+        resolve(false);
     }
 }
