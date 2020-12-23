@@ -1,10 +1,10 @@
 <?php
+    require_once("./home.html");
     require_once("./PHPs/connectDB.php");
     require_once("./PHPs/tools.php");
     require_once("./PHPs/sendNotification.php");
     $conn = connSql();
     $input = $_POST;
-    // session_start();
     switch ($input["act"]) {
         case "sendMailPwd": // 【user】忘記密碼
             require_once("./PHPs/sendMailPwd.php"); 
@@ -70,9 +70,9 @@
             require_once("./PHPs/sortInMenu.php");
             doSortMenu($input);
             break;
-        case "showAritcleComment": //【訪客】檢視文章&留言
-            require_once("./PHPs/showAritcleComment.php");
-            doShowAritcleComment($input);
+        case "showArticleComment": //【訪客】檢視文章&留言
+            require_once("./PHPs/showArticleComment.php");
+            doShowArticleComment($input);
             break;
         case "heart": //【user】點擊愛心&取消
             require_once("./PHPs/changeHeart.php");
@@ -174,10 +174,26 @@
             require_once("./PHPs/removeTopArticle.php");
             doRemoveTopArticle($input);
             break;
-        case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
-        	require_once("showAllUser.php"); 
-        	doShowAllUser($input);
-    		break;
+	case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
+		require_once("./PHPs/showAllUser.php");
+		doShowAllUser($input);
+        break;
+    case "checkPassword":	
+        require_once("./PHPs/checkPassword.php");
+        doCheckPassword($input);
+        break;
+    case "showApplyBoard":	
+        require_once("./PHPs/showApplyBoard.php");
+        doShowApplyBoard($input);
+        break;
+    case "newApplyBoard":	
+        require_once("./PHPs/newApplyBoard.php");
+        doNewApplyBoard($input);
+        break;
+    case "deleteApplyBoard":	
+        require_once("./PHPs/deleteApplyBoard.php");
+        doDeleteApplyBoard($input);
+        break;
     }
     $conn = null;
 ?>
