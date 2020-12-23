@@ -11,7 +11,7 @@
 		dataDB.info = ""
 		dataDB.data[i] 
 		(
-            dataDB.data[i].userID //
+            dataDB.data[i].account //
 			dataDB.data[i].time	// Time
 			dataDB.data[i].content	// Content
 		)
@@ -31,7 +31,7 @@
             $arr=array();
 			for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
-                $arr[$i]=array("userID"=>$row[0],"content"=>$row[1],"times"=>$row[2]);
+                $arr[$i]=array("account"=>$row[0],"content"=>$row[1],"times"=>$row[2]);
             }
             $rtn = successCode("Successfully show apply.",$arr);
         }
