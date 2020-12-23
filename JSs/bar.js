@@ -1,18 +1,18 @@
 var userPermission= 0; // 0(訪客) 1(一般使用者) 2(版主) 3(admin)
 
-function barInitial(){
+async function barInitial(){
     if(sessionStorage.getItem("Helen-sort")== null){
         sessionStorage.setItem("Helen-sort", "熱門");
     }
 
-    getUserInfo();
-    getBoards();
-
+    await new Promise ((resolve, reject) => {getUserInfo(resolve, reject);});
+    await new Promise ((resolve, reject) => {getBoards(resolve, reject);});
+    
     // 最左邊的 ham menu 初始化
     $("#menu").empty();
     let boards= sessionStorage.getItem("Helen-boards");
     boards= JSON.parse(boards);
-
+    
     for(var i= 0; i< boards.length; i++){
         var oneBoard= boards[i];
         $("#menu").append("<a href=\"../HTMLs/sticky.html\"><li>"+
@@ -45,7 +45,7 @@ function barInitial(){
         var userColor= sessionStorage.getItem("Helen-color")
         $("#head").css("background-color", userColor);
     }
-
+    
     // 最右下拉選單: user info 
     $("#userDD").empty();
     if(userPermission== 0){ // 訪客(未登入)
@@ -135,16 +135,16 @@ $("#logOutBtn").click(function(){
 	cmd["act"]= "logOut";
     cmd["account"]= sessionStorage.getItem("Helen-account");
     
-    // $.post("../index.php", cmd, function(dataDB){
-    //     dataDB= JSON.parse(dataDB);
-    //     if(dataDB.status == false){
-    //         swal({
-    //             title: "登出失敗",
-    //             type: "error",
-    //             // text: dataDB.errorCode
-    //         });
-    //     }
-    //     else{ // 登出成功
+    $.post("../index.php", cmd, function(dataDB){
+        dataDB= JSON.parse(dataDB);
+        if(dataDB.status == false){
+            swal({
+                title: "登出失敗",
+                type: "error",
+                // text: dataDB.errorCode
+            });
+        }
+        else{ // 登出成功
             swal({
                 title: 'Bye Bye~',
                 type: 'success',
@@ -161,63 +161,71 @@ $("#logOutBtn").click(function(){
                     }
                 }
             )
-    //     }
-    // });
+        }
+    });
 });
 
-function getUserInfo(){
+function getUserInfo(resolve, reject){
     if(sessionStorage.getItem("Helen-account")== null){
         userPermission= 0;
+        resolve(0);
     }
     else{
         let cmd= {};
         cmd["act"]= "showAuthority";
         cmd["account"]= sessionStorage.getItem("Helen-account");
-        // $.post("../index.php", cmd, function(dataDB){
-        //     dataDB= JSON.parse(dataDB);
-        //     if(dataDB.status == false){
-        //         swal({
-        //             title: "獲取使用者權限失敗",
-        //             type: "error",
-        //             // text: dataDB.errorCode
-        //         });
-        //     }
-        //     else{
-        //         userData= daraDB.data; // permission, boardName
+        $.post("../index.php", cmd, function(dataDB){
+            dataDB= JSON.parse(dataDB);
+            if(dataDB.status == false){
+                swal({
+                    title: "獲取使用者權限失敗",
+                    type: "error",
+                    // text: dataDB.errorCode
+                });
+            }
+            else{
+                userData= dataDB.data; // permission, boardName
          // Test
-         userData= {permission: 2};
+        //  userData= {permission: 2};
          // Test End
-        //         userPermission= userData.permission;
-                    // delete userData.permission;
-        //     }
-        // });
+                userPermission= userData.permission;
+                delete userData.permission;
+            }
+            resolve(0);
+        });
     }
+   
 }
 
-function getBoards(){
+function getBoards(resolve, reject){
+    let boards= [];
     let cmd= {};
     cmd["act"]= "showBoardList";
-    // $.post("../index.php", cmd, function(dataDB){
-    //     dataDB= JSON.parse(dataDB);
-    //     if(dataDB.status == false){
-    //         swal({
-    //             title: "獲取看版失敗",
-    //             type: "error",
-    //             // text: dataDB.errorCode
-    //         });
-    //     }
-    //     else{
-    //         boards= daraDB.data;
-    //     }
-    // });
+    $.post("../index.php", cmd, function(dataDB){
+        dataDB= JSON.parse(dataDB);
+        if(dataDB.status == false){
+            swal({
+                title: "獲取看版失敗",
+                type: "error",
+                // text: dataDB.errorCode
+            });
+        }
+        else{
+            dataDB= dataDB.data;
+            for(var i= 0; i< dataDB.length; i++){
+                boards.push(dataDB[i].boardName);
+            }
+            if(boards.length== 0){
+                console.log("沒有看版");
+            }
+        
+            sessionStorage.setItem("Helen-boards", JSON.stringify(boards)); 
+        }
+        resolve(0);
+    });
     
     //Test
-    boards= ["美食", "廢文", "八卦", "企鵝", "漫威"];
+    // boards= ["美食", "廢文", "八卦", "企鵝", "漫威", "星座", "旅遊"];
     //Test End
 
-    if(boards.length== 0){
-        console.log("沒有看版");
-    }
-
-    sessionStorage.setItem("Helen-boards", JSON.stringify(boards));
 }

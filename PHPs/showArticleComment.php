@@ -21,11 +21,12 @@
         ) 
         dataDB.data.title //第i筆文章的標題
         dataDB.data.content 
+        dataDB.data.blockName
         dataDB.data.time
         dataDB.data.like //第i筆文章的總愛心數
         dataDB.data.keep//第i筆文章的總收藏數
-        dataDB.data.nickname
-        dataDB.data.color
+        dataDB.data.authorNickname
+        dataDB.data.authorColor
     否則
         dataDB.errorCode = "Article doesn't exit."
         dataDB.data = ""
@@ -40,7 +41,6 @@
             errorCode("Article doesn't exit.");
         }
         else{
-            print_r($result[0][7]) ;
             $sqlAuthor="SELECT `Nickname`,`Color` FROM `Users` WHERE `UserID`=?";
             $arrAuthor = array($result[0][7]);
             $resultAuthor = query($conn,$sqlAuthor,$arrAuthor,"SELECT");

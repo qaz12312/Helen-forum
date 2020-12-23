@@ -108,15 +108,21 @@ CREATE TABLE Issue (
 
 # 總愛心數
 DROP VIEW IF EXISTS HomeHeart;
-CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`cntHeart`,`Times`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowHeart.UserID),`Times`
+CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`cntHeart`,`Times`, `AuthorID`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowHeart.UserID),`Times`, `AuthorID`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowHeart` ON Article.ArticleID = FollowHeart.ArticleID
 GROUP BY `ArticleID` ;
 
 # 總收藏數
 DROP VIEW IF EXISTS HomeKeep;
-CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`cntKeep`,`Times`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowKeep.UserID),`Times`
+CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`cntKeep`,`Times`, `AuthorID`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowKeep.UserID),`Times`, `AuthorID`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
 GROUP BY `ArticleID` ;
 
+# 總留言數
+DROP  VIEW IF EXISTS HomeComment;
+CREATE VIEW HomeComment (`ArticleID`, `cntComment`) AS
+SELECT `ArticleID`, COUNT(Comments.Content)
+FROM `Article`  LEFT JOIN `Comments` USING (ArticleID)  
+GROUP BY `ArticleID`;

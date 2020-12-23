@@ -25,7 +25,12 @@
             $rtn = successCode("User didn't create any folder.");
         }
         else{
-            $rtn = successCode("Successfully show dirctionaryName list.",$result);
+            $arr=array();
+		for($i=0;$i<$resultCount;$i++){
+                $row = $result[$i];
+                $arr[$i]=$row[0];
+            }
+            $rtn = successCode("Successfully show dirctionaryName list.",$arr);
         }
         echo json_encode($rtn);
     }
