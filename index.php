@@ -1,5 +1,5 @@
 <?php
-    //require_once("./home.html");
+    require_once("./home.html");
     require_once("./PHPs/connectDB.php");
     require_once("./PHPs/tools.php");
     require_once("./PHPs/sendNotification.php");
@@ -175,12 +175,24 @@
             doRemoveTopArticle($input);
             break;
 	case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
-		require_once("showAllUser.php");
+		require_once("./PHPs/showAllUser.php");
 		doShowAllUser($input);
         break;
-    case "checkPassword":	//【版主】顯示非版主, 非Admin的使用者
-        require_once("checkPassword.php");
+    case "checkPassword":	
+        require_once("./PHPs/checkPassword.php");
         doCheckPassword($input);
+        break;
+    case "showApplyBoard":	
+        require_once("./PHPs/showApplyBoard.php");
+        doShowApplyBoard($input);
+        break;
+    case "newApplyBoard":	
+        require_once("./PHPs/newApplyBoard.php");
+        doNewApplyBoard($input);
+        break;
+    case "deleteApplyBoard":	
+        require_once("./PHPs/deleteApplyBoard.php");
+        doDeleteApplyBoard($input);
         break;
     }
     $conn = null;
