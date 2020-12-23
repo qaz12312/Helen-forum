@@ -8,8 +8,8 @@ let cmd = {};
 cmd["act"] = "searchBoard";
 cmd["searchBoard"] = "美食";
 cmd["account"]="00757033";
-cmd["searchWord"] = "好吃";
-cmd["sort"] = "time/hot/collect";
+cmd["searchWord"] = ["好吃"];
+cmd["sort"] = "time/hot/collect/comment";
 
 後端 to 前端:
 dataDB = JSON.parse(data);
@@ -38,8 +38,12 @@ function doSearchBoard($input){
         errorCode("This boardname doesn't exist");
     }
 	else{
-        if ($input['sort'] == "time" || $input['sort'] == "hot"|| $input['sort'] == "collect" ) {
-            $sql = "SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep WHERE ";
+        if ($input['sort'] == "time" || $input['sort'] == "hot"|| $input['sort'] == "collect"  || $input['sort'] == "comment" ) {
+            $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep";
+			if ($input['sort'] == "comment") {
+				$sql = $sql. " LEFT JOIN `HomeComment` USING (ArticleID)";
+			}
+			$sql = $sql. " WHERE ";
             $arrsize = count($input["searchWord"]);
             $sql = $sql .str_repeat("`Content` LIKE ? OR ",  $arrsize-1);
             $sql = $sql . "`Content` LIKE ? OR  ";
@@ -49,8 +53,10 @@ function doSearchBoard($input){
                 $sql = $sql . " ORDER BY `Times` DESC;";
             else if ($input['sort'] == "hot")
                 $sql = $sql . " ORDER BY `cntHeart` DESC;";
-            else
+            else if ($input['sort'] == "collect")
                 $sql = $sql . " ORDER BY `cntKeep` DESC;";
+			else 
+				$sql = $sql . " ORDER BY `cntComment` DESC;";
             $i = 0;
             for($j=0;$j<2;$j++){
                 foreach($input["searchWord"] as $value){

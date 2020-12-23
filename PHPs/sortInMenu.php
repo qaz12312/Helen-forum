@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "sortInMenu";
     cmd["account"] = "00757033";
-    cmd["sort"] = "time/hot";
+    cmd["sort"] = "time/hot/collect/comment";
 
     後端 to 前端:
     dataDB = JSON.parse(data);
@@ -29,12 +29,16 @@
     */ 
     function doSortMenu($input){
         global $conn;
-        if ($input['sort'] == "time" || $input['sort'] == "hot") {
+        if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect" || $input['sort'] == "comment" ) {
             if ($input['sort'] == "time") {
                 $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `Times` DESC";
-            } else{
+            } else if ($input['sort'] == "hot"){
                 $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `cntHeart` DESC";
-            }
+			} else if ($input['sort'] == "collect"){
+                $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `cntKeep` DESC";
+            } else {
+				$sql = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` LEFT JOIN `HomeComment` USING (ArticleID)  ORDER BY `cntComment` DESC";
+			}
             $result = query($conn,$sql,array(),"SELECT");
             $resultCount = count($result);
             if ($resultCount <= 0) {

@@ -5,7 +5,7 @@
     cmd["act"] = "sortInBoard";
     cmd["account"]="00757033";
     cmd["boardName"] = "美食";
-    cmd["sort"] = "time/hot";
+    cmd["sort"] = "time/hot/collect/comment";
 
     後端 to 前端:
     dataDB = JSON.parse(data);
@@ -30,19 +30,23 @@
     */
     function doSortBoard($input){
         global $conn;
-        if ($input['sort'] == "time" || $input['sort'] == "hot") {
+        if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect" || $input['sort'] == "comment") {
             if ($input['sort'] == "time") {
                 $sql="SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = ? ORDER BY `Times` DESC";
-            } else{
-                $sql="SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = ? ORDER BY `cntHeart` DESC";
-            }
+            } else if ($input['sort'] == "hot"){
+                $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = ? ORDER BY `cntHeart` DESC";
+			} else if ($input['sort'] == "collect"){
+                $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = ? ORDER BY `cntKeep` DESC";
+            } else {
+				$sql = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` LEFT JOIN `HomeComment` USING (ArticleID) WHERE `BoardName` = ? ORDER BY `cntComment` DESC";
+			}
             $arr = array($input['boardName']);
-            $result = query($conn,$sql,$arr,"SELECT");
+            $result = query($conn,$sql,$arr,"SELECT1");
             $resultCount = count($result);
 
             $sql="SELECT `Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`=?";
             $arr = array($input['boardName']);
-            $result2 = query($conn,$sql,$arr,"SELECT");
+            $result2 = query($conn,$sql,$arr,"SELECT2");
             $result2Count = count($result);
 
             if ($resultCount <= 0) {
@@ -60,12 +64,12 @@
                     if(isset($input['account'])){
                         $sql="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
                         $arr = array($articleID, $input['account']);
-                        $heart = query($conn,$sql,$arr,"SELECT");
+                        $heart = query($conn,$sql,$arr,"SELECT3");
                         $heartCount = count($heart);
     
                         $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?" ;
                         $arr = array($articleID, $input['account']);
-                        $keep = query($conn,$sql,$arr,"SELECT");
+                        $keep = query($conn,$sql,$arr,"SELECT4");
                         $keepCount = count($keep);
     
                         $articleList[$i] = array("title" => $row['Title'], "articleID" => $articleID , "like" => $row['cntHeart'], "keep" => $row['cntKeep'], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
