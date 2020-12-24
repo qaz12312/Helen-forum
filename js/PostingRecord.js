@@ -70,7 +70,7 @@ var thisAccount = sessionStorage.getItem( "Helen-account" );
         let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );     
         sessionStorage.setItem("Helen-act", "editArticle");
         sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
-        window.location.href = "../HTMLs/publishArticle.html";
+        window.location.href = "../html/publishArticle.html";
         
     });
     
@@ -78,7 +78,7 @@ var thisAccount = sessionStorage.getItem( "Helen-account" );
     { 
         let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );     
       sessionStorage.setItem( "Helen-articleID", articles[ thisArticle ].articleID );
-      location.href =  "../HTMLs/post.html";
+      location.href =  "../html/post.html";
   });
     
    

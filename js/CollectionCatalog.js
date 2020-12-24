@@ -94,7 +94,7 @@ $( document ).ready(async function()
             sessionStorage.setItem("Helen-act", "showArticleInDir");
             sessionStorage.setItem("Helen-dirID", CollectionCatalog.dirIndex);
             sessionStorage.setItem("Helen-DirName", CollectionCatalog[dirIndex].DirName);
-            location.href = "../HTMLs/sub.html";
+            location.href = "../html/sub.html";
     });
     $( document ).on( "click", ".delete", function()
     {

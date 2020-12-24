@@ -45,7 +45,7 @@ $(document).ready(async function () {
             confirmButtonText: '確定',
             width: 500,
         }).then(function () {
-            window.location.href = "../HTMLs/login.html";
+            window.location.href = "../html/login.html";
         })
     });
     $("#final").click(function () {
@@ -72,7 +72,7 @@ $(document).ready(async function () {
                 }).then(( result ) => {
                     if ( result )
                     {
-                        window.location.href = "../HTMLs/forgetPassword.html";
+                        window.location.href = "../html/forgetPassword.html";
                     }
         
                 
@@ -89,7 +89,7 @@ $(document).ready(async function () {
                     function () { },
                     function (dismiss) {
                         if (dismiss === 'timer') {
-                            window.location.href = "../HTMLs/login.html";
+                            window.location.href = "../html/login.html";
                         }
                     }
                 )

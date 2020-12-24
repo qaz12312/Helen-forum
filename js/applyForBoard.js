@@ -50,6 +50,8 @@ $( document ).ready( async function()
                     cmd[ "act" ] = "deleteApplyBoard";
                     cmd[ "account" ] = thisApplicant;
                     cmd[ "content" ] = thisBoardName + thisContent;
+
+                    console.log( cmd );
                     
                     $.post( "../index.php", cmd, function( dataDB )
                     {
@@ -97,130 +99,71 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
-    // await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
-    // ( error ) =>
-    // {
-    //     res(1);
-    // });
-
-    // let cmd = {};
-    // cmd[ "act" ] = "showApplyBoard";
-
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
-
-    //     if( dataDB.status == false )
-    //     {
-    //         swal({
-    //             title: "載入頁面失敗",
-    //             type: "error",
-    //             text: dataDB.errorCode,
-    //             confirmButtonText: "確定",
-
-    //         }).then((result) => {}, ( dismiss ) => {});
-    //     }
-    //     else
-    //     {
-    //         $( ".tabContent h2" ).html( thisBoardName + "版－審核看板申請" );
-    //         let content = $( ".tabContent tbody" );
-    //         content.empty();
-
-    //         applications = dataDB.data;
-
-    //         if( applications.length == 0 )
-    //         {
-    //             let emptyMessage = "<tr>" + 
-    //                                     "<td colspan='4'>申請看板列表為空</td>" +
-    //                                 "</tr>";
-    //             content.append( emptyMessage );
-
-    //             return;
-    //         }
-
-    //         for( let i in applications )
-    //         {
-    //             let temp = applications[i].content.split( "版" );
-    //             applications[i].boardName = temp[0] + "版";
-    //             applications[i].content = temp[1];
-
-    //             let oneRow = "<tr class='row'>" + 
-    //                                 "<td class='col-md-3'>" + applications[i].account + "</td>" +
-    //                                 "<td class='col-md-3'>" + applications[i].time + "</td>" +
-    //                                 "<td class='col-md-3'>" +
-    //                                     "<button type='button' class='btn btn-default btn-warning'>" +
-    //                                         "<span class='glyphicon glyphicon-book'></span> 申請原因" +
-    //                                     "</button>" +
-    //                                 "</td>" +
-    //                                 "<td class='col-md-2'>" +
-    //                                     "<button type='button' class='btn btn-primary'>" +
-    //                                         "<span class='glyphicon glyphicon-trash'></span> 移除" +
-    //                                     "</button>" +
-    //                                 "</td>" +
-    //                             "</tr>";
-
-    //             content.append( oneRow );
-    //         }
-    //     }
-    //     res(0);
-    // });
-
-    let status = true;
-
-    if( status == false )
+    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    ( error ) =>
     {
-        swal({
-            title: "載入頁面失敗",
-            type: "error",
-            text: "dataDB.errorCode",
-            confirmButtonText: "確定",
+        res(1);
+    });
 
-        }).then((result) => {}, ( dismiss ) => {});
-    }
-    else
+    let cmd = {};
+    cmd[ "act" ] = "showApplyBoard";
+
+    $.post( "../index.php", cmd, function( dataDB )
     {
-        let content = $( ".tabContent tbody" );
-        content.empty();
+        dataDB = JSON.parse( dataDB );
 
-        applications = [{"account": "00757000", "time": "0000-00-00 00:00:00", "content": "美食版我想要分享美食給大家"},
-                        {"account": "00757001", "time": "0000-00-00 00:00:01", "content": "星座版"},
-                        {"account": "00757002", "time": "0000-00-00 00:00:02", "content": "aa版<script>alert('申請aa版辣');</script>"}];
-        // applications = [];
-
-        if( applications.length == 0 )
+        if( dataDB.status == false )
         {
-            let emptyMessage = "<tr>" + 
-                                    "<td colspan='4'>申請看板列表為空</td>" +
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
+
+            }).then((result) => {}, ( dismiss ) => {});
+        }
+        else
+        {
+            let content = $( ".tabContent tbody" );
+            content.empty();
+
+            applications = dataDB.data;
+
+            if( applications.length == 0 )
+            {
+                let emptyMessage = "<tr>" + 
+                                        "<td colspan='4'>申請看板列表為空</td>" +
+                                    "</tr>";
+                content.append( emptyMessage );
+
+                return;
+            }
+
+            for( let i in applications )
+            {
+                applications[i].boardName = applications[i].content.split( "版" )[0] + "版";
+                applications[i].content = applications[i].content.replace( applications[i].boardName, "" );
+
+                let oneRow = "<tr class='row'>" + 
+                                    "<td class='col-md-3'>" + applications[i].account + "</td>" +
+                                    "<td class='col-md-3'>" + applications[i].boardName + "</td>" +
+                                    "<td class='col-md-3'>" +
+                                        "<button type='button' class='btn btn-default btn-warning'>" +
+                                            "<span class='glyphicon glyphicon-book'></span> 申請原因" +
+                                        "</button>" +
+                                    "</td>" +
+                                    "<td class='col-md-3'>" +
+                                        "<button type='button' class='btn btn-info'>" +
+                                            "<span class='glyphicon glyphicon-trash'></span> 移除" +
+                                        "</button>" +
+                                    "</td>" +
                                 "</tr>";
-            content.append( emptyMessage );
 
-            return;
+                content.append( oneRow );
+            }
         }
-
-        for( let i in applications )
-        {
-            applications[i].boardName = applications[i].content.split( "版" )[0] + "版";
-            applications[i].content = applications[i].content.replace( applications[i].boardName, "" );
-
-            let oneRow = "<tr class='row'>" + 
-                                "<td class='col-md-3'>" + applications[i].account + "</td>" +
-                                "<td class='col-md-3'>" + applications[i].boardName + "</td>" +
-                                "<td class='col-md-3'>" +
-                                    "<button type='button' class='btn btn-default btn-warning'>" +
-                                        "<span class='glyphicon glyphicon-book'></span> 申請原因" +
-                                    "</button>" +
-                                "</td>" +
-                                "<td class='col-md-3'>" +
-                                    "<button type='button' class='btn btn-info'>" +
-                                        "<span class='glyphicon glyphicon-trash'></span> 移除" +
-                                    "</button>" +
-                                "</td>" +
-                            "</tr>";
-
-            content.append( oneRow );
-        }
-    }
-    res(0);
+        res(0);
+    });
 }
 
 function checkPermission( resolve, reject )
@@ -231,19 +174,20 @@ function checkPermission( resolve, reject )
             title: "載入頁面失敗",
             type: "error",
             text: "您沒有權限瀏覽此頁面",
+            confirmButtonText: "確定",
             
-        }).then(( result ) => {
-            $( "body" ).empty();
+        }).then(( result ) =>
+        {
+            $( ".tabContent" ).empty();
             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( "body" ).append( httpStatus );
+            $( ".tabContent" ).append( httpStatus );
 
         }, ( dismiss ) => {
-            $( "body" ).empty();
+            $( ".tabContent" ).empty();
             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( "body" ).append( httpStatus );
+            $( ".tabContent" ).append( httpStatus );
         });
-
-        reject(1);
+        resolve(0);
 
         return;
     }
@@ -261,40 +205,44 @@ function checkPermission( resolve, reject )
             swal({
                 title: "載入頁面失敗",
                 type: "error",
-                text: "dataDB.errorCode",
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
     
-            }).then(( result ) => {
-                $( "body" ).empty();
+            }).then(( result ) =>
+            {
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
     
             }, ( dismiss ) => {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
             });
             
-            reject(1);
+            resolve(0);
         }
-        else if( dataDB.data.boardName == undefined || dataDB.data.boardName.find( (element) => element.BoardName == thisBoardName ) == undefined )
+        else if( dataDB.data.permission == undefined || dataDB.data.permission < 3 )
         {
             swal({
                 title: "載入頁面失敗",
                 type: "error",
                 text: "您沒有權限瀏覽此頁面",
-                
-            }).then(( result ) => {
-                $( "body" ).empty();
+                confirmButtonText: "確定",
+
+            }).then(( result ) =>
+            {
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
     
             }, ( dismiss ) => {
-                $( "body" ).empty();
+                $( ".tabContent" ).empty();
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( "body" ).append( httpStatus );
+                $( ".tabContent" ).append( httpStatus );
             });
     
-            reject(1);
+            resolve(0);
         }
     
         resolve(0);

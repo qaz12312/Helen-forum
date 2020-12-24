@@ -99,7 +99,7 @@ $(document).ready(function () {
                         function () { },
                         function (dismiss) {
                             if (dismiss === 'timer') {
-                                window.location.href = "../HTMLs/login.html";
+                                window.location.href = "../html/login.html";
                             }
                         }
                     )
@@ -120,7 +120,7 @@ $(document).ready(function () {
             confirmButtonText: '確定',
             width: 500,
         }).then(function () {
-            window.location.href = "../HTMLs/login.html";
+            window.location.href = "../html/login.html";
         })
     });
 
@@ -186,7 +186,7 @@ $(document).ready(function () {
                             function () { },
                             function (dismiss) {
                                 if (dismiss === 'timer') {
-                                    window.location.href = "../HTMLs/registration.html";
+                                    window.location.href = "../html/registration.html";
                                 }
                             }
                         )

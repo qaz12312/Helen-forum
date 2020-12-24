@@ -63,7 +63,7 @@ $(document).ready(function () {
                         function () { },
                         function (dismiss) {
                             if (dismiss === 'timer') {
-                                window.location.href = "../HTMLs/home.html";
+                                window.location.href = "../html/home.html";
                             }
                         }
                     )
