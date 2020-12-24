@@ -20,7 +20,7 @@
         $result = query($conn,$sql,array(),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
-            $rtn = successCode("Without any board now.");
+            $rtn = successCode("Without any board now.", array());
         }
         else{
 			$arr=array();

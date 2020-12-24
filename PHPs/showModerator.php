@@ -25,7 +25,7 @@
         $result = query($conn,$sql,array(),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
-            $rtn = successCode("this system didn't have board.");
+            $rtn = successCode("this system didn't have board.", array());
         }
         else{
             $arr=array();

@@ -33,10 +33,10 @@ function verifyPwd($input){
             $rtn = successCode("success to verify");
             echo json_encode($rtn);
         }else{
-            errorCode("fail to verify");
+            errorCode("fail to verify...1");
         }
     }else{
-        errorCode("fail to verify");
+        errorCode("fail to verify...2");
     }
 }
 function changePwd($input){
