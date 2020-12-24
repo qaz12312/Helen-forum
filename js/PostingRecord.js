@@ -104,7 +104,7 @@ async function initial(res, rej)
                 title: "載入頁面失敗",
                 type: "error",
                 text: dataDB.errorCode
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else
         {

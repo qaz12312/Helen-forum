@@ -44,9 +44,9 @@ $(document).ready(async function () {
             cancelButtonText: '取消',
             confirmButtonText: '確定',
             width: 500,
-        }).then(function () {
+        }).then(function (result) {
             window.location.href = "../html/login.html";
-        })
+        }, ( dismiss ) => {});
     });
     $("#final").click(function () {
         var url = location.href;
@@ -76,7 +76,7 @@ $(document).ready(async function () {
                     }
         
                 
-                });
+                }, ( dismiss ) => {});
             }
             else{
                 swal({
@@ -92,7 +92,7 @@ $(document).ready(async function () {
                             window.location.href = "../html/login.html";
                         }
                     }
-                )
+                );
             }
         });
         

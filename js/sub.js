@@ -53,7 +53,7 @@ $(document).ready(async function(){
                                     type: "error",
                                     // text: dataDB.errorCode,
                                     animation: false
-                                });
+                                }, ( dismiss ) => {});
                             }
                             else
                             {
@@ -62,7 +62,7 @@ $(document).ready(async function(){
                                      + articles[ articleIndex ].title
                                       + "&gt;</small>",
                                     type: "success",
-                                })
+                                }).then(( result ) => {}, ( dismiss ) => {});
                                 $(this).closest( "tr" ).remove();
                                 articles.splice( articleIndex, 1 );
     
@@ -112,7 +112,7 @@ async function initial(res, rej){
                 title: "載入頁面失敗",
                 type: "error",
                 text: dataDB.errorCode
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{
             let content = $( ".tabContent tbody" );
@@ -160,7 +160,7 @@ async function checkPermission(resolve, reject){
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
                 $( "body" ).append( httpStatus );
             }
-        });
+        }, ( dismiss ) => {});
         resolve(false);
     }
 }

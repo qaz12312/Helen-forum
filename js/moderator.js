@@ -254,7 +254,6 @@ async function initial( res, rej )
     {
         userList = error;
     });
-    console.log( userList );
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch( ( error ) =>
     {
         res(1);
@@ -271,7 +270,6 @@ function getUserList( resolve, reject )
 
     $.post( "../index.php", cmd, function( dataDB )
     {
-        console.log( dataDB )
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )

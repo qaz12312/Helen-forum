@@ -27,7 +27,7 @@ $(document).ready(function () {
                 customClass: 'animated tada',
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#b9cd74'
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else if (format) {
             let cmd = {};
@@ -48,7 +48,7 @@ $(document).ready(function () {
                         customClass: 'animated rotateOutUpLeft',
                         confirmButtonText: 'okay!',
                         confirmButtonColor: '#eda2b6'
-                    })
+                    }).then(( result ) => {}, ( dismiss ) => {});
                 }
                 else {//登入成功
                     //console.log("log in sucess")
@@ -133,7 +133,7 @@ function Restrict() {
             html: '密碼字數只能在3~20內!!!!',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#7a96a2'
-        })
+        }).then(( result ) => {}, ( dismiss ) => {});
         return false;
     }
     /*else if (okPassword) {
@@ -143,7 +143,7 @@ function Restrict() {
             html:'密碼只能是英文、數字 &#9888;',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#252621'
-        })
+        }).then(( result ) => {}, ( dismiss ) => {});
         return false;
     }*/
     return true;

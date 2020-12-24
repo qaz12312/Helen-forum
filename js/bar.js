@@ -120,7 +120,7 @@ function setSearchData(){
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if(sessionStorage.getItem("Helen-boardName")== null){
-        location.href= "../html/home.html";
+        location.href= "../home.html";
     }else{
         location.href= "../html/sticky.html";
     }
@@ -142,7 +142,7 @@ $("#logOutBtn").click(function(){
                 title: "登出失敗",
                 type: "error",
                 // text: dataDB.errorCode
-            });
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{ // 登出成功
             swal({
@@ -157,7 +157,7 @@ $("#logOutBtn").click(function(){
                     if (dismiss === 'timer') {
                         userPermission= 0;
                         sessionStorage.clear();
-                        location.href=  "../html/home.html";
+                        location.href=  "../home.html";
                     }
                 }
             )
@@ -181,7 +181,7 @@ function getUserInfo(resolve, reject){
                     title: "獲取使用者權限失敗",
                     type: "error",
                     // text: dataDB.errorCode
-                });
+                }).then(( result ) => {}, ( dismiss ) => {});
             }
             else{
                 userData= dataDB.data; // permission, boardName
@@ -208,7 +208,7 @@ function getBoards(resolve, reject){
                 title: "獲取看版失敗",
                 type: "error",
                 // text: dataDB.errorCode
-            });
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{
             dataDB= dataDB.data;

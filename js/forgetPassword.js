@@ -18,23 +18,23 @@ $(document).ready(function () {
                     if( dataDB.status == false )
                     {
                         swal({
-                            title: "驗證失敗",
-                            type: "success",
+                            title: "寄送驗證信失敗",
+                            type: "error",
                             text: dataDB.errorCode,
                             showConfirmButton: false,
                             timer: 1000,
     
-                        })
+                        }).then(( result ) => {}, ( dismiss ) => {});
                     }
                     else{
                         swal({
-                            title: "驗證成功",
+                            title: "寄送驗證信成功",
                             type: "success",
                             text: dataDB.errorCode,
                             showConfirmButton: false,
                             timer: 3000,
     
-                        })
+                        }).then(( result ) => {}, ( dismiss ) => {});
                         
                     }
                 
