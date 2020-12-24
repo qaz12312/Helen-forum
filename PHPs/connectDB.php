@@ -7,7 +7,7 @@
         //$databaseName = "test";
         
         
-        $serverName = "140.121.197.130:55152";
+        $serverName = "140.121.197.130:55151";
         $userName = "root";
         $password = "admin";
         $databaseName = "helen";
