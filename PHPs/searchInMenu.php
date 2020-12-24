@@ -58,7 +58,7 @@
             $result = query($conn, $sql, $arr, "SELECT");
             $resultCount = count($result);
             if ($resultCount <= 0) { //找不到文章
-                $rtn =successCode("Don't have any article in board.");
+                $rtn =successCode("Don't have any article in board.", array());
             } 
             else {
                 $articleList = array();

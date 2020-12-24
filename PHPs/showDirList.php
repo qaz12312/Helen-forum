@@ -22,7 +22,7 @@
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
-            $rtn = successCode("User didn't create any folder.");
+            $rtn = successCode("User didn't create any folder.", array());
         }
         else{
             $arr=array();

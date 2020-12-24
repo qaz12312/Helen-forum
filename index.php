@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
     //require_once("./home.html");
+=======
+    require_once("./home.html");
+>>>>>>> backEnd
     require_once("./PHPs/connectDB.php");
     require_once("./PHPs/tools.php");
     require_once("./PHPs/sendNotification.php");

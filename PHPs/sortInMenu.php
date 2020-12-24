@@ -42,7 +42,7 @@
             $result = query($conn,$sql,array(),"SELECT");
             $resultCount = count($result);
             if ($resultCount <= 0) {
-                $rtn = successCode("Without any article now.");
+                $rtn = successCode("Without any article now.", array());
             } else {
                 $articleList = array();
                 for($i=0;$i<$resultCount;$i++){

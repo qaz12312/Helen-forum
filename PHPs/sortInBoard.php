@@ -50,12 +50,9 @@
             $result2Count = count($result);
 
             if ($resultCount <= 0) {
-                $rtn = successCode("Without any article in board now.");
+                $rtn = successCode("Without any article in board now.", array());
             } 
             else {
-                // print_r($result);
-                // echo "<br/><br/>";
-                // print_r($result2);
                 $articleList = array();
                 // foreach($result as $row){
                 for($i=0;$i<$resultCount;$i++){
