@@ -7,10 +7,10 @@
         //$databaseName = "test";
         
         
-        $serverName = "140.121.197.130:55152";
+        $serverName = "140.121.197.130:55151";
         $userName = "root";
         $password = "admin";
-        $databaseName = "140.121.197.130:55151";
+        $databaseName = "140.121.197.130:55152";
         
         header("Access-Control-Allow-Origin: *");
         header("Content-Type:text/html; charset=utf-8");
