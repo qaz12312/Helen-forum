@@ -8,7 +8,7 @@
         
         
         $serverName = "140.121.197.130:55151";
-        $userName = "root@192.168.111.1";
+        $userName = "root";
         $password = "admin";
         $databaseName = "helen";
         
