@@ -24,10 +24,27 @@ $( document ).ready( async function()
                 title: "申請原因&emsp;<cite>" + thisTime + "</cite><br />" +
                         "<small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
                 html: escapeHtml( thisContent ).split( "\n" ).join( "<br/>" ),
-                confirmButtonText: "確定",
+                showCancelButton: true,
+                confirmButtonText: "&plus; 看板",
+                cancelButtonText: "取消",
                 animation: false,
 
-            }).then((result) => {}, ( dismiss ) => {});
+            }).then((result) =>
+            {
+                if( result )
+                {
+                    swal({
+                        title: "新增看板 &emsp;" + thisBoardName + "<br /><small>&lt;版規&gt;</small>",
+                        input: "textarea",
+                        inputPlaceholder: "請輸入板規...",
+                        showCancelButton: true,
+                        confirmButtonText: "送出",
+                        cancelButtonText: "取消",
+                        animation: false,
+                    
+                    }).then((result) => {}, ( dismiss ) => {});
+                }
+            }, ( dismiss ) => {});
 
         }
         else if( $(this).text().trim() == "移除" )
@@ -50,19 +67,53 @@ $( document ).ready( async function()
                     cmd[ "act" ] = "deleteApplyBoard";
                     cmd[ "account" ] = thisApplicant;
                     cmd[ "content" ] = thisBoardName + thisContent;
-
-                    console.log( cmd );
                     
-                    $.post( "../index.php", cmd, function( dataDB )
-                    {
-                        dataDB = JSON.parse( dataDB );
+                    // $.post( "../index.php", cmd, function( dataDB )
+                    // {
+                    //     dataDB = JSON.parse( dataDB );
 
-                        if( dataDB.status == false )
+                    //     if( dataDB.status == false )
+                    //     {
+                    //         swal({
+                    //             title: "移除失敗<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
+                    //             type: "error",
+                    //             text: dataDB.errorCode,
+                    //             confirmButtonText: "確定",
+    
+                    //         }).then((result) => {}, ( dismiss ) => {});
+                    //     }
+                    //     else
+                    //     {
+                    //         swal({
+                    //             title: "已成功移除此申請！<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
+                    //             type: "success",
+                    //             showConfirmButton: false,
+                    //             timer: 1000,
+                                
+                    //         }).then((result) => {}, ( dismiss ) =>
+                    //         {
+                    //             thisTr.remove();
+                    //             delete applications[ thisApplcationID ];
+        
+                    //             if( applications.length == 0 )
+                    //             {
+                    //                 let emptyMessage = "<tr>" + 
+                    //                                         "<td colspan='4'>申請看板列表為空</td>" +
+                    //                                     "</tr>";
+                                                        
+                    //                 $( ".tabContent tbody" ).append( emptyMessage );
+                    //             }
+                    //         });
+                    //     }
+                    // });
+
+                    let status = true;
+                    if( status == false )
                         {
                             swal({
                                 title: "移除失敗<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
                                 type: "error",
-                                text: dataDB.errorCode,
+                                text: "dataDB.errorCode",
                                 confirmButtonText: "確定",
     
                             }).then((result) => {}, ( dismiss ) => {});
@@ -90,7 +141,6 @@ $( document ).ready( async function()
                                 }
                             });
                         }
-                    });
                 }
             }, ( dismiss ) => {});
         }
@@ -99,71 +149,124 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
-    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
-    ( error ) =>
-    {
-        res(1);
-    });
+    // await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    // ( error ) =>
+    // {
+    //     res(1);
+    // });
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
 
-    $.post( "../index.php", cmd, function( dataDB )
+    // $.post( "../index.php", cmd, function( dataDB )
+    // {
+    //     dataDB = JSON.parse( dataDB );
+
+    //     if( dataDB.status == false )
+    //     {
+    //         swal({
+    //             title: "載入頁面失敗",
+    //             type: "error",
+    //             text: dataDB.errorCode,
+    //             confirmButtonText: "確定",
+
+    //         }).then((result) => {}, ( dismiss ) => {});
+    //     }
+    //     else
+    //     {
+    //         let content = $( ".tabContent tbody" );
+    //         content.empty();
+
+    //         applications = dataDB.data;
+
+    //         if( applications.length == 0 )
+    //         {
+    //             let emptyMessage = "<tr>" + 
+    //                                     "<td colspan='4'>申請看板列表為空</td>" +
+    //                                 "</tr>";
+    //             content.append( emptyMessage );
+
+    //             return;
+    //         }
+
+    //         for( let i in applications )
+    //         {
+    //             applications[i].boardName = applications[i].content.split( "版" )[0] + "版";
+    //             applications[i].content = applications[i].content.replace( applications[i].boardName, "" );
+
+    //             let oneRow = "<tr class='row'>" + 
+    //                                 "<td class='col-md-3'>" + applications[i].account + "</td>" +
+    //                                 "<td class='col-md-3'>" + applications[i].boardName + "</td>" +
+    //                                 "<td class='col-md-3'>" +
+    //                                     "<button type='button' class='btn btn-default btn-warning'>" +
+    //                                         "<span class='glyphicon glyphicon-book'></span> 申請原因" +
+    //                                     "</button>" +
+    //                                 "</td>" +
+    //                                 "<td class='col-md-3'>" +
+    //                                     "<button type='button' class='btn btn-info'>" +
+    //                                         "<span class='glyphicon glyphicon-trash'></span> 移除" +
+    //                                     "</button>" +
+    //                                 "</td>" +
+    //                             "</tr>";
+
+    //             content.append( oneRow );
+    //         }
+    //     }
+    //     res(0);
+    // });
+
+    let status = true;
+    if( status == false )
     {
-        dataDB = JSON.parse( dataDB );
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "dataDB.errorCode",
+            confirmButtonText: "確定",
 
-        if( dataDB.status == false )
+        }).then((result) => {}, ( dismiss ) => {});
+    }
+    else
+    {
+        let content = $( ".tabContent tbody" );
+        content.empty();
+
+        applications = [{ account: "00757030", time: "2017-02-28 00:10:53", content: "哈哈版哈哈哈"}];
+
+        if( applications.length == 0 )
         {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: dataDB.errorCode,
-                confirmButtonText: "確定",
-
-            }).then((result) => {}, ( dismiss ) => {});
-        }
-        else
-        {
-            let content = $( ".tabContent tbody" );
-            content.empty();
-
-            applications = dataDB.data;
-
-            if( applications.length == 0 )
-            {
-                let emptyMessage = "<tr>" + 
-                                        "<td colspan='4'>申請看板列表為空</td>" +
-                                    "</tr>";
-                content.append( emptyMessage );
-
-                return;
-            }
-
-            for( let i in applications )
-            {
-                applications[i].boardName = applications[i].content.split( "版" )[0] + "版";
-                applications[i].content = applications[i].content.replace( applications[i].boardName, "" );
-
-                let oneRow = "<tr class='row'>" + 
-                                    "<td class='col-md-3'>" + applications[i].account + "</td>" +
-                                    "<td class='col-md-3'>" + applications[i].boardName + "</td>" +
-                                    "<td class='col-md-3'>" +
-                                        "<button type='button' class='btn btn-default btn-warning'>" +
-                                            "<span class='glyphicon glyphicon-book'></span> 申請原因" +
-                                        "</button>" +
-                                    "</td>" +
-                                    "<td class='col-md-3'>" +
-                                        "<button type='button' class='btn btn-info'>" +
-                                            "<span class='glyphicon glyphicon-trash'></span> 移除" +
-                                        "</button>" +
-                                    "</td>" +
+            let emptyMessage = "<tr>" + 
+                                    "<td colspan='4'>申請看板列表為空</td>" +
                                 "</tr>";
+            content.append( emptyMessage );
 
-                content.append( oneRow );
-            }
+            return;
         }
-        res(0);
-    });
+
+        for( let i in applications )
+        {
+            applications[i].boardName = applications[i].content.split( "版" )[0] + "版";
+            applications[i].content = applications[i].content.replace( applications[i].boardName, "" );
+
+            let oneRow = "<tr class='row'>" + 
+                                "<td class='col-md-3'>" + applications[i].account + "</td>" +
+                                "<td class='col-md-3'>" + applications[i].boardName + "</td>" +
+                                "<td class='col-md-3'>" +
+                                    "<button type='button' class='btn btn-default btn-warning'>" +
+                                        "<span class='glyphicon glyphicon-book'></span> 申請原因" +
+                                    "</button>" +
+                                "</td>" +
+                                "<td class='col-md-3'>" +
+                                    "<button type='button' class='btn btn-info'>" +
+                                        "<span class='glyphicon glyphicon-trash'></span> 移除" +
+                                    "</button>" +
+                                "</td>" +
+                            "</tr>";
+
+            content.append( oneRow );
+        }
+    }
+    res(0);
 }
 
 function checkPermission( resolve, reject )

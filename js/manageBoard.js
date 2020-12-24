@@ -72,7 +72,7 @@ $( document ).ready( async function()
             {
                 title: "新增看板<br /><small>&lt;看板名稱&gt;</small>",
                 input: "text",
-                inputPlaceholder: "請輸入看板名稱...",
+                inputPlaceholder: "請輸入看板名稱(不包含「版」)...",
                 showCancelButton: true,
                 confirmButtonText: "送出",
                 cancelButtonText: "取消",
@@ -83,7 +83,7 @@ $( document ).ready( async function()
             {
                 title: "新增看板<br /><small>&lt;版規&gt;</small>",
                 input: "textarea",
-                inputPlaceholder: "請輸入板規...",
+                inputPlaceholder: "請輸入版規...",
                 showCancelButton: true,
                 confirmButtonText: "送出",
                 cancelButtonText: "取消",
@@ -98,7 +98,7 @@ $( document ).ready( async function()
 
                 let dup = boardList.find((element) => element.boardName == result[0]) !== undefined;
 
-                while( ( result[0] === "" || dup ) && result[0] !== false )
+                while( result[0] !== false && ( result[0] === "" || result[0].includes("版") || dup ) )
                 {
                     if( result[0] === "" )
                     {
@@ -106,6 +106,7 @@ $( document ).ready( async function()
                             title: "看板名稱不得為空",
                             type: "warning",
                             input: "text",
+                            inputPlaceholder: "請輸入看板名稱...",
                             showCancelButton: true,
                             confirmButtonText: "確定",
                             cancelButtonText: "取消",
@@ -126,6 +127,28 @@ $( document ).ready( async function()
                             title: "看板名稱重複，請重新輸入",
                             type: "warning",
                             input: "text",
+                            inputPlaceholder: "請輸入看板名稱...",
+                            showCancelButton: true,
+                            confirmButtonText: "確定",
+                            cancelButtonText: "取消",
+    
+                        }).then(( result ) =>
+                        {
+                            return result;
+    
+                        }, ( dismiss ) =>
+                        {
+                            return false;
+                        });
+                    }
+
+                    if( typeof result[0] == "string" && result[0].includes("版") )
+                    {
+                        result[0] = await swal({
+                            title: "看板名稱不得含有「版」",
+                            type: "warning",
+                            input: "text",
+                            inputPlaceholder: "請輸入看板名稱...",
                             showCancelButton: true,
                             confirmButtonText: "確定",
                             cancelButtonText: "取消",
