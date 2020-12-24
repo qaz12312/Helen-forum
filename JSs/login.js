@@ -27,7 +27,7 @@ $(document).ready(function () {
                 customClass: 'animated tada',
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#b9cd74'
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else if (format) {
             let cmd = {};
@@ -48,7 +48,11 @@ $(document).ready(function () {
                         customClass: 'animated rotateOutUpLeft',
                         confirmButtonText: 'okay!',
                         confirmButtonColor: '#eda2b6'
+<<<<<<< HEAD:JSs/login.js
                     })
+=======
+                    }).then(( result ) => {}, ( dismiss ) => {});
+>>>>>>> frontEnd:js/login.js
                 }
                 else {//登入成功
                     //console.log("log in sucess")
@@ -63,7 +67,11 @@ $(document).ready(function () {
                         function () { },
                         function (dismiss) {
                             if (dismiss === 'timer') {
+<<<<<<< HEAD:JSs/login.js
                                 window.location.href = "../HTMLs/home.html";
+=======
+                                window.location.href = "../HTMLs/home.html";
+>>>>>>> frontEnd:js/login.js
                             }
                         }
                     )
@@ -133,7 +141,11 @@ function Restrict() {
             html: '密碼字數只能在3~20內!!!!',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#7a96a2'
+<<<<<<< HEAD:JSs/login.js
         })
+=======
+        }).then(( result ) => {}, ( dismiss ) => {});
+>>>>>>> frontEnd:js/login.js
         return false;
     }
     /*else if (okPassword) {
@@ -143,7 +155,11 @@ function Restrict() {
             html:'密碼只能是英文、數字 &#9888;',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#252621'
+<<<<<<< HEAD:JSs/login.js
         })
+=======
+        }).then(( result ) => {}, ( dismiss ) => {});
+>>>>>>> frontEnd:js/login.js
         return false;
     }*/
     return true;

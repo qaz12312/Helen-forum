@@ -142,7 +142,7 @@ $("#logOutBtn").click(function(){
                 title: "登出失敗",
                 type: "error",
                 // text: dataDB.errorCode
-            });
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{ // 登出成功
             swal({
@@ -181,7 +181,7 @@ function getUserInfo(resolve, reject){
                     title: "獲取使用者權限失敗",
                     type: "error",
                     // text: dataDB.errorCode
-                });
+                }).then(( result ) => {}, ( dismiss ) => {});
             }
             else{
                 userData= dataDB.data; // permission, boardName
@@ -208,7 +208,7 @@ function getBoards(resolve, reject){
                 title: "獲取看版失敗",
                 type: "error",
                 // text: dataDB.errorCode
-            });
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{
             dataDB= dataDB.data;

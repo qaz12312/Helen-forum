@@ -9,7 +9,6 @@ $( document ).ready( async function()
     $( ".tabContent button" ).on( "click", function()
     {
         let thisTr = $(this).closest( "tr" );
-        console.log( typeof thisTr[0] );
         let thisApplicant = thisTr.find( "td:first-child" ).text();
         let thisApplcationID = thisTr[0].rowIndex;
         let thisBoardName = applications[ thisApplcationID ].boardName;

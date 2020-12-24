@@ -532,6 +532,7 @@ function forNormal( resolve, reject )
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
+            if( !rule ) rule = "無";
             $( "#rule" ).html( "版規：" + escapeHtml(rule).split("\n").join("<br/>") );
 
             $( ".tabContent tbody" ).empty();
@@ -653,6 +654,7 @@ function forSearching( resolve, reject )
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
+            if( !rule ) rule = "無";
             $( "#rule" ).html( "版規：" + escapeHtml(rule).split("\n").join("<br/>") );
 
             $( ".tabContent tbody" ).empty();

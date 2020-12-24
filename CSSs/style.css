@@ -273,9 +273,11 @@ textarea{
 }
 table{
 	width: 100%;
+  word-break:break-all;
+  word-wrap:break-all;
 }
 td{
-	height: 50px;
+  height: 50px;
 }
 
 button{

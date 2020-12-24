@@ -40,7 +40,7 @@ $(document).ready(function () {
                 html: '請輸入帳號 \u2620',
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#a1268e'
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else if (!pw) {
             swal({
@@ -49,7 +49,7 @@ $(document).ready(function () {
                 html: '請輸入密碼 \u2620',
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#8a54a2'
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else if (!vd) {
             swal({
@@ -58,7 +58,7 @@ $(document).ready(function () {
                 html: '請在驗證密碼處輸入密碼 \u2620',
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#7a96a2'
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else if (pw != vd) {
             swal({
@@ -67,7 +67,7 @@ $(document).ready(function () {
                 html: '輸入的驗證密碼有誤 \u2620',
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#252621'
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else {
             let cmd = {};
@@ -86,7 +86,7 @@ $(document).ready(function () {
                         customClass: 'animated rotateOutUpLeft',
                         confirmButtonText: 'okay!',
                         confirmButtonColor: '#eda2b6'
-                    })
+                    }).then(( result ) => {}, ( dismiss ) => {});
                 }
                 else {
                     swal({
@@ -119,9 +119,9 @@ $(document).ready(function () {
             cancelButtonText: '取消',
             confirmButtonText: '確定',
             width: 500,
-        }).then(function () {
+        }).then(function (result) {
             window.location.href = "../HTMLs/login.html";
-        })
+        }, ( dismiss ) => {});
     });
 
     $("#verify").click(function () {
@@ -144,9 +144,10 @@ $(document).ready(function () {
                     animation: false,
                     customClass: 'animated rotateOutUpLeft',
                     confirmButtonText: 'okay!',
-                    confirmButtonColor: '#eda2b6',
-                    timer: 1300,
-                })
+                    // confirmButtonColor: '#eda2b6',
+                    confirmButtonColor: '#ff0000',
+
+                }).then((result) => {}, ( dismiss ) => {});
             }
             else {
                 console.log($(".createBtn").disabled)
@@ -192,7 +193,7 @@ $(document).ready(function () {
                         )
 
                     }
-                });
+                }, ( dismiss ) => {});
 
             }
 
@@ -219,7 +220,7 @@ function Restrict() {
             html: '密碼字數只能在3~20內!!!!',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#7a96a2'
-        })
+        }).then(( result ) => {}, ( dismiss ) => {});
         return false;
     }
     else if (!con_passwrd()) {
@@ -229,7 +230,7 @@ function Restrict() {
             html: 'Password are not Matching &#9888;',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#252621'
-        })
+        }).then(( result ) => {}, ( dismiss ) => {});
         return false;
     }
     return true;

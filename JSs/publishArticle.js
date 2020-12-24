@@ -46,7 +46,7 @@ $("#publishBtn").on("click", function(){
             title: "文章標題太短嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }else if(titleStr.length> 127){
         console.log("(Title) Too long.")
@@ -54,7 +54,7 @@ $("#publishBtn").on("click", function(){
             title: "文章標題太長嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
     if(contentStr.length< 10){
@@ -63,7 +63,7 @@ $("#publishBtn").on("click", function(){
             title: "文章內容太少嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }else if(contentStr.length> 20000){
         console.log("(Content) Too long.")
@@ -71,7 +71,7 @@ $("#publishBtn").on("click", function(){
             title: "文章內容太多嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
     
@@ -100,7 +100,7 @@ $("#publishBtn").on("click", function(){
                 type: "error",
                 text: dataDB.errorCode,
                 animation: false
-            });
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{
             // ?依最新排序的首頁
@@ -189,7 +189,7 @@ async function initial(res, rej){
                     title: "載入頁面失敗",
                     type: "error",
                     text: dataDB.errorCode
-                });
+                }).then(( result ) => {}, ( dismiss ) => {});
             }
             else{
                 article= dataDB.data
@@ -223,7 +223,7 @@ function checkPermission(resolve, reject){
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
                 $( "body" ).append( httpStatus );
             }
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         resolve(false);
     }
 }

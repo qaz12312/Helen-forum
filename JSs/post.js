@@ -37,7 +37,7 @@ async function initial(res, rej){
                 type: "error",
                 text: dataDB.errorCode,
                 animation: false
-            });
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{
             let article= dataDB.data;
@@ -78,7 +78,7 @@ async function initial(res, rej){
                     type: "error",
                     text: dataDB.errorCode,
                     animation: false
-                });
+                }).then(( result ) => {}, ( dismiss ) => {});
             }
             else{
                 if(comments.length== 0){
@@ -110,7 +110,7 @@ $("#reportBtn").click(function(){
             title: "檢舉過嘍！",
             type: "error",
             text: "不可再次檢舉"
-        })
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
     swal({
@@ -353,7 +353,7 @@ function leaveComment(){
             title: "留言太長嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
     let cmd = {};

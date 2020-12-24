@@ -38,7 +38,7 @@ $( document ).ready(async function()
                             title: "收藏目錄已存在<br />",
                             type: "error",
                             animation: false
-                        });
+                        }).then(( result ) => {}, ( dismiss ) => {});
                         return false
                     }
                     else
@@ -53,7 +53,7 @@ $( document ).ready(async function()
                                 type: "error",
                                  text: dataDB.errorCode,
                                 animation: false
-                            });
+                            }).then(( result ) => {}, ( dismiss ) => {});
                         }
                         else
                         {
@@ -64,13 +64,21 @@ $( document ).ready(async function()
                                 + result
                                 + "&gt;</small>",
                                 type: "success",
-                            }).then(( result ) => {
-                                if ( result ) 
+                                timer: 1000,
+                                showConfirmButton: false,
+
+                            }).then(( result ) => {}, ( dismiss ) => {
+                                if ( dismiss ) 
                                 {
                                     $(this).parents('.Page').remove();
-                                    location.reload();//重整
+                                    location.reload();
                                 }
-                                
+                            }).then(( result ) => {}, ( dismiss ) => {
+                                if ( dismiss ) 
+                                {
+                                    $(this).parents('.Page').remove();
+                                    location.reload();
+                                }
                             });
 
                         }
@@ -90,11 +98,13 @@ $( document ).ready(async function()
             width: 400,
             showConfirmButton: false,
             timer: 1000,
-            })
-            sessionStorage.setItem("Helen-act", "showArticleInDir");
-            sessionStorage.setItem("Helen-dirID", CollectionCatalog.dirIndex);
-            sessionStorage.setItem("Helen-DirName", CollectionCatalog[dirIndex].DirName);
-            location.href = "../HTMLs/sub.html";
+            }).then(( result ) => {}, ( dismiss ) =>
+            {
+                sessionStorage.setItem("Helen-act", "showArticleInDir");
+                sessionStorage.setItem("Helen-dirID", CollectionCatalog.dirIndex);
+                sessionStorage.setItem("Helen-DirName", CollectionCatalog[dirIndex]);
+                location.href = "../HTMLs/sub.html";
+            });
     });
     $( document ).on( "click", ".delete", function()
     {
@@ -104,7 +114,7 @@ $( document ).ready(async function()
             
             swal({
                 title: "確定要刪除此收藏目錄嗎？<br /><span style='color:#FF0000'>會連同裡面整個刪除喔!!</span><br /><small>&lt;"
-                + CollectionCatalog[ dirIndex ].DirName
+                + CollectionCatalog[ dirIndex ]
                 + "&gt;</small>",
                 showCancelButton: true,
                 confirmButtonText: "確定",
@@ -127,7 +137,7 @@ $( document ).ready(async function()
                         if( dataDB.status == false )
                         {
                             swal({
-                                title: "移除失敗<br /><small>&lt;" + CollectionCatalog[ dirIndex ].DirName + "&gt;</small>",
+                                title: "移除失敗<br /><small>&lt;" + CollectionCatalog[ dirIndex ] + "&gt;</small>",
                                 type: "error",
                                 text: dataDB.errorCode,
     
@@ -136,24 +146,16 @@ $( document ).ready(async function()
                         else
                         {
                             swal({
-                                title: "已成功移除收藏文章！<br /><small>&lt;" + CollectionCatalog[ dirIndex ].DirName + "&gt;</small>",
+                                title: "已成功移除收藏文章！<br /><small>&lt;" + CollectionCatalog[ dirIndex ] + "&gt;</small>",
                                 type: "success",
                                 showConfirmButton: false,
                                 timer: 1000,
     
-                            }).then((result) => {}, ( dismiss ) => {});
-    
-                            $(this).parents('.Page').remove();
-                            location.reload();//重整
-    
-                            if( $.isEmptyObject(articles) )
+                            }).then((result) => {}, ( dismiss ) =>
                             {
-                                let emptyMessage = "<div class='title' style='position: relative;'>收藏目錄為空"+   
-                                        "</div>"+
-                                        "<div class='title' style='position: relative;'>快來增加你的收藏:)"+   
-                                        "</div>";
-                                content2.append( emptyMessage );
-                            }
+                                $(this).parents('.Page').remove();
+                                location.reload();//重整
+                            });
                         }
                     });
                 }
@@ -161,7 +163,7 @@ $( document ).ready(async function()
             
     });
     
-    $("#CollectionCatalog button").on( "click",  function(){
+    $("#CollectionCatalog button").on( "click", async function(){
     
         
         if( $(this).text().trim() == "getValues")
@@ -173,11 +175,23 @@ $( document ).ready(async function()
             
             
                 var value = $('#input2').val();
+
+                if( value == "" )
+                {
+                    await swal({
+                        title: "請輸入收藏目錄名稱",
+                        type: "error",
+                        text: ":)",
+                    }).then(( result ) => {}, ( dismiss ) => {});
+
+                    return;
+                }
             
                 let cmd = {};
                 cmd[ "act" ] = "newDir";
                 cmd["account"] = sessionStorage.getItem( "Helen-account" );
                 cmd[ "dirName" ] = $('#input2').val();
+                console.log($('#input2').val());
 
                 $.post( "../index.php", cmd, function( dataDB ) 
                 {
@@ -189,7 +203,7 @@ $( document ).ready(async function()
                                 title: "新增收藏目錄失敗",
                                 type: "error",
                                 text: dataDB.errorCode
-                            });
+                            }).then(( result ) => {}, ( dismiss ) => {});
                         }
                         else
                         {
@@ -204,12 +218,13 @@ $( document ).ready(async function()
                                     
                                     swal({
                                         title: "增加收藏成功" ,
-                                        type: "success"
+                                        type: "success",
+                                        timer: 1000,
+                                        showConfirmButton: false,
 
-                                    }).then(( result ) => {
-                                        if ( result ) 
+                                    }).then(( result ) => {}, ( dismiss ) => {
+                                        if ( dismiss ) 
                                         {
-                                            
                                             location.reload();
                                         }
                                     });
@@ -220,15 +235,8 @@ $( document ).ready(async function()
                                         title: "收藏目錄已存在",
                                         type: "error",
                                         text: ":)",
-                                    });
+                                    }).then(( result ) => {}, ( dismiss ) => {});
                                 }
-                            }
-                            else{
-                                swal({
-                                    title: "請輸入收藏目錄名稱",
-                                    type: "error",
-                                    text: ":)",
-                                });
                             }
 
                         }
@@ -251,13 +259,15 @@ async function initial(res, rej)
     $.post( "../index.php", cmd, function( dataDB )
     {   
         dataDB = JSON.parse( dataDB );
+
+        console.log( dataDB.data );
         if( dataDB.status == false )
         {
             swal({
                 title: "載入頁面失敗",
                 type: "error",
                 text: dataDB.errorCode
-            })
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else
         {
@@ -281,7 +291,7 @@ async function initial(res, rej)
 
                 for( let i in CollectionCatalog )
                 {
-                    values.push(CollectionCatalog[i].DirName)
+                    values.push(CollectionCatalog[i])
                     const div = document.createElement('div');          
                     div.classList.add('Page');
                     
@@ -295,7 +305,7 @@ async function initial(res, rej)
                                 
                                     
                                     
-                                    <span class="currency" id="cjgtxt">`+ dataDB.data[i].DirName+ `</span>`+`
+                                    <span class="currency" id="cjgtxt">`+ dataDB.data[i]+ `</span>`+`
                                         
                                 </div>`+`
                             

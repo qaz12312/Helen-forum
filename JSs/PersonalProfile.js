@@ -36,8 +36,8 @@ $( document ).ready(function()
                         animation: false,
                         customClass: 'animated rotateOutUpLeft',
                         confirmButtonText: 'okay!',
-                        confirmButtonColor: '#eda2b6'
-                    })
+                        confirmButtonColor: '#eda2b6',
+                    }).then(( result ) => {}, ( dismiss ) => {});
                 }
                 else {
                     
@@ -50,7 +50,7 @@ $( document ).ready(function()
                         confirmButtonText: 'okay!',
                         confirmButtonColor: '#eda2b6',
                         timer: 2000
-                    })
+                    }).then(( result ) => {}, ( dismiss ) => {});
                     //sessionStorage.setItem("Helen-nickname")=document.getElementById("name").value;
                     sessionStorage.setItem("Helen-nickname", document.getElementById("name").value)
                     document.getElementById('name').disabled = !document.getElementById('name').disabled;
@@ -89,7 +89,7 @@ $( document ).ready(function()
                                 customClass: 'animated rotateOutUpLeft',
                                 confirmButtonText: 'okay!',
                                 confirmButtonColor: '#eda2b6'
-                            })
+                            }).then(( result ) => {}, ( dismiss ) => {});
                             location.reload();//重整
                         }
                         else { 
@@ -121,7 +121,7 @@ $( document ).ready(function()
                                                     showCancelButton: true,
                                                     confirmButtonText: "Next &rarr;",
                                                     cancelButtonText: "取消",
-                                                    input: "text",
+                                                    input: "password",
                                                 });
                                             
                                                 steps.push( parseInt(i) + 1 );
@@ -152,7 +152,7 @@ $( document ).ready(function()
                                                                 customClass: 'animated rotateOutUpLeft',
                                                                 confirmButtonText: 'okay!',
                                                                 confirmButtonColor: '#eda2b6'
-                                                            })
+                                                            }).then(( result ) => {}, ( dismiss ) => {});
                                                             location.reload();//重整
                                                         }
                                                         else{
@@ -165,7 +165,7 @@ $( document ).ready(function()
                                                                 confirmButtonText: 'okay!',
                                                                 confirmButtonColor: '#eda2b6',
                                                                 timer: 2000
-                                                            })
+                                                            }).then(( result ) => {}, ( dismiss ) => {});
                                                            
                                                             location.reload();//重整
                                                         }
@@ -183,8 +183,7 @@ $( document ).ready(function()
                                                         customClass: 'animated rotateOutUpLeft',
                                                         confirmButtonText: 'okay!',
                                                         confirmButtonColor: '#eda2b6',
-                                                        timer: 2000
-                                                    })
+                                                    }).then(( result ) => {}, ( dismiss ) => {});
                                                     location.reload();//重整
                                                 }
                                                 
@@ -223,7 +222,7 @@ $( document ).ready(function()
                             customClass: 'animated rotateOutUpLeft',
                             confirmButtonText: 'okay!',
                             confirmButtonColor: '#eda2b6'
-                        })
+                        }).then(( result ) => {}, ( dismiss ) => {});
                     }
                     else {
                         
