@@ -1,9 +1,17 @@
 <?php
-    function connSql(){     
-        $serverName = "helendb.chw8qvtxo3mu.us-east-1.rds.amazonaws.com";
-        $userName = "helen";
-        $password = "ynVdCeYKBrDJ";
-        $databaseName = "test";
+    function connSql(){    
+        //AWS
+        //$serverName = "helendb.chw8qvtxo3mu.us-east-1.rds.amazonaws.com";
+        //$userName = "helen";
+        //$password = "ynVdCeYKBrDJ";
+        //$databaseName = "test";
+        
+        
+        $serverName = "140.121.197.130:55152";
+        $userName = "root";
+        $password = "admin";
+        $databaseName = "140.121.197.130:55151";
+        
         header("Access-Control-Allow-Origin: *");
         header("Content-Type:text/html; charset=utf-8");
         date_default_timezone_set("Asia/Taipei");
