@@ -32,7 +32,7 @@
         $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
         $arr = array($input['account'], $input['title'], $input['content'], $input['picture'], $input['hashTag'], $input['blockName']);
 		$result = query($conn,$sql,$arr,"INSERT");
-		$rtn = successCode("Successfully new the Article.");
+		$rtn = successCode("Successfully new the Article.",array());
 		
 		/*
 
