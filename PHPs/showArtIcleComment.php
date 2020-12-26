@@ -4,28 +4,35 @@
     let cmd = {};
     cmd["act"] = "showArticleComment";
     cmd["articleID"] = "ArticleID";
-    cmd["account"] = "00757003";    // 訪客不用傳ㄋ
-    s
+    cmd["account"] = "00757003";    // 訪客不用傳
     後端 to 前端
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
         dataDB.info = ""
-        dataDB.data[i] //有i筆文章
-        (
-        dataDB.data.comment[i].content //第i筆留言的內文
-        dataDB.data.comment[i].floor //第i筆留言的樓層
-        dataDB.data.comment[i].nickname
-        dataDB.data.comment[i].color
-        dataDB.data.comment[i].time
-        ) 
-        dataDB.data.title //第i筆文章的標題
-        dataDB.data.content 
-        dataDB.data.time
-        dataDB.data.like //第i筆文章的總愛心數
-        dataDB.data.keep//第i筆文章的總收藏數
+        dataDB.data[i] //有i筆留言
+        若有流言:
+            (
+            dataDB.data.comment[i].content //第i筆留言的內文
+            dataDB.data.comment[i].floor //第i筆留言的樓層
+            dataDB.data.comment[i].nickname//第i筆留言的作者暱稱
+            dataDB.data.comment[i].color//第i筆留言的作者顏色
+            dataDB.data.comment[i].time//第i筆留言的時間
+            ) 
+        否則(
+            dataDB.data.comment.status = true;
+           dataDB.data.comment.info= "No comment.";
+            dataDB.data.comment.data="";
+            )
+        dataDB.data.title //文章的標題
+        dataDB.data.content //文章的內容
+        dataDB.data.time //文章的時間
+        dataDB.data.like //文章的總愛心數
+        dataDB.data.keep//文章的總收藏數
         dataDB.data.authorNickname
         dataDB.data.authorColor
+        dataDB.data.hasHeart//被user按過愛心
+        dataDB.data.hasKeep//被user收藏
     否則
         dataDB.errorCode = "Article doesn't exit."
         dataDB.data = ""
@@ -72,7 +79,7 @@
                 $commentCount = count($comment);
                 $arr2=array();
                 if($commentCount <= 0){
-                    $arr2[0] = successCode("No comment.");
+                    $arr2[0] = successCode("No comment.",array());
                 }
                 else{
                     for($i=0;$i<$commentCount;$i++){
