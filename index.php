@@ -193,6 +193,23 @@
         require_once("./PHPs/deleteApplyBoard.php");
         doDeleteApplyBoard($input);
         break;
+    case "newActivityInCanlendar":	
+        require_once("./PHPs/newActivityInCanlendar.php");
+        doNewActivityInCanlendar($input);
+        break;
+    case "checkInCanlendarList":	
+        require_once("./PHPs/checkInCanlendarList.php"); //審核活動
+        doCheckInCanlendarList($input);
+        break;
+    case "showUncheckCanlenderList":	
+        require_once("./PHPs/showUncheckCanlenderList.php"); //顯示審核活動
+        doShowUncheckCanlenderList($input);
+        break;
+    case "showOnCalendar":	
+        require_once("./PHPs/showOnCalendar.php"); //顯示審核活動
+        doShowOnCalendar($input);
+        break;
+
     }
     $conn = null;
 ?>
