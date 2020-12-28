@@ -44,7 +44,7 @@ async function initial(res, rej){
             let article= dataDB.data;
             comments= article.comment;
             var contentStr= article.content;
-            contentStr+= "<br/ >";
+            contentStr+= "\n";
             for(var i= 0; i< article.hashTag.length; i++){
                 contentStr+= "#"+ article.hashTag[i]+ " ";
             }
@@ -57,7 +57,7 @@ async function initial(res, rej){
             $(".tabContent").find("p").text(contentStr); // 文章內容
 
             let heartText= $("#heartBtn").find("span"); // Text: 愛心 & 數字
-            if(article.hasLike== 1){
+            if(article.hasHeart== 1){
                 $(heartText).removeClass("text-danger");
                 $(heartText).addClass("text-light");
                 $("#heartBtn").removeClass("btn-secondary");

@@ -61,31 +61,32 @@ async function barInitial(){
         $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span>"+
                             " 未登入"+
                             "</span></li>")
+        $("#userDD").append("<li class= \"divider\"></li>");
     }else{ // 一般使用者(已登入)
         $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span> "+
                             sessionStorage.getItem("Helen-nickname")+
-                            "</span></li>")
-        $("#userDD").append("<li class= \"divider\"></li>")
+                            "</span></li>");
+        $("#userDD").append("<li class= \"divider\"></li>");
         $("#userDD").append("<li class= \"glyphicon glyphicon-edit\">"+
-                            "<a href=\"../HTMLs/PersonalProfile.html\"> 個人資料</a></li>")
+                            "<a href=\"../HTMLs/PersonalProfile.html\"> 個人資料</a></li>");
         $("#userDD").append("<li class= \"glyphicon glyphicon-pencil\">"+
-                            "<a href=\"../HTMLs/publishArticle.html\"> 發佈新文章</a></li>")
+                            "<a href=\"../HTMLs/publishArticle.html\"> 發佈新文章</a></li>");
         $("#userDD").append("<li class= \"glyphicon glyphicon-star-empty\">"+
-                            "<a href=\"../HTMLs/CollectionCatalog.html\"> 我的收藏</a></li>")
+                            "<a href=\"../HTMLs/CollectionCatalog.html\"> 我的收藏</a></li>");
         $("#userDD").append("<li class= \"glyphicon glyphicon-time\">"+
-                            "<a href=\"../HTMLs/PostingRecord.html\"> 發文紀錄</a></li>")
+                            "<a href=\"../HTMLs/PostingRecord.html\"> 發文紀錄</a></li>");
 
         if(userPermission>= 2){ // 版主
             $("#userDD").append("<li class= \"glyphicon glyphicon-alert\">"+
-                                "<a href=\"../HTMLs/report.html\"> 檢舉區</a></li>")
+                                "<a href=\"../HTMLs/report.html\"> 檢舉區</a></li>");
         }
-        if(userPermission>= 3){
+        if(userPermission>= 3){ // admin
             $("#userDD").append("<li class= \"glyphicon glyphicon-th-list\">"+
-                                "<a href=\"../HTMLs/manageBoard.html\"> 管理看版</a></li>")
+                                "<a href=\"../HTMLs/manageBoard.html\"> 管理看版</a></li>");
             $("#userDD").append("<li class= \"glyphicon glyphicon-king\">"+
-                                "<a href=\"../HTMLs/moderator.html\"> 管理版主</a></li>")
+                                "<a href=\"../HTMLs/moderator.html\"> 管理版主</a></li>");
             $("#userDD").append("<li class= \"glyphicon glyphicon-bullhorn\">"+
-                                "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>")
+                                "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>");
         }
     }
 }

@@ -112,7 +112,7 @@ $("#publishBtn").on("click", function(){
 })
 
 $("#cancelPublish").on("click", function(){
-    console.log("Back To HOME Page.")
+    sessionStorage.removeItem('Helen-act');
     location.href =  "../HTMLs/home.html";
 })
 
