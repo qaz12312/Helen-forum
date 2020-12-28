@@ -3,6 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "showApplyBoard";
+	cmd["type"] = "board/moderator";
 
     後端 to 前端:
     dataDB = JSON.parse(data);
