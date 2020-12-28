@@ -40,7 +40,7 @@
     */
     function doShowArticleComment($input){
         global $conn;
-        $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times`,`AuthorID` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?";
+        $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times`,`AuthorID`, `Hashtag` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?";
         $arr = array($input['articleID']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
