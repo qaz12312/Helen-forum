@@ -616,7 +616,7 @@ function forSearching( resolve, reject )
     cmd[ "account"] = thisAccount;
     cmd[ "searchBoard" ] = thisBoardName;
     cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
-    cmd[ "content" ] = thisSearching.content;
+    cmd[ "searchWord" ] = thisSearching.content;
     cmd[ "hashtag" ] = thisSearching.hashtag;
 
     $.post( "../index.php", cmd, function( dataDB )
