@@ -213,5 +213,5 @@
         break;
 
     }
-    $conn = null;
+    $conn = NULL;
 ?>
