@@ -92,12 +92,12 @@ $("#newActivity").on("click", function(){
         var startDate;
         var endDate;
     if($("#activityStartTime").val())
-        startDate= $("#activityStartDate").val()+"T"+$("#activityStartTime").val();
+        startDate= $("#activityStartDate").val()+"T"+$("#activityStartTime").val()+":00";
     else
         startDate= $("#activityStartDate").val()+"T"+"00:00:00";
 
     if($("#activityEndTime").val())
-        endDate= $("#activityEndDate").val()+"T"+$("#activityEndTime").val();
+        endDate= $("#activityEndDate").val()+"T"+$("#activityEndTime").val()+":00";
     else if($("#allday").val()=="true")
         endDate= $("#activityStartDate").val()+"T"+"23:00:00";
 
