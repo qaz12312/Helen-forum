@@ -23,7 +23,7 @@
     $mail = new PHPMailer(true);
     $alert = '';
     $email = $input['account'];
-    $url = "http://localhost/helen/HTMLs/index"; // 前端給網址
+    $url = "https://helen-ntou.herokuapp.com/HTMLs/HelenPwd.html"; // 前端給網址
 
     try{
         $mail->isSMTP();
@@ -46,7 +46,7 @@
         $mail->send();
         //例外
         $alert = 'Message Sent! Thank you for contacting us.';
-        $rtn = successCode($alert);
+        $rtn = successCode($alert,$token);
     } catch (Exception $e){
         errorCode("【sendMailPwd.php】failed: ". $e->getMessage());
     }
