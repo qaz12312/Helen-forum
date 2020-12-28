@@ -30,7 +30,9 @@ function query($conn,$sql,$input,$option){
     }catch(PDOException $e){
         errorCode("【SQL ".$option."-execute】failed: ". $e->getMessage());
     }
-    return $stmt->fetchAll();
+    if($option=="SELECT"){
+	    return $stmt->fetchAll();
+    }
 }
 
 // function query($conn,$sql,$input,$option){
