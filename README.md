@@ -11,8 +11,8 @@
 
 ### 紀錄dir
 + old version 12-14 : 12/14日完成的
-+ PHPs 12-27 : 目前在master的版本，最穩定版
-+ add all : 加入token(account、permission、登入ip、操作紀錄檔) + (加解密account、password)
++ PHPs 12-27 : 未加入token、加密，12/27
++ add all : 目前在master的版本，加入token(account、permission、登入ip、操作紀錄檔) + (加解密account、password)
 
 ## 加密
 ```
