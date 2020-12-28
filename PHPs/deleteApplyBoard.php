@@ -4,6 +4,7 @@
 	let cmd = {};
 	cmd["act"] = "deleteApplyBoard";
 	cmd["account"] = "00757033";
+	cmd["type"] = "board/moderator";
     cmd["content"] = "00757033";
 	後端 to 前端:
 	dataDB = JSON.parse(data);
