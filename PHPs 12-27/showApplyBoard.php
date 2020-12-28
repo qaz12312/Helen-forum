@@ -9,10 +9,11 @@
 	dataDB.status
 	若 status = true:
 		dataDB.info = ""
-		dataDB.data[i] //有i筆通知
+		dataDB.data[i] 
 		(
-			dataDB.data.time	// Time
-			dataDB.data.content	// Content
+            dataDB.data[i].account //
+			dataDB.data[i].time	// Time
+			dataDB.data[i].content	// Content
 		)
 	否則
 		dataDB.errorCode = "No notifications right now."
@@ -20,24 +21,29 @@
 	*/
     function doShowApplyBoard($input){
         global $conn;
-        $sql="SELECT `UserID`,`Content`,`Times` FROM `Issue` order by `UserID` ASC ,`Times`DESC ";
-        $result = query($conn,$sql,array(),"SELECT");
-        $resultCount = count($result);
-        if($resultCount <= 0){
-            $rtn = successCode("Don't have any apply.");
-        }
-        else{
+		if($input['type'] == "board" || $input['type'] == "moderator") {
+		  if($input['type'] == "board")
+		     $sql="SELECT `UserID`,`Content`,`Times` FROM `Issue` WHERE `Type`= 1 order by `UserID` ASC ,`Times`DESC ";
+		  else
+		     $sql="SELECT `UserID`,`Content`,`Times` FROM `Issue` WHERE `Type`= 0 order by `UserID` ASC ,`Times`DESC ";
+			 
+		  $result = query($conn,$sql,array(),"SELECT");
+          $resultCount = count($result);
+          if($resultCount <= 0){
+            $rtn = successCode("Don't have any apply.",array());
+          }
+          else{
             $arr=array();
-            for($i=0;$i<$resultCount;$i++){
+			for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
-                $idx = strval($row[0]);
-                if(!isset($arr[$idx])){
-                    $arr[$idx] = [];
-                }
-                array_push($arr[$idx],array("content"=>$row[1],"times"=>$row[2]));
+                $arr[$i]=array("account"=>$row[0],"content"=>$row[1],"times"=>$row[2]);
             }
             $rtn = successCode("Successfully show apply.",$arr);
+          }
         }
+		else {
+		  errorCode("Failed to show who is applying.")
+		}
         echo json_encode($rtn);
     }
 ?>

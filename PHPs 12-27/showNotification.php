@@ -21,7 +21,7 @@
 	*/
     function doShowNotification($input){
         global $conn;
-        $sql="SELECT `Times`,`Content` FROM `Notice` WHERE `UserID`=? order by `Times`DESC ";
+        $sql="SELECT `Times`,`Content` FROM `Issue` WHERE `UserID`=? AND `Type`=2 order by `Times`DESC ";
         $arr = array($input['account']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);

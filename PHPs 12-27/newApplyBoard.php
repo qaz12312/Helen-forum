@@ -4,6 +4,7 @@
 	let cmd = {};
 	cmd["act"] = "newApplyBoard";
 	cmd["account"] = "00757033";
+	cmd["type"] = "board/moderator";
 	cmd["content"] ="我想要成為美食版版主";
 
 	後端 to 前端
@@ -16,12 +17,25 @@
 		dataDB.data = "";
 	*/
     function doNewApplyBoard($input){
-        global $conn;
-        	$sql="INSERT INTO `Issue`(`UserID`,`Content`) VALUES(?,?)";
+		global $conn;
+		if($input['type'] == "board" || $input['type'] == "moderator") {
+		  if($input['type'] == "board")
+		    $sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type`= 1";
+		  else
+		    $sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type`= 0";
+
+		  $arr = array($input['account'], $input['content']);
+		  $result = query($conn,$sql,$arr,"SELECT");
+		  $resultCount = count($result);
+		  if($resultCount > 0){
+			errorCode("You have already sent this message.");
+		  }
+		  else{
+			$sql="INSERT INTO `Issue`(`UserID`,`Content`) VALUES(?,?)";
         	$arr = array($input['account'], $input['content']);
 			$result=query($conn,$sql,$arr,"INSERT");
 
-			$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ?";
+			$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type` = 1";
 			$arr = array($input['account'], $input['content']);
 			$result = query($conn,$sql,$arr,"SELECT");
 			$resultCount = count($result);
@@ -31,6 +45,12 @@
 			else{
 				$rtn = successCode("Successfully Apply the Board.");
 			}
+		  }
+		  else {
+			errorCode("Failed to Apply.");
+		  }
+		
+		}	
         echo json_encode($rtn);
     }
 ?>
