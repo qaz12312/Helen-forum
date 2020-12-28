@@ -1,4 +1,7 @@
 var userPermission= 0; // 0(訪客) 1(一般使用者) 2(版主) 3(admin)
+var canApplyModerator = false;
+var applyError = "";
+var invalidBoards = {};
 
 async function barInitial(){
     if(sessionStorage.getItem("Helen-sort")== null){
@@ -7,6 +10,7 @@ async function barInitial(){
 
     await new Promise ((resolve, reject) => {getUserInfo(resolve, reject);});
     await new Promise ((resolve, reject) => {getBoards(resolve, reject);});
+    await new Promise ((resolve, reject) => {getInvalidBoards(resolve, reject);});
     
     // 最左邊的 ham menu 初始化
     $("#menu").empty();
@@ -26,9 +30,9 @@ async function barInitial(){
                         " A D D</h3></li></a>");
     else if(userPermission > 0)
         $("#menu").append("<a onclick='applyForModerator()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
-                            " 我要當版主</h3></li></a>" +
-                            "<a onclick='applyForBoard()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
-                            " 我要新增看版</h3></li></a>");
+                          " 我要當版主</h3></li></a>" +
+                          "<a onclick='applyForBoard()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
+                          " 我要新增看版</h3></li></a>");
 
     // 登入/登出按紐顯示
     if(userPermission== 0){ // 訪客(登入)
@@ -378,41 +382,9 @@ function applyForBoard()
     }, (dismiss) => {});
 }
 
-var invalidBoards = {};
-
 async function applyForModerator()
 {
-    let success;
-
-    if( $.isEmptyObject(invalidBoards))
-    {
-        let cmd = {};
-        cmd[ "act" ] = "showModerator";
-        success = await $.post( "../index.php", cmd, async function(dataDB)
-        {
-            dataDB = JSON.parse(dataDB);
-
-            if( dataDB.status == false )
-            {
-                await swal({
-                    title: "無法申請看板",
-                    type: "error",
-                    text: dataDB.errorCode,
-                    confirmButtonText: "確定",
-
-                }).then((result) => {}, ( dismiss ) => {});
-
-                return false;
-            }
-            else
-            {
-                invalidBoards = dataDB.data;
-                return true;
-            }
-        });
-    }
-
-    if( success )
+    if( canApplyModerator )
     {
         let boards = sessionStorage.getItem( "Helen-boards");
         boards = JSON.parse( boards ); 
@@ -505,4 +477,50 @@ async function applyForModerator()
 
         }, (dismiss) => {});
     }
+    else
+    {
+        swal({
+            title: "無法申請版主",
+            type: "error",
+            text: applyError,
+            confirmButtonText: "確定",
+
+        }).then((result) => {}, ( dismiss ) => {});
+    }
+}
+
+function getInvalidBoards(resolve, reject)
+{
+    let cmd = {};
+    cmd[ "act" ] = "showModerator";
+    $.post( "../index.php", cmd, async function(dataDB)
+    {
+        dataDB = JSON.parse(dataDB);
+
+        if( dataDB.status == false )
+        {
+            swal({
+                title: "無法申請看板",
+                type: "error",
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
+
+            }).then((result) => {
+                canApplyModerator = false;
+                applyError = dataDB.errorCode;
+
+            }, ( dismiss ) => {
+                canApplyModerator = false;
+                applyError = dataDB.errorCode;
+                invalidBoards = {};
+            });
+        }
+        else
+        {
+            canApplyModerator = true;
+            applyError = "";
+            invalidBoards = dataDB.data;
+        }
+        resolve(0);
+    });
 }
