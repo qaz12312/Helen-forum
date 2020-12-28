@@ -2,7 +2,7 @@
     require_once("./PHPs/connectDB.php");
     require_once("./PHPs/tools.php");
     require_once("./PHPs/sendNotification.php");
-    error_reporting(1);
+    ini_set('display_errors','1');
     error_reporting(E_ALL);
     $conn = connSql();
     $input = $_POST;
