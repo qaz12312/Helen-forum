@@ -46,7 +46,7 @@
         $mail->send();
         //例外
         $alert = 'Message Sent! Thank you for contacting us.';
-        $rtn = successCode($alert);
+        $rtn = successCode($alert,$token);
     } catch (Exception $e){
         errorCode("【sendMailPwd.php】failed: ". $e->getMessage());
     }
