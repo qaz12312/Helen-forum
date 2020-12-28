@@ -14,7 +14,6 @@
         dataDB.errorCode = "fail to find the password"
         dataDB.data = ""
     */
-
     use PHPMailer\PHPMailer\PHPMailer;
     require_once 'phpmailer/Exception.php';
     require_once 'phpmailer/PHPMailer.php';
@@ -24,7 +23,6 @@
     $alert = '';
     $email = $input['account'];
     $url = "https://helen-ntou.herokuapp.com/HTMLs/HelenPwd.html"; // 前端給網址
-
     try{
         $mail->isSMTP();
         $mail->Host = 'ssl://smtp.gmail.com';
@@ -35,6 +33,7 @@
         $mail->Port = '465';
         $mail->setFrom('softwareengineeringhelen@gmail.com'); // Gmail address which you used as SMTP server
         $mail->addAddress($email."@mail.ntou.edu.tw"); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
+        
         //email內容
         $now = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i')+15, date('s'), date('m'), date('d'), date('Y'))) ;	//設定過期時間
         $token = md5($input['account'].$now);
