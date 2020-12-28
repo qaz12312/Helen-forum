@@ -153,10 +153,24 @@ async function initial(res, rej)
 
 
 }
-function checkPermission(res, rej)
+function checkPermission(resolve, reject)
 {
-    if(!thisAccount)
-        return false
-    res(0);
+    if(sessionStorage.getItem("Helen-account")){
+        resolve(true);
+    }
+    else{
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {
+            if ( result ){
+                $( ".tabContent" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                    $( ".tabContent" ).append( httpStatus );
+            }
+        }, ( dismiss ) => {});
+        resolve(false);
+    }
 }
     

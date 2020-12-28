@@ -46,12 +46,12 @@
 				$sql = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` LEFT JOIN `HomeComment` USING (ArticleID) WHERE `BoardName` = ? ORDER BY `cntComment` DESC";
 			}
             $arr = array($input['boardName']);
-            $result = query($conn,$sql,$arr,"SELECT1");
+            $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
 
             $sql="SELECT `Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`=?";
             $arr = array($input['boardName']);
-            $result2 = query($conn,$sql,$arr,"SELECT2");
+            $result2 = query($conn,$sql,$arr,"SELECT");
             $result2Count = count($result);
 
             if ($resultCount <= 0) {
@@ -66,12 +66,12 @@
                     if(isset($input['account'])){
                         $sql="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
                         $arr = array($articleID, $input['account']);
-                        $heart = query($conn,$sql,$arr,"SELECT3");
+                        $heart = query($conn,$sql,$arr,"SELECT");
                         $heartCount = count($heart);
     
                         $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?" ;
                         $arr = array($articleID, $input['account']);
-                        $keep = query($conn,$sql,$arr,"SELECT4");
+                        $keep = query($conn,$sql,$arr,"SELECT");
                         $keepCount = count($keep);
     
                         $articleList[$i] = array("title" => $row['Title'], "articleID" => $articleID , "like" => $row['cntHeart'], "keep" => $row['cntKeep'], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));

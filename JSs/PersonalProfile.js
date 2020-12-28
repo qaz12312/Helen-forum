@@ -280,7 +280,22 @@ function initiall(resolve, reject)
 
 function checkPermission()
 {
-    if(!thisAccount)
-    return false
+    if(sessionStorage.getItem("Helen-account")){
+        return true;
+    }
+    else{
+        swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {
+            if ( result ){
+                $( ".tabContent" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                    $( ".tabContent" ).append( httpStatus );
+            }
+        }, ( dismiss ) => {});
+        return false;
+    }
     
 }

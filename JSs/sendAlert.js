@@ -93,7 +93,9 @@ function checkPermission(resolve, reject)
             
         }).then(( result ) => {
                 
-            $( "body" ).empty(); 
+            $( ".tabContent" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+            $( ".tabContent" ).append( httpStatus ); 
         }, ( dismiss ) => {});;
 
         resolve(0);

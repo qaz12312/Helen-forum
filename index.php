@@ -2,6 +2,8 @@
     require_once("./PHPs/connectDB.php");
     require_once("./PHPs/tools.php");
     require_once("./PHPs/sendNotification.php");
+    ini_set('display_errors','1');
+    error_reporting(E_ALL);
     $conn = connSql();
     $input = $_POST;
     session_start();
@@ -211,5 +213,5 @@
         break;
 
     }
-    $conn = null;
+    $conn = NULL;
 ?>
