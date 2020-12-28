@@ -4,6 +4,7 @@
     require_once("./PHPs/sendNotification.php");
     $conn = connSql();
     $input = $_POST;
+    // session_start();
     switch ($input["act"]) {
         case "sendMailPwd": // 【user】忘記密碼的寄送email
             require_once("./PHPs/sendMailPwd.php"); 
