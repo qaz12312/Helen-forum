@@ -20,11 +20,11 @@
     */
     function doSendNotification($input,$print=1){
         global $conn;
-        $sql="INSERT INTO `Notice`(`UserID`,`Content`) VALUES(?,?)";
+        $sql="INSERT INTO `Issue`(`UserID`,`Content`) VALUES(?,?)";
         $arr = array($input['recipient'], $input['content']);
         query($conn,$sql,$arr,"INSERT");
         
-        $sql="SELECT `UserID`,`Times`,`Content` FROM `Notice` WHERE `UserID`=? AND`Content`=?";
+        $sql="SELECT `UserID`,`Times`,`Content` FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=2";
         $arr = array($input['recipient'], $input['content']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
