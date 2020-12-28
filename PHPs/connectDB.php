@@ -28,8 +28,6 @@
         }catch(PDOException $e){
             errorCode("【Connection Database】failed: " . $e->getMessage());
         }
-        error_reporting(1);
-        error_reporting(E_ALL);
         return $conn;
     }
 ?>
