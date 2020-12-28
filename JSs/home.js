@@ -1,6 +1,6 @@
 // var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 ,"boardName":"美食版", "hasLike": 1, "hasKeep": 0}, 
 //                 { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 ,"boardName":"詢問版", "hasLike": 1, "hasKeep": 0}];
- var articles = [];
+var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisSearching = sessionStorage.getItem( "Helen-search" );
 var thisSort = sessionStorage.getItem( "Helen-sort" );
@@ -281,11 +281,27 @@ async function initial(res, rej)
 }
 function forNormal( res, rej )
 {
+    
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
     cmd[ "account"] = thisAccount;
-    cmd[ "sort" ] = (thisSort == "熱門") ? "hot" : "time";
-
+    //cmd[ "sort" ] = (thisSort == "熱門") ? "hot" : "time";
+    if(thisSort=="熱門")
+    {
+        cmd[ "sort" ]="hot";
+    }
+    else if(thisSort=="最新")
+    {
+        cmd[ "sort" ]="time";
+    }
+    else if(thisSort=="收藏數")
+    {
+        cmd[ "sort" ]="collect";
+    }
+    else if(thisSort=="留言數")
+    {
+        cmd[ "sort" ]="comment";
+    }
     $.post( "../index.php", cmd, function( dataDB )
     {
         console.log(dataDB)
@@ -332,7 +348,7 @@ function forNormal( res, rej )
                                                 "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h5>"+
                                             "</span>" +
                                             "<span class='col-md-6'>" +
-                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
+                                                "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
                                             "</span>" +
                                             "<span class='col-md-4'>";
 
@@ -353,7 +369,7 @@ function forNormal( res, rej )
                 {
                     oneRow += "<button type='button' class='btn btn-warning'>" +
                                     "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
-                                        + articles[i].like + "</span></button>";
+                                        + articles[i].keep + "</span></button>";
                 }
                 else
                 {
@@ -373,83 +389,7 @@ function forNormal( res, rej )
         res(0);
     });
 
-    // let status = true;
-    // if( status == false )
-    // {
-    //     swal({
-    //         title: "載入頁面失敗",
-    //         type: "error",
-    //         text: "dataDB.errorCode",
-
-    //     }).then(( result ) => {}, ( dismiss ) =>
-    //     {
-    //         if ( dismiss )
-    //         {
-    //             $( "body" ).empty();
-    //             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>500 Internal Server Error</h1>";
-    //             $( "body" ).append( httpStatus );
-    //         }
-    //     });
-    // }
-    // else
-    // {
-
-
-        // $( ".tabContent h2" ).html(  "Home"  +"</br>"+
-        // "<button class='addPost' id='addPost'>+ 發文</button>"
-        
-        // );
-        // $( ".tabContent h3" ).html( thisSort );
-        // $( ".topnav a" ).removeClass( "active" );
-        // $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
-        // $( ".tabContent tbody" ).empty();
-
-
-    //     for( let i in articles )
-    //     {
-    //         let oneRow = "<tr>" +
-                                // "<td>" +
-                                // "<div class='card'>" +
-                                //     "<div class='card-body row'>" +
-                                //         "<span class='col-md-2'>" + 
-                                //             "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"</h5>"+
-                                //         "</span>" +
-                                //         "<span class='col-md-6'>" +
-                                //             "<span class='articleTitle'>" + articles[i].title + "</span>" +
-                                //         "</span>" +
-    //                                     "<span class='col-md-4'>";
-
-    //         if( articles[i].hasLike == 1 )
-    //         {
-    //             oneRow += "<button type='button' class='btn btn-danger'>" +
-    //                             "<span class='glyphicon glyphicon-heart text-light'></span><span class='text-light heartaa'> " 
-    //                                 + articles[i].like + "</span></button>";
-    //         }
-    //         else
-    //         {
-    //             oneRow += "<button type='button' class='btn btn-secondary'>" +
-    //                             "<span class='glyphicon glyphicon-heart text-danger'></span><span class='text-danger heartaa'> " 
-    //                                 + articles[i].like + "</span></button>";
-    //         }
-
-    //         if( articles[i].hasKeep == 1 )
-    //         {
-    //             oneRow += "<button type='button' class='btn btn-warning'>" +
-    //                             "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
-    //                                 + articles[i].like + "</span></button>";
-    //         }
-    //         else
-    //         {
-    //             oneRow += "<button type='button' class='btn btn-secondary'>" +
-    //                             "<span class='glyphicon glyphicon-star text-warning'></span><span class='text-warning heartaa'> " 
-    //                                 + articles[i].keep + "</span></button>";
-    //         }
-                                            
-    //         oneRow += "</span></div></div></td></tr>";
-
-    //         $( ".tabContent tbody" ).append( oneRow );
-    //     }
-
+    
     
 }
 
@@ -458,7 +398,23 @@ function forSearching( res, rej)
     let cmd = {};
     cmd[ "act" ] = "searchBoard";
     cmd[ "account"] = thisAccount;
-    cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
+    //cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
+    if($( ".contentArea h3" ).text().trim() =="熱門")
+    {
+        cmd[ "sort" ]="hot";
+    }
+    else if($( ".contentArea h3" ).text().trim() =="最新")
+    {
+        cmd[ "sort" ]="time";
+    }
+    else if($( ".contentArea h3" ).text().trim() =="收藏數")
+    {
+        cmd[ "sort" ]="collect";
+    }
+    else if($( ".contentArea h3" ).text().trim() =="留言數")
+    {
+        cmd[ "sort" ]="comment";
+    }
     cmd[ "content" ] = thisSearching.content;
     cmd[ "hashtag" ] = thisSearching.hashtag;
 
@@ -508,7 +464,7 @@ function forSearching( res, rej)
                                             "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"</h5>"+
                                         "</span>" +
                                         "<span class='col-md-6'>" +
-                                            "<span class='articleTitle'>" + articles[i].title + "</span>" +
+                                            "<span class='articleTitle' style='cursor:pointer'>" + articles[i].title + "</span>" +
                                         "</span>" +
                                             "<span class='col-md-4'>";
 
@@ -529,7 +485,7 @@ function forSearching( res, rej)
                 {
                     oneRow += "<button type='button' class='btn btn-warning'>" +
                                     "<span class='glyphicon glyphicon-star text-light'></span><span class='text-light heartaa'> " 
-                                        + articles[i].like + "</span></button>";
+                                        + articles[i].keep + "</span></button>";
                 }
                 else
                 {
@@ -588,14 +544,15 @@ function getKeepMenu(resolve,reject)
           reject([]);
       }
 
-      let menu = [];
-      for( let i in dataDB.data )
-      {
-          menu.push( dataDB.data[i].DirName );
-		  console.log(dataDB.data[i]);
-      }
+    //   let menu = [];
+    //   for( let i in dataDB.data )
+    //   {
+    //       menu.push( dataDB.data[i].DirName );
+	// 	  console.log(dataDB.data[i]);
+    //   }
 	  
-      resolve(menu);
+    //   resolve(menu);
+      resolve(dataDB.data);
   });
   
 }

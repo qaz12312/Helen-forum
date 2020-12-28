@@ -94,11 +94,11 @@ async function initial(res, rej){
     // no Front Text
     // sessionStorage.setItem("Helen-keepDir", "尬意");
     // test End
-
+    
     var keepDir= sessionStorage.getItem("Helen-keepDir");
     $(".tabContent").find("h2").text(keepDir);
     $(".tabContent").find("p").text("收藏目錄 > "+ keepDir);
-
+    console.log(keepDir)
     let cmd = {};
     cmd["act"] = "showArticleInDir";
     cmd["account"] = sessionStorage.getItem("Helen-userID");
