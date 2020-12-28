@@ -13,52 +13,11 @@
 <!--jQuery要在ajax上面(好像是)-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script><!-- drownlist edit -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>drownlist edit -->
 <script src="http://www.jq22.com/demo/colpick-jQuery-Color-Picker-master/js/colpick.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
 
-<style>
-    .selectOption{
-        width: 100%;
-    }
-    .classification{
-        border: 0px;
-        width: 30%;
-        padding: 3px 7px 3px 7px;
-        margin-right: 5%;
-        margin-bottom: 2%;
-        font-size: inherit;
-      }
-
-    .input-file-container {
-        position: relative;
-      } 
-      .js .input-file-trigger {
-        display: block;
-        padding: 10px 10px 10px 10px;
-        background: #7c838f;
-        color: whitesmoke;
-        font-size: 1em;
-        transition: all .4s;
-        cursor: pointer;
-      }
-      .js .input-file {
-        width: 10px;
-        position: absolute;
-        top: 0; left: 0;
-        opacity: 0;
-        /*padding: 14px 0;*/
-        cursor: pointer;
-      }
-      .js .input-file:hover + .input-file-trigger,
-      .js .input-file:focus + .input-file-trigger,
-      .js .input-file-trigger:hover,
-      .js .input-file-trigger:focus {
-        background: #545871;
-        color: #e0d5d5;
-      }
-</style>
 </head>
 
 <body>
@@ -86,7 +45,7 @@
             </li>
             <li style="padding-left: 12px;">    
                 <a href="../HTMLs/home.html">
-                    <img class= "barLogo" src="../imgs/logo.png" alt="Helen">
+                    <img class= "barLogo" src="../Imgs/logo.png" alt="Helen">
                     Helen
                 </a>
             </li>
@@ -155,14 +114,7 @@
               <span id="pwMsg" disabled=false></span>
             </div>
           </div>
-          <div class="InputWrap2" id="InputWrap2" style="display: none;">
-            <div row>
-              <input type="text" id="validatePW" placeholder="請輸入新密碼" >
-              <span id="checkPw" disabled=false></span>
-              <input type="text" id="validatePW" placeholder="確認密碼" >
-              <span id="checkPw" disabled=false></span>
-            </div>
-          </div>
+         
          
           </div>
           <br>
@@ -179,7 +131,6 @@
   </script>
 </body>
 
-
-<script src="../JSs/PersonalProfile.js"></script>
 <script src="../JSs/bar.js"></script>
+<script src="../JSs/PersonalProfile.js"></script>
 </html>
