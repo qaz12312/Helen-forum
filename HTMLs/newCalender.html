@@ -156,16 +156,25 @@
             <tr>
                 <td>標題&nbsp;</td>
                 <td>
-                    <input type="text" id= "articleTitle" class="textInput"
+                    <input type="text" id= "activityTitle" class="textInput"
                     name= "title" placeholder="Input title" required>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div style="text-align:left;">
+                         <input style="size:200ch;"type="checkbox" id="allday" name="vehicle1" value="false">全天 
+                        </div>
+                   
                 </td>
             </tr>
             <tr>
                 <td>開始時間&nbsp;</td>
                 <td style="text-align: left">
                     <div class="selectOption">
-                            <input type="date">
-                            <input type="time">
+                            <input type="date" id= "activityStartDate">
+                            <input type="time" id= "activityStartTime">
                     </div>
                 </td>
             </tr>
@@ -174,8 +183,8 @@
                 <td>結束時間&nbsp;</td>
                 <td style="text-align: left">
                     <div class="selectOption">
-                            <input type="date">
-                            <input type="time">
+                            <input type="date" id= "activityEndDate">
+                            <input type="time" id= "activityEndTime">
                     </div>
                 </td>
             </tr>
@@ -183,17 +192,17 @@
             <tr>
                 <td>內容&nbsp;</td>
                 <td>
-                    <textarea type="text" id= "articleContent" style="height: 200px;"></textarea>
+                    <textarea type="text" id= "activityContent" style="height: 200px;"></textarea>
                 </td>
             </tr>
             <tr>
                     <td>
-                        <button type="button" class="btn" id= "cancelPublish">
+                        <button type="button" class="btn" id= "cancelActivity">
                             <span class="glyphicon glyphicon-remove"></span> 取消
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-success" id= "publishBtn">
+                        <button type="button" class="btn btn-success" id= "newActivity">
                             <span class="glyphicon glyphicon-open"></span> 發佈
                         </button>
                     </td>
