@@ -13,7 +13,7 @@
         dataDB.info = "success to verify"
         dataDB.data = ""
     否則
-        dataDB.errorCode = "fail to verify" / "fail to verify.You need to go to forgetPassword Page again."
+        dataDB.errorCode = "fail - address has expired." / "fail - No verification code entered." / "fail to verify.You need to go to forgetPassword Page again."
         dataDB.data = ""
     */
     switch($input['option']){
@@ -33,10 +33,10 @@ function verifyPwd($input){
             $rtn = successCode("success to verify");
             echo json_encode($rtn);
         }else{
-            errorCode("fail to verify");
+            errorCode("fail - address has expired.");
         }
     }else{
-        errorCode("fail to verify");
+        errorCode("fail - No verification code entered.");
     }
 }
 function changePwd($input){

@@ -836,13 +836,8 @@ function getKeepMenu( resolve, reject )
 
             });
         }
-
-        let menu = [];
-        for( let i in dataDB.data )
-        {
-            menu.push( dataDB.data[i].DirName );
-        }
-        resolve(menu);
+        
+        resolve(dataDB.data);
     });
 }
 
