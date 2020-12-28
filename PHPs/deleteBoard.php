@@ -5,21 +5,20 @@
     cmd["act"] = "deleteBoard";
     cmd["boardName"] =  "BoardName";
 
-    後端 to 前端
+    後端 to 前端:
+    dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.status = true
         dataDB.info = ""
         dataDB.data= "Successfully deleted this board."
-    否則 status = false:
-        dataDB.status = false
+    否則
         dataDB.errorCode = "This board doesn't exist." / "Failed to delete,Database exception."
         dataDB.data = ""
     */
     function doDeleteBoard($input)
     {
         global $conn;
-        $sql = "SELECT `BoardName` FROM `Board` NATURAL JOIN `Users`  WHERE `BoardName`=?";
+        $sql = "SELECT `BoardName` FROM `Board` NATURAL JOIN `Users` WHERE `BoardName`=?";
         $arr = array($input['boardName']);
 		$result = query($conn,$sql,$arr,"SELECT");
 		$resultCount = count($result);

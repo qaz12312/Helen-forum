@@ -7,6 +7,7 @@
 	cmd["articleID"] = 1;
 
 	後端 to 前端:
+	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
 		dataDB.info = "Successfully added this heart. / Successfully deleted this heart."

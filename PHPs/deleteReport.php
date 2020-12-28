@@ -10,11 +10,9 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
     若 status = true:
-        dataDB.status = true
 		dataDB.info = "Successfully canceled this report." / "Successfully deleted this article which you report."
 		dataDB.data = ""
-    否則 status = false:
-        dataDB.status = false
+    否則
 		dataDB.errorCode = "This article which you report doesn't exit."
 		dataDB.data = "" 
 	*/

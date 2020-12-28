@@ -3,30 +3,23 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "checkPassword";
-    cmd["account"] = "00757007"; //cmd["token"]
-    cmd["password"] = "00757007";
+    cmd["account"] = "00757003";(base64加密後) //cmd["token"]
+    cmd["password"] = "00757003";(base64加密後)
 
     後端 to 前端:
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.status = true
-        dataDB.info = ""
-        dataDB.data = "success to change the (password/nickname/color)"
-    否則 status = false:
-        dataDB.status = false
-        dataDB.errorCode = "Cannot find the user.Failed to Update personal information in (password/nickname/color) .You need to login again." / 
-        "Failed to Update personal information in (password/nickname/color) .You need to login again."/
+        dataDB.info = "Your password is correct"
+        dataDB.data = ""
+    否則
+        dataDB.errorCode = "Your password is wrong,you need to try again."
         dataDB.data = "" 
 	*/
-    function doCheckPassword($input){
+    function doCheckPassword($input){ //密碼是否正確
         global $conn;
-        // $token =$input['token'];
-        // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `UserID` FROM `Users` WHERE `UserID`=? AND `Password`=?";
+        //$arr = array(base64_decode($input['account']),base64_decode($input['password']) );
         $arr = array($input['account'],$input['password']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
