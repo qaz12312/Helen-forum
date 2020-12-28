@@ -36,7 +36,7 @@ $("#publishBtn").on("click", function(){
     if(titleStr.length< 1){
         console.log("(Title) Too short.")
         swal({
-            title: "文章標題太短嘍！",
+            title: "標題太短嘍！",
             type: "warning",
             // text: dataDB.errorCode
         }).then(( result ) => {}, ( dismiss ) => {});
@@ -44,16 +44,16 @@ $("#publishBtn").on("click", function(){
     }else if(titleStr.length> 127){
         console.log("(Title) Too long.")
         swal({
-            title: "文章標題太長嘍！",
+            title: "標題太長嘍！",
             type: "warning",
             // text: dataDB.errorCode
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
-    if(contentStr.length< 10){
+    if(contentStr.length< 1){
         console.log("(Content) Too shor.")
         swal({
-            title: "文章內容太少嘍！",
+            title: "內容太少嘍！",
             type: "warning",
             // text: dataDB.errorCode
         }).then(( result ) => {}, ( dismiss ) => {});
@@ -61,7 +61,7 @@ $("#publishBtn").on("click", function(){
     }else if(contentStr.length> 20000){
         console.log("(Content) Too long.")
         swal({
-            title: "文章內容太多嘍！",
+            title: "內容太多嘍！",
             type: "warning",
             // text: dataDB.errorCode
         }).then(( result ) => {}, ( dismiss ) => {});
