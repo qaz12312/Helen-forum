@@ -104,7 +104,6 @@ $("#newActivity").on("click", function(){
         var myStartDate = new Date(startDate);
         var myEndDate = new Date(endDate);
         var now=new Date();
-        alert(myStartDate)
         if(!(myStartDate <= myEndDate)||myEndDate<=now||myStartDate<=now){
             swal({
                 title: "日期或時間輸入錯誤請重新輸入！",
