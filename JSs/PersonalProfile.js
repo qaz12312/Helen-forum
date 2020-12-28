@@ -200,7 +200,7 @@ $( document ).ready(function()
                     });
             }
         });
-        $('#color').colpick({
+        $("#color").colpick({
             layout:'hex',
             submit:0,
             colorScheme:'dark',
@@ -232,10 +232,10 @@ $( document ).ready(function()
                         location.reload();//重整
                         }
                     })
-                // }).keyup(function(){
-                //     $(this).colpickSetColor(this.value); 
-                // });
-            }
+                }.keyup(function(){
+                    $(this).colpickSetColor(this.value); 
+                })
+            
         });
     
 
