@@ -38,7 +38,7 @@
 			// $hashTag = $input['hashTag'];
 			//$arr = array($userInfo['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
 			$arr = array($input['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
-			$result = query($conn,$sql,$arr,"INSERT");
+			query($conn,$sql,$arr,"INSERT");
 			$rtn = successCode("Successfully new the Article.",array());
 			/*
 			流水號問題!!!!!!!!!!!!!!!!!
