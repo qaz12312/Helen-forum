@@ -17,12 +17,10 @@ $( document ).ready( async function()
 
         if( $(this).text().trim() == "申請原因" )
         {
-            if( !thisContent ) thisContent = "無";
-
             swal({ 
                 title: "申請原因&emsp;<cite>" + thisTime + "</cite><br />" +
                         "<small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
-                html: escapeHtml( thisContent ).split( "\n" ).join( "<br/>" ),
+                html: escapeHtml( (!thisContent) ? "無" : thisContent ).split( "\n" ).join( "<br/>" ),
                 confirmButtonText: "確定",
                 animation: false,
 
@@ -48,7 +46,9 @@ $( document ).ready( async function()
                     let cmd = {};
                     cmd[ "act" ] = "deleteApplyBoard";
                     cmd[ "account" ] = thisApplicant;
-                    cmd[ "content" ] = thisBoardName + thisContent;
+                    cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
+
+                    console.log( cmd );
                     
                     $.post( "../index.php", cmd, function( dataDB )
                     {
@@ -74,8 +74,12 @@ $( document ).ready( async function()
                                 
                             }).then((result) => {}, ( dismiss ) =>
                             {
+                                console.log(  applications[ thisApplcationID ] )
+
+                                applications.splice( thisApplcationID, 1 );
                                 thisTr.remove();
-                                delete applications[ thisApplcationID ];
+
+                                console.log( applications )
         
                                 if( applications.length == 0 )
                                 {
@@ -138,8 +142,9 @@ async function initial( res, rej )
 
             for( let i in applications )
             {
-                applications[i].boardName = applications[i].content.split( "版" )[0] + "版";
-                applications[i].content = applications[i].content.replace( applications[i].boardName, "" );
+                applications[i].boardName = applications[i].content.split( "版 " )[0] + "版";
+                applications[i].content = applications[i].content.replace( applications[i].boardName + " ", "" );
+                applications[i].boardName = applications[i].boardName.substring( 2, applications[i].boardName.length )
 
                 let oneRow = "<tr class='row'>" + 
                                     "<td class='col-md-3'>" + applications[i].account + "</td>" +
