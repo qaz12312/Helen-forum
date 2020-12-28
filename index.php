@@ -172,43 +172,42 @@
             require_once("./PHPs/removeTopArticle.php");
             doRemoveTopArticle($input);
             break;
-	case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
-		require_once("./PHPs/showAllUser.php");
-		doShowAllUser($input);
-        break;
-    case "checkPassword":	
-        require_once("./PHPs/checkPassword.php");
-        doCheckPassword($input);
-        break;
-    case "showApplyBoard":	
-        require_once("./PHPs/showApplyBoard.php");
-        doShowApplyBoard($input);
-        break;
-    case "newApplyBoard":	
-        require_once("./PHPs/newApplyBoard.php");
-        doNewApplyBoard($input);
-        break;
-    case "deleteApplyBoard":	
-        require_once("./PHPs/deleteApplyBoard.php");
-        doDeleteApplyBoard($input);
-        break;
-    case "newActivityInCanlendar":	
-        require_once("./PHPs/newActivityInCanlendar.php");
-        doNewActivityInCanlendar($input);
-        break;
-    case "checkInCanlendarList":	
-        require_once("./PHPs/checkInCanlendarList.php"); //審核活動
-        doCheckInCanlendarList($input);
-        break;
-    case "showUncheckCanlenderList":	
-        require_once("./PHPs/showUncheckCanlenderList.php"); //顯示審核活動
-        doShowUncheckCanlenderList($input);
-        break;
-    case "showOnCalendar":	
-        require_once("./PHPs/showOnCalendar.php"); //顯示審核活動
-        doShowOnCalendar($input);
-        break;
-
+        case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
+            require_once("./PHPs/showAllUser.php");
+            doShowAllUser($input);
+            break;
+        case "checkPassword": // 確認密碼是否正確	
+            require_once("./PHPs/checkPassword.php");
+            doCheckPassword($input);
+            break;
+        case "showApplyBoard":	
+            require_once("./PHPs/showApplyBoard.php");
+            doShowApplyBoard($input);
+            break;
+        case "newApplyBoard":	
+            require_once("./PHPs/newApplyBoard.php");
+            doNewApplyBoard($input);
+            break;
+        case "deleteApplyBoard":	
+            require_once("./PHPs/deleteApplyBoard.php");
+            doDeleteApplyBoard($input);
+            break;
+        case "newActivityInCanlendar":	
+            require_once("./PHPs/newActivityInCanlendar.php");
+            doNewActivityInCanlendar($input);
+            break;
+        case "checkInCanlendarList": //審核活動
+            require_once("./PHPs/checkInCanlendarList.php"); 
+            doCheckInCanlendarList($input);
+            break;
+        case "showUncheckCanlenderList": //顯示審核活動	
+            require_once("./PHPs/showUncheckCanlenderList.php"); 
+            doShowUncheckCanlenderList($input);
+            break;
+        case "showOnCalendar": //顯示審核活動	
+            require_once("./PHPs/showOnCalendar.php");
+            doShowOnCalendar($input);
+            break;
     }
     $conn = null;
 ?>
