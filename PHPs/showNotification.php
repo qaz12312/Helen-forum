@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "showNotice";
-	cmd["account"] = "00757007"; //cmd["token"]
+	cmd["account"] = "00757007";
 
     後端 to 前端:
     dataDB = JSON.parse(data);
@@ -21,12 +21,7 @@
 	*/
     function doShowNotification($input){
         global $conn;
-        // $token =$input['token'];
-        // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-        $sql="SELECT `Times`,`Content` FROM `Notice` WHERE `UserID`=? order by `Times`DESC ";
+        $sql="SELECT `Times`,`Content` FROM `Issue` WHERE `UserID`=? AND `Type`=2 order by `Times`DESC ";
         $arr = array($input['account']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
