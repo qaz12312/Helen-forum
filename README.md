@@ -9,7 +9,10 @@
 
 ### 有問題可以先上[Trello](https://trello.com/b/2amh64r0/helen)相關連結的`後端問題集`看~
 
-
+### 紀錄dir
++ old version 12-14 : 12/14日完成的
++ PHPs 12-27 : 目前在master的版本，最穩定版
++ add all : 加入token(account、permission、登入ip、操作紀錄檔) + (加解密account、password)
 
 ## 加密
 ```
@@ -26,8 +29,3 @@ $str = accountID."010helen";
 $token = base64_encode($str);
 $_SESSION[$token] = array("account"=>accountID,"permission"=>1/2/3,"ip"=>ip位址,"log"=>log操作紀錄);
 ```
-
-### 紀錄dir
-+ old version 12-14 : 12/14日完成的
-+ PHPs : 目前在master的版本，最穩定版，12/17日完成的
-+ add token : (account、permission、登入ip、操作紀錄檔) + (加解密account、password)
