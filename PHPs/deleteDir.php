@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "deleteDir";
-    cmd["account"] = "00757007";
+    cmd["account"] = "00757007"; //cmd["token"]
     cmd["dirName"] ="我喜歡的";
 
     後端 to 前端
@@ -20,6 +20,11 @@
     function doDeleteDir($input)
     {
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql = "SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
         $arr = array($input['dirName'], $input['account'] );
 		$result = query($conn,$sql,$arr,"SELECT");

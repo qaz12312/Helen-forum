@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "sortInMenu";
-    cmd["account"] = "00757033";
+    cmd["account"] = "00757033"; //cmd["token"]
     cmd["sort"] = "time/hot/collect/comment";
 
     後端 to 前端:
@@ -29,6 +29,11 @@
     */ 
     function doSortMenu($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect" || $input['sort'] == "comment" ) {
             if ($input['sort'] == "time") {
                 $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `Times` DESC";

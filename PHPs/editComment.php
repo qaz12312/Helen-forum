@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "editComment"
-    cmd["account"] = "AuthorID"
+    cmd["account"] = "AuthorID" //cmd["token"]
     cmd["detail"] = "Content"
     cmd["articleID"] ="ArticleID"
     cmd["floors"] = "Floor"

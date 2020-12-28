@@ -1,4 +1,3 @@
-<!-- <?php include '../sendemail.php'; ?> -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -129,29 +128,11 @@
     </div>
         </div>
     <!--contact section end-->
-
     <script type="text/javascript">
     if(window.history.replaceState){
       window.history.replaceState(null, null, window.location.href);
     }
-
-    /*$("#verify").click(function () {  //有js檔
-        let cmd = {};
-            cmd["act"] = "sendMail";
-            cmd["account"] = act;
-            $.post("../index.php", cmd, function (data) {
-                dataDB = JSON.parse(data);
-                if(dataDB.status == false){
-                    $(".showAlert").text(dataDB.errorCode);
-                }
-                else{
-                    $(".showAlert").text(dataDB.data); 
-                }
-            });
-    });
-    setTimeout("document.getElementById('alert').innerHTML=html",5000);*/
-
-
+    /*setTimeout("document.getElementById('alert').innerHTML=html",5000);*/
     </script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="../JSs/forgetPassword.js"></script>

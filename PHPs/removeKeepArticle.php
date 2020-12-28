@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "removeKeepArticle";
-    cmd["account"] = "00857210";
+    cmd["account"] = "00857210"; //cmd["token"]
     cmd["articleID"] = "1";
     cmd["dirName"] ="旅遊景點";
 		
@@ -19,6 +19,11 @@
      */
     function doRemoveKeepArticle($input){ // 將文章從收藏資料夾移除
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=?";
         $arr = array($input['articleID'], $input['account'], $input['dirName']);
         $result = query($conn,$sql,$arr,"SELECT");

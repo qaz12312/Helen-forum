@@ -3,7 +3,7 @@
 	前端 to 後端:
 		let cmd = {};
 		cmd["act"] = "newComment";
-		cmd["account"] = "00857210";
+		cmd["account"] = "00857210"; //cmd["token"]
 		cmd["content"] = "Content";
 		cmd["articleID"] = 1;	
 	後端 to 前端
@@ -22,6 +22,11 @@
 */
 	function doNewComment($input){ 
 		global $conn;
+		// $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
 		$sql="SELECT max(`Floor`) FROM `Comments`  WHERE `ArticleID`=?";
 		$arr = array($input['articleID']);
 		$result = query($conn,$sql,$arr,"SELECT");

@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "sendReport";
-	cmd["account"] = "00757007";
+	cmd["account"] = "00757007"; //cmd["token"]
 	cmd["reason"] = "Reason";
 	cmd["articleID"] = articleID;	
 	
@@ -22,6 +22,11 @@
     */
     function doSendReport($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="INSERT INTO `Report`(`UserID`,`ArticleID`,`Reason`) VALUES(?,?,?)";
         $arr = array($input['account'], $input['articleID'], $input['reason']);
         query($conn,$sql,$arr,"INSERT");

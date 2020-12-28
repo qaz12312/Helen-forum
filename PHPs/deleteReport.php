@@ -4,7 +4,7 @@
 	let cmd = {};
 	cmd["act"] = "deleteReport";
 	cmd["isPass"] = true / false; (通過審核/審核不通過)
-    cmd["articleID"] = "1";
+    cmd["articleID"] = 1;
 
 	後端 to 前端:
 	dataDB = JSON.parse(data);

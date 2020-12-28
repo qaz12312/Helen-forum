@@ -3,7 +3,7 @@
         let cmd = {};
         cmd["act"] = "editBoard";
         cmd["boardName"] = "BoardName"
-        cmd["account"] = "UserID"
+        cmd["account"] = "UserID" //cmd["token"]
         cmd["rule"] = "Rule"
     */ 
     /* 後端 to 前端
@@ -19,6 +19,11 @@
          */
     function doEditBoard($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `BoardName` FROM `Board` WHERE `BoardName`=? AND `UserID`=? ";  
         $arr = array($input['boardName'], $input['account']);
 		$result = query($conn,$sql,$arr,"SELECT");

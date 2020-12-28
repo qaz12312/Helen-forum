@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "deleteArticle";
-	cmd["account"] = "00757007";
+	cmd["account"] = "00757007"; //cmd["token"]
     cmd["articleID"] = ArticleID;
 		
     後端 to 前端
@@ -20,6 +20,11 @@
     */
     function doDeleteArticle($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `ArticleID` FROM `Article` NATURAL JOIN `Users`  WHERE `ArticleID`=? AND `AuthorID`=?";  
         $arr = array($input['articleID'], $input['account']);
 		$result = query($conn,$sql,$arr,"SELECT");

@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "deleteApplyBoard";
-	cmd["account"] = "00757033";
+	cmd["account"] = "00757033"; //cmd["token"]
     cmd["content"] = "00757033";
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -19,6 +19,11 @@
 	*/
     function doDeleteApplyBoard($input){ //審核被檢舉文章
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=? AND`Content`=?";  
         $arr = array($input['account'],$input['content']);
         $result = query($conn,$sql,$arr,"SELECT");

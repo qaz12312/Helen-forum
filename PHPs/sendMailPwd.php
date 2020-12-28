@@ -37,8 +37,8 @@
         $mail->addAddress($email."@mail.ntou.edu.tw"); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
         //email內容
         $now = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i')+15, date('s'), date('m'), date('d'), date('Y'))) ;	//設定過期時間
-        $token = md5($input["account"].$now);
-        $_SESSION[$token]= array("account"=>$input["account"],"time"=>$now);
+        $token = md5($input['account'].$now);
+        $_SESSION[$token]= array("account"=>$input['account'],"time"=>$now);
 
         $mail->isHTML(true);
         $mail->Subject = "=?UTF-8?B?".base64_encode('Helen海大討論區')."?=";

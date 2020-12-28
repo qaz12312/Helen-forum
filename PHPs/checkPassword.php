@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "checkPassword";
-    cmd["account"] = "00757007";
+    cmd["account"] = "00757007"; //cmd["token"]
     cmd["password"] = "00757007";
 
     後端 to 前端:
@@ -21,6 +21,11 @@
 	*/
     function doCheckPassword($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `UserID` FROM `Users` WHERE `UserID`=? AND `Password`=?";
         $arr = array($input['account'],$input['password']);
         $result = query($conn,$sql,$arr,"SELECT");

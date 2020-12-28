@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
 	cmd["act"] = "clickNotice";
-    cmd["account"] = "00757033";
+    cmd["account"] = "00757033"; //cmd["token"]
     cmd["detail"] = "Content";
         
     後端 to 前端
@@ -20,6 +20,11 @@
     */
     function doClickNotice($input){ //user點通知->刪除此則通知
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `Times` FROM `Notice` Where `UserID`=? AND `Content`=?";  
         $arr = array($input['account'], $input['detail']);
 		$result = query($conn,$sql,$arr,"SELECT");

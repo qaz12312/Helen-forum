@@ -4,7 +4,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "editDir";
-	cmd["account"] = "UserID";
+	cmd["account"] = "UserID"; //cmd["token"]
 	cmd["old"] ="我喜歡的"; (oldDirName)
 	cmd["new"] ="我不喜歡的"; (newDirName)
 
@@ -21,6 +21,11 @@
 	*/
     function doEditDir($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";  
         $arr = array($input['old'], $input['account']);
 		$result = query($conn,$sql,$arr,"SELECT");

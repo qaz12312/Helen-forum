@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "newApplyBoard";
-	cmd["account"] = "00757033";
+	cmd["account"] = "00757033"; //cmd["token"]
 	cmd["content"] ="我想要成為美食版版主";
 
 	後端 to 前端
@@ -17,6 +17,11 @@
 	*/
     function doNewApplyBoard($input){
 		global $conn;
+		// $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
 		$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ?";
 		$arr = array($input['account'], $input['content']);
 		$result = query($conn,$sql,$arr,"SELECT");

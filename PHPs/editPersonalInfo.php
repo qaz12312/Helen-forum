@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "editPersonalInfo";
     cmd["option"] = "password" / "nickname" / "color";
-    cmd["account"] = "00757007";
+    cmd["account"] = "00757007"; //cmd["token"]
     cmd["new"] = "987654321" / "beauty cook" / "\#028d5f";
 
     後端 to 前端:
@@ -37,6 +37,11 @@
 <?php
     function doChangeInfo($input,$optionAttr){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `UserID` FROM `Users` WHERE `UserID`=?";
         $arr = array($input['account']);
         $result = query($conn,$sql,$arr,"SELECT");

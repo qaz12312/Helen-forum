@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "newArticle";
-	cmd["account"] = "AuthorID";
+	cmd["account"] = "AuthorID"; //cmd["token"]
 	cmd["blockName"] ="美食";
 	cmd["title"] = "Title";
 	cmd["content"] = "Content"
@@ -28,7 +28,12 @@
 		dataDB.data = ""
 	*/
     function doNewArticle($input){
-        global $conn;
+		global $conn;
+		// $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
         
 		//$hashTag = json_encode($input['hashTag']);

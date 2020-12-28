@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "sortInBoard";
-    cmd["account"]="00757033";
+    cmd["account"]="00757033"; //cmd["token"]
     cmd["boardName"] = "美食";
     cmd["sort"] = "time/hot/collect/comment";
 
@@ -30,6 +30,11 @@
     */
     function doSortBoard($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect" || $input['sort'] == "comment") {
             if ($input['sort'] == "time") {
                 $sql="SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = ? ORDER BY `Times` DESC";

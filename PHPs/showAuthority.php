@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
     cmd["act"] = "showAuthority";
-    cmd["account"] = "00757007";
+    cmd["account"] = "00757007"; //cmd["token"]
     
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -16,6 +16,11 @@
 	*/
     function doShowAuthority($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $rtn = array();
         $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`=? AND `UserID` not in ('admin')";
         $arr = array($input['account']);

@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "showArticleComment";
     cmd["articleID"] = "ArticleID";
-    cmd["account"] = "00757003";    // 訪客不用傳
+    cmd["account"] = "00757003";    // 訪客不用傳 //cmd["token"]
     後端 to 前端
     dataDB = JSON.parse(data);
     dataDB.status
@@ -40,6 +40,11 @@
     */
     function doShowArticleComment($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times`,`AuthorID` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?";
         $arr = array($input['articleID']);
         $result = query($conn,$sql,$arr,"SELECT");

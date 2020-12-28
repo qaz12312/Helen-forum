@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "showArticleInDir";
-    cmd["account"] = "userid";
+    cmd["account"] = "userid"; //cmd["token"]
     cmd["dirName"] = "abc";
 
     後端 to 前端
@@ -22,6 +22,11 @@
     */
     function doShowArticleInDir($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `Title`,`ArticleID`  FROM `KeepDir` NATURAL JOIN `FollowKeep` NATURAL JOIN`Article` WHERE `UserID`=? AND`DirName`=?";
         $arr = array($input['account'], $input['dirName']);
         $result = query($conn,$sql,$arr,"SELECT");

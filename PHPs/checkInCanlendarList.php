@@ -22,6 +22,11 @@
 	*/
     function doCheckInCanlendarList($input){ //審核被檢舉文章
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `Title`,`Start`,`END` FROM `Calendar` WHERE `Title`=? AND `Start`=? AND `END`=? ";  
             $arr = array($input['title'],$input['startTime'],$input['endTime']);
             $result = query($conn,$sql,$arr,"SELECT");

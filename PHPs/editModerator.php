@@ -5,7 +5,7 @@
         前端 to 後端:
         let cmd = {};
         cmd["act"] = "editModerator";
-        cmd["account"] = "UserID";
+        cmd["account"] = "UserID"; //cmd["token"]
         cmd["oldBoardName"] = "BoardName";
         cmd["newBoardName"] = "BoardName";
 

@@ -7,7 +7,7 @@
 let cmd = {};
 cmd["act"] = "searchBoard";
 cmd["searchBoard"] = "美食";
-cmd["account"]="00757033";
+cmd["account"]="00757033"; //cmd["token"]
 cmd["searchWord"] = ["好吃"];
 cmd["sort"] = "time/hot/collect/comment";
 
@@ -30,6 +30,11 @@ dataDB.data = ""
 */
 function doSearchBoard($input){
     global $conn;
+    // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
     $sql_check="SELECT `TopArticleID`,`Rule` FROM `Board`  WHERE `BoardName`= ?";
     $arr = array($input['searchBoard']);
     $resultBoard = query($conn,$sql_check,$arr,"SELECT");

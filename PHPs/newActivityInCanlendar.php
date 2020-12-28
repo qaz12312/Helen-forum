@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "newActivityInCanlendar";
-	cmd["account"] = "00757033";
+	cmd["account"] = "00757033"; //cmd["token"]
     cmd["title"] = "聖誕節";
     cmd["startTime"] = "2020/12/25";
     cmd["endTime"] = "202012/25";
@@ -19,7 +19,12 @@
 		dataDB.data = "";
 	*/
     function doNewActivityInCanlendar($input){
-		global $conn;
+        global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `IsValid` FROM `Calendar`WHERE `Title`=? AND `Start`=? AND `END`=?";
         $arr = array($input['title'],$input['startTime'],$input['endTime']);
         $result = query($conn,$sql,$arr,"SELECT");

@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "deleteComment";
-    cmd["account"] = "00757007";
+    cmd["account"] = "00757007"; //cmd["token"]
     cmd["articleID"] = ArticleID;
     cmd["floors"] = Floor;
 
@@ -20,6 +20,11 @@
     */
     function doDeleteComment($input){
         global $conn;
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         $sql="SELECT `ArticleID` FROM `Comments` NATURAL JOIN `Users`  WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";  
         $arr = array($input['articleID'], $input['account'], $input['floors']);
 		$result = query($conn,$sql,$arr,"SELECT");

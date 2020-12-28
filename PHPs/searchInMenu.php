@@ -3,7 +3,7 @@
     /* 前端 to 後端:
     let cmd = {};
     cmd["act"] = "searchMenu";
-    cmd["account"]="00757033";
+    cmd["account"]="00757033"; //cmd["token"]
     cmd["searchWord"] = ["美食"];
     cmd["sort"] = "time/hot/collect/comment";
 
@@ -29,6 +29,11 @@
     function doSearchMenu($input){
         global $conn;
         //搜尋標題+內容
+        // $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
         if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect" || $input['sort'] == "comment") {
             $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` FROM HomeHeart NATURAL JOIN HomeKeep";
 			if ($input['sort'] == "comment") {

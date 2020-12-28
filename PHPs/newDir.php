@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "newDir";
-	cmd["account"] = "UserID";
+	cmd["account"] = "UserID"; //cmd["token"]
 	cmd["dirName"] ="搞笑";
 
 	後端 to 前端
@@ -17,6 +17,11 @@
 	*/
     function doNewDir($input){
 		global $conn;
+		// $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
 		$sql="SELECT `DirName` FROM `KeepDir` WHERE `UserID` = ? AND `DirName` = ?";
 		$arr = array($input['account'], $input['dirName']);
 		$result = query($conn,$sql,$arr,"SELECT");

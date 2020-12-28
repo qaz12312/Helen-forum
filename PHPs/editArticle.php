@@ -4,7 +4,7 @@
 	let cmd = {};
 	cmd["act"] = "editArticle";
 	cmd["articleID"] = ArticleID;
-	cmd["account"] = "AuthorID";
+	cmd["account"] = "AuthorID"; //cmd["token"]
 	cmd["newBlockName"] ="美食"; // 使用者想改版
 	cmd["title"] = "Title";
 	cmd["content"] = "Content";
@@ -24,6 +24,11 @@
 	*/
     function doEditArticle($input){ 
 		global $conn;    
+		// $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
 		$sql="SELECT `ArticleID` FROM `Article` JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `ArticleID`=? AND `AuthorID`=?";  
 		$arr = array($input['articleID'], $input['account']);
 		$result = query($conn,$sql,$arr,"SELECT");

@@ -5,7 +5,7 @@
 	cmd["act"] = "editTopArticle";
 	cmd["articleID"] = 1;
 	cmd["boardName"] = "美食";
-	cmd["account"] = "admin";
+	cmd["account"] = "admin"; //cmd["token"]
 	
     後端 to 前端:
 	dataDB.status
@@ -21,6 +21,11 @@
     */
     function doEditTopArticle($input){
 		global $conn;
+		// $token =$input['token'];
+        // if(!isset($_SESSION[$token])){
+		// 	errorCode("token doesn't exist.");
+        // }else{
+		// 	$userInfo = $_SESSION[$token];
 		$sql="SELECT `BoardName` FROM `Board` WHERE `BoardName`=? AND `UserID`=? ";  
 		$arr = array($input['boardName'], $input['account']);
 		$result = query($conn,$sql,$arr,"SELECT");
