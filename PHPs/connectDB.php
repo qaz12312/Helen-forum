@@ -1,9 +1,9 @@
 <?php
     function connSql(){    
         $serverName = "localhost";
-        $username = "root";
-        $password = '';
-        $databaseName = "new";
+        $userName = "root";
+        $password = "";
+        $databaseName = "test";
         //$serverName = "helendb.chw8qvtxo3mu.us-east-1.rds.amazonaws.com";
         //$userName = "helen";
          //$password = "ynVdCeYKBrDJ";

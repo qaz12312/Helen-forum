@@ -183,11 +183,11 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
-    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
-    ( error ) =>
-    {
-        res(1);
-    });
+    //await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    //( error ) =>
+    //{
+    //    res(1);
+    //});
 
     let cmd = {};
     cmd[ "act" ] = "showReport";

@@ -113,7 +113,7 @@ $("#publishBtn").on("click", function(){
 
 $("#cancelPublish").on("click", function(){
     console.log("Back To HOME Page.")
-    location.href =  "../home.html";
+    location.href =  "../HTMLs/home.html";
 })
 
 $("#inputHashtag").keypress(function (event){
@@ -198,8 +198,8 @@ async function initial(res, rej){
                 //從後端拿資料
                 $("#chooseBoard").find("option[text= '" + article.blockName+ "版']").attr("selected", true);
                 //依 text 為"看版名(美食版)"的項選中
-                $("#articleTitle").val()= article.title;
-                $("#articleContent").val()= article.content;
+                $("#articleTitle").val(article.title);
+                $("#articleContent").val(article.content);
                 hashtags= article.hashtag;
                 printHashtag();
             }

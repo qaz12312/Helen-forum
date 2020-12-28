@@ -30,7 +30,10 @@
     function doNewArticle($input){
         global $conn;
         $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
-        $arr = array($input['account'], $input['title'], $input['content'], $input['picture'], $input['hashTag'], $input['blockName']);
+        
+		//$hashTag = json_encode($input['hashTag']);
+		$hashTag = $input['hashTag'];
+		$arr = array($input['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
 		$result = query($conn,$sql,$arr,"INSERT");
 		$rtn = successCode("Successfully new the Article.",array());
 		

@@ -23,14 +23,14 @@ $(document).ready(async function(){
     console.log("addPost")
     cmd={};
     cmd["account"] = sessionStorage.getItem("Helen-userID");
-    window.location.href = "./HTMLs/publishArticle.html";
+    window.location.href = "./publishArticle.html";
   });
   
   $( ".articleTitle" ).parent().click( function() 
   {
       let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
       sessionStorage.setItem( "Helen-articleID", thisArticle.articleID );
-      location.href =  "./HTMLs/post.html";
+      location.href =  "./post.html";
   });
 
   $( "button" ).has( ".glyphicon-heart" ).click( function()
@@ -592,7 +592,9 @@ function getKeepMenu(resolve,reject)
       for( let i in dataDB.data )
       {
           menu.push( dataDB.data[i].DirName );
+		  console.log(dataDB.data[i]);
       }
+	  
       resolve(menu);
   });
   

@@ -1,5 +1,5 @@
 <?php
-    require_once("./home.html");
+    #require_once("./home.html");
     require_once("./PHPs/connectDB.php");
     require_once("./PHPs/tools.php");
     require_once("./PHPs/sendNotification.php");

@@ -219,7 +219,7 @@ $("#heartBtn").click( function(){
 $("#keepBtn").click( function(){
     let keepText = $(this).find("span");
     let keepMenu = getKeepMenu();
-
+	console.log(keepMenu);
     if(keepMenu.length== 0){
         swal({
             title: "錯誤",

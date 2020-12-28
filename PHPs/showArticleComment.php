@@ -26,6 +26,7 @@
             )
         dataDB.data.title //文章的標題
         dataDB.data.content //文章的內容
+		dataDB.data.hashTag
         dataDB.data.time //文章的時間
         dataDB.data.like //文章的總愛心數
         dataDB.data.keep//文章的總收藏數
@@ -58,6 +59,8 @@
                 $arr=array();
                 // foreach($result as $row){
                 $articleID=$result[0][3];
+				//$hashTag = json_decode($result[0][7]);
+				$hashTag = "";
                 if(isset($input['account'])){
                     $userID=$input['account'];
                     $sql ="SELECT UserID FROM FollowHeart WHERE `ArticleID`=? AND`UserID`=?" ;
@@ -69,9 +72,9 @@
                     $arr = array($articleID, $input['account']);
                     $keep = query($conn,$sql,$arr,"SELECT");
                     $keepCount = count($keep);
-                    $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5],"time"=>$result[0][6],"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1],"hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
+                    $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5],"time"=>$result[0][6],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1],"hasHeart" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
                 }else
-                    $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5],"time"=>$result[0][6],"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasHeart" => "", "hasKeep" =>"");
+                    $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5],"time"=>$result[0][6],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasHeart" => "", "hasKeep" =>"");
 
                 $sql ="SELECT `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ;
                 $arr3 = array($articleID);
@@ -79,7 +82,7 @@
                 $commentCount = count($comment);
                 $arr2=array();
                 if($commentCount <= 0){
-                    $arr2[0] = successCode("No comment.",array());
+                    $arr2 = array();
                 }
                 else{
                     for($i=0;$i<$commentCount;$i++){
