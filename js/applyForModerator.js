@@ -12,17 +12,15 @@ $( document ).ready( async function()
         let thisApplicant = thisTr.find( "td:first-child" ).text();
         let thisApplcationID = thisTr[0].rowIndex;
         let thisBoardName = applications[ thisApplcationID ].boardName;
-        let thisTime = applications[ thisApplcationID ].time;
+        let thisTime = applications[ thisApplcationID ].times;
         let thisContent = applications[ thisApplcationID ].content;
 
         if( $(this).text().trim() == "申請原因" )
         {
-            if( !thisContent ) thisContent = "無";
-
             swal({ 
                 title: "申請原因&emsp;<cite>" + thisTime + "</cite><br />" +
                         "<small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
-                html: escapeHtml( thisContent ).split( "\n" ).join( "<br/>" ),
+                html: escapeHtml( (!thisContent) ? "無" : thisContent ).split( "\n" ).join( "<br/>" ),
                 confirmButtonText: "確定",
                 animation: false,
 
@@ -48,7 +46,7 @@ $( document ).ready( async function()
                     let cmd = {};
                     cmd[ "act" ] = "deleteApplyBoard";
                     cmd[ "account" ] = thisApplicant;
-                    cmd[ "content" ] = thisBoardName + thisContent;
+                    cmd[ "content" ] = "版主" + thisBoardName + " " + thisContent;
                     
                     $.post( "../index.php", cmd, function( dataDB )
                     {
@@ -74,13 +72,13 @@ $( document ).ready( async function()
                                 
                             }).then((result) => {}, ( dismiss ) =>
                             {
+                                applications.splice( thisApplcationID, 1 );
                                 thisTr.remove();
-                                delete applications[ thisApplcationID ];
         
                                 if( applications.length == 0 )
                                 {
                                     let emptyMessage = "<tr>" + 
-                                                            "<td colspan='4'>申請看板列表為空</td>" +
+                                                            "<td colspan='4'>申請版主列表為空</td>" +
                                                         "</tr>";
                                                         
                                     $( ".tabContent tbody" ).append( emptyMessage );
@@ -104,6 +102,7 @@ async function initial( res, rej )
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
+    cmd[ "applyFor" ] = "版主";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
@@ -129,7 +128,7 @@ async function initial( res, rej )
             if( applications.length == 0 )
             {
                 let emptyMessage = "<tr>" + 
-                                        "<td colspan='4'>申請看板列表為空</td>" +
+                                        "<td colspan='4'>申請版主列表為空</td>" +
                                     "</tr>";
                 content.append( emptyMessage );
 
@@ -138,8 +137,9 @@ async function initial( res, rej )
 
             for( let i in applications )
             {
-                applications[i].boardName = applications[i].content.split( "版" )[0] + "版";
-                applications[i].content = applications[i].content.replace( applications[i].boardName, "" );
+                applications[i].boardName = applications[i].content.split( "版 " )[0] + "版";
+                applications[i].content = applications[i].content.replace( applications[i].boardName + " ", "" );
+                applications[i].boardName = applications[i].boardName.substring( 2, applications[i].boardName.length )
 
                 let oneRow = "<tr class='row'>" + 
                                     "<td class='col-md-3'>" + applications[i].account + "</td>" +

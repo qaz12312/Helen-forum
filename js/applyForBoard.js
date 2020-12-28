@@ -12,7 +12,7 @@ $( document ).ready( async function()
         let thisApplicant = thisTr.find( "td:first-child" ).text();
         let thisApplcationID = thisTr[0].rowIndex;
         let thisBoardName = applications[ thisApplcationID ].boardName;
-        let thisTime = applications[ thisApplcationID ].time;
+        let thisTime = applications[ thisApplcationID ].times;
         let thisContent = applications[ thisApplcationID ].content;
 
         if( $(this).text().trim() == "申請原因" )
@@ -47,8 +47,6 @@ $( document ).ready( async function()
                     cmd[ "act" ] = "deleteApplyBoard";
                     cmd[ "account" ] = thisApplicant;
                     cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
-
-                    console.log( cmd );
                     
                     $.post( "../index.php", cmd, function( dataDB )
                     {
@@ -74,12 +72,8 @@ $( document ).ready( async function()
                                 
                             }).then((result) => {}, ( dismiss ) =>
                             {
-                                console.log(  applications[ thisApplcationID ] )
-
                                 applications.splice( thisApplcationID, 1 );
                                 thisTr.remove();
-
-                                console.log( applications )
         
                                 if( applications.length == 0 )
                                 {
@@ -108,6 +102,7 @@ async function initial( res, rej )
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
+    cmd[ "applyFor" ] = "看板";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
