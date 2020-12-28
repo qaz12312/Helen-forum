@@ -1,5 +1,6 @@
 let hasReport= false;
 let comments= [];
+let keepMenu= [];
 
 $(document).ready(async function(){
     barInitial();
@@ -199,15 +200,17 @@ $("#heartBtn").click( function(){
             if( $(heartText).hasClass("text-danger")){ // 沒按過愛心
                 $(heartText).removeClass("text-danger");
                 $(heartText).addClass("text-light");
-                $(this).addClass("btn-danger");
+                $(heartText).closest("button").removeClass("btn-secondary");
+                $(heartText).closest("button").addClass("btn-danger");
                 
                 var heartCount= parseInt($(heartText).eq(1).text())+ 1; // 愛心數
                 $(heartText).eq(1).html(" "+ heartCount);
             }
             else{ // 按過愛心
-                $(this).removeClass( "btn-danger" );
-                $(heartText).addClass( "text-danger" );
-                $(heartText).removeClass( "text-light" );
+                $(heartText).closest("button").removeClass("btn-danger");
+                $(heartText).closest("button").addClass("btn-secondary");
+                $(heartText).addClass("text-danger" );
+                $(heartText).removeClass("text-light" );
 
                 var heartCount= parseInt($(heartText).eq(1).text())- 1; // 愛心數
                 $(heartText).eq(1).html(" "+ heartCount);
@@ -218,8 +221,8 @@ $("#heartBtn").click( function(){
 
 $("#keepBtn").click( function(){
     let keepText = $(this).find("span");
-    let keepMenu = getKeepMenu();
-	console.log(keepMenu);
+    getKeepMenu();
+	
     if(keepMenu.length== 0){
         swal({
             title: "錯誤",
@@ -304,6 +307,7 @@ $("#keepBtn").click( function(){
     }
 });
 
+// 取得收藏目錄
 function getKeepMenu(){
     // return ["最愛", "漫威", "小說"];
 
@@ -320,10 +324,15 @@ function getKeepMenu(){
                 type: "error",
                 text: dataDB.errorCode
             }).then((result) => {}, ( dismiss ) => {} );
-            return [];
+            return;
         }
         else{
-            return dataDB.data;
+            keepMenu= [];
+            let keep= dataDB.data;
+            for(var k= 0; k< keep.length; k++){
+                keepMenu.push(keepMenu[k]);
+            }
+            return;
         }
     });
 }
