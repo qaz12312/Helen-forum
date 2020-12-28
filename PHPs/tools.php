@@ -30,7 +30,7 @@ function query($conn,$sql,$input,$option){
     }catch(PDOException $e){
         errorCode("【SQL ".$option."-execute】failed: ". $e->getMessage());
     }
-    return $stmt->fetchAll();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // function query($conn,$sql,$input,$option){
