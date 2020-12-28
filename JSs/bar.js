@@ -24,6 +24,11 @@ async function barInitial(){
         $("#menu").append("<a href=\"../HTMLs/manageBoard.html\">"+
                         "<li><h3 class=\"glyphicon glyphicon-plus\">"+
                         " A D D</h3></li></a>");
+    else if(userPermission > 0)
+        $("#menu").append("<a onclick='applyForModerator()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
+                            " 我要當版主</h3></li></a>" +
+                            "<a onclick='applyForBoard()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
+                            " 我要新增看版</h3></li></a>");
 
     // 登入/登出按紐顯示
     if(userPermission== 0){ // 訪客(登入)
@@ -228,4 +233,276 @@ function getBoards(resolve, reject){
     // boards= ["美食", "廢文", "八卦", "企鵝", "漫威", "星座", "旅遊"];
     //Test End
 
+}
+
+function applyForBoard()
+{
+    let boards = sessionStorage.getItem( "Helen-boards");
+    boards = JSON.parse( boards ); 
+    
+    let addingQueue = [];
+    let steps = [1, 2];
+
+    addingQueue.push(
+    {
+        title: "新增看板申請<br /><small>&lt;看板名稱&gt;</small>",
+        input: "text",
+        inputPlaceholder: "請輸入看板名稱(不包含「版」)...",
+        showCancelButton: true,
+        confirmButtonText: "送出",
+        cancelButtonText: "取消",
+        animation: false,
+    });
+
+    addingQueue.push(
+    {
+        title: "新增看板申請<br /><small>&lt;申請原因&gt;</small>",
+        input: "textarea",
+        inputPlaceholder: "請輸入申請原因...",
+        showCancelButton: true,
+        confirmButtonText: "送出",
+        cancelButtonText: "取消",
+        animation: false,
+    });
+
+    swal.setDefaults( { progressSteps: steps } );
+
+    swal.queue( addingQueue ).then( async ( result ) => 
+    {
+        swal.setDefaults( { progressSteps: false } );
+
+        let dup = boards.indexOf(result[0]) != -1;
+
+        while( result[0] !== false && ( result[0] === "" || result[0].includes("版") || dup ) )
+        {
+            if( result[0] === "" )
+            {
+                result[0] = await swal({
+                    title: "看板名稱不得為空",
+                    type: "warning",
+                    input: "text",
+                    inputPlaceholder: "請輸入看板名稱...",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+
+                }).then(( result ) =>
+                {
+                    return result;
+
+                }, ( dismiss ) =>
+                {
+                    return false;
+                });
+            }
+
+            if( dup )
+            {
+                result[0] = await swal({
+                    title: "看板已存在，請重新輸入",
+                    type: "warning",
+                    input: "text",
+                    inputPlaceholder: "請輸入看板名稱...",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+
+                }).then(( result ) =>
+                {
+                    return result;
+
+                }, ( dismiss ) =>
+                {
+                    return false;
+                });
+            }
+
+            if( typeof result[0] == "string" && result[0].includes("版") )
+            {
+                result[0] = await swal({
+                    title: "看板名稱不得含有「版」",
+                    type: "warning",
+                    input: "text",
+                    inputPlaceholder: "請輸入看板名稱...",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+
+                }).then(( result ) =>
+                {
+                    return result;
+
+                }, ( dismiss ) =>
+                {
+                    return false;
+                });
+            }
+
+            dup = boards.indexOf(result[0]) != -1;
+        }
+
+        if( result[0] == false ) return;
+    
+        let newBoard = result[0] + "版";
+        let cmd = {};
+        cmd[ "act" ] = "newApplyBoard";
+        cmd[ "account" ] = sessionStorage.getItem("Helen-account");
+        cmd[ "content" ] = "看板" + newBoard + " " + result[1];
+    
+        $.post( "../index.php", cmd, function(dataDB)
+        {
+            dataDB = JSON.parse(dataDB);
+    
+            if( dataDB.status == false )
+            {
+                swal({
+                    title: "申請看板失敗<br/><small>&lt;" + newBoard + "&gt;</small>",
+                    type: "error",
+                    text: dataDB.errorCode,
+                    confirmButtonText: "確定",
+    
+                }).then((result) => {}, (dismiss ) => {});
+            }
+            else
+            {
+                swal({
+                    title: "申請看板成功<br/><small>&lt;" + newBoard + "&gt;</small>",
+                    type: "success",
+                    showConfirmButton: false,
+                    timer: 1000,
+    
+                }).then((result) => {}, ( dismiss ) => {});
+            }
+        });
+
+    }, (dismiss) => {});
+}
+
+var invalidBoards = {};
+
+async function applyForModerator()
+{
+    let success;
+
+    if( $.isEmptyObject(invalidBoards))
+    {
+        let cmd = {};
+        cmd[ "act" ] = "showModerator";
+        success = await $.post( "../index.php", cmd, async function(dataDB)
+        {
+            dataDB = JSON.parse(dataDB);
+
+            if( dataDB.status == false )
+            {
+                await swal({
+                    title: "無法申請看板",
+                    type: "error",
+                    text: dataDB.errorCode,
+                    confirmButtonText: "確定",
+
+                }).then((result) => {}, ( dismiss ) => {});
+
+                return false;
+            }
+            else
+            {
+                invalidBoards = dataDB.data;
+                return true;
+            }
+        });
+    }
+
+    if( success )
+    {
+        let boards = sessionStorage.getItem( "Helen-boards");
+        boards = JSON.parse( boards ); 
+
+        let validBoards = [...boards];
+
+        for( let i in boards )
+        {
+            if( invalidBoards.find( ( element ) => element.boardName == boards[i] ) !== undefined )
+            {
+                validBoards.splice( validBoards.indexOf( boards[i]), 1 );
+            }
+        }
+        
+        if( validBoards.length == 0 )
+        {
+            await swal({
+                title: "無法申請看板",
+                type: "error",
+                text: "還沒有可申請的看板哦",
+                confirmButtonText: "確定",
+
+            }).then((result) => {}, ( dismiss ) => {});
+
+            return;
+        }
+        
+        let addingQueue = [];
+        let steps = [1, 2];
+
+        addingQueue.push(
+        {
+            title: "申請成為版主<br /><small>&lt;看板名稱&gt;</small>",
+            input: "select",
+            inputOptions: validBoards,
+            showCancelButton: true,
+            confirmButtonText: "送出",
+            cancelButtonText: "取消",
+            animation: false,
+        });
+
+        addingQueue.push(
+        {
+            title: "申請成為版主<br /><small>&lt;申請原因&gt;</small>",
+            input: "textarea",
+            inputPlaceholder: "請輸入申請原因...",
+            showCancelButton: true,
+            confirmButtonText: "送出",
+            cancelButtonText: "取消",
+            animation: false,
+        });
+
+        swal.setDefaults( { progressSteps: steps } );
+
+        swal.queue( addingQueue ).then( async ( result ) => 
+        {
+            swal.setDefaults( { progressSteps: false } );
+        
+            let newBoard = validBoards[result[0]] + "版";
+            let cmd = {};
+            cmd[ "act" ] = "newApplyBoard";
+            cmd[ "account" ] = sessionStorage.getItem("Helen-account");
+            cmd[ "content" ] = "版主" + newBoard + " " + result[1];
+        
+            $.post( "../index.php", cmd, function(dataDB)
+            {
+                dataDB = JSON.parse(dataDB);
+        
+                if( dataDB.status == false )
+                {
+                    swal({
+                        title: "申請版主失敗<br/><small>&lt;" + newBoard + "&gt;</small>",
+                        type: "error",
+                        text: dataDB.errorCode,
+                        confirmButtonText: "確定",
+        
+                    }).then((result) => {}, (dismiss ) => {});
+                }
+                else
+                {
+                    swal({
+                        title: "申請版主成功<br/><small>&lt;" + newBoard + "&gt;</small>",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 1000,
+        
+                    }).then((result) => {}, ( dismiss ) => {});
+                }
+            });
+
+        }, (dismiss) => {});
+    }
 }

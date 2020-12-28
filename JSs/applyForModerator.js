@@ -46,7 +46,7 @@ $( document ).ready( async function()
                     let cmd = {};
                     cmd[ "act" ] = "deleteApplyBoard";
                     cmd[ "account" ] = thisApplicant;
-                    cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
+                    cmd[ "content" ] = "版主" + thisBoardName + " " + thisContent;
                     
                     $.post( "../index.php", cmd, function( dataDB )
                     {
@@ -78,7 +78,7 @@ $( document ).ready( async function()
                                 if( applications.length == 0 )
                                 {
                                     let emptyMessage = "<tr>" + 
-                                                            "<td colspan='4'>申請看板列表為空</td>" +
+                                                            "<td colspan='4'>申請版主列表為空</td>" +
                                                         "</tr>";
                                                         
                                     $( ".tabContent tbody" ).append( emptyMessage );
@@ -102,7 +102,7 @@ async function initial( res, rej )
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
-    cmd[ "applyFor" ] = "看板";
+    cmd[ "applyFor" ] = "版主";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
@@ -128,7 +128,7 @@ async function initial( res, rej )
             if( applications.length == 0 )
             {
                 let emptyMessage = "<tr>" + 
-                                        "<td colspan='4'>申請看板列表為空</td>" +
+                                        "<td colspan='4'>申請版主列表為空</td>" +
                                     "</tr>";
                 content.append( emptyMessage );
 
