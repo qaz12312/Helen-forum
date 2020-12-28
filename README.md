@@ -1,6 +1,6 @@
 # Helen
 
-## 網站:[herokuapp](https://helen-ntou.herokuapp.com/index.html)
+## 網站:[herokuapp](https://helen-ntou.herokuapp.com/HTMLs/home.html)
 ## 後端door:[index.php](https://github.com/ytchao0234/softwareEngineeringProject/blob/backEnd/index.php)
 ## 記得到[Trello](https://trello.com/b/2amh64r0/helen)做紀錄
 
