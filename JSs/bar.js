@@ -352,7 +352,8 @@ function applyForBoard()
         cmd[ "act" ] = "newApplyBoard";
         cmd[ "account" ] = sessionStorage.getItem("Helen-account");
         cmd[ "content" ] = "看板" + newBoard + " " + result[1];
-    
+        cmd[ "type" ] = "board"; 
+
         $.post( "../index.php", cmd, function(dataDB)
         {
             dataDB = JSON.parse(dataDB);
@@ -448,7 +449,7 @@ async function applyForModerator()
             cmd[ "act" ] = "newApplyBoard";
             cmd[ "account" ] = sessionStorage.getItem("Helen-account");
             cmd[ "content" ] = "版主" + newBoard + " " + result[1];
-        
+            cmd[ "type" ] = "moderator"; 
             $.post( "../index.php", cmd, function(dataDB)
             {
                 dataDB = JSON.parse(dataDB);

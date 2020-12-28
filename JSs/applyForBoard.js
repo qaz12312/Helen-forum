@@ -47,7 +47,8 @@ $( document ).ready( async function()
                     cmd[ "act" ] = "deleteApplyBoard";
                     cmd[ "account" ] = thisApplicant;
                     cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
-                    
+                    cmd["type"]="board";//申請勘版
+
                     $.post( "../index.php", cmd, function( dataDB )
                     {
                         dataDB = JSON.parse( dataDB );

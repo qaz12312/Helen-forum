@@ -80,12 +80,13 @@ CREATE TABLE FollowKeep (
 	FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON UPDATE CASCADE ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
-DROP TABLE IF EXISTS Notice;
-CREATE TABLE Notice (
+DROP TABLE IF EXISTS Issue;
+CREATE TABLE Issue (
 	UserID varchar(101) NOT NULL,
 	Times datetime DEFAULT CURRENT_TIMESTAMP,
 	Content varchar(255) NOT NULL,
-	PRIMARY KEY (UserID, Times, Content),
+	Type int(2) NOT NULL,
+	PRIMARY KEY (UserID, Content),
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
@@ -95,15 +96,6 @@ CREATE TABLE KeepDir (
 	DirName varchar(255) NOT NULL,
 	PRIMARY KEY (UserID, DirName),
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
-) CHARSET=utf8mb4 ;
-
-DROP TABLE IF EXISTS Issue;
-CREATE TABLE Issue (
-	UserID varchar(101) NOT NULL,
-    Content text,
-    Times datetime DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (UserID, Times),
-    FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS Calendar;

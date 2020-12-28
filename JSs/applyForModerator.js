@@ -47,7 +47,7 @@ $( document ).ready( async function()
                     cmd[ "act" ] = "deleteApplyBoard";
                     cmd[ "account" ] = thisApplicant;
                     cmd[ "content" ] = "版主" + thisBoardName + " " + thisContent;
-                    
+                    cmd["type"]="moderator";
                     $.post( "../index.php", cmd, function( dataDB )
                     {
                         dataDB = JSON.parse( dataDB );
