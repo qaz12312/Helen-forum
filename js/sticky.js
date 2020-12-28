@@ -497,12 +497,11 @@ function forNormal( resolve, reject )
     cmd[ "act" ] = "sortInBoard";
     cmd[ "account"] = thisAccount;
     cmd[ "boardName" ] = thisBoardName;
-    cmd[ "sort" ] = ( thisSort == "熱門") ? "hot" : "time";
+    cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
 
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
-
         if( dataDB.status == false )
         {
             swal({
@@ -594,7 +593,7 @@ function forNormal( resolve, reject )
                 }
             }
 
-            if( articles.length == 0 )
+            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
             {
                 let isEmpty = "<tr>" +
                                 "<td>" +
@@ -615,7 +614,7 @@ function forSearching( resolve, reject )
     cmd[ "act" ] = "searchBoard";
     cmd[ "account"] = thisAccount;
     cmd[ "searchBoard" ] = thisBoardName;
-    cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
+    cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
     cmd[ "searchWord" ] = thisSearching.content;
     cmd[ "hashtag" ] = thisSearching.hashtag;
 
@@ -716,7 +715,7 @@ function forSearching( resolve, reject )
                 }
             }
 
-            if( articles.length == 0 )
+            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
             {
                 let isEmpty = "<tr>" +
                                 "<td>" +
@@ -836,13 +835,8 @@ function getKeepMenu( resolve, reject )
 
             });
         }
-
-        let menu = [];
-        for( let i in dataDB.data )
-        {
-            menu.push( dataDB.data[i].DirName );
-        }
-        resolve(menu);
+        
+        resolve(dataDB.data);
     });
 }
 
