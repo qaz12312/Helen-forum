@@ -106,7 +106,7 @@ $("#publishBtn").on("click", function(){
             // ?依最新排序的首頁
             sessionStorage.setItem("Helen-act", "home");
             sessionStorage.setItem("Helen-sort", "最新");
-            location.href =  "../home.html";
+            location.href =  "../HTMLs/home.html";
         }
     })
 })
@@ -200,7 +200,7 @@ async function initial(res, rej){
                 //依 text 為"看版名(美食版)"的項選中
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
-                hashtags= article.hashtag;
+                hashtags= article.hashTag;
                 printHashtag();
             }
         })

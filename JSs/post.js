@@ -43,18 +43,24 @@ async function initial(res, rej){
         else{
             let article= dataDB.data;
             comments= article.comment;
+            var contentStr= article.content;
+            contentStr+= "<br/ >";
+            for(var i= 0; i< article.hashTag.length; i++){
+                contentStr+= "#"+ article.hashTag[i]+ " ";
+            }
 
             $(".tabContent").find("h2").text(article.title); // 文章標題
             $("#authorDiv").parent().html("<div id= \"authorDiv\" class= \"head\" style=\"float:left;\"></div>"+
                                             "&emsp;"+ article.authorNickName); // 原po暱稱
             
             $("#authorDiv").css("background-color", article.authorColor); // 原po頭像
-            $(".tabContent").find("p").text(article.content); // 文章內容
+            $(".tabContent").find("p").text(contentStr); // 文章內容
 
             let heartText= $("#heartBtn").find("span"); // Text: 愛心 & 數字
             if(article.hasLike== 1){
                 $(heartText).removeClass("text-danger");
                 $(heartText).addClass("text-light");
+                $("#heartBtn").removeClass("btn-secondary");
                 $("#heartBtn").addClass("btn-danger");
             }
             heartText.eq(1).html(" "+ article.like);
@@ -63,6 +69,7 @@ async function initial(res, rej){
             if(article.hasKeep== 1){ // 已收藏
                 $(keepText).removeClass("text-warning");
                 $(keepText).addClass("text-light");
+                $("#keepBtn").removeClass("btn-secondary");
                 $("#keepBtn").addClass("btn-warning");
             }
             keepText.eq(1).html(" "+ article.keep);
@@ -73,32 +80,23 @@ async function initial(res, rej){
 
             // 載入留言
             $("#commentTable").empty();
-            if(comments.status== false){
-                swal({
-                    title: "載入留言失敗，請稍後重試！",
-                    type: "error",
-                    text: dataDB.errorCode,
-                    animation: false
-                }).then(( result ) => {}, ( dismiss ) => {});
+        
+            if(comments.length== 0){
+                $("#commentTable").append("<tr><td colspan=\"2\" style= \"width: 750px;\">&emsp;No Comments</td></tr>");
             }
-            else{
-                if(comments.length== 0){
-                    $("#commentTable").append("<tr><td colspan=\"2\" style= \"width: 750px;\">&emsp;No Comments</td></tr>");
-                }
-                for(var i= 0; i< comments.length; i++){
-                    let oldStr= comments[i].content;
-                    var newStr= oldStr.replace(tagRe, "<a>"+ "$1"+ "</a>");
-                    
-                    let oneRow= "<tr><td rowspan=\"2\" style=\"vertical-align: top;\">"+
-                                "<div class= \"head\" style=\"background-color: "+ 
-                                comments[i].color +";\">B"+ 
-                                comments[i].floor+ "</div></td><td style=\"font-size: 15px;\">&nbsp;"+ 
-                                comments[i].nickname+ "<button type=\"button\" class=\"btn btn-dark deleteComment\">"+
-                                "<span class=\"glyphicon glyphicon-trash\"></span></button></td></tr><tr><td>"+ 
-                                newStr+ "</td></tr>";
-                    
-                    $("#commentTable").append(oneRow);
-                }
+            for(var i= 0; i< comments.length; i++){
+                let oldStr= comments[i].content;
+                var newStr= oldStr.replace(tagRe, "<a>"+ "$1"+ "</a>");
+                
+                let oneRow= "<tr><td rowspan=\"2\" style=\"vertical-align: top;\">"+
+                            "<div class= \"head\" style=\"background-color: "+ 
+                            comments[i].color +";\">B"+ 
+                            comments[i].floor+ "</div></td><td style=\"font-size: 15px;\">&nbsp;"+ 
+                            comments[i].nickname+ "<button type=\"button\" class=\"btn btn-dark deleteComment\">"+
+                            "<span class=\"glyphicon glyphicon-trash\"></span></button></td></tr><tr><td>"+ 
+                            newStr+ "</td></tr>";
+                
+                $("#commentTable").append(oneRow);
             }
         }
     });
@@ -200,15 +198,15 @@ $("#heartBtn").click( function(){
             if( $(heartText).hasClass("text-danger")){ // 沒按過愛心
                 $(heartText).removeClass("text-danger");
                 $(heartText).addClass("text-light");
-                $(heartText).closest("button").removeClass("btn-secondary");
-                $(heartText).closest("button").addClass("btn-danger");
+                $(this).removeClass("btn-secondary");
+                $(this).addClass("btn-danger");
                 
                 var heartCount= parseInt($(heartText).eq(1).text())+ 1; // 愛心數
                 $(heartText).eq(1).html(" "+ heartCount);
             }
             else{ // 按過愛心
-                $(heartText).closest("button").removeClass("btn-danger");
-                $(heartText).closest("button").addClass("btn-secondary");
+                $(this).removeClass("btn-danger");
+                $(this).addClass("btn-secondary");
                 $(heartText).addClass("text-danger" );
                 $(heartText).removeClass("text-light" );
 
@@ -269,6 +267,7 @@ $("#keepBtn").click( function(){
                         $(keepText).removeClass("text-warning");
                         $(keepText).addClass("text-light");
                         $(this).addClass("btn-warning");
+                        $(this).removeClass("btn-secondary");
 
                         var keepCount= parseInt($(keepText).eq(1).text())+ 1; // 收藏數
                         $(keepText).eq(1).html(" "+ keepCount);
@@ -297,6 +296,7 @@ $("#keepBtn").click( function(){
             }
             else{
                 $(this).removeClass("btn-warning");
+                $(this).addClass("btn-secondary");
                 $(keepText).addClass("text-warning");
                 $(keepText).removeClass("text-light");
 
@@ -349,7 +349,6 @@ $("#inputComment").keypress(function(event){
 function leaveComment(){
     let inputComment= $("#inputComment").val().trim();
     if(inputComment.length< 1){
-        console.log("(Comment) Too short.")
         swal({
             title: "留言是空的！",
             type: "warning",
@@ -357,7 +356,6 @@ function leaveComment(){
         });
         return;
     }else if(inputComment.length> 1000000){
-        console.log("(Comment) Too long.")
         swal({
             title: "留言太長嘍！",
             type: "warning",
