@@ -23,7 +23,7 @@
     $mail = new PHPMailer(true);
     $alert = '';
     $email = $input['account'];
-    $url = "http://localhost/helen/HTMLs/index"; // 前端給網址
+    $url = "https://helen-ntou.herokuapp.com/HTMLs/HelenPwd.html"; // 前端給網址
 
     try{
         $mail->isSMTP();
