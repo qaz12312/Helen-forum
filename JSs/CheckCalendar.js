@@ -19,7 +19,11 @@ $( document ).ready( async function()
 
     $( ".tabContent button" ).on( "click", function()
     {
-        let thisActivity = thisTr.find( "td:first-child" ).text();
+        let thisActivity = Object.keys( articles ).find( ( key ) => 
+        {
+            return articles[ key ][0].title == thisArticleTitle;
+        });
+
         let thisStartTime = activity[ thisActivity ].startTime;
         let thisEndTime = activity[ thisActivity ].endTime;
         let thisText = activity[ thisActivity ].text;
@@ -28,32 +32,15 @@ $( document ).ready( async function()
         {
             let reasonsQueue = [];
             let steps = [];
-            
-            for( let i in activity[ thisActivity ] )
-            {
-                reasonsQueue.push(
-                { 
-                    title: "申請原因&emsp;<cite>" + thisTitle + "</cite><br />" +
-                    "<small>&lt;時間:" + thisStartTime + "~ " + thisEndTime + "&gt;</small>"+
-                    "內容: " +thisText,
-                    confirmButtonText: "確定",
-                    cancelButtonText: "取消",
-                    animation: false,
-                });
+            swal({
+                title: "申請原因&emsp;<cite>" + thisTitle + "</cite><br />" +
+                "<small>&lt;時間:" + thisStartTime + "~ " + thisEndTime + "&gt;</small>"+
+                "內容: " +thisText,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                animation: false,
 
-                steps.push( parseInt(i) + 1 );
-            }
-
-            swal.setDefaults( { progressSteps: steps } );
-
-            swal.queue( reasonsQueue ).then( ( result ) => 
-            {
-                swal.setDefaults( { progressSteps: false } );
-
-            }, ( dismiss ) =>
-            {
-                swal.setDefaults( { progressSteps: false } );
-            });
+            }).then((result) => {}, ( dismiss ) => {});
 
         }
         else if( $(this).text().trim() == "新增活動" )
@@ -227,19 +214,25 @@ async function initial( res, rej )
             for( let i in activity )
             {
                 let oneRow = "<tr>" + 
-                                    "<td class='col-md-3'>" + activity[i].title + "</td>" +
-                                    "<td class='col-md-3'>" + activity[i].time + "</td>" +
-                                    "<td class='col-md-3'>" +
-                                    "<button type='button' class='btn btn-danger'>" +
-                                        "<span class='glyphicon glyphicon-trash'></span> 新增活動" +
-                                    "</button>" +
-                                "</td>" +
-                                "<td class='col-md-3'>" +
-                                    "<button type='button' class='btn'>" +
-                                        "<span class='glyphicon glyphicon-remove'></span> 審核失敗" +
-                                    "</button>" +
-                                "</td>" +
-                                "</tr>";
+                    "<td>" + activity[i][0].title + "</td>" +
+                    "<td>" +
+                    "<button type='button' class='btn btn-default btn-warning'>" +
+                        "<span class='glyphicon glyphicon-book'></span> 原因" +
+                    "</button>" +
+                "</td>" +
+                "<td>" +
+                    "<button type='button' class='btn btn-danger'>" +
+                        "<span class='glyphicon glyphicon-trash'></span> 刪除" +
+                    "</button>" +
+                "</td>" +
+                "<td>" +
+                    "<button type='button' class='btn'>" +
+                        "<span class='glyphicon glyphicon-remove'></span> 取消" +
+                    "</button>" +
+                "</td>" +
+                "</tr>";
+
+content.append( oneRow );
 
                 content.append( oneRow );
             }
