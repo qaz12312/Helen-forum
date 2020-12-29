@@ -503,6 +503,9 @@ async function applyForModerator()
                 }
             });
 
-        }, (dismiss) => {});
+        }, (dismiss) =>
+        {
+            swal.setDefaults( { progressSteps: false } );
+        });
     }
 }
