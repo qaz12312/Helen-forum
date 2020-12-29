@@ -5,13 +5,28 @@ $( document ).ready(async function()
 {
     // barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
-    $('.fc-event-title-container').click(function(){
-        swal({
-            title: "",
-            text: ""
-        }, ( dismiss ) => {});
-    }
-    );
+    // $('.fc-event-title-container').click(function(){
+
+    //   let thisArticleTitle = $(this).val();
+    //   alert(thisArticleTitle)
+    //   let thisActivity = Object.keys( activity ).find( ( key ) => 
+    //   {
+    //       return activity[ key ].title == thisArticleTitle;
+    //   });
+
+    //   swal({
+    //     title: thisActivity.title,
+    //     text: thisActivity.text,
+    //     type: "question",
+    //     showCancelButton: true,
+    //     confirmButtonText: "確定",
+    //     cancelButtonText: "取消",
+    //     animation: false,
+
+    // }).then(( result ) => {});  
+      
+
+    // });
     
 });
 
@@ -41,8 +56,8 @@ function initial(resolve, reject)
     //     } 
     //     else
           {
-            activity=[{"title":"test","startTime":"2020-12-05T12:00:00","endTime":"2020-12-15T15:00:00"},
-                    {"title":"test22","startTime":"2020-12-10T14:00:00","endTime":"2020-12-13T16:00:00"}]
+            activity=[{"id":1,"title":"test","startTime":"2020-12-05T12:00:00","endTime":"2020-12-15T15:00:00","text":"text"},
+                    {"id":2,"title":"test22","startTime":"2020-12-10T14:00:00","endTime":"2020-12-13T16:00:00","text":"text222"}]
                     if( $.isEmptyObject(activity) )
                     {
                         let emptyMessage = "<tr>" + 
@@ -60,14 +75,30 @@ function initial(resolve, reject)
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
                       },
-                      events: [
+                      eventClick: function(info) {
+                        let thisActivity = Object.keys( activity ).find( ( key ) => 
                         {
-                          title: activity[0].time,
-                          //url: 'http://google.com/',
-                          start: '2020-12-12',
-                          end: '2020-12-13'
-                        },
-                      ]
+                            return activity[ key ].id == info.event.id;
+                        });
+                        let startT=info.event.startStr.split(/[\T\+]/);
+                        let endT=info.event.startStr.split(/[\T\+]/);
+                        swal({
+                               title: "<cite>"+info.event.title+ "</cite><br />" +
+                               "<small>開始時間:"+startT[0]+"&emsp;"+startT[1]+"<br\>"+
+                               "結束時間:"+endT[0]+"&emsp;"+endT[1]+"<br\>"+
+                               "內容:"+activity[thisActivity].text+"<\small>",
+                               type: "info",
+                               showCancelButton: true,
+                               confirmButtonText: "確定",
+                               cancelButtonText: "取消",
+                             animation: false,
+                      
+                           }).then(( result ) => {});  
+
+                    
+                        // change the border color just for fun
+                        info.el.style.borderColor = 'red';
+                      }
                     });
                     }
 
@@ -75,9 +106,11 @@ function initial(resolve, reject)
                      for( let i in activity )
                      {
                       calendar.addEvent({
+                          id:activity[i].id,
                           title : activity[i].title, 
                           start : activity[i].startTime ,
-                          end :activity[i].endTime
+                          end :activity[i].endTime,
+                          eventContent:activity[i].text
                           }); 
         
                     //     content.append( dict );

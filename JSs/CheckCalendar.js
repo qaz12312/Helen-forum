@@ -8,7 +8,7 @@ $( document ).ready( async function()
 
     $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function()
     {
-        let thisArticleID = Object.keys( activity ).find( ( key ) => activity[ key ][0].title == $(this).text() );
+        let thisArticleID = Object.keys( activity ).find( ( key ) => activity[ key ].title == $(this).text() );
 
         if( thisArticleID != undefined )
         {
