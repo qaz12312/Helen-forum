@@ -27,6 +27,11 @@ $( document ).ready(async function()
       
 
     // });
+     $( "#newActivity" ).click( function()
+    {
+        window.location.href = "./newCalender.html";
+    });
+
     
 });
 
