@@ -14,6 +14,7 @@
     dataDB.status
     若 status = true:
         dataDB.info = ""
+        (cmd["where"] = home)
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title        //文章的標題
@@ -26,6 +27,10 @@
             dataDB.data[i].Hashtag      //文章的Hashtag
             dataDB.data[i].time         //文章的發布時間
         )
+        (cmd["where"] = board)
+        dataDB.data.articleList[i] //有i筆文章
+        dataDB.data.topArticleID   //置頂的文章
+        dataDB.data.rule           //板規
     否則
         dataDB.errorCode = "Didn't find any relational article." / "Failed to search in board."
         dataDB.data = ""
