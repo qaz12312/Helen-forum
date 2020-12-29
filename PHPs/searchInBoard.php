@@ -91,10 +91,10 @@ function doSearchBoard($input){
                         $keep = query($conn, $sql, $arr, "SELECT");
                         $keepCount = count($keep);
 
-                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID, "like" => $row[2], "keep" => $row[3], "hasLike" => ($heartCount > 0 ? 1 : 0), "hasKeep" => ($keepCount > 0 ? 1 : 0));
+                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID,"like" => $row[3], "keep" => $row[4], "hasLike" => ($heartCount > 0 ? 1 : 0), "hasKeep" => ($keepCount > 0 ? 1 : 0));
                     } 
                     else
-                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID, "like" => $row[2], "keep" => $row[3], "hasLike" => "", "hasKeep" => "");
+                        $articleList[$i] = array("title" => $row[0], "articleID" => $articleID,"like" => $row[3], "keep" => $row[4], "hasLike" => "", "hasKeep" => "");
                 }
                 $arr = array("articleList" => $articleList, "topArticleID" => $resultBoard[0][1], "rule" => $resultBoard[0][0]);
                 $rtn = successCode($arr);
