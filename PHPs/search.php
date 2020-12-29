@@ -35,13 +35,14 @@
     switch($where[0]){
         case "home": // 在首頁搜尋
             break;
-            case "board": // 板內搜尋
-                $sql = "SELECT EXISTS(SELECT 1 FROM `Board`  WHERE `BoardName`= ? LIMIT 1)";
-                $result = query($conn,$sql,array($where[1]),"SELECT");
-                if(!$result[0][0]){
-                    errorCode("This boardName: [".$where[1]."] doesn't exist");
-                }
-                break;
+        case "board": // 板內搜尋
+            $sql = "SELECT `TopArticleID`,`Rule` FROM `Board`  WHERE `BoardName`= ?";
+            $result = query($conn,$sql,array($where[1]),"SELECT");
+            if(count($result)<=0){
+                errorCode("This boardName: [".$where[1]."] doesn't exist");
+            }
+            $boardInfo = $result;
+            break;
         // case "dir": // 收藏文件中搜尋
         //     $user = $input['account'];
         //     // $token =$input['token'];
@@ -110,7 +111,7 @@
             errorCode("Don't have this option way.");
             break;
     }
-    doSearch($where[0],$sql,$orderWay,$search,empty($input['account'])== 0 ? $input['account'] : NULL);
+    doSearch($where[0],isset($boardInfo)== 1 ? $boardInfo : NULL,$sql,$orderWay,$search,empty($input['account'])== 0 ? $input['account'] : NULL);
 ?>
 <?php
 
@@ -125,7 +126,7 @@ function inputArr($times,$words,$prep=""){
     return array($arr,$idx);
 }
 
-function doSearch($where,$sql,$orderWay,$search,$user){
+function doSearch($where,$boardInfo="",$sql,$orderWay,$search,$user){
     global $conn;
     // $token = $user;
     // if(isset($_SESSION[$token])){
@@ -164,7 +165,7 @@ function doSearch($where,$sql,$orderWay,$search,$user){
             }
         }
         if($where=="board"){
-            $arr = array("articleList" => $arr, "topArticleID" => $resultBoard[0][1], "rule" => $resultBoard[0][0]);
+            $arr = array("articleList" => $arr, "topArticleID" => $boardInfo[0][1], "rule" => $boardInfo[0][0]);
         }
         $rtn = successCode("",$arr);
     }
