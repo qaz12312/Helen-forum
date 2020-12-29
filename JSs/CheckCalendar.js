@@ -182,7 +182,7 @@ async function initial( res, rej )
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
-
+        console.log(dataDB);
         if( dataDB.status == false )
         {
             swal({
