@@ -131,7 +131,7 @@ function inputArr($times,$words,$prep=""){
     return array($arr,$idx);
 }
 
-function doSearch($where,$boardInfo="",$sql,$orderWay,$search,$user){
+function doSearch($where,$boardInfo,$sql,$orderWay,$search,$user){
     global $conn;
     // $token = $user;
     // if(isset($_SESSION[$token])){
