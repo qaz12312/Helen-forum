@@ -1,7 +1,4 @@
 var userPermission= 0; // 0(訪客) 1(一般使用者) 2(版主) 3(admin)
-var canApplyModerator = false;
-var applyError = "";
-var invalidBoards = {};
 
 async function barInitial(){
     if(sessionStorage.getItem("Helen-sort")== null){
@@ -10,7 +7,6 @@ async function barInitial(){
 
     await new Promise ((resolve, reject) => {getUserInfo(resolve, reject);});
     await new Promise ((resolve, reject) => {getBoards(resolve, reject);});
-    await new Promise ((resolve, reject) => {getInvalidBoards(resolve, reject);});
     
     // 最左邊的 ham menu 初始化
     $("#menu").empty();
@@ -30,9 +26,9 @@ async function barInitial(){
                         " A D D</h3></li></a>");
     else if(userPermission > 0)
         $("#menu").append("<a onclick='applyForModerator()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
-                          " 我要當版主</h3></li></a>" +
-                          "<a onclick='applyForBoard()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
-                          " 我要新增看版</h3></li></a>");
+                            " 我要當版主</h3></li></a>" +
+                            "<a onclick='applyForBoard()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
+                            " 我要新增看版</h3></li></a>");
 
     // 登入/登出按紐顯示
     if(userPermission== 0){ // 訪客(登入)
@@ -61,32 +57,31 @@ async function barInitial(){
         $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span>"+
                             " 未登入"+
                             "</span></li>")
-        $("#userDD").append("<li class= \"divider\"></li>");
     }else{ // 一般使用者(已登入)
         $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span> "+
                             sessionStorage.getItem("Helen-nickname")+
-                            "</span></li>");
-        $("#userDD").append("<li class= \"divider\"></li>");
+                            "</span></li>")
+        $("#userDD").append("<li class= \"divider\"></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-edit\">"+
-                            "<a href=\"../HTMLs/PersonalProfile.html\"> 個人資料</a></li>");
+                            "<a href=\"../HTMLs/PersonalProfile.html\"> 個人資料</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-pencil\">"+
-                            "<a href=\"../HTMLs/publishArticle.html\"> 發佈新文章</a></li>");
+                            "<a href=\"../HTMLs/publishArticle.html\"> 發佈新文章</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-star-empty\">"+
-                            "<a href=\"../HTMLs/CollectionCatalog.html\"> 我的收藏</a></li>");
+                            "<a href=\"../HTMLs/CollectionCatalog.html\"> 我的收藏</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-time\">"+
-                            "<a href=\"../HTMLs/PostingRecord.html\"> 發文紀錄</a></li>");
+                            "<a href=\"../HTMLs/PostingRecord.html\"> 發文紀錄</a></li>")
 
         if(userPermission>= 2){ // 版主
             $("#userDD").append("<li class= \"glyphicon glyphicon-alert\">"+
-                                "<a href=\"../HTMLs/report.html\"> 檢舉區</a></li>");
+                                "<a href=\"../HTMLs/report.html\"> 檢舉區</a></li>")
         }
-        if(userPermission>= 3){ // admin
+        if(userPermission>= 3){
             $("#userDD").append("<li class= \"glyphicon glyphicon-th-list\">"+
-                                "<a href=\"../HTMLs/manageBoard.html\"> 管理看版</a></li>");
+                                "<a href=\"../HTMLs/manageBoard.html\"> 管理看版</a></li>")
             $("#userDD").append("<li class= \"glyphicon glyphicon-king\">"+
-                                "<a href=\"../HTMLs/moderator.html\"> 管理版主</a></li>");
+                                "<a href=\"../HTMLs/moderator.html\"> 管理版主</a></li>")
             $("#userDD").append("<li class= \"glyphicon glyphicon-bullhorn\">"+
-                                "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>");
+                                "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>")
         }
     }
 }
@@ -130,7 +125,7 @@ function setSearchData(){
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if(sessionStorage.getItem("Helen-boardName")== null){
-        location.href= "../HTMLs/home.html";
+        location.href= "../home.html";
     }else{
         location.href= "../HTMLs/sticky.html";
     }
@@ -167,7 +162,7 @@ $("#logOutBtn").click(function(){
                     if (dismiss === 'timer') {
                         userPermission= 0;
                         sessionStorage.clear();
-                        location.href=  "../HTMLs/home.html";
+                        location.href=  "../home.html";
                     }
                 }
             )
@@ -353,8 +348,7 @@ function applyForBoard()
         cmd[ "act" ] = "newApplyBoard";
         cmd[ "account" ] = sessionStorage.getItem("Helen-account");
         cmd[ "content" ] = "看板" + newBoard + " " + result[1];
-        cmd[ "type" ] = "board"; 
-
+    
         $.post( "../index.php", cmd, function(dataDB)
         {
             dataDB = JSON.parse(dataDB);
@@ -381,12 +375,47 @@ function applyForBoard()
             }
         });
 
-    }, (dismiss) => {});
+    }, (dismiss) =>
+    {
+        swal.setDefaults( { progressSteps: false } );
+    });
 }
+
+var invalidBoards = {};
 
 async function applyForModerator()
 {
-    if( canApplyModerator )
+    let success;
+
+    if( $.isEmptyObject(invalidBoards))
+    {
+        let cmd = {};
+        cmd[ "act" ] = "showModerator";
+        success = await $.post( "../index.php", cmd, async function(dataDB)
+        {
+            dataDB = JSON.parse(dataDB);
+
+            if( dataDB.status == false )
+            {
+                await swal({
+                    title: "無法申請看板",
+                    type: "error",
+                    text: dataDB.errorCode,
+                    confirmButtonText: "確定",
+
+                }).then((result) => {}, ( dismiss ) => {});
+
+                return false;
+            }
+            else
+            {
+                invalidBoards = dataDB.data;
+                return true;
+            }
+        });
+    }
+
+    if( success )
     {
         let boards = sessionStorage.getItem( "Helen-boards");
         boards = JSON.parse( boards ); 
@@ -450,7 +479,7 @@ async function applyForModerator()
             cmd[ "act" ] = "newApplyBoard";
             cmd[ "account" ] = sessionStorage.getItem("Helen-account");
             cmd[ "content" ] = "版主" + newBoard + " " + result[1];
-            cmd[ "type" ] = "moderator"; 
+        
             $.post( "../index.php", cmd, function(dataDB)
             {
                 dataDB = JSON.parse(dataDB);
@@ -477,52 +506,9 @@ async function applyForModerator()
                 }
             });
 
-        }, (dismiss) => {});
-    }
-    else
-    {
-        swal({
-            title: "無法申請版主",
-            type: "error",
-            text: applyError,
-            confirmButtonText: "確定",
-
-        }).then((result) => {}, ( dismiss ) => {});
-    }
-}
-
-function getInvalidBoards(resolve, reject)
-{
-    let cmd = {};
-    cmd[ "act" ] = "showModerator";
-    $.post( "../index.php", cmd, async function(dataDB)
-    {
-        dataDB = JSON.parse(dataDB);
-
-        if( dataDB.status == false )
+        }, (dismiss) =>
         {
-            swal({
-                title: "無法申請看板",
-                type: "error",
-                text: dataDB.errorCode,
-                confirmButtonText: "確定",
-
-            }).then((result) => {
-                canApplyModerator = false;
-                applyError = dataDB.errorCode;
-
-            }, ( dismiss ) => {
-                canApplyModerator = false;
-                applyError = dataDB.errorCode;
-                invalidBoards = {};
-            });
-        }
-        else
-        {
-            canApplyModerator = true;
-            applyError = "";
-            invalidBoards = dataDB.data;
-        }
-        resolve(0);
-    });
+            swal.setDefaults( { progressSteps: false } );
+        });
+    }
 }
