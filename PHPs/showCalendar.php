@@ -2,7 +2,8 @@
 	/* 
 	前端 to 後端:
 	let cmd = {};
-	cmd["act"] = "showOnCalendar";
+    cmd["act"] = "showOnCalendar";
+    cmd["type"] = "list"/"calendar";
 	
     後端 to 前端:
     dataDB = JSON.parse(data);
@@ -23,10 +24,13 @@
 		dataDB.errorCode = "【SQL SELECT -query】failed: ."
 		dataDB.data = ""
 	*/
-    function doShowOnCalendar($input){
+    function doShowCalendar($input){
         global $conn;
         $sql="SELECT `Title`,`Start`,`END`,`Text` FROM `Calendar` Where `IsValid`=? order by `Start` ASC ";
-        $arr = array(true);
+        if($input['type']=="calendar")
+            $arr = array(true);
+        else
+            $arr = array(false);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){

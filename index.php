@@ -207,9 +207,9 @@
         require_once("./PHPs/showUncheckCanlenderList.php"); //顯示審核活動
         doShowUncheckCanlenderList($input);
         break;
-    case "showOnCalendar":	
-        require_once("./PHPs/showOnCalendar.php"); //顯示審核活動
-        doShowOnCalendar($input);
+    case "showCalendar":	
+        require_once("./PHPs/showCalendar.php"); //顯示活動
+        doShowCalendar($input);
         break;
 
     }

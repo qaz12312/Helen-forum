@@ -177,7 +177,7 @@ async function initial( res, rej )
     //});
 
     let cmd = {};
-    cmd[ "act" ] = "checkInCanlendarList";
+    cmd[ "act" ] = "showCalendar";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
