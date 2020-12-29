@@ -14,6 +14,7 @@
             dataDB.data[i].startTime //第i筆startTime
             dataDB.data[i].endTime//第i筆endTime
             dataDB.data[i].text//第i筆text
+            dataDB.data[i].id//第i筆text
         }
         否則 {
             dataDB.data.status = true;
@@ -26,7 +27,7 @@
 	*/
     function doShowCalendar($input){
         global $conn;
-        $sql="SELECT `Title`,`Start`,`END`,`Text` FROM `Calendar` Where `IsValid`=? order by `Start` ASC ";
+        $sql="SELECT `Title`,`Start`,`END`,`Text`,`ID` FROM `Calendar` Where `IsValid`=? order by `Start` ASC ";
         if($input['type']=="calendar")
             $arr = array(true);
         else
@@ -40,7 +41,7 @@
 			$arr=array();
 			for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
-                $arr[$i]=array("title"=>$row[0],"startTime"=>$row[1],"endTime"=>$row[2],"text"=>$row[3]);
+                $arr[$i]=array("title"=>$row[0],"startTime"=>$row[1],"endTime"=>$row[2],"text"=>$row[3],"id"=>$row[4]);
             }
             $rtn = successCode("Successfully show boardName list.",$arr);
         }
