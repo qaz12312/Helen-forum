@@ -52,9 +52,8 @@ $( document ).ready( async function()
             let chosen = this;
             swal({
                 title: "確定要允許這個活動嗎？<br /><small>" + activity[ thisActivity ].title + "</small>",
-                type: "warning",
+                type: "question",
                 showCancelButton: true,
-                confirmButtonColor: "#F09900",
                 confirmButtonText: "確定",
                 cancelButtonText: "取消",
                 animation: false,
@@ -106,7 +105,7 @@ $( document ).ready( async function()
                 }
             }, ( dismiss ) => {});
         }
-        else if( $(this).text().trim() == "審核失敗")
+        else if( $(this).text().trim() == "否決申請")
         {
             let chosen = this;
 
@@ -114,7 +113,6 @@ $( document ).ready( async function()
                 title: "確定要否決此活動嗎？<br /><small>" + activity[thisActivity].title + "</small>",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#F09900",
                 confirmButtonText: "確定",
                 cancelButtonText: "取消",
                 animation: false,
@@ -196,9 +194,9 @@ async function initial( res, rej )
     //         }).then((result) => {}, ( dismiss ) => {});
     //     } 
     //     else
-        {
-            activity=[{"title":"test","startTime":"2020/02/05T12:00:00","endTime":"2020/04/05T15:00:00","text":"text"},
+        {activity=[{"title":"test","startTime":"2020/02/05T12:00:00","endTime":"2020/04/05T15:00:00","text":"text"},
                     {"title":"test22","startTime":"2020/02/10T14:00:00","endTime":"2020/04/05T16:00:00","text":"text"}]
+            
             $( ".tabContent h2" ).html(  "審核活動列表" );
             let content = $( "#checklist tbody" );
             content.empty();
@@ -231,7 +229,7 @@ async function initial( res, rej )
                 "</td>" +
                 "<td>" +
                     "<button type='button' class='btn btn-danger'disabled=false id="+i+1+">" +
-                        "<span class='glyphicon glyphicon-remove'></span>審核失敗" +
+                        "<span class='glyphicon glyphicon-remove'></span>否決申請" +
                     "</button>" +
                 "</td>" +
                 "</tr>";
