@@ -177,7 +177,7 @@ async function initial( res, rej )
     //});
 
     let cmd = {};
-    cmd[ "act" ] = "showReport";
+    cmd[ "act" ] = "checkInCanlendarList";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
@@ -196,7 +196,7 @@ async function initial( res, rej )
         else
         {
             $( ".tabContent h2" ).html(  "審核活動列表" );
-            let content = $( ".tabContent tbody" );
+            let content = $( "#checklist tbody" );
             content.empty();
 
             activity = dataDB.data;
