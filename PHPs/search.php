@@ -163,7 +163,9 @@ function doSearch($where,$sql,$orderWay,$search,$user){
                 $arr[$i] += ["blockName" => $row[1]];
             }
         }
-        // $arr = array("articleList" => $articleList, "topArticleID" => $resultBoard[0][1], "rule" => $resultBoard[0][0]);(board????)
+        if($where=="board"){
+            $arr = array("articleList" => $arr, "topArticleID" => $resultBoard[0][1], "rule" => $resultBoard[0][0]);
+        }
         $rtn = successCode("",$arr);
     }
     echo json_encode($rtn);
