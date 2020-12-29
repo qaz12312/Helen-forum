@@ -19,23 +19,27 @@ $( document ).ready( async function()
 
     $( ".tabContent button" ).on( "click", function()
     {
-        let thisActivity = Object.keys( articles ).find( ( key ) => 
-        {
-            return articles[ key ][0].title == thisArticleTitle;
-        });
+        let thisArticleTitle = $(this).closest( "tr" ).find( "td:first-child" ).text();
 
-        let thisStartTime = activity[ thisActivity ].startTime;
-        let thisEndTime = activity[ thisActivity ].endTime;
+        let thisActivity = Object.keys( activity ).find( ( key ) => 
+        {
+            return activity[ key ].title == thisArticleTitle;
+        });
+        let thisStartTime = activity[ thisActivity ].startTime.split("T");
+        let thisEndTime = activity[ thisActivity ].endTime.split("T");
         let thisText = activity[ thisActivity ].text;
         let thisTitle = activity[ thisActivity ].title;
         if( $(this).text().trim() == "原因" )
         {
+            $("#"+$(this).attr('id')+"0").attr('disabled',false);
+            $("#"+$(this).attr('id')+"1").attr('disabled',false);
             let reasonsQueue = [];
             let steps = [];
             swal({
-                title: "申請原因&emsp;<cite>" + thisTitle + "</cite><br />" +
-                "<small>&lt;時間:" + thisStartTime + "~ " + thisEndTime + "&gt;</small>"+
-                "內容: " +thisText,
+                title: "<cite>" + thisTitle + "</cite><br />" +
+                "<small>&emsp;開始日期:" + thisStartTime[0]+"&emsp;時間:" + thisStartTime[1]+ 
+                "<br />&emsp;結束日期:" + thisEndTime[0]+"&emsp;時間:" + thisEndTime[1]+ "<br />"+
+                "內容: " +thisText+"</small><br />",
                 confirmButtonText: "確定",
                 cancelButtonText: "取消",
                 animation: false,
@@ -46,9 +50,8 @@ $( document ).ready( async function()
         else if( $(this).text().trim() == "新增活動" )
         {
             let chosen = this;
-
             swal({
-                title: "確定要允許這個活動嗎？<br /><small>&lt;" + activity[ thisActivity ][0].title + "&gt;</small>",
+                title: "確定要允許這個活動嗎？<br /><small>" + activity[ thisActivity ].title + "</small>",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#F09900",
@@ -103,12 +106,12 @@ $( document ).ready( async function()
                 }
             }, ( dismiss ) => {});
         }
-        else if( $(this).text().trim() == "審核失敗" )
+        else if( $(this).text().trim() == "審核失敗")
         {
             let chosen = this;
 
             swal({
-                title: "確定要否決此活動嗎？<br /><small>&lt;" + activity[ thisActivity ][0].title + "&gt;</small>",
+                title: "確定要否決此活動嗎？<br /><small>" + activity[thisActivity].title + "</small>",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#F09900",
@@ -134,7 +137,7 @@ $( document ).ready( async function()
                         if( dataDB.status == false )
                         {
                             swal({
-                                title: "取消否決活動<br /><small>&lt;" + activity[ thisActivity ][0].title + "&gt;</small>",
+                                title: "取消否決活動<br /><small>&lt;" + activity[ thisActivity ].title + "&gt;</small>",
                                 type: "error",
                                 text: dataDB.errorCode,
     
@@ -143,7 +146,7 @@ $( document ).ready( async function()
                         else
                         {
                             swal({
-                                title: "已成功取消活動！<br /><small>&lt;" + activity[ thisActivity ][0].title + "&gt;</small>",
+                                title: "已成功取消活動！<br /><small>&lt;" + activity[ thisActivity ].title + "&gt;</small>",
                                 type: "success",
                                 showConfirmButton: false,
                                 timer: 1000,
@@ -179,27 +182,28 @@ async function initial( res, rej )
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
 
-    $.post( "../index.php", cmd, function( dataDB )
-    {
-        dataDB = JSON.parse( dataDB );
-        console.log(dataDB);
-        if( dataDB.status == false )
-        {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: dataDB.errorCode,
-                confirmButtonText: "確定",
+    // $.post( "../index.php", cmd, function( dataDB )
+    // {
+    //     dataDB = JSON.parse( dataDB );
+    //     if( dataDB.status == false )
+    //     {
+    //         swal({
+    //             title: "載入頁面失敗",
+    //             type: "error",
+    //             text: dataDB.errorCode,
+    //             confirmButtonText: "確定",
 
-            }).then((result) => {}, ( dismiss ) => {});
-        }
-        else
+    //         }).then((result) => {}, ( dismiss ) => {});
+    //     } 
+    //     else
         {
+            activity=[{"title":"test","startTime":"2020/02/05T12:00:00","endTime":"2020/04/05T15:00:00","text":"text"},
+                    {"title":"test22","startTime":"2020/02/10T14:00:00","endTime":"2020/04/05T16:00:00","text":"text"}]
             $( ".tabContent h2" ).html(  "審核活動列表" );
             let content = $( "#checklist tbody" );
             content.empty();
 
-            activity = dataDB.data;
+           // activity = dataDB.data;
 
             if( $.isEmptyObject(activity) )
             {
@@ -210,35 +214,33 @@ async function initial( res, rej )
 
                 return;
             }
-
+            
             for( let i in activity )
             {
-                let oneRow = "<tr>" + 
-                    "<td>" + activity[i][0].title + "</td>" +
+                let oneRow = "<tr id="+i+">" + 
+                    "<td>" + activity[i].title + "</td>" +
                     "<td>" +
-                    "<button type='button' class='btn btn-default btn-warning'>" +
-                        "<span class='glyphicon glyphicon-book'></span> 原因" +
+                    "<button type='button' class='btn btn-info' id="+i+">" +
+                        "<span class='glyphicon glyphicon-book' ></span>原因" +
                     "</button>" +
                 "</td>" +
                 "<td>" +
-                    "<button type='button' class='btn btn-danger'>" +
-                        "<span class='glyphicon glyphicon-trash'></span> 刪除" +
+                    "<button type='button' class='btn btn-success'disabled=false id="+i+0+">" +
+                        "<span class='glyphicon glyphicon-send'></span>新增活動" +
                     "</button>" +
                 "</td>" +
                 "<td>" +
-                    "<button type='button' class='btn'>" +
-                        "<span class='glyphicon glyphicon-remove'></span> 取消" +
+                    "<button type='button' class='btn btn-danger'disabled=false id="+i+1+">" +
+                        "<span class='glyphicon glyphicon-remove'></span>審核失敗" +
                     "</button>" +
                 "</td>" +
                 "</tr>";
-
-content.append( oneRow );
-
                 content.append( oneRow );
             }
         }
         res(0);
-    });
+    // });
+    
 }
 
 function checkPermission( resolve, reject )
