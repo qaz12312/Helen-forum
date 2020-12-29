@@ -375,7 +375,10 @@ function applyForBoard()
             }
         });
 
-    }, (dismiss) => {});
+    }, (dismiss) =>
+    {
+        swal.setDefaults( { progressSteps: false } );
+    });
 }
 
 var invalidBoards = {};
