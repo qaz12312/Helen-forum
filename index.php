@@ -59,13 +59,16 @@
             require_once("./PHPs/searchInBoard.php");
             doSearchBoard($input);
             break;
+	case "searchMenu": //【訪客】主頁搜尋
+            require_once("./PHPs/searchInMenu.php");
+            doSearchMenu($input);
+            break;
+	case "search":
+            require_once("./PHPs/search.php"); 
+            break;
         case "sortInBoard": // 【系統】版內排序
             require_once("./PHPs/sortInBoard.php");
             doSortBoard($input);
-            break;
-        case "searchMenu": //【訪客】主頁搜尋
-            require_once("./PHPs/searchInMenu.php");
-            doSearchMenu($input);
             break;
         case "sortInMenu": // 【系統】首頁排序
             require_once("./PHPs/sortInMenu.php");
