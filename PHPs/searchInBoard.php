@@ -68,7 +68,7 @@ function doSearchBoard($input){
                 $search[$i++] = "%".$value."%";
                 }
             }
-            $search[$i] = "%".$input['searchBoard']."%";
+            $search[$i] = $input['searchBoard'];
             $arr = $search;
             $result = query($conn, $sql, $arr, "SELECT");
             $resultCount = count($result);
