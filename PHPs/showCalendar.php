@@ -27,7 +27,7 @@
 	*/
     function doShowCalendar($input){
         global $conn;
-        $sql="SELECT `Title`,`Start`,`END`,`Text`,`ID` FROM `Calendar` Where `IsValid`=? order by `Start` ASC ";
+        $sql="SELECT `Title`,`Start`,`END`,`Text`,`ID` FROM `Calendars` Where `IsValid`=? order by `Start` ASC ";
         if($input['type']=="calendar")
             $arr = array(true);
         else
