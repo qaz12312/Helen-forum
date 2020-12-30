@@ -489,7 +489,6 @@ async function initial( res, rej )
     {
         await new Promise( ( resolve, reject ) => forSearching( resolve, reject ) );
     }
-    console.log(topArticleID)
 
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
 
@@ -530,6 +529,7 @@ function forNormal( resolve, reject )
             rule = dataDB.data.rule;
             topArticleID = dataDB.data.topArticleID;
             articles = dataDB.data.articleList;
+            console.log(topArticleID);
 
             $( ".tabContent h2" ).html( thisBoardName + "版" );
             $( ".tabContent h3" ).html( thisSort );
@@ -756,6 +756,7 @@ function checkPermission( resolve, reject )
         );
 
         resolve(0);
+        return;
     }
 
     let cmd = {};
