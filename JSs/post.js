@@ -28,6 +28,9 @@ async function initial(res, rej){
     let cmd = {};
     let tagRe= /(@\d+波)/g;
     cmd["act"]= "showArticleComment";
+    if(sessionStorage.getItem("Helen-account")){
+        cmd["account"]= sessionStorage.getItem("Helen-account");
+    }
     cmd["articleID"]= articleID;
 
     $.post("../index.php", cmd, function(dataDB){
@@ -93,7 +96,7 @@ async function initial(res, rej){
                             comments[i].color +";\">B"+ 
                             comments[i].floor+ "</div></td><td style=\"font-size: 15px;\">&nbsp;"+ 
                             comments[i].nickname;
-                if(comments[i].isOwn== 1){
+                if(comments[i].isOwn== 1){ // 是自己的留言
                     oneRow+= "<button type=\"button\" class=\"btn btn-dark deleteComment\">"+
                             "<span class=\"glyphicon glyphicon-trash\"></span></button>"
                 }
@@ -151,9 +154,7 @@ $("#reportBtn").click(function(){
                 else{
                     swal({
                         title: "已成功檢舉此文章",
-                        type: "success",
-                        showConfirmButton: false,
-                        timer: 1000,
+                        type: "success"
                     })
                     .then((result)=> {}, (dismiss)=> {});
                     hasReport= true;
