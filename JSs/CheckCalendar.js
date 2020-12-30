@@ -25,6 +25,7 @@ $( document ).ready( async function()
         let thisEndTime = activity[ thisActivity ].endTime.split("T");
         let thisText = activity[ thisActivity ].text;
         let thisTitle = activity[ thisActivity ].title;
+        let thisID = activity[ thisActivity ].id;
         if( $(this).text().trim() == "原因" )
         {
             $("#"+$(this).attr('id')+"0").attr('disabled',false);
@@ -57,10 +58,8 @@ $( document ).ready( async function()
                 {
                     let cmd = {};
                     cmd[ "act" ] = "checkInCanlendarList";
-                    cmd[ "title" ] = thisActivity;
-                    cmd["startTime"] = thisStartTime;
-                    cmd["endTime"] = thisEndTime;
-                    cmd[ "isPass" ] = "true";
+                    cmd[ "id" ] = parseInt(thisID);
+                    cmd[ "isPass" ] = 1;
                     
                     $.post( "../index.php", cmd, function( dataDB ){
                         console.log(dataDB)
@@ -69,7 +68,7 @@ $( document ).ready( async function()
                         if( dataDB.status == false )
                         {
                             swal({
-                                title: "刪除失敗<br /><small>&lt;" + activity[ thisActivity ][0].title + "&gt;</small>",
+                                title: "刪除失敗<br /><small>&lt;" + activity[ thisActivity ].title + "&gt;</small>",
                                 type: "error",
                                 text: dataDB.errorCode,
     
@@ -78,7 +77,7 @@ $( document ).ready( async function()
                         else
                         {
                             swal({
-                                title: "已成功新增活動！<br /><small>&lt;" + activity[ thisActivity ][0].title + "&gt;</small>",
+                                title: "已成功新增活動！<br /><small>&lt;" + activity[ thisActivity ].title + "&gt;</small>",
                                 type: "success",
                                 showConfirmButton: false,
                                 timer: 1000,
@@ -86,12 +85,12 @@ $( document ).ready( async function()
                             }).then((result) => {}, ( dismiss ) => {});
     
                             $(chosen).closest( "tr" ).remove();
-                            delete activity[ thisActivity ];
+                            delete activity[ thisID ];
     
                             if( $.isEmptyObject(activity) )
                             {
                                 let emptyMessage = "<tr>" + 
-                                                        "<td colspan='4'>檢舉文章列表為空</td>" +
+                                                        "<td colspan='4'>活動列表為空</td>" +
                                                     "</tr>";
                                 $( ".tabContent tbody" ).append( emptyMessage );
                             }
@@ -116,15 +115,15 @@ $( document ).ready( async function()
             {
                 if ( result ) 
                 {
+                    alert(thisID)
                     let cmd = {};
                     cmd[ "act" ] = "checkInCanlendarList";
-                    cmd[ "title" ] = thisActivity;
-                    cmd["startTime"] = thisStartTime;
-                    cmd["endTime"] = thisEndTime;
-                    cmd[ "isPass" ] = "false";
+                    cmd[ "id" ] = parseInt(thisID);
+                    cmd[ "isPass" ] = 0;
 
                     $.post( "../index.php", cmd, function( dataDB )
                     {
+                        console.log(dataDB);
                         dataDB = JSON.parse( dataDB );
 
                         if( dataDB.status == false )
@@ -178,7 +177,6 @@ async function initial( res, rej )
 
     $.post( "../index.php", cmd, function( dataDB )
     {
-        console.log(dataDB)
         dataDB = JSON.parse( dataDB );
         if( dataDB.status == false )
         {
@@ -195,7 +193,6 @@ async function initial( res, rej )
              //activity=[{"title":"test","startTime":"2020/02/05T12:00:00","endTime":"2020/04/05T15:00:00","text":"text"},
         //             {"title":"test22","startTime":"2020/02/10T14:00:00","endTime":"2020/04/05T16:00:00","text":"text"}]
             activity = dataDB.data;
-            $( ".tabContent h2" ).html(  "審核活動列表" );
             let content = $( "#checklist tbody" );
             content.empty();
             if( $.isEmptyObject(activity) )
@@ -233,89 +230,33 @@ async function initial( res, rej )
         }
         res(0);
     });
-    
-}
+}   
 
-function checkPermission( resolve, reject )
-{
-    if( !thisAccount )
-    {
-        swal({
-            title: "載入頁面失敗",
-            type: "error",
-            text: "您沒有權限瀏覽此頁面",
-            confirmButtonText: "確定",
+// function checkPermission( resolve, reject )
+// {
+//     if( !thisAccount )
+//     {
+//         swal({
+//             title: "載入頁面失敗",
+//             type: "error",
+//             text: "您沒有權限瀏覽此頁面",
+//             confirmButtonText: "確定",
             
-        }).then(( result ) => {
-            $( ".tabContent" ).empty();
-            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( ".tabContent" ).append( httpStatus );
+//         }).then(( result ) => {
+//             $( ".tabContent" ).empty();
+//             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+//             $( ".tabContent" ).append( httpStatus );
 
-        }, ( dismiss ) => {
-            $( ".tabContent" ).empty();
-            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( ".tabContent" ).append( httpStatus );
-        });
+//         }, ( dismiss ) => {
+//             $( ".tabContent" ).empty();
+//             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+//             $( ".tabContent" ).append( httpStatus );
+//         });
 
-        reject(1);
+//         reject(1);
 
-        return;
-    }
-
-    let cmd = {};
-    cmd[ "act" ] = "showUncheckCanlenderList";
-    cmd[ "account" ] = thisAccount;
-
-    $.post( "../index.php", cmd, function( dataDB )
-    {
-        dataDB = JSON.parse( dataDB );
-
-        if( dataDB.status == false )
-        {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: dataDB.errorCode,
-                confirmButtonText: "確定",
-    
-            }).then(( result ) => {
-                $( ".tabContent" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( ".tabContent" ).append( httpStatus );
-    
-            }, ( dismiss ) => {
-                $( ".tabContent" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( ".tabContent" ).append( httpStatus );
-            });
-            
-            reject(1);
-        }
-        else if( dataDB.data.boardName == undefined )
-        {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: "您沒有權限瀏覽此頁面",
-                confirmButtonText: "確定",
-                
-            }).then(( result ) => {
-                $( ".tabContent" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( ".tabContent" ).append( httpStatus );
-    
-            }, ( dismiss ) => {
-                $( ".tabContent" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( ".tabContent" ).append( httpStatus );
-            });
-    
-            reject(1);
-        }
-    
-        resolve(0);
-    });
-}
+//         return;
+//     }
 
 function escapeHtml(str)
 {
