@@ -597,6 +597,10 @@ function forNormal( resolve, reject )
                     tempTbody.prepend( tempTr );
                 }
             }
+            else
+            {
+                topArticleID = undefined;
+            }
 
             if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
             {
