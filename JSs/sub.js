@@ -13,7 +13,6 @@ $(document).ready(async function(){
 
     $(".tabContent tr").find("td:first-child").on("click", function(){
         let thisArticleID = articles.find((element)=>element.title == $(this).text()).articleID;
-        console.log("[" + thisArticleID + "]");
         if(thisArticleID != undefined){
             sessionStorage.setItem( "Helen-articleID", thisArticleID );
             location.href =  "../HTMLs/post.html";
