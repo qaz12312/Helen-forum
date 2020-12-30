@@ -191,7 +191,7 @@
         doShowApplyBoard($input);
         break;
     case "newApplyBoard":	
-        require_once("./PHPs/newApplyBoard.php");
+        require_once("./PHPs/newApply.php");
         doNewApplyBoard($input);
         break;
     case "deleteApplyBoard":	
