@@ -20,10 +20,7 @@
 		global $conn;
 		if($input['type'] == "board" || $input['type'] == "moderator") {
 			$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type`=? ";
-			if($input['type'] == "board")
-			$arr = array($input['account'], $input['content'],1);
-			else
-			$arr = array($input['account'], $input['content'],0);
+			$arr = array($input['account'], $input['content'],($input['type'] == "board" ? 1 : 0));
 
 			$arr = array($input['account'], $input['content']);
 			$result = query($conn,$sql,$arr,"SELECT");
@@ -32,8 +29,8 @@
 				errorCode("You have already sent this message.");
 			}
 			else{
-				$sql="INSERT INTO `Issue`(`UserID`,`Content`) VALUES(?,?)";
-				$arr = array($input['account'], $input['content']);
+				$sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?)";
+				$arr = array($input['account'], $input['content'],($input['type'] == "board" ? 1 : 0));
 				$result=query($conn,$sql,$arr,"INSERT");
 
 				$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type` = 1";
