@@ -71,7 +71,7 @@ async function initial(res, rej){
     res(0);
 }
 
-$(".tabContent tr").find("td:first-child").on("click", function(){
+$(".tabContent").find("tr td:first-child").on("click", function(){
     let thisArticleID = Object.keys(articles).find((key) => articles[key].title == $(this).text() );
     console.log(thisArticleID);
     if(thisArticleID != undefined){
@@ -80,7 +80,7 @@ $(".tabContent tr").find("td:first-child").on("click", function(){
     }
 });
 
-$(".tabContent button").on( "click", function(){
+$(".tabContent").on( "click", "button", function(){
     let articleIndex = $(".tabContent tr").index(this.closest("tr"));
     if( $(this).text().trim() == "刪除"){
         let cmd= {};
