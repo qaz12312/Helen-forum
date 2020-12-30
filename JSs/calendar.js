@@ -10,8 +10,10 @@ $( document ).ready(async function()
     {
         window.location.href = "./newCalender.html";
     });
-    $(".fc-daygrid-day fc-day fc-day-tue fc-day-past").on( "click", function(){
-        sessionStorage.setItem( "Helen-articleID", this.data-date );
+    $(".fc-daygrid-day fc-day fc-day-fri fc-day-past").on( "click", function(){
+        alert(this);
+        alert(this.data-date);
+        sessionStorage.setItem( "Helen-startTime", this.data-date );
     });
 });
 
