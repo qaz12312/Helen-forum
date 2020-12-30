@@ -190,7 +190,7 @@ $( document ).ready(async function()
                 let cmd = {};
                 cmd[ "act" ] = "newDir";
                 cmd["account"] = sessionStorage.getItem( "Helen-account" );
-                cmd[ "dirName" ] = $('#input2').val();
+                cmd[ "dirName" ] = String(value);
                 console.log($('#input2').val());
 
                 $.post( "../index.php", cmd, function( dataDB ) 
@@ -291,7 +291,6 @@ async function initial(res, rej)
 
                 for( let i in CollectionCatalog )
                 {
-                    
                     values.push(CollectionCatalog[i])
                     const div = document.createElement('div');          
                     div.classList.add('Page');
