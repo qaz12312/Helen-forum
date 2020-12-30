@@ -57,7 +57,7 @@ async function initial(res, rej){
             $(".tabContent").find("p").text(contentStr); // 文章內容
 
             let heartText= $("#heartBtn").find("span"); // Text: 愛心 & 數字
-            if(article.hasHeart== 1){
+            if(article.hasLike== 1){
                 $(heartText).removeClass("text-danger");
                 $(heartText).addClass("text-light");
                 $("#heartBtn").removeClass("btn-secondary");
@@ -175,8 +175,15 @@ function escapeHtml(str){ // 擋掉html攻擊
     return $('<div/>').text(str).html();
 }
 
-
 $("#heartBtn").click( function(){
+    if(!(sessionStorage.getItem("Helen-account"))){
+        swal({
+            title: "無法按讚！",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {}, ( dismiss ) => {});
+        return;
+    }
     let cmd = {};
     cmd["act"] = "heart";
     cmd["account"] = sessionStorage.getItem("Helen-account");
@@ -218,6 +225,14 @@ $("#heartBtn").click( function(){
 });
 
 $("#keepBtn").click( function(){
+    if(!(sessionStorage.getItem("Helen-account"))){
+        swal({
+            title: "無法收藏！",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {}, ( dismiss ) => {});
+        return;
+    }
     let keepText = $(this).find("span");
     getKeepMenu();
 	
@@ -330,7 +345,7 @@ function getKeepMenu(){
             keepMenu= [];
             let keep= dataDB.data;
             for(var k= 0; k< keep.length; k++){
-                keepMenu.push(keepMenu[k]);
+                keepMenu.push(keep[k]);
             }
             return;
         }
@@ -347,6 +362,13 @@ $("#inputComment").keypress(function(event){
 });
 
 function leaveComment(){
+    if(!(sessionStorage.getItem("Helen-account"))){
+        swal({
+            title: "無法留言！",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {}, ( dismiss ) => {});
+    }
     let inputComment= $("#inputComment").val().trim();
     if(inputComment.length< 1){
         swal({
@@ -388,6 +410,7 @@ function leaveComment(){
             }).then((result)=> {}, (dismiss)=> {});
         }
     });
+    location.reload();
 }
 
 $("#commentTable").on("click", "button", function(){
