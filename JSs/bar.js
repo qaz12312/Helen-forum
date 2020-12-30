@@ -2,6 +2,7 @@ var userPermission= 0; // 0(訪客) 1(一般使用者) 2(版主) 3(admin)
 var canApplyModerator = false;
 var InvalidBoards = [];
 var applyError = "";
+var searchType = "";
 
 async function barInitial(){
     if(sessionStorage.getItem("Helen-sort")== null){
@@ -11,6 +12,7 @@ async function barInitial(){
     await new Promise ((resolve, reject) => {getUserInfo(resolve, reject);});
     await new Promise ((resolve, reject) => {getBoards(resolve, reject);});
     await new Promise ((resolve, reject) => {getInvalidBoards(resolve, reject);});
+    
     
     // 最左邊的 ham menu 初始化
     $("#menu").empty();
@@ -152,28 +154,22 @@ async function barInitial(){
 }
 
 function setSearchData(){
+    //抓搜尋的選擇
+    let searchType = $("#searchOption").val(); //獲取選中記錄的value值
     let searchStr= $("#searchInputText").val().trim();
     let searchArr= searchStr.split(" ");
     var contents= [];
-    var hashtags= [];
+    // var hashtags= [];
     for(var i= 0; i< searchArr.length; i++){
         if(searchArr[i].length> 0){
-            if(searchArr[i][0]!= "#"){
-                contents.push(searchArr[i]);
-            }else{
-                if(searchArr[i].length> 1){
-                    hashtags.push(searchArr[i].substring(1, searchArr[i].length));
-                }
-            }
+            contents.push(searchArr[i]);
         }
     }
-    let searchData= {};
-    searchData["content"]= contents;
-    searchData["hashtag"]= hashtags;
-    sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
-
-    if( contents.length == 0 && hashtags.length == 0 )
-    {
+    // let searchData= {};
+    // searchData["content"]= contents;
+    // searchData["hashtag"]= hashtags;
+    
+    if( contents.length == 0){
         swal({
             title: "錯誤",
             type: "error",
@@ -181,11 +177,17 @@ function setSearchData(){
             confirmButtonText: "確定",
 
         }).then((result) => {}, ( dismiss ) => {});
+        return;
     }
     else if(sessionStorage.getItem("Helen-boardName")== null){
         location.href= "../HTMLs/home.html";
     }else{
         location.href= "../HTMLs/sticky.html";
+    }
+    if(searchType== 1){ // hashTag
+        sessionStorage.setItem("Helen-hashtag", JSON.stringify(searchData));
+    }else{ // ==2 content
+        sessionStorage.setItem("Helen-content", JSON.stringify(searchData));
     }
 }
 

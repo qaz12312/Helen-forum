@@ -22,7 +22,7 @@ $(document).ready(async function(){
   $('.addPost').click(function(){
     console.log("addPost")
     cmd={};
-    cmd["account"] = sessionStorage.getItem("Helen-userID");
+    cmd["account"] = sessionStorage.getItem("Helen-account");
     window.location.href = "./publishArticle.html";
   });
   
