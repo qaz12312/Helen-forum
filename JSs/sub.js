@@ -101,7 +101,7 @@ async function initial(res, rej){
     console.log(keepDir)
     let cmd = {};
     cmd["act"] = "showArticleInDir";
-    cmd["account"] = sessionStorage.getItem("Helen-userID");
+    cmd["account"] = sessionStorage.getItem("Helen-account");
     cmd["dirName"] = keepDir;
 
     $.post( "../index.php", cmd, function(dataDB){
@@ -119,7 +119,7 @@ async function initial(res, rej){
             content.empty();
         
             articles = dataDB.data;
-
+            console.log(articles)
             if( articles.length == 0 ){
                 let emptyMessage = "<tr>" + 
                                         "<td colspan='2'>還沒有收藏文章呦！</td>" +

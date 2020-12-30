@@ -405,9 +405,10 @@ function forNormal( res, rej )
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
-
+            console.log(articles[0])
             for( let i in articles )
             {
+                
                 let oneRow = "<tr>" +
                                 "<td>" +
                                     "<div class='card'>" +
