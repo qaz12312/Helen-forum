@@ -25,7 +25,7 @@
 	*/
     function doShowUncheckCanlenderList($input){ //審核
         global $conn;
-        $sql="SELECT `Title`,`Start`,`END`,`Text` FROM `Calendar` Where `IsValid`=? order by `Start` ASC ";
+        $sql="SELECT `Title`,`Start`,`END`,`Text` FROM `Calendars` Where `IsValid`=? order by `Start` ASC ";
         $arr = array(false);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
