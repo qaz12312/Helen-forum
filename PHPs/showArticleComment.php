@@ -44,7 +44,7 @@
         }
         else{
             $sql="SELECT `Nickname`,`Color` FROM `Users` WHERE `UserID`=?"; //作者 相關資訊
-            $resultAuthor = query($conn,$sqlAuthor,array($result[0][0]),"SELECT");
+            $resultAuthor = query($conn,$sql,array($result[0][0]),"SELECT");
             $resultCount = count($resultAuthor);
             if($resultCount <= 0){
                 errorCode("AuthorID doesn't exit.");
