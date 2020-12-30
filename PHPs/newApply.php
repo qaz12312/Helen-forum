@@ -19,10 +19,11 @@
     function doNewApplyBoard($input){
 		global $conn;
 		if($input['type'] == "board" || $input['type'] == "moderator") {
+			$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type`=? ";
 			if($input['type'] == "board")
-				$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type`= 1";
+			$arr = array($input['account'], $input['content'],1);
 			else
-				$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type`= 0";
+			$arr = array($input['account'], $input['content'],0);
 
 			$arr = array($input['account'], $input['content']);
 			$result = query($conn,$sql,$arr,"SELECT");

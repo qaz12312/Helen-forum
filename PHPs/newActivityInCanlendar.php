@@ -39,7 +39,7 @@
 			$sql="INSERT INTO `Calendar`(`UserID`,`Title`,`Start`,`END`,`Text`) VALUES(?,?,?,?,?)";
         	$arr = array($input['account'],$input['title'],$input['startTime'],$input['endTime'],$input['text']);
             $result = query($conn,$sql,$arr,"SELECT");
-            $rtn = successCode("Successfully new the Article."array();
+            $rtn = successCode("Successfully new the Article.",array());
 		}	
         echo json_encode($rtn);
     }
