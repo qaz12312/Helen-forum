@@ -87,17 +87,12 @@ function initial(resolve, reject)
                         }).then(( result ) => {}, (dismiss) => {});  
                         
                     info.el.style.borderColor = 'red';
-                }
-
+                },
+                dayClick: function(date, jsEvent, view, resource) {
+                    alert('clicked ' + date.getDate() + ' on resource ' + resource.id);
+                  },
             });
-            $('#calendar').fullCalendar({
-                dayClick: function(date, jsEvent, view) {
-              
-                  console.log('Clicked on: ' + date.format());              
-                  console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);             
-                  console.log('Current view: ' + view.name);              
-                }
-              });
+
 
 
         for( let i in activity ) {
