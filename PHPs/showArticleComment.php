@@ -18,6 +18,7 @@
             dataDB.data.comment[i].nickname //第i筆留言的作者暱稱
             dataDB.data.comment[i].color    //第i筆留言的作者顏色
             dataDB.data.comment[i].time     //第i筆留言的時間
+            dataDB.data.comment[i].isOwn      //第i筆留言是我留的
         ) 
         dataDB.data.title   //文章的標題
         dataDB.data.content //文章的內容
@@ -74,14 +75,25 @@
                 }
                 $arr = array("title"=>$result[0][1],"content"=>$result[0][2],"like"=>$result[0][3],"keep"=>$result[0][4],"time"=>$result[0][5],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 
-                $sql ="SELECT `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
+                $sql ="SELECT `UserID`, `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
                 $comment = query($conn,$sql,array($articleID),"SELECT");
                 $commentCount = count($comment);
                 $commentArr = array();
                 if($commentCount > 0){
-                    for($i=0;$i<$commentCount;$i++){
-                        $row = $comment[$i];
-                        $commentArr[$i]=array("nickname"=>$row[0],"color"=>$row[1],"content"=>$row[2],"floor"=>$row[3],"time"=>$row[4]);
+                    if(isset($input['account'])){
+                        for($i=0;$i<$commentCount;$i++){
+                            $row = $comment[$i];
+                            $isUser = 0;
+                            if($row[0]==$user){
+                                $isUser = 1;
+                            }
+                            $commentArr[$i]=array("nickname"=>$row[1],"color"=>$row[2],"content"=>$row[3],"floor"=>$row[4],"time"=>$row[5],"isOwn"=>$isUser);
+                        }
+                    }else{
+                        for($i=0;$i<$commentCount;$i++){
+                            $row = $comment[$i];
+                            $commentArr[$i]=array("nickname"=>$row[1],"color"=>$row[2],"content"=>$row[3],"floor"=>$row[4],"time"=>$row[5],"isOwn"=>0);
+                        }
                     }
                 }
                 $arr['comment']=$commentArr;
