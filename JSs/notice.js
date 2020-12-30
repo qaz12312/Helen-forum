@@ -54,10 +54,13 @@ async function initial( res, rej )
             }
 
             for( let i in articles )
-            {
+            { 
+                console.log(articles[i].time)
                 
                 let oneRow = "<tr>" +
-                                "<td>" + articles[i][0].title  + "</td>" 
+                
+                                "<td rowspan='2'>" + articles[i].time  + "</td>" +
+                                "<td rowspan='6'>" + articles[i].content  + "</td>" 
                                 ;
 
                 content.append( oneRow );
