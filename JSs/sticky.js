@@ -476,9 +476,12 @@ async function initial( res, rej )
     if( !thisAccount ) thisAccount = "";
     if( !thisBoardName ) thisBoardName = "";
 
-    thisSearching = JSON.parse( thisSearching );
+    if( thisSearching )
+    {
+        thisSearching = JSON.parse( thisSearching );
+    }
 
-    if( thisSearching.content.length == 0 && thisSearching.hashtag.length == 0 )
+    if( !thisSearching || (thisSearching.content.length == 0 && thisSearching.hashtag.length == 0) )
     {
         await new Promise( ( resolve, reject ) => forNormal( resolve, reject ) );
     }
