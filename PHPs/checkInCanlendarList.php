@@ -19,7 +19,7 @@
 	*/
     function doCheckInCanlendarList($input){ //審核活動
         global $conn;
-        $sql="SELECT `Title`,`Start`,`END` FROM `Calendar` WHERE `Title`=? AND `Start`=? AND `END`=? ";  
+        $sql="SELECT `Title`,`Start`,`END` FROM `Calendars` WHERE `Title`=? AND `Start`=? AND `END`=? ";  
             $arr = array($input['title'],$input['startTime'],$input['endTime']);
             $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
@@ -28,13 +28,13 @@
             }
             else{
                 if($input['isPass']){ 
-                    $sql="UPDATE `Calendar` SET `IsValid`=?  WHERE `Title`=? AND `Start`=? AND `END`=? ";
+                    $sql="UPDATE `Calendars` SET `IsValid`=?  WHERE `Title`=? AND `Start`=? AND `END`=? ";
                     $arr = array(true,$input['title'],$input['startTime'],$input['endTime']);
                     query($conn,$sql,$arr,"UPDATE");
                     $rtn = successCode("Successfully update to Calendar.",array());
                 }
                 else { //刪除活動
-                    $sql="DELETE FROM `Calendar` WHERE `Title`=? AND `Start`=? AND `END`=?";
+                    $sql="DELETE FROM `Calendars` WHERE `Title`=? AND `Start`=? AND `END`=?";
                     $arr = array($input['title'],$input['startTime'],$input['endTime']);
                     query($conn,$sql,$arr,"DELETE");
                     $rtn = successCode("Successfully canceled this activity.",array());
