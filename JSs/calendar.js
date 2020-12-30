@@ -46,20 +46,21 @@ function initial(resolve, reject)
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
 
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
-    //     if( dataDB.status == false )
-    //     {
-    //         swal({
-    //             title: "載入頁面失敗",
-    //             type: "error",
-    //             text: dataDB.errorCode,
-    //             confirmButtonText: "確定",
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
+        console.log(dataDB.data)
+        if( dataDB.status == false )
+        {
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
 
-    //         }).then((result) => {}, ( dismiss ) => {});
-    //     } 
-    //     else
+            }).then((result) => {}, ( dismiss ) => {});
+        } 
+        else
           {
             activity=[{"id":1,"title":"test","startTime":"2020-12-05T12:00:00","endTime":"2020-12-15T15:00:00","text":"text"},
                     {"id":2,"title":"test22","startTime":"2020-12-10T14:00:00","endTime":"2020-12-13T16:00:00","text":"text222"}]
@@ -121,11 +122,10 @@ function initial(resolve, reject)
                     //     content.append( dict );
                      }
 
-
-           
-  
-    calendar.render();
-    resolve(0);
+        calendar.render();
+        resolve(0);    
+    });
+    
 }
  
 function checkPermission( resolve, reject )
