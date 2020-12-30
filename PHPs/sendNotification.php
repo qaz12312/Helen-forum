@@ -24,8 +24,8 @@
         $arr = array($input['recipient'], $input['content']);
         query($conn,$sql,$arr,"INSERT");
         
-        $sql="SELECT `UserID`,`Times`,`Content` FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=2";
-        $arr = array($input['recipient'], $input['content']);
+        $sql="SELECT `UserID`,`Times`,`Content` FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`= ? ";
+        $arr = array($input['recipient'], $input['content'],2);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){

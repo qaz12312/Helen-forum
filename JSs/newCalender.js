@@ -138,14 +138,14 @@ $("#newActivity").on("click", function(){
             // ?依最新排序的首頁
             sessionStorage.setItem("Helen-act", "home");
             sessionStorage.setItem("Helen-sort", "最新");
-            location.href =  "../home.html";
+            window.location.href = "../HTMLs/home.html";
         }
     })
 })
 
 $("#cancelActivity").on("click", function(){//取消
     console.log("Back To HOME Page.")
-    location.href =  "../HTMLs/home.html";
+    window.location.href =  "../HTMLs/home.html";
 })
 
 
