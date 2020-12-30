@@ -529,6 +529,7 @@ function forNormal( resolve, reject )
             rule = dataDB.data.rule;
             topArticleID = dataDB.data.topArticleID;
             articles = dataDB.data.articleList;
+            console.log(topArticleID);
 
             $( ".tabContent h2" ).html( thisBoardName + "版" );
             $( ".tabContent h3" ).html( thisSort );
@@ -583,8 +584,7 @@ function forNormal( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            console.log(topArticleID)
-            if( topArticleID !== undefined )
+            if( topArticleID !== undefined && articles.find( (ele) => ele.articleID == topArticleID ) !== undefined )
             {
                 let topArticle = articles.find( (element) => element.articleID === topArticleID );
 
@@ -596,6 +596,10 @@ function forNormal( resolve, reject )
                     tempTr.remove();
                     tempTbody.prepend( tempTr );
                 }
+            }
+            else
+            {
+                topArticleID = undefined;
             }
 
             if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
@@ -756,6 +760,7 @@ function checkPermission( resolve, reject )
         );
 
         resolve(0);
+        return;
     }
 
     let cmd = {};
