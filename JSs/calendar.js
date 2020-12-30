@@ -70,23 +70,19 @@ function initial(resolve, reject)
                             html:   "<table>"+
                                         "<tbody>"+
                                             "<tr>"+
-                                                "<th>開始時間</th>"+
+                                                "<td style='font-weight:1000; padding:5%;'>開始時間</td>"+
                                                 "<td>"+startT[0]+
                                                 "&emsp;"+startT[1]+"</td>"+
                                             "</tr>"+
                                             "<tr>"+
-                                                "<th>結束時間</th>"+
+                                                "<td style='font-weight:1000; padding:5%;'>結束時間</td>"+
                                                 "<td>"+endT[0]+
                                                 "&emsp;"+endT[1]+"</td>"+
                                             "</tr>"+
-                                            "<tr>"+
-                                                "<th colspan='2'>內容</th>"+
-                                            "</tr>"+
-                                            "<tr>"+
-                                                "<td colspan='2'>"+activity[thisActivity].text+"</td>"+
-                                            "</tr>"+
                                         "</tbody>"+
-                                    "</table>",
+                                    "</table>"+
+                                    "<hr>"+
+                                    activity[thisActivity].text,
                             type: "info",
                             showCancelButton: true,
                             confirmButtonText: "確定",
