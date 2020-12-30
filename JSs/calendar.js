@@ -45,11 +45,12 @@ function initial(resolve, reject)
 
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
+    cmd["type"]="calendar";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
+        console.log(dataDB);
         dataDB = JSON.parse( dataDB );
-        console.log(dataDB.data)
         if( dataDB.status == false )
         {
             swal({
@@ -61,67 +62,61 @@ function initial(resolve, reject)
             }).then((result) => {}, ( dismiss ) => {});
         } 
         else
-          {
-            activity=[{"id":1,"title":"test","startTime":"2020-12-05T12:00:00","endTime":"2020-12-15T15:00:00","text":"text"},
-                    {"id":2,"title":"test22","startTime":"2020-12-10T14:00:00","endTime":"2020-12-13T16:00:00","text":"text222"}]
-                    if( $.isEmptyObject(activity) )
+        {
+            let activity= dataDB.data;
+            if( $.isEmptyObject(activity) ) {
+                let emptyMessage = "<tr>" + 
+                                        "<td colspan='4'>檢舉文章列表為空</td>" +
+                                    "</tr>";
+                content.append( emptyMessage );
+
+                return;
+            }
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+
+                eventClick: function(info) {
+                    let thisActivity = Object.keys( activity ).find( ( key ) => 
                     {
-                        let emptyMessage = "<tr>" + 
-                                                "<td colspan='4'>檢舉文章列表為空</td>" +
-                                            "</tr>";
-                        content.append( emptyMessage );
-
-                        return;
-                    }
-                    var calendarEl = document.getElementById('calendar');
-                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                      initialView: 'dayGridMonth',
-                      headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                      },
-                      eventClick: function(info) {
-                        let thisActivity = Object.keys( activity ).find( ( key ) => 
-                        {
-                            return activity[ key ].id == info.event.id;
-                        });
-                        let startT=info.event.startStr.split(/[\T\+]/);
-                        let endT=info.event.startStr.split(/[\T\+]/);
-                        swal({
-                               title: "<cite>"+info.event.title+ "</cite><br />" +
-                               "<small>開始時間:"+startT[0]+"&emsp;"+startT[1]+"<br\>"+
-                               "結束時間:"+endT[0]+"&emsp;"+endT[1]+"<br\>"+
-                               "內容:"+activity[thisActivity].text+"<\small>",
-                               type: "info",
-                               showCancelButton: true,
-                               confirmButtonText: "確定",
-                               cancelButtonText: "取消",
-                             animation: false,
-                      
-                           }).then(( result ) => {});  
-
-                    
-                        // change the border color just for fun
-                        info.el.style.borderColor = 'red';
-                      }
+                        return activity[ key ].id == info.event.id;
                     });
-                    }
 
-                    // let content={};
-                     for( let i in activity )
-                     {
-                      calendar.addEvent({
-                          id:activity[i].id,
-                          title : activity[i].title, 
-                          start : activity[i].startTime ,
-                          end :activity[i].endTime,
-                          eventContent:activity[i].text
-                          }); 
-        
-                    //     content.append( dict );
-                     }
+                    let startT=info.event.startStr.split(/[\T\+]/);
+                    let endT=info.event.startStr.split(/[\T\+]/);
 
+                    swal({
+                            title: "<cite>"+info.event.title+ "</cite><br />" +
+                            "<small>開始時間:"+startT[0]+"&emsp;"+startT[1]+"<br\>"+
+                            "結束時間:"+endT[0]+"&emsp;"+endT[1]+"<br\>"+
+                            "內容:"+activity[thisActivity].text+"<\small>",
+                            type: "info",
+                            showCancelButton: true,
+                            confirmButtonText: "確定",
+                            cancelButtonText: "取消",
+                            animation: false,
+                        }).then(( result ) => {});  
+
+                    info.el.style.borderColor = 'red';
+                }
+            });
+        }
+
+        for( let i in activity ) {
+            calendar.addEvent({
+                id:activity[i].id,
+                title : activity[i].title, 
+                start : activity[i].startTime ,
+                end :activity[i].endTime,
+                eventContent:activity[i].text
+            }); 
+        }
         calendar.render();
         resolve(0);    
     });
