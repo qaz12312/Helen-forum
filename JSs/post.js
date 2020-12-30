@@ -88,13 +88,16 @@ async function initial(res, rej){
                 let oldStr= comments[i].content;
                 var newStr= oldStr.replace(tagRe, "<a>"+ "$1"+ "</a>");
                 
-                let oneRow= "<tr><td rowspan=\"2\" style=\"vertical-align: top;\">"+
+                var oneRow= "<tr><td rowspan=\"2\" style=\"vertical-align: top;\">"+
                             "<div class= \"head\" style=\"background-color: "+ 
                             comments[i].color +";\">B"+ 
                             comments[i].floor+ "</div></td><td style=\"font-size: 15px;\">&nbsp;"+ 
-                            comments[i].nickname+ "<button type=\"button\" class=\"btn btn-dark deleteComment\">"+
-                            "<span class=\"glyphicon glyphicon-trash\"></span></button></td></tr><tr><td>"+ 
-                            newStr+ "</td></tr>";
+                            comments[i].nickname;
+                if(comments[i].isOwn== 1){
+                    oneRow+= "<button type=\"button\" class=\"btn btn-dark deleteComment\">"+
+                            "<span class=\"glyphicon glyphicon-trash\"></span></button>"
+                }
+                oneRow+= "</td></tr><tr><td>"+ newStr+ "</td></tr>";
                 
                 $("#commentTable").append(oneRow);
             }
