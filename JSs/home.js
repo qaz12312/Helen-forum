@@ -130,15 +130,99 @@ $(document).ready(async function(){
         let title = $( this ).closest( "tr" ).find( ".articleTitle" ).text();
         let thisArticle = articles.find( (element) => element.title == title );
         // getKeepMenu();
-        if( keepMenu === undefined ) keepMenu = await new Promise( ( resolve, reject ) => { getKeepMenu( resolve, reject );});
+   
+        if( keepMenu === undefined ) 
+        {
+            let result = await new Promise( (resolve, reject) => { getKeepMenu( resolve, reject ); });
+
+            if( result === undefined )
+                return;
+            else
+                keepMenu = result;
+        }
+
         if( keepMenu.length == 0 )
         {
             swal({
-                title: "錯誤",
-                type: "error",
+                title: "警告",
+                type: "warning",
                 text: "沒有可用的收藏分類哦",
+                showCancelButton: true,
+                confirmButtonText: "\u002b 分類",
+                cancelButtonText: "取消",
 
-            }).then(( result ) => {}, ( dismiss ) => {} );
+            }).then(( result ) => 
+            {
+                swal({
+                    title: "新增收藏分類",
+                    input: "text",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+                    
+                }).then( async ( result ) =>
+                {
+                    let dirName = result;
+
+                    while( dirName == "" )
+                    {
+                        let dismissing = await swal({
+
+                            title: "請輸入收藏分類名稱",
+                            type: "warning",
+                            input: "text",
+                            showCancelButton: true,
+                            confirmButtonText: "確定",
+                            cancelButtonText: "取消",
+
+                        }).then((result) =>
+                        {
+                            dirName = result;
+                            return false
+
+                        }, ( dismiss ) =>
+                        {
+                            return true;
+                        });
+
+                        if( dismissing ) break;
+                    }
+
+                    let cmd = {};
+                    cmd[ "act" ] = "newDir";
+                    cmd[ "account" ] = thisAccount;
+                    cmd[ "dirName" ] = dirName;
+
+                    $.post( "../index.php", cmd, function( dataDB )
+                    {
+                        dataDB = JSON.parse( dataDB );
+
+                        if( dataDB.status == false )
+                        {
+                            swal({
+                                title: "新增收藏分類失敗",
+                                type: "error",
+                                text: dataDB.errorCode,
+                                confirmButtonText: "確定",
+
+                            }).then(( result ) => {}, ( dismiss ) => {});
+                        }
+                        else
+                        {
+                            keepMenu.push( dirName );
+                            let cmd = {};
+                            cmd[ "act" ] = "keep";
+                            cmd[ "account" ] = thisAccount;
+                            cmd[ "articleID" ] = thisArticle.articleID;
+                            cmd[ "dirName" ] = keepMenu[result];
+                            
+                        }
+                    });
+
+                }, ( dismiss ) => {});
+                
+            }, ( dismiss ) => {} );
+
             return;
         }
 
@@ -285,23 +369,7 @@ function forNormal( res, rej )
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
     cmd[ "account"] = thisAccount;
-    //cmd[ "sort" ] = (thisSort == "熱門") ? "hot" : "time";
-    if(thisSort=="熱門")
-    {
-        cmd[ "sort" ]="hot";
-    }
-    else if(thisSort=="最新")
-    {
-        cmd[ "sort" ]="time";
-    }
-    else if(thisSort=="收藏數")
-    {
-        cmd[ "sort" ]="collect";
-    }
-    else if(thisSort=="留言數")
-    {
-        cmd[ "sort" ]="comment";
-    }
+    cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
     $.post( "../index.php", cmd, function( dataDB )
     {
         console.log(dataDB)
@@ -398,23 +466,7 @@ function forSearching( res, rej)
     let cmd = {};
     cmd[ "act" ] = "searchBoard";
     cmd[ "account"] = thisAccount;
-    //cmd[ "sort" ] = ($( ".contentArea h3" ).text().trim() == "熱門") ? "hot" : "time";
-    if($( ".contentArea h3" ).text().trim() =="熱門")
-    {
-        cmd[ "sort" ]="hot";
-    }
-    else if($( ".contentArea h3" ).text().trim() =="最新")
-    {
-        cmd[ "sort" ]="time";
-    }
-    else if($( ".contentArea h3" ).text().trim() =="收藏數")
-    {
-        cmd[ "sort" ]="collect";
-    }
-    else if($( ".contentArea h3" ).text().trim() =="留言數")
-    {
-        cmd[ "sort" ]="comment";
-    }
+    cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
     cmd[ "content" ] = thisSearching.content;
     cmd[ "hashtag" ] = thisSearching.hashtag;
 
