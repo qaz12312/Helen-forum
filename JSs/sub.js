@@ -11,12 +11,11 @@ $(document).ready(async function(){
     barInitial();
     await new Promise((resolve, reject) => initial(resolve, reject));
 
-    $(".tabContent tr").find("td:first-child").on( "click", function(){
-        console.log(articles);
-        if($(this).text() != "還沒有收藏文章呦！"){
-            let articleIndex = $(".tabContent tr").index(this.closest("tr"));
-            sessionStorage.setItem("Helen-articleID", articles[articleIndex].articleID);
-            sessionStorage.setItem("Helen-act", "postPage");
+    $(".tabContent tr").find("td:first-child").on("click", function(){
+        let thisArticleID = Object.keys(articles).find((key) => articles[key][0].title == $(this).text() );
+        // console.log(thisArticleID);
+        if(thisArticleID != undefined){
+            sessionStorage.setItem( "Helen-articleID", thisArticleID );
             location.href =  "../HTMLs/post.html";
         }
     });
