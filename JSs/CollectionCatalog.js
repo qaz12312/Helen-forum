@@ -260,7 +260,7 @@ async function initial(res, rej)
     {   
         dataDB = JSON.parse( dataDB );
 
-        console.log( dataDB.data );
+        
         if( dataDB.status == false )
         {
             swal({
@@ -291,6 +291,7 @@ async function initial(res, rej)
 
                 for( let i in CollectionCatalog )
                 {
+                    
                     values.push(CollectionCatalog[i])
                     const div = document.createElement('div');          
                     div.classList.add('Page');
