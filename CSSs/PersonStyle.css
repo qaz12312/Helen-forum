@@ -129,6 +129,8 @@
 	}
 	
 	.Page {
+		float:left;
+		display: inline-block;
 		margin: 20px;
 		padding-bottom: 25px;
 		background: #fff;

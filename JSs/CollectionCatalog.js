@@ -175,7 +175,7 @@ $( document ).ready(async function()
             
             
                 var value = $('#input2').val();
-
+                
                 if( value == "" )
                 {
                     await swal({

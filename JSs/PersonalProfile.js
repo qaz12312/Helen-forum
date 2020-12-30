@@ -41,20 +41,21 @@ $( document ).ready(function()
                 }
                 else {
                     
-                    swal({
-                        title: 'Congratulation!!',
-                        type: 'success',
-                        text: 'success to change the nickname',
-                        showConfirmButton: false,
-                        customClass: 'animated rotateOutUpLeft',
-                        confirmButtonText: 'okay!',
-                        confirmButtonColor: '#eda2b6',
-                        timer: 2000
-                    }).then(( result ) => {}, ( dismiss ) => {});
+                    // swal({
+                    //     title: 'Congratulation!!',
+                    //     type: 'success',
+                    //     text: 'success to change the nickname',
+                    //     showConfirmButton: false,
+                    //     customClass: 'animated rotateOutUpLeft',
+                    //     confirmButtonText: 'okay!',
+                    //     confirmButtonColor: '#eda2b6',
+                    //     timer: 3000
+                    // }).then(( result ) => {}, ( dismiss ) => {});
                     //sessionStorage.setItem("Helen-nickname")=document.getElementById("name").value;
                     sessionStorage.setItem("Helen-nickname", document.getElementById("name").value)
                     document.getElementById('name').disabled = !document.getElementById('name').disabled;
                     document.getElementById("edit").value = 'Edit'
+                    location.reload();//重整
                 }
             });
         }
@@ -221,7 +222,7 @@ $( document ).ready(function()
                             animation: false,
                             customClass: 'animated rotateOutUpLeft',
                             confirmButtonText: 'okay!',
-                            confirmButtonColor: '#eda2b6'
+                            confirmButtonColor: sessionStorage.getItem("Helen-color")
                         }).then(( result ) => {}, ( dismiss ) => {});
                     }
                     else {
