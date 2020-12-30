@@ -529,7 +529,6 @@ function forNormal( resolve, reject )
             rule = dataDB.data.rule;
             topArticleID = dataDB.data.topArticleID;
             articles = dataDB.data.articleList;
-            console.log(topArticleID);
 
             $( ".tabContent h2" ).html( thisBoardName + "版" );
             $( ".tabContent h3" ).html( thisSort );
