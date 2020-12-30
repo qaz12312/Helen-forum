@@ -24,7 +24,7 @@ $(document).ready(async function(){
         if( $(this).text().trim() == "刪除"){
             let cmd= {};
             cmd["act"] = "removeKeepArticle";
-            cmd["account"] = sessionStorage.getItem("Helen-userID");
+            cmd["account"] = sessionStorage.getItem("Helen-account");
             cmd["articleID"] = articles[articleIndex].articleID;
             cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
 
