@@ -42,30 +42,29 @@ function initial(resolve, reject)
     //{
     //    res(1);
     //});
-
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
     cmd["type"]="calendar";
 
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     console.log(dataDB);
-    //     dataDB = JSON.parse( dataDB );
-    //     if( dataDB.status == false )
-    //     {
-    //         swal({
-    //             title: "載入頁面失敗",
-    //             type: "error",
-    //             text: dataDB.errorCode,
-    //             confirmButtonText: "確定",
-
-    //         }).then((result) => {}, ( dismiss ) => {});
-    //     } 
-    //     else
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        
+        dataDB = JSON.parse( dataDB );
+        if( dataDB.status == false )
         {
-            //let activity= dataDB.data;
-            activity=[{"title":"test","startTime":"2020-02-05T12:00:00","endTime":"2020-04-05T15:00:00","text":"text"},
-                     {"title":"test22","startTime":"2020-02-10T14:00:00","endTime":"2020-04-05T16:00:00","text":"text"}];
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
+
+            }).then((result) => {}, ( dismiss ) => {});
+        } 
+        else
+        {
+            let activity= dataDB.data;
+            // activity=[{"title":"test","startTime":"2020-12-05T12:00:00","endTime":"2020-12-05T15:00:00","text":"text"},
+            //          {"title":"test22","startTime":"2020-12-10T14:00:00","endTime":"2020-12-05T16:00:00","text":"text"}];
             if( $.isEmptyObject(activity) ) {
                 let emptyMessage = "<tr>" + 
                                         "<td colspan='4'>檢舉文章列表為空</td>" +
@@ -122,7 +121,7 @@ function initial(resolve, reject)
         calendar.render();
         resolve(0); 
       } 
-    //});
+    });
     
 }
  
