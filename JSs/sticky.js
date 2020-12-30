@@ -584,7 +584,7 @@ function forNormal( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            if( topArticleID !== undefined )
+            if( topArticleID !== undefined && articles.find( (ele) => ele.articleID == topArticleID ) !== undefined )
             {
                 let topArticle = articles.find( (element) => element.articleID === topArticleID );
 
