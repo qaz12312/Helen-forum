@@ -113,6 +113,13 @@ $("#reportBtn").click(function(){
             text: "不可再次檢舉"
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
+    }if(!(sessionStorage.getItem("Helen-account"))){
+        swal({
+            title: "無法按讚！",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {}, ( dismiss ) => {});
+        return;
     }
     swal({
         title: "檢舉",
@@ -327,7 +334,7 @@ $("#keepBtn").click( function(){
 // 取得收藏目錄
 function getKeepMenu(){
     // return ["最愛", "漫威", "小說"];
-
+    keepMenu= [];
     let cmd = {};
     cmd["act"] = "showDirList";
     cmd["account"] = sessionStorage.getItem("Helen-account");
@@ -344,7 +351,6 @@ function getKeepMenu(){
             return;
         }
         else{
-            keepMenu= [];
             let keep= dataDB.data;
             for(var k= 0; k< keep.length; k++){
                 keepMenu.push(keep[k]);
