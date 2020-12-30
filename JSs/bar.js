@@ -4,8 +4,8 @@ var InvalidBoards = [];
 var applyError = "";
 var searchType = "";
 
-async function barInitial(){
-    if(sessionStorage.getItem("Helen-sort")== null){
+async function barInitial() {
+    if (sessionStorage.getItem("Helen-sort") == null) {
         sessionStorage.setItem("Helen-sort", "熱門");
     }
 
@@ -16,33 +16,33 @@ async function barInitial(){
     
     // 最左邊的 ham menu 初始化
     $("#menu").empty();
-    let boards= sessionStorage.getItem("Helen-boards");
-    boards= JSON.parse(boards);
-    
-    for(var i= 0; i< boards.length; i++){
-        var oneBoard= boards[i];
-        $("#menu").append("<a href=\"../HTMLs/sticky.html\"><li>"+
-                            oneBoard+ 
-                            "版</li></a>");
+    let boards = sessionStorage.getItem("Helen-boards");
+    boards = JSON.parse(boards);
+
+    for (var i = 0; i < boards.length; i++) {
+        var oneBoard = boards[i];
+        $("#menu").append("<a href=\"../HTMLs/sticky.html\"><li>" +
+            oneBoard +
+            "版</li></a>");
     }
-    
-    if(userPermission>= 3) // admin 可新增看版
-        $("#menu").append("<a href=\"../HTMLs/manageBoard.html\">"+
-                        "<li><h3 class=\"glyphicon glyphicon-plus\">"+
-                        " A D D</h3></li></a>");
-    else if(userPermission > 0)
-        $("#menu").append("<a onclick='applyForModerator()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
-                            " 我要當版主</h3></li></a>" +
-                            "<a onclick='applyForBoard()'><li><h3 class=\"glyphicon glyphicon-plus\">"+
-                            " 我要新增看版</h3></li></a>");
+
+    if (userPermission >= 3) // admin 可新增看版
+        $("#menu").append("<a href=\"../HTMLs/manageBoard.html\">" +
+            "<li><h3 class=\"glyphicon glyphicon-plus\">" +
+            " A D D</h3></li></a>");
+    else if (userPermission > 0)
+        $("#menu").append("<a onclick='applyForModerator()'><li><h3 class=\"glyphicon glyphicon-plus\">" +
+            " 我要當版主</h3></li></a>" +
+            "<a onclick='applyForBoard()'><li><h3 class=\"glyphicon glyphicon-plus\">" +
+            " 我要新增看版</h3></li></a>");
 
     // 登入/登出按紐顯示
-    if(userPermission== 0){ // 訪客(登入)
+    if (userPermission == 0) { // 訪客(登入)
         $("#logInBtn").attr("disable", false);
         $("#logOutBtn").attr("disable", true);
         $("#logInBtn").show();
         $("#logOutBtn").hide();
-    }else{ // 已登入(登出)
+    } else { // 已登入(登出)
         $("#logInBtn").attr("disable", true);
         $("#logOutBtn").attr("disable", false);
         $("#logInBtn").hide();
@@ -50,13 +50,13 @@ async function barInitial(){
     }
 
     // 頭像(登入改顏色)
-    if(userPermission== 0){
+    if (userPermission == 0) {
         $("#head").css("background-color", "#9da9be");
-    }else{
-        var userColor= sessionStorage.getItem("Helen-color")
+    } else {
+        var userColor = sessionStorage.getItem("Helen-color")
         $("#head").css("background-color", userColor);
     }
-    
+
     // 最右下拉選單: user info 
     $("#userDD").empty();
     if(userPermission== 0){ // 訪客(未登入)
@@ -100,44 +100,44 @@ async function barInitial(){
 
         }
     }
-    
+
     // 點選最左邊的 ham menu(看版) -> 跳轉到特定看版
-    $("#menu").on("click", "li", function(){
-        let boardIndex= $("li").index($(this)); // this= <li>某某版</li>
-        let boards= sessionStorage.getItem("Helen-boards");
-        boards= JSON.parse(boards);
-        sessionStorage.setItem("Helen-boardName", boards[boardIndex- 1]);
+    $("#menu").on("click", "li", function () {
+        let boardIndex = $("li").index($(this)); // this= <li>某某版</li>
+        let boards = sessionStorage.getItem("Helen-boards");
+        boards = JSON.parse(boards);
+        sessionStorage.setItem("Helen-boardName", boards[boardIndex - 1]);
     });
 
     // 按搜尋或 'Enter Key' 搜尋頁面
-    $("#searchBtn").click(function(){
+    $("#searchBtn").click(function () {
         setSearchData();
     });
-    $("#searchInputText").keypress(function(event){
-        if(event.keyCode== 13){ // 按下 ENTER
+    $("#searchInputText").keypress(function (event) {
+        if (event.keyCode == 13) { // 按下 ENTER
             setSearchData();
         }
     });
-        
+
     // 登入/登出按紐
-    $("#logInBtn").click(function(){
-        location.href=  "../HTMLs/login.html";
+    $("#logInBtn").click(function () {
+        location.href = "../HTMLs/login.html";
     });
-    $("#logOutBtn").click(function(){
-        let cmd= {};
-        cmd["act"]= "logOut";
-        cmd["account"]= sessionStorage.getItem("Helen-account");
-        
-        $.post("../index.php", cmd, function(dataDB){
-            dataDB= JSON.parse(dataDB);
-            if(dataDB.status == false){
+    $("#logOutBtn").click(function () {
+        let cmd = {};
+        cmd["act"] = "logOut";
+        cmd["account"] = sessionStorage.getItem("Helen-account");
+
+        $.post("../index.php", cmd, function (dataDB) {
+            dataDB = JSON.parse(dataDB);
+            if (dataDB.status == false) {
                 swal({
                     title: "登出失敗",
                     type: "error",
                     // text: dataDB.errorCode
-                }).then(( result ) => {}, ( dismiss ) => {});
+                }).then((result) => { }, (dismiss) => { });
             }
-            else{ // 登出成功
+            else { // 登出成功
                 swal({
                     title: 'Bye Bye~',
                     type: 'success',
@@ -148,9 +148,9 @@ async function barInitial(){
                     function () { },
                     function (dismiss) {
                         if (dismiss === 'timer') {
-                            userPermission= 0;
+                            userPermission = 0;
                             sessionStorage.clear();
-                            location.href=  "../HTMLs/home.html";
+                            location.href = "../HTMLs/home.html";
                         }
                     }
                 )
@@ -160,36 +160,31 @@ async function barInitial(){
 
 }
 
-function setSearchData(){
-    //抓搜尋的選擇
-    let searchType = $("#searchOption").val(); //獲取選中記錄的value值
-    let searchStr= $("#searchInputText").val().trim();
-    let searchArr= searchStr.split(" ");
-    var contents= [];
-    // var hashtags= [];
-    for(var i= 0; i< searchArr.length; i++){
-        if(searchArr[i].length> 0){
-            contents.push(searchArr[i]);
+function setSearchData() {
+    let searchStr = $("#searchInputText").val().trim();
+    let searchArr = searchStr.split(" ");
+    var contents = [];
+    var hashtags = [];
+    for (var i = 0; i < searchArr.length; i++) {
+        if (searchArr[i].length > 0) {
+            if (searchArr[i][0] != "#") {
+                contents.push(searchArr[i]);
+            } else {
+                if (searchArr[i].length > 1) {
+                    hashtags.push(searchArr[i].substring(1, searchArr[i].length));
+                }
+            }
         }
     }
-    // let searchData= {};
-    // searchData["content"]= contents;
-    // searchData["hashtag"]= hashtags;
-    
-    if( contents.length == 0){
-        swal({
-            title: "錯誤",
-            type: "error",
-            text: "還沒有輸入搜尋內容哦",
-            confirmButtonText: "確定",
+    let searchData = {};
+    searchData["content"] = contents;
+    searchData["hashtag"] = hashtags;
+    sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
-        }).then((result) => {}, ( dismiss ) => {});
-        return;
-    }
-    else if(sessionStorage.getItem("Helen-boardName")== null){
-        location.href= "../HTMLs/home.html";
-    }else{
-        location.href= "../HTMLs/sticky.html";
+    if (sessionStorage.getItem("Helen-boardName") == null) {
+        location.href = "../HTMLs/home.html";
+    } else {
+        location.href = "../HTMLs/sticky.html";
     }
     if(searchType== 1){ // hashTag
         sessionStorage.setItem("Helen-hashtag", JSON.stringify(searchData));
@@ -198,113 +193,109 @@ function setSearchData(){
     }
 }
 
-function getUserInfo(resolve, reject){
-    if(sessionStorage.getItem("Helen-account")== null){
-        userPermission= 0;
+function getUserInfo(resolve, reject) {
+    if (sessionStorage.getItem("Helen-account") == null) {
+        userPermission = 0;
         resolve(0);
     }
-    else{
-        let cmd= {};
-        cmd["act"]= "showAuthority";
-        cmd["account"]= sessionStorage.getItem("Helen-account");
-        $.post("../index.php", cmd, function(dataDB){
-            dataDB= JSON.parse(dataDB);
-            if(dataDB.status == false){
+    else {
+        let cmd = {};
+        cmd["act"] = "showAuthority";
+        cmd["account"] = sessionStorage.getItem("Helen-account");
+        $.post("../index.php", cmd, function (dataDB) {
+            dataDB = JSON.parse(dataDB);
+            if (dataDB.status == false) {
                 swal({
                     title: "獲取使用者權限失敗",
                     type: "error",
                     // text: dataDB.errorCode
-                }).then(( result ) => {}, ( dismiss ) => {});
+                }).then((result) => { }, (dismiss) => { });
             }
-            else{
-                userData= dataDB.data; // permission, boardName
-         // Test
-        //  userData= {permission: 2};
-         // Test End
-                userPermission= userData.permission;
+            else {
+                userData = dataDB.data; // permission, boardName
+                // Test
+                //  userData= {permission: 2};
+                // Test End
+                userPermission = userData.permission;
                 delete userData.permission;
             }
             resolve(0);
         });
     }
-   
+
 }
 
-function getBoards(resolve, reject){
-    let boards= [];
-    let cmd= {};
-    cmd["act"]= "showBoardList";
-    $.post("../index.php", cmd, function(dataDB){
-        dataDB= JSON.parse(dataDB);
-        if(dataDB.status == false){
+function getBoards(resolve, reject) {
+    let boards = [];
+    let cmd = {};
+    cmd["act"] = "showBoardList";
+    $.post("../index.php", cmd, function (dataDB) {
+        dataDB = JSON.parse(dataDB);
+        if (dataDB.status == false) {
             swal({
                 title: "獲取看版失敗",
                 type: "error",
                 // text: dataDB.errorCode
-            }).then(( result ) => {}, ( dismiss ) => {});
+            }).then((result) => { }, (dismiss) => { });
         }
-        else{
-            dataDB= dataDB.data;
-            for(var i= 0; i< dataDB.length; i++){
+        else {
+            dataDB = dataDB.data;
+            for (var i = 0; i < dataDB.length; i++) {
                 boards.push(dataDB[i].boardName);
             }
-            if(boards.length== 0){
+            if (boards.length == 0) {
                 console.log("沒有看版");
             }
-        
-            sessionStorage.setItem("Helen-boards", JSON.stringify(boards)); 
+
+            sessionStorage.setItem("Helen-boards", JSON.stringify(boards));
         }
         resolve(0);
     });
-    
+
     //Test
     // boards= ["美食", "廢文", "八卦", "企鵝", "漫威", "星座", "旅遊"];
     //Test End
 
 }
 
-function applyForBoard()
-{
-    let boards = sessionStorage.getItem( "Helen-boards");
-    boards = JSON.parse( boards ); 
-    
+function applyForBoard() {
+    let boards = sessionStorage.getItem("Helen-boards");
+    boards = JSON.parse(boards);
+
     let addingQueue = [];
     let steps = [1, 2];
 
     addingQueue.push(
-    {
-        title: "新增看板申請<br /><small>&lt;看板名稱&gt;</small>",
-        input: "text",
-        inputPlaceholder: "請輸入看板名稱(不包含「版」)...",
-        showCancelButton: true,
-        confirmButtonText: "送出",
-        cancelButtonText: "取消",
-        animation: false,
-    });
+        {
+            title: "新增看板申請<br /><small>&lt;看板名稱&gt;</small>",
+            input: "text",
+            inputPlaceholder: "請輸入看板名稱(不包含「版」)...",
+            showCancelButton: true,
+            confirmButtonText: "送出",
+            cancelButtonText: "取消",
+            animation: false,
+        });
 
     addingQueue.push(
-    {
-        title: "新增看板申請<br /><small>&lt;申請原因&gt;</small>",
-        input: "textarea",
-        inputPlaceholder: "請輸入申請原因...",
-        showCancelButton: true,
-        confirmButtonText: "送出",
-        cancelButtonText: "取消",
-        animation: false,
-    });
+        {
+            title: "新增看板申請<br /><small>&lt;申請原因&gt;</small>",
+            input: "textarea",
+            inputPlaceholder: "請輸入申請原因...",
+            showCancelButton: true,
+            confirmButtonText: "送出",
+            cancelButtonText: "取消",
+            animation: false,
+        });
 
-    swal.setDefaults( { progressSteps: steps } );
+    swal.setDefaults({ progressSteps: steps });
 
-    swal.queue( addingQueue ).then( async ( result ) => 
-    {
-        swal.setDefaults( { progressSteps: false } );
+    swal.queue(addingQueue).then(async (result) => {
+        swal.setDefaults({ progressSteps: false });
 
         let dup = boards.indexOf(result[0]) != -1;
 
-        while( result[0] !== false && ( result[0] === "" || result[0].includes("版") || dup ) )
-        {
-            if( result[0] === "" )
-            {
+        while (result[0] !== false && (result[0] === "" || result[0].includes("版") || dup)) {
+            if (result[0] === "") {
                 result[0] = await swal({
                     title: "看板名稱不得為空",
                     type: "warning",
@@ -314,18 +305,15 @@ function applyForBoard()
                     confirmButtonText: "確定",
                     cancelButtonText: "取消",
 
-                }).then(( result ) =>
-                {
+                }).then((result) => {
                     return result;
 
-                }, ( dismiss ) =>
-                {
-                    return false;
-                });
+                }, (dismiss) => {
+                        return false;
+                    });
             }
 
-            if( dup )
-            {
+            if (dup) {
                 result[0] = await swal({
                     title: "看板已存在，請重新輸入",
                     type: "warning",
@@ -335,18 +323,15 @@ function applyForBoard()
                     confirmButtonText: "確定",
                     cancelButtonText: "取消",
 
-                }).then(( result ) =>
-                {
+                }).then((result) => {
                     return result;
 
-                }, ( dismiss ) =>
-                {
-                    return false;
-                });
+                }, (dismiss) => {
+                        return false;
+                    });
             }
 
-            if( typeof result[0] == "string" && result[0].includes("版") )
-            {
+            if (typeof result[0] == "string" && result[0].includes("版")) {
                 result[0] = await swal({
                     title: "看板名稱不得含有「版」",
                     type: "warning",
@@ -356,21 +341,19 @@ function applyForBoard()
                     confirmButtonText: "確定",
                     cancelButtonText: "取消",
 
-                }).then(( result ) =>
-                {
+                }).then((result) => {
                     return result;
 
-                }, ( dismiss ) =>
-                {
-                    return false;
-                });
+                }, (dismiss) => {
+                        return false;
+                    });
             }
 
             dup = boards.indexOf(result[0]) != -1;
         }
 
-        if( result[0] == false ) return;
-    
+        if (result[0] == false) return;
+
         let newBoard = result[0] + "版";
         let cmd = {};
         cmd[ "act" ] = "newApplyBoard";
@@ -381,26 +364,24 @@ function applyForBoard()
         $.post( "../index.php", cmd, function(dataDB)
         {
             dataDB = JSON.parse(dataDB);
-    
-            if( dataDB.status == false )
-            {
+
+            if (dataDB.status == false) {
                 swal({
                     title: "申請看板失敗<br/><small>&lt;" + newBoard + "&gt;</small>",
                     type: "error",
                     text: dataDB.errorCode,
                     confirmButtonText: "確定",
-    
-                }).then((result) => {}, (dismiss ) => {});
+
+                }).then((result) => { }, (dismiss) => { });
             }
-            else
-            {
+            else {
                 swal({
                     title: "申請看板成功<br/><small>&lt;" + newBoard + "&gt;</small>",
                     type: "success",
                     showConfirmButton: false,
                     timer: 1000,
-    
-                }).then((result) => {}, ( dismiss ) => {});
+
+                }).then((result) => { }, (dismiss) => { });
             }
         });
 
@@ -419,58 +400,54 @@ async function applyForModerator()
 
         let validBoards = [...boards];
 
-        for( let i in boards )
-        {
-            if( invalidBoards.find( ( element ) => element.boardName == boards[i] ) !== undefined )
-            {
-                validBoards.splice( validBoards.indexOf( boards[i]), 1 );
+        for (let i in boards) {
+            if (invalidBoards.find((element) => element.boardName == boards[i]) !== undefined) {
+                validBoards.splice(validBoards.indexOf(boards[i]), 1);
             }
         }
-        
-        if( validBoards.length == 0 )
-        {
+
+        if (validBoards.length == 0) {
             await swal({
                 title: "無法申請看板",
                 type: "error",
                 text: "還沒有可申請的看板哦",
                 confirmButtonText: "確定",
 
-            }).then((result) => {}, ( dismiss ) => {});
+            }).then((result) => { }, (dismiss) => { });
 
             return;
         }
-        
+
         let addingQueue = [];
         let steps = [1, 2];
 
         addingQueue.push(
-        {
-            title: "申請成為版主<br /><small>&lt;看板名稱&gt;</small>",
-            input: "select",
-            inputOptions: validBoards,
-            showCancelButton: true,
-            confirmButtonText: "送出",
-            cancelButtonText: "取消",
-            animation: false,
-        });
+            {
+                title: "申請成為版主<br /><small>&lt;看板名稱&gt;</small>",
+                input: "select",
+                inputOptions: validBoards,
+                showCancelButton: true,
+                confirmButtonText: "送出",
+                cancelButtonText: "取消",
+                animation: false,
+            });
 
         addingQueue.push(
-        {
-            title: "申請成為版主<br /><small>&lt;申請原因&gt;</small>",
-            input: "textarea",
-            inputPlaceholder: "請輸入申請原因...",
-            showCancelButton: true,
-            confirmButtonText: "送出",
-            cancelButtonText: "取消",
-            animation: false,
-        });
+            {
+                title: "申請成為版主<br /><small>&lt;申請原因&gt;</small>",
+                input: "textarea",
+                inputPlaceholder: "請輸入申請原因...",
+                showCancelButton: true,
+                confirmButtonText: "送出",
+                cancelButtonText: "取消",
+                animation: false,
+            });
 
-        swal.setDefaults( { progressSteps: steps } );
+        swal.setDefaults({ progressSteps: steps });
 
-        swal.queue( addingQueue ).then( async ( result ) => 
-        {
-            swal.setDefaults( { progressSteps: false } );
-        
+        swal.queue(addingQueue).then(async (result) => {
+            swal.setDefaults({ progressSteps: false });
+
             let newBoard = validBoards[result[0]] + "版";
             let cmd = {};
             cmd[ "act" ] = "newApplyBoard";
@@ -480,26 +457,24 @@ async function applyForModerator()
             $.post( "../index.php", cmd, function(dataDB)
             {
                 dataDB = JSON.parse(dataDB);
-        
-                if( dataDB.status == false )
-                {
+
+                if (dataDB.status == false) {
                     swal({
                         title: "申請版主失敗<br/><small>&lt;" + newBoard + "&gt;</small>",
                         type: "error",
                         text: dataDB.errorCode,
                         confirmButtonText: "確定",
-        
-                    }).then((result) => {}, (dismiss ) => {});
+
+                    }).then((result) => { }, (dismiss) => { });
                 }
-                else
-                {
+                else {
                     swal({
                         title: "申請版主成功<br/><small>&lt;" + newBoard + "&gt;</small>",
                         type: "success",
                         showConfirmButton: false,
                         timer: 1000,
-        
-                    }).then((result) => {}, ( dismiss ) => {});
+
+                    }).then((result) => { }, (dismiss) => { });
                 }
             });
 
