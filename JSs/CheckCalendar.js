@@ -115,7 +115,6 @@ $( document ).ready( async function()
             {
                 if ( result ) 
                 {
-                    alert(thisID)
                     let cmd = {};
                     cmd[ "act" ] = "checkInCanlendarList";
                     cmd[ "id" ] = parseInt(thisID);
