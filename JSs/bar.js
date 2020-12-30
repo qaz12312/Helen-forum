@@ -84,25 +84,66 @@ async function barInitial(){
                                 "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>")
         }
     }
+    
+    // 點選最左邊的 ham menu(看版) -> 跳轉到特定看版
+    $("#menu").on("click", "li", function(){
+        let boardIndex= $("li").index($(this)); // this= <li>某某版</li>
+        let boards= sessionStorage.getItem("Helen-boards");
+        boards= JSON.parse(boards);
+        sessionStorage.setItem("Helen-boardName", boards[boardIndex- 1]);
+    });
+
+    // 按搜尋或 'Enter Key' 搜尋頁面
+    $("#searchBtn").click(function(){
+        setSearchData();
+    });
+    $("#searchInputText").keypress(function(event){
+        if(event.keyCode== 13){ // 按下 ENTER
+            setSearchData();
+        }
+    });
+        
+    // 登入/登出按紐
+    $("#logInBtn").click(function(){
+        location.href=  "../HTMLs/login.html";
+    });
+    $("#logOutBtn").click(function(){
+        let cmd= {};
+        cmd["act"]= "logOut";
+        cmd["account"]= sessionStorage.getItem("Helen-account");
+        
+        $.post("../index.php", cmd, function(dataDB){
+            dataDB= JSON.parse(dataDB);
+            if(dataDB.status == false){
+                swal({
+                    title: "登出失敗",
+                    type: "error",
+                    // text: dataDB.errorCode
+                }).then(( result ) => {}, ( dismiss ) => {});
+            }
+            else{ // 登出成功
+                swal({
+                    title: 'Bye Bye~',
+                    type: 'success',
+                    text: '本訊息1秒後自動關閉',
+                    showConfirmButton: false,
+                    timer: 1000,
+                }).then(
+                    function () { },
+                    function (dismiss) {
+                        if (dismiss === 'timer') {
+                            userPermission= 0;
+                            sessionStorage.clear();
+                            location.href=  "../HTMLs/home.html";
+                        }
+                    }
+                )
+            }
+        });
+    });
+
 }
 
-// 點選最左邊的 ham menu(看版) -> 跳轉到特定看版
-$("#menu").on("click", "li", function(){
-    let boardIndex= $("li").index($(this)); // this= <li>某某版</li>
-    let boards= sessionStorage.getItem("Helen-boards");
-    boards= JSON.parse(boards);
-    sessionStorage.setItem("Helen-boardName", boards[boardIndex- 1]);
-});
-
-// 按搜尋或 'Enter Key' 搜尋頁面
-$("#searchBtn").click(function(){
-    setSearchData();
-});
-$("#searchInputText").keypress(function(event){
-    if(event.keyCode== 13){ // 按下 ENTER
-        setSearchData();
-    }
-});
 function setSearchData(){
     let searchStr= $("#searchInputText").val().trim();
     let searchArr= searchStr.split(" ");
@@ -125,50 +166,11 @@ function setSearchData(){
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if(sessionStorage.getItem("Helen-boardName")== null){
-        location.href= "../home.html";
+        location.href= "../HTMLs/home.html";
     }else{
         location.href= "../HTMLs/sticky.html";
     }
 }
-
-// 登入/登出按紐
-$("#logInBtn").click(function(){
-    location.href=  "../HTMLs/login.html";
-});
-$("#logOutBtn").click(function(){
-    let cmd= {};
-	cmd["act"]= "logOut";
-    cmd["account"]= sessionStorage.getItem("Helen-account");
-    
-    $.post("../index.php", cmd, function(dataDB){
-        dataDB= JSON.parse(dataDB);
-        if(dataDB.status == false){
-            swal({
-                title: "登出失敗",
-                type: "error",
-                // text: dataDB.errorCode
-            }).then(( result ) => {}, ( dismiss ) => {});
-        }
-        else{ // 登出成功
-            swal({
-                title: 'Bye Bye~',
-                type: 'success',
-                text: '本訊息1秒後自動關閉',
-                showConfirmButton: false,
-                timer: 1000,
-            }).then(
-                function () { },
-                function (dismiss) {
-                    if (dismiss === 'timer') {
-                        userPermission= 0;
-                        sessionStorage.clear();
-                        location.href=  "../home.html";
-                    }
-                }
-            )
-        }
-    });
-});
 
 function getUserInfo(resolve, reject){
     if(sessionStorage.getItem("Helen-account")== null){
