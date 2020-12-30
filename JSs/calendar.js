@@ -70,26 +70,22 @@ function initial(resolve, reject)
                             html:   "<table>"+
                                         "<tbody>"+
                                             "<tr>"+
-                                                "<td style='font-weight:1000; padding:5%;'>開始時間</td>"+
-                                                "<td>"+startT[0]+
-                                                "&emsp;"+startT[1]+"</td>"+
+                                                "<td style='font-weight:1000; padding: 0px 0px 0px 10px;'>開始時間"+
+                                                "&emsp;&emsp;"+startT[0]+"&emsp;"+startT[1]+"</td>"+
                                             "</tr>"+
                                             "<tr>"+
-                                                "<td style='font-weight:1000; padding:5%;'>結束時間</td>"+
-                                                "<td>"+endT[0]+
-                                                "&emsp;"+endT[1]+"</td>"+
+                                                "<td style='font-weight:1000; padding: 0px 0px 0px 10px;'>結束時間"+
+                                                "&emsp;&emsp;"+endT[0]+"&emsp;"+endT[1]+"</td>"+
                                             "</tr>"+
                                         "</tbody>"+
                                     "</table>"+
                                     "<hr>"+
                                     activity[thisActivity].text,
                             type: "info",
-                            showCancelButton: true,
                             confirmButtonText: "確定",
-                            cancelButtonText: "取消",
                             animation: false,
                         }).then(( result ) => {}, (dismiss) => {});  
-
+                        
                     info.el.style.borderColor = 'red';
                 }
             });
