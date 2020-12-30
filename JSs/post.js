@@ -234,7 +234,6 @@ $("#heartBtn").click( function(){
 });
 
 $("#keepBtn").click( function(){
-    console.log(keepMenu);
     if(!(sessionStorage.getItem("Helen-account"))){
         swal({
             title: "無法收藏！",
@@ -245,6 +244,7 @@ $("#keepBtn").click( function(){
     }
     let keepText = $(this).find("span");
     getKeepMenu();
+    console.log(keepMenu);
 	
     if(keepMenu.length== 0){
         swal({
