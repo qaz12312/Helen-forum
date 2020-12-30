@@ -41,7 +41,7 @@
                 $row = $result[$i];
                 $arr[$i] = array("title"=>$row[0],"articleID"=>$row[1]);
             }
-            $rtn = successCode("Successfully article in dictionary.",$arr[0]);
+            $rtn = successCode("Successfully article in dictionary.",$arr);
         }
         echo json_encode($rtn);
     }

@@ -10,78 +10,6 @@ var articles = [];
 $(document).ready(async function(){
     barInitial();
     await new Promise((resolve, reject) => initial(resolve, reject));
-
-    $(".tabContent tr").find("td:first-child").on( "click", function(){
-        if($(this).text() != "還沒有收藏文章呦！"){
-            let articleIndex = $(".tabContent tr").index(this.closest("tr"));
-            sessionStorage.setItem("Helen-articleID", articles[articleIndex].articleID);
-            sessionStorage.setItem("Helen-act", "postPage");
-            location.href =  "../HTMLs/post.html";
-        }
-    });
-
-    $(".tabContent button").on( "click", function(){
-        let articleIndex = $(".tabContent tr").index(this.closest("tr"));
-        if( $(this).text().trim() == "刪除"){
-            let cmd= {};
-            cmd["act"] = "removeKeepArticle";
-            cmd["account"] = sessionStorage.getItem("Helen-userID");
-            cmd["articleID"] = articles[articleIndex].articleID;
-            cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
-
-            $.post( "../index.php", cmd, function( dataDB ){
-                dataDB = JSON.parse( dataDB );
-
-                swal({
-                    title: "確定要刪除此篇文章嗎？<br /><small>&lt;"
-                     + articles[ articleIndex ].title
-                      + "&gt;</small>",
-                    showCancelButton: true,
-                    confirmButtonText: "確定",
-                    cancelButtonText: "取消",
-                    animation: false
-    
-                    }).then(( result ) => {
-                        if ( result ) 
-                        {
-                            if( status == false )
-                            {
-                                swal({
-                                    title: "移除失敗<br /><small>&lt;"
-                                    //  + articles[ articleIndex ].title
-                                      + "&gt;</small>",
-                                    type: "error",
-                                    // text: dataDB.errorCode,
-                                    animation: false
-                                }, ( dismiss ) => {});
-                            }
-                            else
-                            {
-                                swal({
-                                    title: "已成功移除收藏文章！<br /><small>&lt;"
-                                     + articles[ articleIndex ].title
-                                      + "&gt;</small>",
-                                    type: "success",
-                                }).then(( result ) => {}, ( dismiss ) => {});
-                                $(this).closest( "tr" ).remove();
-                                articles.splice( articleIndex, 1 );
-    
-                                if( articles.length == 0 )
-                                {
-                                    console.log( "這個收藏目錄沒有收藏任何文章" );
-                                    let emptyMessage = "<tr>" + 
-                                                            "<td colspan='2'>還沒有收藏文章呦！</td>" +
-                                                        "</tr>";
-                                    $( ".tabContent tbody" ).append( emptyMessage );
-                                }
-                            }
-                        }
-                    }, function( dismiss ) {
-                        if ( dismiss === 'cancel' );
-                });
-            });
-        }
-    });
 });
 
 async function initial(res, rej){
@@ -98,7 +26,6 @@ async function initial(res, rej){
     var keepDir= sessionStorage.getItem("Helen-keepDir");
     $(".tabContent").find("h2").text(keepDir);
     $(".tabContent").find("p").text("收藏目錄 > "+ keepDir);
-    console.log(keepDir)
     let cmd = {};
     cmd["act"] = "showArticleInDir";
     cmd["account"] = sessionStorage.getItem("Helen-account");
@@ -119,7 +46,6 @@ async function initial(res, rej){
             content.empty();
         
             articles = dataDB.data;
-            console.log(articles)
             if( articles.length == 0 ){
                 let emptyMessage = "<tr>" + 
                                         "<td colspan='2'>還沒有收藏文章呦！</td>" +
@@ -145,7 +71,79 @@ async function initial(res, rej){
     res(0);
 }
 
-async function checkPermission(resolve, reject){
+$(".tabContent tr").find("td:first-child").on("click", function(){
+    let thisArticleID = Object.keys(articles).find((key) => articles[key].title == $(this).text() );
+    console.log(thisArticleID);
+    if(thisArticleID != undefined){
+        sessionStorage.setItem( "Helen-articleID", thisArticleID );
+        location.href =  "../HTMLs/post.html";
+    }
+});
+
+$(".tabContent button").on( "click", function(){
+    let articleIndex = $(".tabContent tr").index(this.closest("tr"));
+    if( $(this).text().trim() == "刪除"){
+        let cmd= {};
+        cmd["act"] = "removeKeepArticle";
+        cmd["account"] = sessionStorage.getItem("Helen-userID");
+        cmd["articleID"] = articles[articleIndex].articleID;
+        cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
+
+        $.post( "../index.php", cmd, function( dataDB ){
+            dataDB = JSON.parse( dataDB );
+
+            swal({
+                title: "確定要刪除此篇文章嗎？<br /><small>&lt;"
+                 + articles[ articleIndex ].title
+                  + "&gt;</small>",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                animation: false
+
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        if( status == false )
+                        {
+                            swal({
+                                title: "移除失敗<br /><small>&lt;"
+                                //  + articles[ articleIndex ].title
+                                  + "&gt;</small>",
+                                type: "error",
+                                // text: dataDB.errorCode,
+                                animation: false
+                            }, ( dismiss ) => {});
+                        }
+                        else
+                        {
+                            swal({
+                                title: "已成功移除收藏文章！<br /><small>&lt;"
+                                 + articles[ articleIndex ].title
+                                  + "&gt;</small>",
+                                type: "success",
+                            }).then(( result ) => {}, ( dismiss ) => {});
+                            $(this).closest( "tr" ).remove();
+                            articles.splice( articleIndex, 1 );
+
+                            if( articles.length == 0 )
+                            {
+                                console.log( "這個收藏目錄沒有收藏任何文章" );
+                                let emptyMessage = "<tr>" + 
+                                                        "<td colspan='2'>還沒有收藏文章呦！</td>" +
+                                                    "</tr>";
+                                $( ".tabContent tbody" ).append( emptyMessage );
+                            }
+                        }
+                    }
+                }, function( dismiss ) {
+                    if ( dismiss === 'cancel' );
+            });
+        });
+    }
+});
+
+function checkPermission(resolve, reject){
     if(sessionStorage.getItem("Helen-account")){
         resolve(true);
     }

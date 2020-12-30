@@ -113,6 +113,13 @@ $("#reportBtn").click(function(){
             text: "不可再次檢舉"
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
+    }if(!(sessionStorage.getItem("Helen-account"))){
+        swal({
+            title: "無法按讚！",
+            type: "error",
+            text: "請先登入！"
+        }).then(( result ) => {}, ( dismiss ) => {});
+        return;
     }
     swal({
         title: "檢舉",
@@ -226,7 +233,7 @@ $("#heartBtn").click( function(){
     });
 });
 
-$("#keepBtn").click( function(){
+$("#keepBtn").click(async function(){
     if(!(sessionStorage.getItem("Helen-account"))){
         swal({
             title: "無法收藏！",
@@ -236,7 +243,8 @@ $("#keepBtn").click( function(){
         return;
     }
     let keepText = $(this).find("span");
-    getKeepMenu();
+    await new Promise ((resolve, reject) => {getKeepMenu(resolve, reject);});
+    console.log(keepMenu);
 	
     if(keepMenu.length== 0){
         swal({
@@ -325,9 +333,9 @@ $("#keepBtn").click( function(){
 });
 
 // 取得收藏目錄
-function getKeepMenu(){
+function getKeepMenu(resolve, reject){
     // return ["最愛", "漫威", "小說"];
-
+    keepMenu= [];
     let cmd = {};
     cmd["act"] = "showDirList";
     cmd["account"] = sessionStorage.getItem("Helen-account");
@@ -341,16 +349,15 @@ function getKeepMenu(){
                 type: "error",
                 text: dataDB.errorCode
             }).then((result) => {}, ( dismiss ) => {} );
-            return;
         }
         else{
-            keepMenu= [];
             let keep= dataDB.data;
             for(var k= 0; k< keep.length; k++){
+                console.log(keep[k]);
                 keepMenu.push(keep[k]);
             }
-            return;
         }
+        resolve(0);
     });
 }
 

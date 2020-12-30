@@ -39,7 +39,7 @@ $( document ).ready( async function()
                 if( dataDB.status == false )
                 {
                     swal({
-                        title: "更改看板失敗<br /><small>&lt;" + cmd.account + ", " + previous + "版<i class='fa fa-long-arrow-right'></i>" + cmd.newBoardName +"版&gt;</small>",
+                        title: "更改看板失敗<br /><small>&lt;" + cmd.account + ", " + previous + "版<i class='fa fa-long-arrow-right'> " + cmd.newBoardName +"版&gt;</small>",
                         type: "error",
                         text: dataDB.errorCode,
                         confirmButtonText: "確定",
@@ -55,7 +55,7 @@ $( document ).ready( async function()
                 else
                 {
                     swal({
-                        title: "更改看板成功<br /><small>&lt;" + cmd.account + ", " + previous + "版<i class='fa fa-long-arrow-right'></i>" + cmd.newBoardName +"版&gt;</small>",
+                        title: "更改看板成功<br /><small>&lt;" + cmd.account + ", " + previous + "版<i class='fa fa-long-arrow-right'> " + cmd.newBoardName +"版&gt;</small>",
                         type: "success",
                         showConfirmButton: false,
                         timer: 1000,
@@ -409,13 +409,13 @@ function moderatorInitial( resolve, reject )
                     buttonBlock = "<div class='input-group input-group-lg mt-3'>" +
                                     "<div class='dropdown'>" +
                                         "<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' style='width: 40px !important;'>" +
-                                            "<i class='fa fa-plus'></i>" +
+                                            "<i class='fa fa-plus'> " +
                                         "</button>&nbsp;" +
                                         "<ul class='dropdown-menu'>" +
                                             validlis +
                                         "</ul>" +
                                         "<button class='btn btn-danger' type='button' style='width: 40px !important;'>" +
-                                            "<i class='fa fa-minus'></i>" +
+                                            "<i class='fa fa-minus'> " +
                                         "</button>" +
                                     "</div>" +
                                   "</div>";
