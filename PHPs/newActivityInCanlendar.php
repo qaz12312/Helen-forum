@@ -25,7 +25,7 @@
 		// 	errorCode("token doesn't exist.");
         // }else{
 		// 	$userInfo = $_SESSION[$token];
-        $sql="SELECT `IsValid` FROM `Calendar`WHERE `Title`=? AND `Start`=? AND `END`=?";
+        $sql="SELECT `IsValid` FROM `Calendars`WHERE `Title`=? AND `Start`=? AND `END`=?";
         $arr = array($input['title'],$input['startTime'],$input['endTime']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
@@ -36,7 +36,7 @@
                 $rtn = successCode("Activity has not been approved yet.",array());  
         }
 		else{
-			$sql="INSERT INTO `Calendar`(`UserID`,`Title`,`Start`,`END`,`Text`) VALUES(?,?,?,?,?)";
+			$sql="INSERT INTO `Calendars`(`UserID`,`Title`,`Start`,`END`,`Text`) VALUES(?,?,?,?,?)";
         	$arr = array($input['account'],$input['title'],$input['startTime'],$input['endTime'],$input['text']);
             $result = query($conn,$sql,$arr,"SELECT");
             $rtn = successCode("Successfully new the Article.",array());

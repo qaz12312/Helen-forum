@@ -42,14 +42,13 @@ function initial(resolve, reject)
     //{
     //    res(1);
     //});
-
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
     cmd["type"]="calendar";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
-        console.log(dataDB);
+        
         dataDB = JSON.parse( dataDB );
         if( dataDB.status == false )
         {
@@ -64,6 +63,8 @@ function initial(resolve, reject)
         else
         {
             let activity= dataDB.data;
+            // activity=[{"title":"test","startTime":"2020-12-05T12:00:00","endTime":"2020-12-05T15:00:00","text":"text"},
+            //          {"title":"test22","startTime":"2020-12-10T14:00:00","endTime":"2020-12-05T16:00:00","text":"text"}];
             if( $.isEmptyObject(activity) ) {
                 let emptyMessage = "<tr>" + 
                                         "<td colspan='4'>檢舉文章列表為空</td>" +
@@ -106,7 +107,7 @@ function initial(resolve, reject)
                     info.el.style.borderColor = 'red';
                 }
             });
-        }
+        
 
         for( let i in activity ) {
             calendar.addEvent({
@@ -118,91 +119,92 @@ function initial(resolve, reject)
             }); 
         }
         calendar.render();
-        resolve(0);    
+        resolve(0); 
+      } 
     });
     
 }
  
-function checkPermission( resolve, reject )
-{
-    if( !thisAccount )
-    {
-        swal({
-            title: "載入頁面失敗",
-            type: "error",
-            text: "您沒有權限瀏覽此頁面",
-            confirmButtonText: "確定",
+// function checkPermission( resolve, reject )
+// {
+//     if( !thisAccount )
+//     {
+//         swal({
+//             title: "載入頁面失敗",
+//             type: "error",
+//             text: "您沒有權限瀏覽此頁面",
+//             confirmButtonText: "確定",
             
-        }).then(( result ) => {
-            $( ".tabContent" ).empty();
-            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( ".tabContent" ).append( httpStatus );
+//         }).then(( result ) => {
+//             $( ".tabContent" ).empty();
+//             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+//             $( ".tabContent" ).append( httpStatus );
 
-        }, ( dismiss ) => {
-            $( ".tabContent" ).empty();
-            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-            $( ".tabContent" ).append( httpStatus );
-        });
+//         }, ( dismiss ) => {
+//             $( ".tabContent" ).empty();
+//             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+//             $( ".tabContent" ).append( httpStatus );
+//         });
 
-        reject(1);
+//         reject(1);
 
-        return;
-    }
+//         return;
+//     }
 
-    let cmd = {};
-    cmd[ "act" ] = "showUncheckCanlenderList";
-    cmd[ "account" ] = thisAccount;
+//     let cmd = {};
+//     cmd[ "act" ] = "showUncheckCanlenderList";
+//     cmd[ "account" ] = thisAccount;
 
-    $.post( "../index.php", cmd, function( dataDB )
-    {
-        dataDB = JSON.parse( dataDB );
+//     $.post( "../index.php", cmd, function( dataDB )
+//     {
+//         dataDB = JSON.parse( dataDB );
 
-        if( dataDB.status == false )
-        {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: dataDB.errorCode,
-                confirmButtonText: "確定",
+//         if( dataDB.status == false )
+//         {
+//             swal({
+//                 title: "載入頁面失敗",
+//                 type: "error",
+//                 text: dataDB.errorCode,
+//                 confirmButtonText: "確定",
     
-            }).then(( result ) => {
-                $( ".tabContent" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( ".tabContent" ).append( httpStatus );
+//             }).then(( result ) => {
+//                 $( ".tabContent" ).empty();
+//                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+//                 $( ".tabContent" ).append( httpStatus );
     
-            }, ( dismiss ) => {
-                $( ".tabContent" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( ".tabContent" ).append( httpStatus );
-            });
+//             }, ( dismiss ) => {
+//                 $( ".tabContent" ).empty();
+//                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+//                 $( ".tabContent" ).append( httpStatus );
+//             });
             
-            reject(1);
-        }
-        else if( dataDB.data.boardName == undefined )
-        {
-            swal({
-                title: "載入頁面失敗",
-                type: "error",
-                text: "您沒有權限瀏覽此頁面",
-                confirmButtonText: "確定",
+//             reject(1);
+//         }
+//         else if( dataDB.data.boardName == undefined )
+//         {
+//             swal({
+//                 title: "載入頁面失敗",
+//                 type: "error",
+//                 text: "您沒有權限瀏覽此頁面",
+//                 confirmButtonText: "確定",
                 
-            }).then(( result ) => {
-                $( ".tabContent" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( ".tabContent" ).append( httpStatus );
+//             }).then(( result ) => {
+//                 $( ".tabContent" ).empty();
+//                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+//                 $( ".tabContent" ).append( httpStatus );
     
-            }, ( dismiss ) => {
-                $( ".tabContent" ).empty();
-                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                $( ".tabContent" ).append( httpStatus );
-            });
+//             }, ( dismiss ) => {
+//                 $( ".tabContent" ).empty();
+//                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+//                 $( ".tabContent" ).append( httpStatus );
+//             });
     
-            reject(1);
-        }
+//             reject(1);
+//         }
     
-        resolve(0);
-    });
-}
+//         resolve(0);
+//     });
+// }
 
 function escapeHtml(str)
 {

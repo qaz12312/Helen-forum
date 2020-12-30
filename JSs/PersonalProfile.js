@@ -204,8 +204,10 @@ $( document ).ready(function()
         $('#color').colpick({
             layout:'hex',
             submit:0,
-            colorScheme:'dark',
+            colorScheme:'#3289c7',
+            color:sessionStorage.getItem("Helen-color"),
             onChange:function(hsb,hex,rgb,el,bySetColor){
+                
                 let cmd = {};
                 cmd["act"] = "editPersonalInfo";
                 cmd[ "account" ] =sessionStorage.getItem("Helen-account");
@@ -222,7 +224,7 @@ $( document ).ready(function()
                             animation: false,
                             customClass: 'animated rotateOutUpLeft',
                             confirmButtonText: 'okay!',
-                            confirmButtonColor: sessionStorage.getItem("Helen-color")
+                            confirmButtonColor: '#3289c7'
                         }).then(( result ) => {}, ( dismiss ) => {});
                     }
                     else {
