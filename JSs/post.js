@@ -233,7 +233,7 @@ $("#heartBtn").click( function(){
     });
 });
 
-$("#keepBtn").click( function(){
+$("#keepBtn").click(async function(){
     if(!(sessionStorage.getItem("Helen-account"))){
         swal({
             title: "無法收藏！",
@@ -243,7 +243,7 @@ $("#keepBtn").click( function(){
         return;
     }
     let keepText = $(this).find("span");
-    getKeepMenu();
+    await new Promise ((resolve, reject) => {getKeepMenu(resolve, reject);});
     console.log(keepMenu);
 	
     if(keepMenu.length== 0){
@@ -333,7 +333,7 @@ $("#keepBtn").click( function(){
 });
 
 // 取得收藏目錄
-function getKeepMenu(){
+function getKeepMenu(resolve, reject){
     // return ["最愛", "漫威", "小說"];
     keepMenu= [];
     let cmd = {};
@@ -349,7 +349,6 @@ function getKeepMenu(){
                 type: "error",
                 text: dataDB.errorCode
             }).then((result) => {}, ( dismiss ) => {} );
-            return;
         }
         else{
             let keep= dataDB.data;
@@ -357,8 +356,8 @@ function getKeepMenu(){
                 console.log(keep[k]);
                 keepMenu.push(keep[k]);
             }
-            return;
         }
+        resolve(0);
     });
 }
 
