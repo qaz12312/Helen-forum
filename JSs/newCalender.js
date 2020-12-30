@@ -12,7 +12,6 @@ $("#allday").click(function () {
         //$("#activityStartTime").attr('disabled','disabled');
         document.getElementById("activityStartTime").disabled = true;
         document.getElementById("activityEndTime").disabled = true;
-        document.getElementById("activityEndDate").disabled = true;
         $("#activityStartTime").val("");
         $("#activityEndDate").val("");
         $("#activityEndTime").val("");
@@ -20,7 +19,6 @@ $("#allday").click(function () {
     } else {
         document.getElementById("activityStartTime").disabled = false;
         document.getElementById("activityEndTime").disabled = false;
-        document.getElementById("activityEndDate").disabled = false;
         $(this).val("false");
     }
 });
@@ -87,8 +85,6 @@ $("#newActivity").on("click", function(){
             // text: dataDB.errorCode
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
-    }else if($("#allday").val()=="false"){
-        $("#activityEndDate").val($("#activityStartDate").val());
     }
         var startDate;
         var endDate;
