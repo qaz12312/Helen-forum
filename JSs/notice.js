@@ -1,82 +1,73 @@
-//PostingRecord
+var articles = {};
+var thisAccount = sessionStorage.getItem( 'Helen-account' );
 
-var thisAccount = sessionStorage.getItem( "Helen-account" );
-
- $( document ).ready(async function() 
+$( document ).ready( async function() 
 {
     barInitial();
-    await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
+    await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
+
     
 });
 
-async function initial(res, rej)
+async function initial( res, rej )
 {
+    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    ( error ) =>
+    {
+        res(1);
+    });
 
-    
     let cmd = {};
-    cmd[ "act" ] = "showPostRecord";
-    cmd["account"] = sessionStorage.getItem("Helen-account");
-
+    cmd[ "act" ] = "showNotice";
+    cmd["account"] = sessionStorage.getItem( 'Helen-account' );
     $.post( "../index.php", cmd, function( dataDB )
     {
-        dataDB = JSON.parse( dataDB );
         
+        dataDB = JSON.parse( dataDB );
+
         if( dataDB.status == false )
         {
             swal({
                 title: "載入頁面失敗",
                 type: "error",
-                text: dataDB.errorCode
-            }).then(( result ) => {}, ( dismiss ) => {});
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
+
+            }).then((result) => {}, ( dismiss ) => {});
         }
         else
         {
-            let content = $( ".postContent tbody" );
+            $( ".tabContent h2" ).html( "Helen－通知");
+            let content = $( ".tabContent tbody" );
             content.empty();
-        
+
             articles = dataDB.data;
-            
-            if( articles.length == 0 )
+            console.log(articles)
+            if( $.isEmptyObject(articles) )
             {
                 let emptyMessage = "<tr>" + 
-                                        "<td colspan='4'>沒發文紀錄喔</td>" +
+                                        "<td colspan='4'>沒有通知喔喔喔</td>" +
                                     "</tr>";
                 content.append( emptyMessage );
 
                 return;
             }
 
-            for( let i in dataDB.data )
+            for( let i in articles )
             {
-            
-                let oneRow = "<tr>" + 
-                                "<td>" + dataDB.data[i].blockName + "版"+"</td>" +
-                                "<td>" +"<span class='articleTitle'>"+ dataDB.data[i].title +"</span>"+ "</td>" +
-                                "<td>" +
-                                    "<button type='button' class='btn btn-default'>" +
-                                        "<span class='glyphicon glyphicon-book'></span> 編輯" +
-                                    "</button>" +
-                                "</td>" +
-                                "<td>" +
-                                    "<button type='button' class='btn btn-danger'>" +
-                                        "<span class='glyphicon glyphicon-trash'></span> 刪除" +
-                                    "</button>" +
-                                "</td>" +
-    
-                                "</tr>";
-        
-                content.append( oneRow );
-            }     
                 
+                let oneRow = "<tr>" +
+                                "<td>" + articles[i][0].title  + "</td>" 
+                                ;
+
+                content.append( oneRow );
+            }
         }
-    } );
-    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
-
-    res(0);
-
-
+        res(0);
+    });
 }
-function checkPermission(resolve, reject)
+
+function checkPermission( resolve, reject )
 {
     if(sessionStorage.getItem("Helen-account")){
         resolve(true);
@@ -96,4 +87,8 @@ function checkPermission(resolve, reject)
         resolve(false);
     }
 }
-    
+
+function escapeHtml(str)
+{
+    return $('<div/>').text(str).html();
+}

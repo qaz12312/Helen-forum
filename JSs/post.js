@@ -115,7 +115,7 @@ $("#reportBtn").click(function(){
         return;
     }if(!(sessionStorage.getItem("Helen-account"))){
         swal({
-            title: "無法按讚！",
+            title: "無法檢舉！",
             type: "error",
             text: "請先登入！"
         }).then(( result ) => {}, ( dismiss ) => {});
@@ -377,6 +377,7 @@ function leaveComment(){
             type: "error",
             text: "請先登入！"
         }).then(( result ) => {}, ( dismiss ) => {});
+        return;
     }
     let inputComment= $("#inputComment").val().trim();
     if(inputComment.length< 1){
