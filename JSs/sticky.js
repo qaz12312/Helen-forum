@@ -476,9 +476,12 @@ async function initial( res, rej )
     if( !thisAccount ) thisAccount = "";
     if( !thisBoardName ) thisBoardName = "";
 
-    thisSearching = JSON.parse( thisSearching );
+    if( thisSearching != null )
+    {
+        thisSearching = JSON.parse( thisSearching );
+    }
 
-    if( thisSearching.content.length == 0 && thisSearching.hashtag.length == 0 )
+    if( !thisSearching || (thisSearching.content.length == 0 && thisSearching.hashtag.length == 0) )
     {
         await new Promise( ( resolve, reject ) => forNormal( resolve, reject ) );
     }
@@ -580,7 +583,7 @@ function forNormal( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            if( topArticleID !== undefined )
+            if( topArticleID !== undefined && articles.find( (ele) => ele.articleID == topArticleID ) !== undefined )
             {
                 let topArticle = articles.find( (element) => element.articleID === topArticleID );
 
@@ -592,6 +595,10 @@ function forNormal( resolve, reject )
                     tempTr.remove();
                     tempTbody.prepend( tempTr );
                 }
+            }
+            else
+            {
+                topArticleID = undefined;
             }
 
             if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )

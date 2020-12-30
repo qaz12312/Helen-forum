@@ -98,15 +98,16 @@ CREATE TABLE KeepDir (
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
-DROP TABLE IF EXISTS Calendar;
-CREATE TABLE Calendar (
+DROP TABLE IF EXISTS Calendars;
+CREATE TABLE Calendars (
+	ID bigint(255) NOT NULL AUTO_INCREMENT,
 	UserID varchar(101) NOT NULL,
 	Title varchar(255) NOT NULL,
     Start varchar(101) NOT NULL,
     END varchar(101) NOT NULL,
     Text text,
     IsValid boolean default false,
-    PRIMARY KEY (UserID, Title),
+    PRIMARY KEY (ID),
     FOREIGN KEY (UserID) REFERENCES Users (UserID)
 )	CHARSET=utf8mb4 ;
 

@@ -34,7 +34,11 @@
         // }else{
 		// 	$userInfo = $_SESSION[$token];
 			$sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
-			$hashTag = json_encode($input['hashTag']);
+	    		if(!isset($input['hashTag'])){
+				$hashTag = json_encode(array());
+			}else{
+				$hashTag = json_encode($input['hashTag']);
+			}
 			// $hashTag = $input['hashTag'];
 			//$arr = array($userInfo['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
 			$arr = array($input['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);

@@ -414,12 +414,12 @@ function leaveComment(){
             swal({
                 title: "留言成功",
                 type: "success",
-                showConfirmButton: false,
-                timer: 1000
-            }).then((result)=> {}, (dismiss)=> {});
+                showConfirmButton: false
+            }).then((result)=> {
+                location.reload();
+            }, (dismiss)=> {});
         }
     });
-    location.reload();
 }
 
 $("#commentTable").on("click", "button", function(){
