@@ -55,7 +55,7 @@ function initial(resolve, reject)
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-
+                eventColor: '#378006',
                 eventClick: function(info) {
                     let thisActivity = Object.keys( activity ).find( ( key ) => 
                     {
@@ -66,16 +66,33 @@ function initial(resolve, reject)
                     let endT=info.event.startStr.split(/[\T\+]/);
 
                     swal({
-                            title: "<cite>"+info.event.title+ "</cite><br />" +
-                            "<small>開始時間:"+startT[0]+"&emsp;"+startT[1]+"<br\>"+
-                            "結束時間:"+endT[0]+"&emsp;"+endT[1]+"<br\>"+
-                            "內容:"+activity[thisActivity].text+"<\small>",
+                            title: "<cite>"+info.event.title+ "</cite>",
+                            html:   "<table>"+
+                                        "<tbody>"+
+                                            "<tr>"+
+                                                "<td>開始時間</td>"+
+                                                "<td>"+startT[0]+"</td>"+
+                                                "<td>"+startT[1]+"</td>"+
+                                            "</tr>"+
+                                            "<tr>"+
+                                                "<td>結束時間</td>"+
+                                                "<td>"+endT[0]+"</td>"+
+                                                "<td>"+endT[1]+"</td>"+
+                                            "</tr>"+
+                                            "<tr>"+
+                                                "<td colspan='3'>內容</td>"+
+                                            "</tr>"+
+                                            "<tr>"+
+                                                "<td colspan='2'>"+activity[thisActivity].text+"</td>"+
+                                            "</tr>"+
+                                        "</tbody>"+
+                                    "</table>",
                             type: "info",
                             showCancelButton: true,
                             confirmButtonText: "確定",
                             cancelButtonText: "取消",
                             animation: false,
-                        }).then(( result ) => {});  
+                        }).then(( result ) => {}, (dismiss) => {});  
 
                     info.el.style.borderColor = 'red';
                 }
