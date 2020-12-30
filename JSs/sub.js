@@ -12,8 +12,8 @@ $(document).ready(async function(){
     await new Promise((resolve, reject) => initial(resolve, reject));
 
     $(".tabContent tr").find("td:first-child").on("click", function(){
-        let thisArticleID = Object.keys(articles).find((key) => articles[key].title == $(this).text() );
-        console.log(thisArticleID);
+        let thisArticleID = articles.find((element)=>element.title == $(this).text()).articleID;
+        console.log("[" + thisArticleID + "]");
         if(thisArticleID != undefined){
             sessionStorage.setItem( "Helen-articleID", thisArticleID );
             location.href =  "../HTMLs/post.html";
