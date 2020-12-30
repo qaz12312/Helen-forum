@@ -413,9 +413,10 @@ function leaveComment(){
                 type: "success",
                 timer: 1000,
                 showConfirmButton: false
-            }).then((result)=> {
+            }).then((result)=> {}, (dismiss)=>
+            {
                 location.reload();
-            }, (dismiss)=> {});
+            });
         }
     });
 }
