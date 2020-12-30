@@ -476,7 +476,7 @@ async function initial( res, rej )
     if( !thisAccount ) thisAccount = "";
     if( !thisBoardName ) thisBoardName = "";
 
-    if( thisSearching )
+    if( thisSearching != null )
     {
         thisSearching = JSON.parse( thisSearching );
     }
@@ -583,6 +583,7 @@ function forNormal( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
+            console.log(topArticleID)
             if( topArticleID !== undefined )
             {
                 let topArticle = articles.find( (element) => element.articleID === topArticleID );
@@ -755,7 +756,6 @@ function checkPermission( resolve, reject )
         );
 
         resolve(0);
-        return;
     }
 
     let cmd = {};
