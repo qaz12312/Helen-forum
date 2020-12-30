@@ -411,10 +411,12 @@ function leaveComment(){
             swal({
                 title: "留言成功",
                 type: "success",
+                timer: 1000,
                 showConfirmButton: false
-            }).then((result)=> {
+            }).then((result)=> {}, (dismiss)=>
+            {
                 location.reload();
-            }, (dismiss)=> {});
+            });
         }
     });
 }
@@ -453,8 +455,10 @@ $("#commentTable").on("click", "button", function(){
                         type: "success",
                         showConfirmButton: false,
                         timer: 1000,
-                    }).then((result) => {}, ( dismiss ) => {} );
-                    location.reload();
+                    }).then((result) => {}, ( dismiss ) =>
+                    {
+                        location.reload();
+                    } );
                 }
             });
     }, ( dismiss ) => {})
