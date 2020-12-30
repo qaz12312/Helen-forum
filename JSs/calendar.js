@@ -88,7 +88,7 @@ function initial(resolve, reject)
                         
                     info.el.style.borderColor = 'red';
                 },
-                dayClick: function(date, jsEvent, view, resource) {
+                select:function(date, jsEvent, view, resource) {
                     alert('clicked ' + date.getDate() + ' on resource ' + resource.id);
                   },
             });
