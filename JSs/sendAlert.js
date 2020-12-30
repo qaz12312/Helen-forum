@@ -38,10 +38,11 @@ $(document).ready(async function () {
 
                         if( dataDB.status == false )
                         {
+                            
                             swal({
                                 title: "傳頌失敗" ,
                                 type: "error",
-                                text: dataDB.errorCode,
+                                //text: dataDB.errorCode,
                                 timer: 2000,
 
                             }).then((result) => {}, ( dismiss ) => {});
