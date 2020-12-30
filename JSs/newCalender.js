@@ -12,15 +12,13 @@ $("#allday").click(function () {
         //$("#activityStartTime").attr('disabled','disabled');
         document.getElementById("activityStartTime").disabled = true;
         document.getElementById("activityEndTime").disabled = true;
-        document.getElementById("activityEndDate").disabled = true;
         $("#activityStartTime").val("");
-        $("#activityEndDate").val("");
+        $("#activityEndDate").val($("#activityStartDate").val());
         $("#activityEndTime").val("");
         $(this).val("true");
     } else {
         document.getElementById("activityStartTime").disabled = false;
         document.getElementById("activityEndTime").disabled = false;
-        document.getElementById("activityEndDate").disabled = false;
         $(this).val("false");
     }
 });
@@ -87,8 +85,6 @@ $("#newActivity").on("click", function(){
             // text: dataDB.errorCode
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
-    }else if($("#allday").val()=="false"){
-        $("#activityEndDate").val($("#activityStartDate").val());
     }
         var startDate;
         var endDate;
@@ -107,7 +103,7 @@ $("#newActivity").on("click", function(){
         var now=new Date();
         if(!(myStartDate <= myEndDate)||myEndDate<=now||myStartDate<=now){
             swal({
-                title: "日期或時間輸入錯誤請重新輸入！",
+                title: "日期或時間輸入錯誤<br>請重新輸入！",
                 type: "warning",
                 // text: dataDB.errorCode
             }).then(( result ) => {}, ( dismiss ) => {});
@@ -165,6 +161,11 @@ async function initial(res, rej){
     for(var i= 0; i< boards.length; i++){
         $("#chooseBoard").append(new Option(boards[i]+ "版"), i, false);
     }
+    $("#allday").prop('checked', false);
+    $("#activityStartDate").val("");
+    $("#activityStartTime").val("");
+    $("#activityEndDate").val("");
+    $("#activityEndTime").val("");
     res(0);
 }
 

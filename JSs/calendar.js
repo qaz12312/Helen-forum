@@ -70,17 +70,17 @@ function initial(resolve, reject)
                             html:   "<table>"+
                                         "<tbody>"+
                                             "<tr>"+
-                                                "<td>開始時間</td>"+
-                                                "<td>"+startT[0]+"</td>"+
-                                                "<td>"+startT[1]+"</td>"+
+                                                "<th>開始時間</th>"+
+                                                "<td>"+startT[0]+
+                                                "&emsp;"+startT[1]+"</td>"+
                                             "</tr>"+
                                             "<tr>"+
-                                                "<td>結束時間</td>"+
-                                                "<td>"+endT[0]+"</td>"+
-                                                "<td>"+endT[1]+"</td>"+
+                                                "<th>結束時間</th>"+
+                                                "<td>"+endT[0]+
+                                                "&emsp;"+endT[1]+"</td>"+
                                             "</tr>"+
                                             "<tr>"+
-                                                "<td colspan='3'>內容</td>"+
+                                                "<th colspan='2'>內容</th>"+
                                             "</tr>"+
                                             "<tr>"+
                                                 "<td colspan='2'>"+activity[thisActivity].text+"</td>"+
