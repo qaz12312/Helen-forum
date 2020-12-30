@@ -161,19 +161,16 @@ async function barInitial() {
 }
 
 function setSearchData() {
+    let searchType = $("#searchOption").val(); //獲取選中記錄的value值
     let searchStr = $("#searchInputText").val().trim();
     let searchArr = searchStr.split(" ");
     var contents = [];
     var hashtags = [];
     for (var i = 0; i < searchArr.length; i++) {
-        if (searchArr[i].length > 0) {
-            if (searchArr[i][0] != "#") {
-                contents.push(searchArr[i]);
-            } else {
-                if (searchArr[i].length > 1) {
-                    hashtags.push(searchArr[i].substring(1, searchArr[i].length));
-                }
-            }
+        if(searchType== 1){ // hashTag
+            hashtags.push(searchArr[i]);
+        }else{ // == 2, content
+            contents.push(searchArr[i]);
         }
     }
     let searchData = {};
@@ -183,13 +180,8 @@ function setSearchData() {
 
     if (sessionStorage.getItem("Helen-boardName") == null) {
         location.href = "../HTMLs/home.html";
-    } else {
+    }else{
         location.href = "../HTMLs/sticky.html";
-    }
-    if(searchType== 1){ // hashTag
-        sessionStorage.setItem("Helen-hashtag", JSON.stringify(searchData));
-    }else{ // ==2 content
-        sessionStorage.setItem("Helen-content", JSON.stringify(searchData));
     }
 }
 
