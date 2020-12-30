@@ -84,7 +84,7 @@
                         for($i=0;$i<$commentCount;$i++){
                             $row = $comment[$i];
                             $isUser = 0;
-                            if($row[0]==$user){
+                            if($row[0]==$input['account']){
                                 $isUser = 1;
                             }
                             $commentArr[$i]=array("nickname"=>$row[1],"color"=>$row[2],"content"=>$row[3],"floor"=>$row[4],"time"=>$row[5],"isOwn"=>$isUser);
