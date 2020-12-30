@@ -6,23 +6,19 @@ $( document ).ready( async function()
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
 
-    $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function()
-    {
+    $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function(){
         let thisArticleID = Object.keys( activity ).find( ( key ) => activity[ key ].title == $(this).text() );
 
-        if( thisArticleID != undefined )
-        {
+        if( thisArticleID != undefined ){
             sessionStorage.setItem( "Helen-articleID", thisArticleID );
             location.href =  "../HTMLs/post.html";
         }
     } );
 
-    $( ".tabContent button" ).on( "click", function()
-    {
+    $( ".tabContent button" ).on( "click", function(){
         let thisArticleTitle = $(this).closest( "tr" ).find( "td:first-child" ).text();
 
-        let thisActivity = Object.keys( activity ).find( ( key ) => 
-        {
+        let thisActivity = Object.keys( activity ).find( ( key ) =>{
             return activity[ key ].title == thisArticleTitle;
         });
         let thisStartTime = activity[ thisActivity ].startTime.split("T");
@@ -33,8 +29,6 @@ $( document ).ready( async function()
         {
             $("#"+$(this).attr('id')+"0").attr('disabled',false);
             $("#"+$(this).attr('id')+"1").attr('disabled',false);
-            let reasonsQueue = [];
-            let steps = [];
             swal({
                 title: "<cite>" + thisTitle + "</cite><br />" +
                 "<small>&emsp;開始日期:" + thisStartTime[0]+"&emsp;時間:" + thisStartTime[1]+ 
@@ -69,6 +63,7 @@ $( document ).ready( async function()
                     cmd[ "isPass" ] = "true";
                     
                     $.post( "../index.php", cmd, function( dataDB ){
+                        console.log(dataDB)
                         dataDB = JSON.parse( dataDB );
 
                         if( dataDB.status == false )
@@ -179,30 +174,30 @@ async function initial( res, rej )
 
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
+    cmd["type"]="list";
 
-    // $.post( "../index.php", cmd, function( dataDB )
-    // {
-    //     dataDB = JSON.parse( dataDB );
-    //     if( dataDB.status == false )
-    //     {
-    //         swal({
-    //             title: "載入頁面失敗",
-    //             type: "error",
-    //             text: dataDB.errorCode,
-    //             confirmButtonText: "確定",
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        console.log(dataDB)
+        dataDB = JSON.parse( dataDB );
+        if( dataDB.status == false )
+        {
+            swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
 
-    //         }).then((result) => {}, ( dismiss ) => {});
-    //     } 
-    //     else
-        {activity=[{"title":"test","startTime":"2020/02/05T12:00:00","endTime":"2020/04/05T15:00:00","text":"text"},
-                    {"title":"test22","startTime":"2020/02/10T14:00:00","endTime":"2020/04/05T16:00:00","text":"text"}]
-            
+            }).then((result) => {}, ( dismiss ) => {});
+        } 
+        else
+         {
+             //activity=[{"title":"test","startTime":"2020/02/05T12:00:00","endTime":"2020/04/05T15:00:00","text":"text"},
+        //             {"title":"test22","startTime":"2020/02/10T14:00:00","endTime":"2020/04/05T16:00:00","text":"text"}]
+            activity = dataDB.data;
             $( ".tabContent h2" ).html(  "審核活動列表" );
             let content = $( "#checklist tbody" );
             content.empty();
-
-           // activity = dataDB.data;
-
             if( $.isEmptyObject(activity) )
             {
                 let emptyMessage = "<tr>" + 
@@ -237,7 +232,7 @@ async function initial( res, rej )
             }
         }
         res(0);
-    // });
+    });
     
 }
 
