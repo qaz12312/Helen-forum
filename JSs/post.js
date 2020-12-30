@@ -455,8 +455,10 @@ $("#commentTable").on("click", "button", function(){
                         type: "success",
                         showConfirmButton: false,
                         timer: 1000,
-                    }).then((result) => {}, ( dismiss ) => {} );
-                    location.reload();
+                    }).then((result) => {}, ( dismiss ) =>
+                    {
+                        location.reload();
+                    } );
                 }
             });
     }, ( dismiss ) => {})
