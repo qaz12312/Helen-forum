@@ -2,7 +2,8 @@
 	/* 
 	前端 to 後端:
 	let cmd = {};
-	cmd["act"] = "showBoardList";
+    cmd["act"] = "showBoardList";
+    
 	
     後端 to 前端:
     dataDB = JSON.parse(data);
