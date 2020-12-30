@@ -35,7 +35,8 @@
           else{
             $sql="DELETE FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=1";
             $arr = array($input['account'],$input['content']);
-            query($conn,$sql,$arr,"DELETE");
+						query($conn,$sql,$arr,"DELETE");
+						doSendNotification(array("recipient" => $result[0][4], "content" => "Your apply can't be added.",""));
             $rtn = successCode("Successfully deleted all this user's apply.");
           }
 		}

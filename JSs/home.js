@@ -8,8 +8,7 @@ var keepMenu;
 
 $(document).ready(async function(){
     barInitial();
-    // initial();
-    console.log("start")
+
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
 
     $( ".topnav a" ).click( function()
@@ -20,9 +19,9 @@ $(document).ready(async function(){
         location.reload();
     });
   $('.addPost').click(function(){
-    console.log("addPost")
+
     cmd={};
-    cmd["account"] = sessionStorage.getItem("Helen-userID");
+    cmd["account"] = sessionStorage.getItem("Helen-account");
     window.location.href = "./publishArticle.html";
   });
   
@@ -214,7 +213,40 @@ $(document).ready(async function(){
                             cmd[ "act" ] = "keep";
                             cmd[ "account" ] = thisAccount;
                             cmd[ "articleID" ] = thisArticle.articleID;
-                            cmd[ "dirName" ] = keepMenu[result];
+                            cmd[ "dirName" ] =  dirName;
+
+                            $.post( "../index.php", cmd, function( dataDB )
+                            {
+                                dataDB = JSON.parse( dataDB );
+
+                                if( dataDB.status == false )
+                                {
+                                    swal({
+                                        title: "錯誤！",
+                                        type: "error",
+                                        text: dataDB.errorCode,
+                            
+                                    }).then(( result ) => {}, ( dismiss ) => {} );
+                                }
+                                else
+                                {
+                                    swal({
+                                        title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
+                                        type: "success",
+                                        showConfirmButton: false,
+                                        timer: 1000,
+                                
+                                    }).then(( result ) => {}, ( dismiss ) => {
+                                        $( chosen ).removeClass( "text-warning" );
+                                        $( chosen ).addClass( "text-light" );
+                                        $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
+                                        $( chosen ).closest( "button" ).addClass( "btn-warning" );
+                
+                                        thisArticle.keep = parseInt( thisArticle.keep ) + 1;
+                                        $( chosen ).eq(1).html( " " + thisArticle.keep );
+                                    });
+                                }
+                            });
                             
                         }
                     });
@@ -343,7 +375,7 @@ $(document).ready(async function(){
 
 async function initial(res, rej)
 {
-    console.log("inital");
+
     
     if( !thisAccount ) thisAccount = "";
 
@@ -372,7 +404,7 @@ function forNormal( res, rej )
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
     $.post( "../index.php", cmd, function( dataDB )
     {
-        console.log(dataDB)
+        
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
@@ -405,7 +437,7 @@ function forNormal( res, rej )
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
-            console.log(articles[0])
+            
             for( let i in articles )
             {
                 
@@ -565,7 +597,7 @@ function checkPermission(res, rej)
         $( ".addPost" ).remove();
     }
     else{
-        console.log("yes")
+        
     }
     res(0);
 }
@@ -584,7 +616,7 @@ function getKeepMenu(resolve,reject)
   $.post( "../index.php", cmd, function( dataDB )
   {
       dataDB = JSON.parse( dataDB );
-      console.log( dataDB );
+     
 
       if( dataDB.status == false)
       {
@@ -597,14 +629,6 @@ function getKeepMenu(resolve,reject)
           reject([]);
       }
 
-    //   let menu = [];
-    //   for( let i in dataDB.data )
-    //   {
-    //       menu.push( dataDB.data[i].DirName );
-	// 	  console.log(dataDB.data[i]);
-    //   }
-	  
-    //   resolve(menu);
       resolve(dataDB.data);
   });
   
