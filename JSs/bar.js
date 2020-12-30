@@ -74,6 +74,8 @@ async function barInitial(){
                             "<a href=\"../HTMLs/CollectionCatalog.html\"> 我的收藏</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-time\">"+
                             "<a href=\"../HTMLs/PostingRecord.html\"> 發文紀錄</a></li>")
+        $("#userDD").append("<li class= \"glyphicon glyphicon-bell\">"+
+                            "<a href=\"../HTMLs/notice.html\"> 我的通知</a></li>")
 
         if(userPermission>= 2){ // 版主
             $("#userDD").append("<li class= \"glyphicon glyphicon-alert\">"+
@@ -86,6 +88,7 @@ async function barInitial(){
                                 "<a href=\"../HTMLs/moderator.html\"> 管理版主</a></li>")
             $("#userDD").append("<li class= \"glyphicon glyphicon-bullhorn\">"+
                                 "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>")
+
         }
     }
     

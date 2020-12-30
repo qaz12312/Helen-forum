@@ -44,8 +44,6 @@ async function initial(res, rej){
             let article= dataDB.data;
             comments= article.comment;
             var contentStr= article.content;
-            console.log(article.hashTag);
-            console.log(article.hashTag.length);
             contentStr+= "\n";
             for(var i= 0; i< article.hashTag.length; i++){
                 contentStr+= "#"+ article.hashTag[i]+ " ";
@@ -244,7 +242,6 @@ $("#keepBtn").click(async function(){
     }
     let keepText = $(this).find("span");
     await new Promise ((resolve, reject) => {getKeepMenu(resolve, reject);});
-    console.log(keepMenu);
 	
     if(keepMenu.length== 0){
         swal({
@@ -353,7 +350,6 @@ function getKeepMenu(resolve, reject){
         else{
             let keep= dataDB.data;
             for(var k= 0; k< keep.length; k++){
-                console.log(keep[k]);
                 keepMenu.push(keep[k]);
             }
         }
@@ -465,11 +461,14 @@ $("#commentTable").on("click", "button", function(){
 })
 
 // 點擊樓層tag
-$("#commentTable").on("click", "a", function(){
-    let tagStr= $(this).text().trim();
+$("#commentTable").on("click", "a", function() { 
+    clickTag(this); 
+} );
+
+function clickTag( thisTag ){
+    let tagStr= $(thisTag).text().trim();
     let commentIndex= tagStr.substring(1, tagStr.length- 1);
     commentIndex= parseInt(commentIndex);
-    console.log(commentIndex);
 
     // let comments= dataDB.data.comment;
     let floorComment= comments.find((element)=> element.floor== commentIndex);
@@ -477,7 +476,7 @@ $("#commentTable").on("click", "a", function(){
     if(floorComment){
         let tagRe= /(@\d+波)/g;
         let oldStr= floorComment.content;
-        var newStr= oldStr.replace(tagRe, "<a>"+ "$1"+ "</a>");
+        var newStr= oldStr.replace(tagRe, "<a onclick='clickTag(this)'>"+ "$1"+ "</a>");
         
         swal({
             title: "<div style= \"text-align: left;\"><div class= \"head\" style=\"background-color: "+ 
@@ -494,4 +493,4 @@ $("#commentTable").on("click", "a", function(){
             text: "無此留言"
         }).then((result) => {}, ( dismiss ) => {} );
     }
-});
+}
