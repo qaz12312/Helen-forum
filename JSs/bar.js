@@ -60,10 +60,13 @@ async function barInitial(){
     // 最右下拉選單: user info 
     $("#userDD").empty();
     if(userPermission== 0){ // 訪客(未登入)
-        $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span>"+
-                            " 未登入"+
-                            "</span></li>")
+        // $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span>"+
+        //                     " 未登入"+
+        //                     "</span></li>")
+        $("#userDD").append("<li class= \"glyphicon glyphicon-calendar\">"+
+                            "<a href=\"../HTMLs/calendar.html\"> 行事曆</a></li>")                 
     }else{ // 一般使用者(已登入)
+        
         $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span> "+
                             sessionStorage.getItem("Helen-nickname")+
                             "</span></li>")
@@ -78,6 +81,8 @@ async function barInitial(){
                             "<a href=\"../HTMLs/PostingRecord.html\"> 發文紀錄</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-bell\">"+
                             "<a href=\"../HTMLs/notice.html\"> 我的通知</a></li>")
+        $("#userDD").append("<li class= \"glyphicon glyphicon-calendar\">"+
+                            "<a href=\"../HTMLs/calendar.html\"> 行事曆</a></li>")
 
         if(userPermission>= 2){ // 版主
             $("#userDD").append("<li class= \"glyphicon glyphicon-alert\">"+
@@ -90,6 +95,8 @@ async function barInitial(){
                                 "<a href=\"../HTMLs/moderator.html\"> 管理版主</a></li>")
             $("#userDD").append("<li class= \"glyphicon glyphicon-bullhorn\">"+
                                 "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>")
+            $("#userDD").append("<li class= \"glyphicon glyphicon-ok\">"+
+                                "<a href=\"../HTMLs/CheckCalendar.html\"> 審核行事曆</a></li>")
 
         }
     }

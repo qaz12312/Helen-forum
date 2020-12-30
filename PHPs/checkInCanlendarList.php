@@ -3,9 +3,8 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "checkInCanlendarList";
-    cmd["title"] = "聖誕節";
-    cmd["startTime"] = "2020/12/25";
-    cmd["endTime"] = "202012/25";
+    cmd["id"] = 0;
+    cmd["isPass"]=1/0
 
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -19,8 +18,8 @@
 	*/
     function doCheckInCanlendarList($input){ //審核活動
         global $conn;
-        $sql="SELECT `Title`,`Start`,`END` FROM `Calendars` WHERE `Title`=? AND `Start`=? AND `END`=? ";  
-            $arr = array($input['title'],$input['startTime'],$input['endTime']);
+        $sql="SELECT `Title`,`Start`,`END`,`UserID` FROM `Calendars` WHERE `ID`= ? AND `IsValid`= ? ";  
+            $arr = array($input['id'],0);
             $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
             if($resultCount <= 0){
@@ -28,15 +27,17 @@
             }
             else{
                 if($input['isPass']){ 
-                    $sql="UPDATE `Calendars` SET `IsValid`=?  WHERE `Title`=? AND `Start`=? AND `END`=? ";
-                    $arr = array(true,$input['title'],$input['startTime'],$input['endTime']);
+                    $sql="UPDATE `Calendars` SET `IsValid`=?  WHERE `ID`=? ";
+                    $arr = array(true,$input['id'] );
                     query($conn,$sql,$arr,"UPDATE");
+                    doSendNotification(array("recipient" => $result[0][4], "content" => "Your activtiy has been added.",""));
                     $rtn = successCode("Successfully update to Calendar.",array());
                 }
                 else { //刪除活動
-                    $sql="DELETE FROM `Calendars` WHERE `Title`=? AND `Start`=? AND `END`=?";
-                    $arr = array($input['title'],$input['startTime'],$input['endTime']);
+                    $sql="DELETE FROM `Calendars` WHERE `ID`= ? AND `IsValid`= ? ";
+                    $arr = array($input['id'],0);
                     query($conn,$sql,$arr,"DELETE");
+                    doSendNotification(array("recipient" => $result[0][4], "content" => "Your activtiy can't be added.",""));
                     $rtn = successCode("Successfully canceled this activity.",array());
                 }
             }
