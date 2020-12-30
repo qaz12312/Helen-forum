@@ -489,6 +489,7 @@ async function initial( res, rej )
     {
         await new Promise( ( resolve, reject ) => forSearching( resolve, reject ) );
     }
+    console.log(topArticleID)
 
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
 
@@ -583,7 +584,6 @@ function forNormal( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            console.log(topArticleID)
             if( topArticleID !== undefined )
             {
                 let topArticle = articles.find( (element) => element.articleID === topArticleID );
