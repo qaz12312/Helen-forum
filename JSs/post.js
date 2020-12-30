@@ -466,10 +466,12 @@ $("#commentTable").on("click", "button", function(){
 
 // 點擊樓層tag
 $("#commentTable").on("click", "a", function() { 
+    console.log(this);
     clickTag(this); 
 } );
 
 function clickTag( thisTag ){
+    console.log(thisTag);
     let tagStr= $(thisTag).text().trim();
     let commentIndex= tagStr.substring(1, tagStr.length- 1);
     commentIndex= parseInt(commentIndex);
