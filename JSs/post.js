@@ -465,7 +465,11 @@ $("#commentTable").on("click", "button", function(){
 })
 
 // 點擊樓層tag
-$("#commentTable").on("click", "a", function(){
+$("#commentTable").on("click", "a", function() { 
+    clickTag(this); 
+} );
+
+function clickTag( thisTag ){
     let tagStr= $(this).text().trim();
     let commentIndex= tagStr.substring(1, tagStr.length- 1);
     commentIndex= parseInt(commentIndex);
@@ -477,7 +481,7 @@ $("#commentTable").on("click", "a", function(){
     if(floorComment){
         let tagRe= /(@\d+波)/g;
         let oldStr= floorComment.content;
-        var newStr= oldStr.replace(tagRe, "<a>"+ "$1"+ "</a>");
+        var newStr= oldStr.replace(tagRe, "<a onclick='clickTag(this)'>"+ "$1"+ "</a>");
         
         swal({
             title: "<div style= \"text-align: left;\"><div class= \"head\" style=\"background-color: "+ 
@@ -494,4 +498,3 @@ $("#commentTable").on("click", "a", function(){
             text: "無此留言"
         }).then((result) => {}, ( dismiss ) => {} );
     }
-});
