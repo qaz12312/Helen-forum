@@ -165,7 +165,17 @@ function setSearchData(){
     searchData["hashtag"]= hashtags;
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
-    if(sessionStorage.getItem("Helen-boardName")== null){
+    if( contents.length == 0 && hashtags.length == 0 )
+    {
+        swal({
+            title: "錯誤",
+            type: "error",
+            text: "還沒有輸入搜尋內容哦",
+            confirmButtonText: "確定",
+
+        }).then((result) => {}, ( dismiss ) => {});
+    }
+    else if(sessionStorage.getItem("Helen-boardName")== null){
         location.href= "../HTMLs/home.html";
     }else{
         location.href= "../HTMLs/sticky.html";
