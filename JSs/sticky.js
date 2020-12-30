@@ -476,13 +476,14 @@ async function initial( res, rej )
     if( !thisAccount ) thisAccount = "";
     if( !thisBoardName ) thisBoardName = "";
 
-    if( !thisSearching )
+    thisSearching = JSON.parse( thisSearching );
+
+    if( thisSearching.content.length == 0 && thisSearching.hashtag.length == 0 )
     {
         await new Promise( ( resolve, reject ) => forNormal( resolve, reject ) );
     }
     else
     {
-        thisSearching = JSON.parse( thisSearching );
         await new Promise( ( resolve, reject ) => forSearching( resolve, reject ) );
     }
 
@@ -611,12 +612,20 @@ function forNormal( resolve, reject )
 function forSearching( resolve, reject )
 {
     let cmd = {};
-    cmd[ "act" ] = "searchBoard";
+    cmd[ "act" ] = "search";
     cmd[ "account"] = thisAccount;
-    cmd[ "searchBoard" ] = thisBoardName;
+    cmd[ "where" ] = ["board", thisBoardName];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
-    cmd[ "searchWord" ] = thisSearching.content;
-    cmd[ "hashtag" ] = thisSearching.hashtag;
+    if( thisSearching.content.length != 0 )
+    {
+        cmd[ "searchWord" ] = thisSearching.content;
+        cmd[ "option" ] = "normal";
+    }
+    else
+    {
+        cmd[ "searchWord" ] = thisSearching.hashtag;
+        cmd[ "option" ] = "hashtag";
+    }
 
     $.post( "../index.php", cmd, function( dataDB )
     {
