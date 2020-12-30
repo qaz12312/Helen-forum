@@ -10,11 +10,6 @@ $( document ).ready(async function()
     {
         window.location.href = "./newCalender.html";
     });
-    $(".fc-daygrid-day fc-day fc-day-fri fc-day-past").on( "click", function(){
-        alert(this);
-        alert(this.data-date);
-        sessionStorage.setItem( "Helen-startTime", this.data-date );
-    });
 });
 
 function initial(resolve, reject)
