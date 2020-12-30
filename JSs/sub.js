@@ -12,6 +12,7 @@ $(document).ready(async function(){
     await new Promise((resolve, reject) => initial(resolve, reject));
 
     $(".tabContent tr").find("td:first-child").on( "click", function(){
+        console.log(articles);
         if($(this).text() != "還沒有收藏文章呦！"){
             let articleIndex = $(".tabContent tr").index(this.closest("tr"));
             sessionStorage.setItem("Helen-articleID", articles[articleIndex].articleID);
@@ -98,7 +99,6 @@ async function initial(res, rej){
     var keepDir= sessionStorage.getItem("Helen-keepDir");
     $(".tabContent").find("h2").text(keepDir);
     $(".tabContent").find("p").text("收藏目錄 > "+ keepDir);
-    console.log(keepDir)
     let cmd = {};
     cmd["act"] = "showArticleInDir";
     cmd["account"] = sessionStorage.getItem("Helen-account");
@@ -119,7 +119,6 @@ async function initial(res, rej){
             content.empty();
         
             articles = dataDB.data;
-            console.log(articles)
             if( articles.length == 0 ){
                 let emptyMessage = "<tr>" + 
                                         "<td colspan='2'>還沒有收藏文章呦！</td>" +
@@ -145,7 +144,7 @@ async function initial(res, rej){
     res(0);
 }
 
-async function checkPermission(resolve, reject){
+function checkPermission(resolve, reject){
     if(sessionStorage.getItem("Helen-account")){
         resolve(true);
     }
