@@ -10,8 +10,21 @@ $( document ).ready(async function()
     {
         window.location.href = "./newCalender.html";
     });
-
     
+    $('#calendar').fullCalendar({
+        dayClick: function(date, jsEvent, view) {
+      
+          alert('Clicked on: ' + date.format());
+      
+          alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+      
+          alert('Current view: ' + view.name);
+      
+          // change the day's background color just for fun
+          $(this).css('background-color', 'red');
+      
+        }
+      });
 });
 
 function initial(resolve, reject)
@@ -88,6 +101,7 @@ function initial(resolve, reject)
                         
                     info.el.style.borderColor = 'red';
                 }
+
             });
         
 
