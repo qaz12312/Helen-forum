@@ -470,7 +470,7 @@ $("#commentTable").on("click", "a", function() {
 } );
 
 function clickTag( thisTag ){
-    let tagStr= $(this).text().trim();
+    let tagStr= $(thisTag).text().trim();
     let commentIndex= tagStr.substring(1, tagStr.length- 1);
     commentIndex= parseInt(commentIndex);
     console.log(commentIndex);
