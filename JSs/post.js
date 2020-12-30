@@ -44,6 +44,8 @@ async function initial(res, rej){
             let article= dataDB.data;
             comments= article.comment;
             var contentStr= article.content;
+            console.log(article.hashTag);
+            console.log(article.hashTag.length);
             contentStr+= "\n";
             for(var i= 0; i< article.hashTag.length; i++){
                 contentStr+= "#"+ article.hashTag[i]+ " ";
