@@ -62,16 +62,16 @@
                 // }
                 if(isset($input['account'])){
                     $user=$input['account'];
-                    $sql = "SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?";
+                    $sql = "SELECT EXISTS(SELECT 1 FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
                     $heart = query($conn, $sql, array($articleID, $user), "SELECT");
-                    $hasLike = count($heart)> 0 ? 1 : 0;
+                    $hasLike = $heart[0][0];
     
-                    $sql = "SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?";
+                    $sql = "SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
                     $keep = query($conn, $sql, array($articleID, $user), "SELECT");
-                    $hasKeep = count($keep)> 0 ? 1 : 0;
+                    $hasKeep = $keep[0][0];
                 }else{
-                    $hasLike = 0 ;
-                    $hasKeep = 0 ;
+                    $hasLike = "" ;
+                    $hasKeep = "" ;
                 }
                 $arr = array("title"=>$result[0][1],"content"=>$result[0][2],"like"=>$result[0][3],"keep"=>$result[0][4],"time"=>$result[0][5],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 
@@ -84,7 +84,7 @@
                         for($i=0;$i<$commentCount;$i++){
                             $row = $comment[$i];
                             $isUser = 0;
-                            if($row[0]==$input['account']){
+                            if($row[0]==$user){
                                 $isUser = 1;
                             }
                             $commentArr[$i]=array("nickname"=>$row[1],"color"=>$row[2],"content"=>$row[3],"floor"=>$row[4],"time"=>$row[5],"isOwn"=>$isUser);
