@@ -103,7 +103,7 @@ async function initial( res, rej )
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
-    cmd[ "applyFor" ] = "看板";
+    cmd[ "type" ] = "board";
 
     $.post( "../index.php", cmd, function( dataDB )
     {
