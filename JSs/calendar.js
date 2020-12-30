@@ -10,8 +10,9 @@ $( document ).ready(async function()
     {
         window.location.href = "./newCalender.html";
     });
-
-    
+    $(".fc-daygrid-day fc-day fc-day-tue fc-day-past").on( "click", function(){
+        sessionStorage.setItem( "Helen-articleID", this.data-date );
+    });
 });
 
 function initial(resolve, reject)
@@ -87,13 +88,9 @@ function initial(resolve, reject)
                         }).then(( result ) => {}, (dismiss) => {});  
                         
                     info.el.style.borderColor = 'red';
-                },
-                select:function(date, jsEvent, view, resource) {
-                    alert('clicked ' + date.getDate() + ' on resource ' + resource.id);
-                  },
+                }
             });
-
-
+        
 
         for( let i in activity ) {
             calendar.addEvent({
