@@ -6,20 +6,11 @@ $( document ).ready( async function()
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
 
-    $( ".tabContent tr" ).find( "td:first-child" ).on( "click", function(){
-        let thisArticleID = Object.keys( activity ).find( ( key ) => activity[ key ].title == $(this).text() );
-
-        if( thisArticleID != undefined ){
-            sessionStorage.setItem( "Helen-articleID", thisArticleID );
-            location.href =  "../HTMLs/post.html";
-        }
-    } );
-
     $( ".tabContent button" ).on( "click", function(){
-        let thisArticleTitle = $(this).closest( "tr" ).find( "td:first-child" ).text();
+        let thisActivityTitle = $(this).closest( "tr" ).find( "td:first-child" ).text();
 
         let thisActivity = Object.keys( activity ).find( ( key ) =>{
-            return activity[ key ].title == thisArticleTitle;
+            return activity[ key ].title == thisActivityTitle;
         });
         let thisStartTime = activity[ thisActivity ].startTime.split("T");
         let thisEndTime = activity[ thisActivity ].endTime.split("T");
