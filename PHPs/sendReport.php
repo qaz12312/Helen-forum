@@ -39,7 +39,7 @@
             errorCode("Failed to send report,Database exception.");
         }
         else{
-            doSendNotification(array("recipient" => $input['account'], "content" => "Sorry - Your article has been report.",""));
+            doSendNotification(array("recipient" => $input['account'], "content" => "Sorry - Your article has been report."));
             $rtn = successCode("Successfully send the report.",$result);
         }
         echo json_encode($rtn);

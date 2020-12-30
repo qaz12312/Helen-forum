@@ -18,7 +18,7 @@
 	*/
     function doCheckInCanlendarList($input){ //審核活動
         global $conn;
-        $sql="SELECT `Title`,`Start`,`END` FROM `Calendars` WHERE `ID`= ? AND `IsValid`= ? ";  
+        $sql="SELECT `Title`,`Start`,`END`,`UserID` FROM `Calendars` WHERE `ID`= ? AND `IsValid`= ? ";  
             $arr = array($input['id'],0);
             $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
@@ -30,12 +30,14 @@
                     $sql="UPDATE `Calendars` SET `IsValid`=?  WHERE `ID`=? ";
                     $arr = array(true,$input['id'] );
                     query($conn,$sql,$arr,"UPDATE");
+                    doSendNotification(array("recipient" => $result[0][4], "content" => "Your activtiy has been added.",""));
                     $rtn = successCode("Successfully update to Calendar.",array());
                 }
                 else { //刪除活動
                     $sql="DELETE FROM `Calendars` WHERE `ID`= ? AND `IsValid`= ? ";
                     $arr = array($input['id'],0);
                     query($conn,$sql,$arr,"DELETE");
+                    doSendNotification(array("recipient" => $result[0][4], "content" => "Your activtiy can't be added.",""));
                     $rtn = successCode("Successfully canceled this activity.",array());
                 }
             }
