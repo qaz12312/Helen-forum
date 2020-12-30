@@ -411,6 +411,7 @@ function leaveComment(){
             swal({
                 title: "留言成功",
                 type: "success",
+                timer: 1000,
                 showConfirmButton: false
             }).then((result)=> {
                 location.reload();
