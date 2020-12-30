@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "showArticleComment";
-    cmd["articleID"] = "ArticleID";
+    cmd["articleID"] = ArticleID;
     cmd["account"] = "00757003";(訪客不用傳) //cmd["token"]
 
     後端 to 前端:
@@ -13,107 +13,77 @@
         dataDB.info = ""
         dataDB.data[i].comment //有i筆留言
         (
-            dataDB.data.comment[i].content //第i筆留言的內文
-            dataDB.data.comment[i].floor //第i筆留言的樓層
-            dataDB.data.comment[i].nickname//第i筆留言的作者暱稱
-            dataDB.data.comment[i].color//第i筆留言的作者顏色
-            dataDB.data.comment[i].time//第i筆留言的時間
+            dataDB.data.comment[i].content  //第i筆留言的內文
+            dataDB.data.comment[i].floor    //第i筆留言的樓層
+            dataDB.data.comment[i].nickname //第i筆留言的作者暱稱
+            dataDB.data.comment[i].color    //第i筆留言的作者顏色
+            dataDB.data.comment[i].time     //第i筆留言的時間
         ) 
-        dataDB.data.title //文章的標題
+        dataDB.data.title   //文章的標題
         dataDB.data.content //文章的內容
+        dataDB.data.like    //文章的總愛心數
+        dataDB.data.keep    //文章的總收藏數
+        dataDB.data.hasLike//是否被user按過愛心
+        dataDB.data.hasKeep //是否被user收藏
+        dataDB.data.time    //文章的發布時間
 		dataDB.data.hashTag
-        dataDB.data.time //文章的時間
-        dataDB.data.like //文章的總愛心數
-        dataDB.data.keep//文章的總收藏數
-        dataDB.data.authorNickname
-        dataDB.data.authorColor
-        dataDB.data.hasHeart//被user按過愛心
-        dataDB.data.hasKeep//被user收藏
+        dataDB.data.authorNickname 
+        dataDB.data.authorColor    
     否則
         dataDB.errorCode = "Article doesn't exit."
         dataDB.data = ""
     */
     function doShowArticleComment($input){
         global $conn;
-        // if(isset($input['token'])){// 非訪客
-        //     if(!isset($_SESSION[$token])){
-        //         errorCode("token doesn't exist.");
-        //     }else{
-        //         $userInfo = $_SESSION[$token];
-        //         $user = $userInfo['account'];
-        //     }
-        // }
-        //要增加hashTag欄位
-        $sql="SELECT `Title`,`Content`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times`,`AuthorID` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?";
-        $arr = array($input['articleID']);
-        $result = query($conn,$sql,$arr,"SELECT");
+        $sql="SELECT `AuthorID`,`Title`,`Content`,`cntHeart`,`cntKeep`,`Times`,`Hashtag` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?"; //文章 相關資訊
+        $result = query($conn,$sql,array($input['articleID']),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
             errorCode("Article doesn't exit.");
         }
         else{
-            $sqlAuthor="SELECT `Nickname`,`Color` FROM `Users` WHERE `UserID`=?";
-            $arrAuthor = array($result[0][7]);//AuthorID
-            $resultAuthor = query($conn,$sqlAuthor,$arrAuthor,"SELECT");
+            $sql="SELECT `Nickname`,`Color` FROM `Users` WHERE `UserID`=?"; //作者 相關資訊
+            $resultAuthor = query($conn,$sqlAuthor,array($result[0][0]),"SELECT");
             $resultCount = count($resultAuthor);
             if($resultCount <= 0){
                 errorCode("AuthorID doesn't exit.");
             }
             else{
-                $articleID=$result[0][3];
-				//$hashTag = json_decode($result[0][7]);
-                $hashTag = array();
-                // if(isset($user)){
-                //     $sql ="SELECT UserID FROM FollowHeart WHERE `ArticleID`=? AND`UserID`=?";
-                //     $arr = array($articleID, $user);
-                //     $heart = query($conn,$sql,$arr,"SELECT");
-                //     $heartCount = count($heart);
-
-                //     $sql ="SELECT UserID FROM FollowKeep WHERE `ArticleID`=? AND`UserID`=?" ;
-                //     $arr = array($articleID, $user);
-                //     $keep = query($conn,$sql,$arr,"SELECT");
-                //     $keepCount = count($keep);
-
-                //     $hasHeart = ( $heartCount>0 ? 1 : 0);
-                //     $hasKeep = ($keepCount>0 ? 1 : 0 );
-                // }else{
-                //     $hasHeart = "";
-                //     $hasKeep = "";
+                $hashTag = json_decode($result[0][6]);
+                // if(isset($input['token'])){// 非訪客
+                //     if(!isset($_SESSION[$token])){
+                //         errorCode("account doesn't exist.");
+                //     }else{
+                //         $userInfo = $_SESSION[$token];
+                //         $user = $userInfo['account'];
+                //     }
                 // }
                 if(isset($input['account'])){
-                    $userID=$input['account'];
-                    $sql ="SELECT UserID FROM FollowHeart WHERE `ArticleID`=? AND`UserID`=?" ;
-                    $arr = array($articleID, $input['account']);
-                    $heart = query($conn,$sql,$arr,"SELECT");
-                    $heartCount = count($heart);
-
-                    $sql ="SELECT UserID FROM FollowKeep WHERE `ArticleID`=? AND`UserID`=?" ;
-                    $arr = array($articleID, $input['account']);
-                    $keep = query($conn,$sql,$arr,"SELECT");
-                    $keepCount = count($keep);
-                    $hasHeart = ( $heartCount>0 ? 1 : 0);
-                    $hasKeep = ($keepCount>0 ? 1 : 0 );
+                    $user=$input['account'];
+                    $sql = "SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?";
+                    $heart = query($conn, $sql, array($articleID, $user), "SELECT");
+                    $hasLike = count($heart)> 0 ? 1 : 0;
+    
+                    $sql = "SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?";
+                    $keep = query($conn, $sql, array($articleID, $user), "SELECT");
+                    $hasKeep = count($keep)> 0 ? 1 : 0;
                 }else{
-                    $hasHeart = "";
-                    $hasKeep = "";
+                    $hasLike = 0 ;
+                    $hasKeep = 0 ;
                 }
-                $arr = array("title"=>$result[0][0],"content"=>$result[0][1],"blockName"=>$result[0][2],"articleID"=>$result[0][3],"like"=>$result[0][4],"keep"=>$result[0][5],"time"=>$result[0][6],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasHeart" => $hasHeart, "hasKeep" =>$hasKeep);
+                $arr = array("title"=>$result[0][1],"content"=>$result[0][2],"like"=>$result[0][3],"keep"=>$result[0][4],"time"=>$result[0][5],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 
-                $sql ="SELECT `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ;
-                $arr3 = array($articleID);
-                $comment = query($conn,$sql,$arr3,"SELECT");
+                $sql ="SELECT `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
+                $comment = query($conn,$sql,array($input['articleID']),"SELECT");
                 $commentCount = count($comment);
-                $arr2=array();
-                if($commentCount <= 0){
-                    $arr2 = array();
-                }
-                else{
+                $commentArr = array();
+                if($commentCount > 0){
                     for($i=0;$i<$commentCount;$i++){
                         $row = $comment[$i];
-                        $arr2[$i]=array("nickname"=>$row[0],"color"=>$row[1],"content"=>$row[2],"floor"=>$row[3],"time"=>$row[4]);
+                        $commentArr[$i]=array("nickname"=>$row[0],"color"=>$row[1],"content"=>$row[2],"floor"=>$row[3],"time"=>$row[4]);
                     }
                 }
-                $arr['comment']=$arr2;
+                $arr['comment']=$commentArr;
                 $rtn = successCode("Successfully show article and comment.",$arr);
             }
         }
