@@ -252,11 +252,11 @@ async function initial( res, rej )
     });
 }
 
-function checkPermission( resolve, reject )
+async function checkPermission( resolve, reject )
 {
     if( !thisAccount )
     {
-        swal({
+        await swal({
             title: "載入頁面失敗",
             type: "error",
             text: "您沒有權限瀏覽此頁面",
@@ -282,13 +282,13 @@ function checkPermission( resolve, reject )
     cmd[ "act" ] = "showAuthority";
     cmd[ "account" ] = thisAccount;
 
-    $.post( "../index.php", cmd, function( dataDB )
+    $.post( "../index.php", cmd, async function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
         {
-            swal({
+            await swal({
                 title: "載入頁面失敗",
                 type: "error",
                 text: dataDB.errorCode,
@@ -309,7 +309,7 @@ function checkPermission( resolve, reject )
         }
         else if( dataDB.data.boardName == undefined || dataDB.data.boardName.find( (element) => element.BoardName == thisBoardName ) == undefined )
         {
-            swal({
+            await swal({
                 title: "載入頁面失敗",
                 type: "error",
                 text: "您沒有權限瀏覽此頁面",
