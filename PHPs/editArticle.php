@@ -37,7 +37,11 @@
 				errorCode("Update without permission.");
 			}
 			else{
-				$hashTag = json_encode($input['hashTag']);
+				if(empty($input['hashTag'])){
+					$hashTag = json_encode(array());
+				}else{
+					$hashTag = json_encode($input['hashTag']);
+				}
 				$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=?,`Times`=NOW() WHERE `ArticleID` = ? AND `AuthorID`=?";
 				$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['articleID'], $user);
 				query($conn,$sql,$arr,"UPDATE");
