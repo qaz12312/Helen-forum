@@ -5,7 +5,7 @@
 	cmd["act"] = "editArticle";
 	cmd["articleID"] = ArticleID;
 	cmd["account"] = "00757003"; //cmd["token"]
-	cmd["newBlockName"] ="美食"; // 使用者想改版
+	cmd["blockName"] ="美食"; // 使用者想改版
 	cmd["title"] = "Title";
 	cmd["content"] = "Content";
 	cmd["picture"] = "Image";
@@ -39,7 +39,7 @@
 			else{
 				$hashTag = json_encode($input['hashTag']);
 				$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=?,`Times`=NOW() WHERE `ArticleID` = ? AND `AuthorID`=?";
-				$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['newBlockName'], $input['articleID'], $user);
+				$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['articleID'], $user);
 				query($conn,$sql,$arr,"UPDATE");
 
 				$sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color`,`BlockName` FROM `Article` JOIN`Users` ON Users.UserID=Article.AuthorID WHERE `Title`=? AND `Content`=? AND `Image`=? AND `HashTag`=?";
