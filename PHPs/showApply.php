@@ -23,28 +23,25 @@
     function doShowApplyBoard($input){
         global $conn;
 		if($input['type'] == "board" || $input['type'] == "moderator") {
-		  if($input['type'] == "board")
-		     $sql="SELECT `UserID`,`Content`,`Times` FROM `Issue` WHERE `Type`= 1 order by `UserID` ASC ,`Times`DESC ";
-		  else
-		     $sql="SELECT `UserID`,`Content`,`Times` FROM `Issue` WHERE `Type`= 0 order by `UserID` ASC ,`Times`DESC ";
+				$sql="SELECT `UserID`,`Content`,`Times` FROM `Issue` WHERE `Type`= ? order by `UserID` ASC ,`Times`DESC ";
 			 
-		  $result = query($conn,$sql,array(),"SELECT");
-          $resultCount = count($result);
-          if($resultCount <= 0){
-            $rtn = successCode("Don't have any apply.",array());
-          }
-          else{
-            $arr=array();
-			for($i=0;$i<$resultCount;$i++){
-                $row = $result[$i];
-                $arr[$i]=array("account"=>$row[0],"content"=>$row[1],"times"=>$row[2]);
-            }
-            $rtn = successCode("Successfully show apply.",$arr);
-          }
+		  	$result = query($conn,$sql,($input['type'] == "board" ? 1 : 0 ),"SELECT");
+          	$resultCount = count($result);
+          	if($resultCount <= 0){
+            	$rtn = successCode("Don't have any apply.",array());
+          	}
+          	else{
+            	$arr=array();
+				for($i=0;$i<$resultCount;$i++){
+					$row = $result[$i];
+					$arr[$i]=array("account"=>$row[0],"content"=>$row[1],"times"=>$row[2]);
+				}
+            	$rtn = successCode("Successfully show apply.",$arr);
+          	}
         }
-		else {
-		  errorCode("Failed to show who is applying.")
-		}
+		else 
+		  	errorCode("Failed to show who is applying.");
+
         echo json_encode($rtn);
     }
 ?>
