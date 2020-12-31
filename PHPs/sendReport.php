@@ -42,7 +42,10 @@
                 errorCode("Failed to send report,Database exception.");
             }
             else{
-                doSendNotification(array("recipient" => $input['account'], "content" => "Sorry - Your article has been report."),0);
+		$sql = "SELECT `Title` FROM `Article` WHERE `ArticleID`=?";
+        	$arr = array($input['articleID']);
+        	$result = query($conn,$sql,$arr,"SELECT");
+                doSendNotification(array("recipient" => $input['account'], "content" => "Sorry - Your article-【".$result[0]."】 has been report."));
                 $rtn = successCode("Successfully send the report.");
             }
             echo json_encode($rtn);
