@@ -93,6 +93,7 @@ $("#publishBtn").on("click", function(){
     console.log(cmd);
     
     $.post("../index.php", cmd, function(dataDB){
+        console.log(dataDB);
         var dataDB= JSON.parse(dataDB);
         if(dataDB.status== false){
             swal({
