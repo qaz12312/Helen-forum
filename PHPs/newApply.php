@@ -21,8 +21,6 @@
 		if($input['type'] == "board" || $input['type'] == "moderator") {
 			$sql="SELECT `Content` FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type`=? ";
 			$arr = array($input['account'], $input['content'],($input['type'] == "board" ? 1 : 0));
-
-			$arr = array($input['account'], $input['content']);
 			$result = query($conn,$sql,$arr,"SELECT");
 			$resultCount = count($result);
 			if($resultCount > 0){

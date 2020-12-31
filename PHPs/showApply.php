@@ -23,9 +23,9 @@
     function doShowApplyBoard($input){
         global $conn;
 		if($input['type'] == "board" || $input['type'] == "moderator") {
-				$sql="SELECT `UserID`,`Content`,`Times` FROM `Issue` WHERE `Type`= ? order by `UserID` ASC ,`Times`DESC ";
-			 
-		  	$result = query($conn,$sql,($input['type'] == "board" ? 1 : 0 ),"SELECT");
+			$sql="SELECT `UserID`,`Content`,`Times` FROM `Issue` WHERE `Type`= ? order by `UserID` ASC ,`Times`DESC ";
+			$a=array($input['type'] == "board" ? 1 : 0 );
+		  	$result = query($conn,$sql,$a,"SELECT");
           	$resultCount = count($result);
           	if($resultCount <= 0){
             	$rtn = successCode("Don't have any apply.",array());
