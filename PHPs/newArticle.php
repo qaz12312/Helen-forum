@@ -33,10 +33,19 @@
 		// 	errorCode("token doesn't exist.");
         // }else{
 		// 	$userInfo = $_SESSION[$token];
+		$sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color` FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? ";
+		$arr = array($articleID,$input['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
+		$result = query($conn,$sql,$arr,"SELECT");
+		$resultCount = count($result);
+		if($resultCount > 0){
+			errorCode("article exist.");
+		}
+		else{
 			$sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
-	    		if(!isset($input['hashTag'])){
+				if(!isset($input['hashTag'])){
 				$hashTag = json_encode(array());
-			}else{
+			}
+			else{
 				$hashTag = json_encode($input['hashTag']);
 			}
 			// $hashTag = $input['hashTag'];
@@ -58,6 +67,7 @@
 				$rtn = successCode("Successfully new the Article.",$result[0]);
 			}
 			*/
+		}
 			echo json_encode($rtn);
 		// }
     }
