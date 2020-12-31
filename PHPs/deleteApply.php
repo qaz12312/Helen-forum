@@ -32,7 +32,7 @@
 				$sql="DELETE FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=?";
 				$arr = array($input['account'],$input['content'],($input['type'] == "board" ? 1 : 0 ));
 				query($conn,$sql,$arr,"DELETE");
-				doSendNotification(array("recipient" => $input['account'], "content" => "Your application can't be added.",0));
+				doSendNotification(array("recipient" => $input['account'], "content" => "Your application can't be added."),0);
 				$rtn = successCode("Successfully deleted all this user's application.");
 			}
 		}

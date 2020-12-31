@@ -31,7 +31,7 @@
                 $sql="DELETE FROM `Article` WHERE `ArticleID` = ?";
                 $arr = array($input['articleID']);
                 query($conn,$sql,$arr,"DELETE");
-                doSendNotification(array("recipient" => $result[0][1], "content" => "Your post 【".$result[0][1]."】 has been reported and deleted.",0));
+                doSendNotification(array("recipient" => $result[0][1], "content" => "Your post 【".$result[0][1]."】 has been reported and deleted."),0);
                 $rtn = successCode("Successfully deleted this article which you report.");
             }
         }
