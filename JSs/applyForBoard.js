@@ -4,8 +4,7 @@ var thisAccount = sessionStorage.getItem( 'Helen-account' );
 $( document ).ready( async function() 
 {
     barInitial();
-    await new Promise( ( resolve, reject ) => initial( resolve, reject ) ).catch(
-    (error) => {});
+    await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
 
     $( ".tabContent button" ).on( "click", function()
     {
@@ -96,10 +95,10 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
-    let valid = await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
     ( error ) =>
     {
-        rej(1);
+        res(1);
     });
 
     let cmd = {};
@@ -165,11 +164,11 @@ async function initial( res, rej )
     });
 }
 
-function checkPermission( resolve, reject )
+async function checkPermission( resolve, reject )
 {
     if( !thisAccount )
     {
-        swal({
+        await swal({
             title: "載入頁面失敗",
             type: "error",
             text: "您沒有權限瀏覽此頁面",
@@ -186,6 +185,7 @@ function checkPermission( resolve, reject )
             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
             $( ".tabContent" ).append( httpStatus );
         });
+
         reject(0);
 
         return;
@@ -201,7 +201,7 @@ function checkPermission( resolve, reject )
 
         if( dataDB.status == false )
         {
-            swal({
+            await swal({
                 title: "載入頁面失敗",
                 type: "error",
                 text: dataDB.errorCode,
@@ -223,7 +223,7 @@ function checkPermission( resolve, reject )
         }
         else if( dataDB.data.permission == undefined || dataDB.data.permission < 3 )
         {
-            swal({
+            await swal({
                 title: "載入頁面失敗",
                 type: "error",
                 text: "您沒有權限瀏覽此頁面",
