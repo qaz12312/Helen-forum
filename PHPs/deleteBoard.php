@@ -37,7 +37,9 @@
             
             if ($resultCount > 0) {
                 errorCode("Failed to delete,Database exception.");
-            } else {
+            } 
+            else {
+                doToAllNotification(array("content" => "The board ".$input['boardName']." does not exit."));
                 $rtn = successCode("Successfully deleted this board.");
             }
         }

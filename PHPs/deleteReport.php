@@ -19,7 +19,7 @@
     function doDeleteReport($input){ //審核被檢舉文章
         global $conn;
         if($input['isPass']){//刪除文章
-            $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID`=?";  
+            $sql="SELECT `ArticleID`,`AuthorID`,`Title` FROM `Article` WHERE `ArticleID`=?";  
             $arr = array($input['articleID']);
             $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
@@ -30,7 +30,8 @@
             else{
                 $sql="DELETE FROM `Article` WHERE `ArticleID` = ?";
                 $arr = array($input['articleID']);
-			    query($conn,$sql,$arr,"DELETE");
+                query($conn,$sql,$arr,"DELETE");
+                doSendNotification(array("recipient" => $result[0][1], "content" => "Your post 【".$result[0][1]."】 has been reported and deleted."));
                 $rtn = successCode("Successfully deleted this article which you report.");
             }
         }

@@ -44,7 +44,7 @@
             if($resultCount <= 0){
                 errorCode("Failed to found the update board.");
             }
-            else{
+            else{ 
                 $rtn = successCode("Successfully edited this board.",$result);
             }
         }
