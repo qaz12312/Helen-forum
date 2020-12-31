@@ -95,11 +95,13 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
-    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    let valid = await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
     ( error ) =>
     {
         res(1);
     });
+
+    if( valid == 1 ) return
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
@@ -185,7 +187,7 @@ function checkPermission( resolve, reject )
             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
             $( ".tabContent" ).append( httpStatus );
         });
-        resolve(0);
+        reject(0);
 
         return;
     }
@@ -218,7 +220,7 @@ function checkPermission( resolve, reject )
                 $( ".tabContent" ).append( httpStatus );
             });
             
-            resolve(0);
+            reject(0);
         }
         else if( dataDB.data.permission == undefined || dataDB.data.permission < 3 )
         {
@@ -240,7 +242,7 @@ function checkPermission( resolve, reject )
                 $( ".tabContent" ).append( httpStatus );
             });
     
-            resolve(0);
+            reject(0);
         }
     
         resolve(0);
