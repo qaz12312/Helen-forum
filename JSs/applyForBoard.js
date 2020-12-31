@@ -195,7 +195,7 @@ async function checkPermission( resolve, reject )
     cmd[ "act" ] = "showAuthority";
     cmd[ "account" ] = thisAccount;
 
-    $.post( "../index.php", cmd, function( dataDB )
+    $.post( "../index.php", cmd, async function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
 
