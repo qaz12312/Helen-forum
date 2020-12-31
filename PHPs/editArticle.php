@@ -28,21 +28,18 @@
 		// 	errorCode("token doesn't exist.");
         // }else{
 		// 	$userInfo = $_SESSION[$token];
-			// $user = $userInfo['account'];
-			$sql="SELECT `ArticleID` FROM `Article` JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `ArticleID`=? AND `AuthorID`=?";  
-			// $arr = array($input['articleID'], $user);
-			$arr = array($input['articleID'], $input['account']);
-			$result = query($conn,$sql,$arr,"SELECT");
+            // $user = $userInfo['account'];
+            $user = $input['account'];
+			$sql="SELECT EXISTS(SELECT 1 FROM `Article` JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `ArticleID`=? AND `AuthorID`=? LIMIT 1)";  
+			$result = query($conn,$sql,array($input['articleID'], $user),"SELECT");
 			$resultCount = count($result);
 			if($resultCount <= 0){
 				errorCode("Update without permission.");
 			}
 			else{
 				$hashTag = json_encode($input['hashTag']);
-				// $hashTag = $input['hashTag'];
-				$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=? WHERE `ArticleID` = ? AND `AuthorID`=?";
-				// $arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['newBlockName'], $input['articleID'], $user);
-				$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['newBlockName'], $input['articleID'], $input['account']);
+				$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=?,`Times`=NOW() WHERE `ArticleID` = ? AND `AuthorID`=?";
+				$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['newBlockName'], $input['articleID'], $user);
 				query($conn,$sql,$arr,"UPDATE");
 
 				$sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color`,`BlockName` FROM `Article` JOIN`Users` ON Users.UserID=Article.AuthorID WHERE `Title`=? AND `Content`=? AND `Image`=? AND `HashTag`=?";
@@ -53,6 +50,7 @@
 					errorCode("Failed to Update Article, Database exception.");
 				}
 				else{
+                    // writeRecord($user,$userInfo["log"],"edit for articleID:".$input['articleID']);
 					$rtn = successCode("Successfully edited this article.", $result);
 				}
 			}
