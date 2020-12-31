@@ -27,7 +27,7 @@
 		// 	errorCode("token doesn't exist.");
         // }else{
         // 	$userInfo = $_SESSION[$token];
-            $user = $userInfo['account'];
+//             $user = $userInfo['account'];
             $user = $input['account'];
             if(empty($input['hashTag'])){
                 $hashTag = json_encode(array());
