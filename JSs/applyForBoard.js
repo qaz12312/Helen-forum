@@ -51,7 +51,6 @@ $( document ).ready( async function()
 
                     $.post( "../index.php", cmd, function( dataDB )
                     {
-                        console.log(dataDB)
                         dataDB = JSON.parse( dataDB );
 
                         if( dataDB.status == false )

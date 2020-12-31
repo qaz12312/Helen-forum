@@ -408,8 +408,8 @@ function moderatorInitial( resolve, reject )
         
                     buttonBlock = "<div class='input-group input-group-lg mt-3'>" +
                                     "<div class='dropdown'>" +
-                                        "<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' style='width: 40px !important;'>" +
-                                            "<i class='fa fa-plus'> " +
+                                        "<button class='btn btn-primary dropdown-toggle fa fa-plus' type='button' data-toggle='dropdown' style='width: 40px !important;'>" +
+                                            // "<i class='fa fa-plus'> " +
                                         "</button>&nbsp;" +
                                         "<ul class='dropdown-menu'>" +
                                             validlis +
