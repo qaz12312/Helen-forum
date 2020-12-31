@@ -4,7 +4,8 @@ var thisAccount = sessionStorage.getItem( 'Helen-account' );
 $( document ).ready( async function() 
 {
     barInitial();
-    await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
+    await new Promise( ( resolve, reject ) => initial( resolve, reject ) ).catch(
+    (error) => {});
 
     $( ".tabContent button" ).on( "click", function()
     {
@@ -98,10 +99,8 @@ async function initial( res, rej )
     let valid = await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
     ( error ) =>
     {
-        res(1);
+        rej(1);
     });
-
-    if( valid == 1 ) return
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
