@@ -159,6 +159,7 @@ async function initial( res, rej )
     ( error ) =>
     {
        res(1);
+       return;
     });
 
     let cmd = {};
