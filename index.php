@@ -188,7 +188,7 @@
         doCheckPassword($input);
         break;
     case "showApplyBoard":	
-        require_once("./PHPs/showApplyBoard.php");
+        require_once("./PHPs/showApply.php");
         doShowApplyBoard($input);
         break;
     case "newApplyBoard":	
@@ -196,7 +196,7 @@
         doNewApplyBoard($input);
         break;
     case "deleteApplyBoard":	
-        require_once("./PHPs/deleteApplyBoard.php");
+        require_once("./PHPs/deleteApply.php");
         doDeleteApplyBoard($input);
         break;
     case "newActivityInCanlendar":	
