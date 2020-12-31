@@ -34,7 +34,7 @@
         // }else{
 		// 	$userInfo = $_SESSION[$token];
 		$sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color` FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? ";
-		$arr = array($articleID,$input['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
+		$arr = array($input['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
 		$result = query($conn,$sql,$arr,"SELECT");
 		$resultCount = count($result);
 		if($resultCount > 0){
@@ -42,7 +42,7 @@
 		}
 		else{
 			$sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
-				if(!isset($input['hashTag'])){
+			if(empty($input['hashTag'])){
 				$hashTag = json_encode(array());
 			}
 			else{
