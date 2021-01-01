@@ -132,6 +132,7 @@ $( document ).ready(async function()
                     cmd["dirName"] = $(this).parents('.Page').find("span").text();
                     $.post( "../index.php", cmd, function( dataDB )
                     {
+                        console.log(dataDB);
                         dataDB = JSON.parse( dataDB );
 
                         if( dataDB.status == false )
