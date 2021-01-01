@@ -242,6 +242,7 @@
 	}
 	
 	.Page .currency {
+		word-break: break-word;width: 125px;
 		display: inline-block;
 		font-size: 25px;
 		margin-top: -10px;
