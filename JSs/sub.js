@@ -29,6 +29,7 @@ $(document).ready(async function(){
             cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
 
             $.post( "../index.php", cmd, function( dataDB ){
+                console.log(dataDB)
                 dataDB = JSON.parse( dataDB );
 
                 swal({
