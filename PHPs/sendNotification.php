@@ -5,15 +5,12 @@
     cmd["act"] = "sendNotification";
     cmd["recipient"] = "收通知的account";
     cmd["content"] = "Content"
-
     後端 to 前端:
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
         dataDB.info = ""
-        dataDB.data[0]	// UserID
-        dataDB.data[1]	// Times
-        dataDB.data[2]	// Content
+        dataDB.data = ""
     否則
         dataDB.errorCode = "Failed to send notification,Database exception."
         dataDB.data = ""
