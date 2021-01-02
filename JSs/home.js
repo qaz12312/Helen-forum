@@ -508,12 +508,10 @@ function forSearching( res, rej)
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
-    if( thisSearching.content != null )
-    {
-        document.getElementById('searchBtn').disabled = false;
-    }
+
     if( thisSearching.content.length != 0 )
     {
+        document.getElementById('name').disabled = true;
         cmd[ "searchWord" ] = thisSearching.content;
         cmd[ "option" ] = "normal";
     }
