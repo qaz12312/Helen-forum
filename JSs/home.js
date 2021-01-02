@@ -378,7 +378,7 @@ async function initial(res, rej)
     
     if( !thisAccount ) thisAccount = "";
 
-    if( !thisSearching || (thisSearching.content.length == 0 && thisSearching.hashtag.length == 0))
+    if( !thisSearching )
     {
         await new Promise( (res, rej) => { forNormal(res, rej) });
         // forNormal();
