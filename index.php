@@ -56,6 +56,7 @@
             require_once("./PHPs/toAllNotification.php");
             doToAllNotification($input);
             break;
+	/*	    
         case "searchBoard": //【訪客】看板內搜尋
             require_once("./PHPs/searchInBoard.php");
             doSearchBoard($input);
@@ -63,8 +64,8 @@
 	case "searchMenu": //【訪客】主頁搜尋
             require_once("./PHPs/searchInMenu.php");
             doSearchMenu($input);
-            break;
-	case "search":
+            break;*/
+	case "search": //【訪客】主頁/看板內 搜尋
             require_once("./PHPs/search.php"); 
             break;
         case "sortInBoard": // 【系統】版內排序
