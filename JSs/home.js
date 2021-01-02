@@ -516,7 +516,7 @@ function forSearching( res, rej)
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
-        sessionStorage.setItem( "Helen-search", "" );
+        sessionStorage.removeItem( "Helen-search" );
         thisSearching = "";
 
         if( dataDB.status == false )
