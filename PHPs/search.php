@@ -95,24 +95,25 @@
     $arrsize = count($searchWord);
     switch($input["option"]){
         case "normal": // 一般正常搜尋
-            $sql = $sql .str_repeat("`Content` LIKE ? OR ",  $arrsize-1);
-            $sql = $sql . "`Content` LIKE ? OR  ";
+            $sql = $sql ."(";
+            $sql = $sql .str_repeat("`Content` LIKE ? OR ",  $arrsize);
             $sql = $sql .str_repeat("`Title` LIKE  ? OR ",  $arrsize-1);
-            $sql = $sql . "`Title` LIKE  ?";
+            $sql = $sql . "`Title` LIKE  ?) ";
             //input query value
             [$search,$idx] = inputArr(2,$searchWord);
             if($where[0]=="board"){
-                $sql = $sql . "  AND `BoardName` =?";
+                $sql = $sql . "AND `BoardName` =?";
                 $search[$idx] = $where[1];
             }
             break;
         case "hashTag": // hashTag搜尋
+            $sql = $sql ."(";
             $sql = $sql .str_repeat("`Hashtag` LIKE  ? OR ",  $arrsize-1);
-            $sql = $sql . "`Hashtag` LIKE  ?";
+            $sql = $sql . "`Hashtag` LIKE  ?) ";
             //input query value
             [$search,$idx] = inputArr(1,$searchWord,"\"");
             if($where[0]=="board"){
-                $sql = $sql . "  AND `BoardName` =?";
+                $sql = $sql . "AND `BoardName` =?";
                 $search[$idx] = $where[1];
             }
             break;

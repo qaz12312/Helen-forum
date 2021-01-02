@@ -42,7 +42,7 @@
 			}else{
 				$hashTag = json_encode($input['hashTag']);
 			}
-			$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=?,`Times`=NOW() WHERE `ArticleID` = ? AND `AuthorID`=?";
+			$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=?,`Times`=current_timestamp() WHERE `ArticleID` = ? AND `AuthorID`=?";
 			$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['articleID'], $user);
 			query($conn,$sql,$arr,"UPDATE");
 
