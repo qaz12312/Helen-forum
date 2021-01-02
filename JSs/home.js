@@ -503,7 +503,7 @@ function forSearching( res, rej)
     let cmd = {};
     cmd[ "act" ] = "search";
     cmd[ "account"] = thisAccount;
-    cmd[ "where" ] = ["board", thisBoardName];
+    cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
     if( thisSearching.content.length != 0 )
     {
