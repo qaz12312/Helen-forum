@@ -1,5 +1,4 @@
-// var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 ,"boardName":"美食版", "hasLike": 1, "hasKeep": 0}, 
-//                 { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 ,"boardName":"詢問版", "hasLike": 1, "hasKeep": 0}];
+
 var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisSearching = sessionStorage.getItem( "Helen-search" );
@@ -376,15 +375,10 @@ $(document).ready(async function(){
 async function initial(res, rej)
 {
 
-    if(sessionStorage.getItem( "Helen-boardName" )!="")
-    {
-        console.log("刪除")
-        sessionStorage.removeItem( "Helen-boardName" );
-    }
     
     if( !thisAccount ) thisAccount = "";
 
-    if( !thisSearching )
+    if( !thisSearching || (thisSearching.content.length == 0 && thisSearching.hashtag.length == 0))
     {
         await new Promise( (res, rej) => { forNormal(res, rej) });
         // forNormal();
@@ -549,7 +543,7 @@ function forSearching( res, rej)
         {
         
             articles = dataDB.data;
-
+            console(articles)
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
