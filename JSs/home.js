@@ -28,7 +28,6 @@ $(document).ready(async function(){
   $( ".articleTitle" ).parent().click( function() 
   {
       let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
-      sessionStorage.setItem( "Helen-sort", "熱門" );
       sessionStorage.setItem( "Helen-articleID", thisArticle.articleID );
       location.href =  "./post.html";
   });
@@ -380,18 +379,15 @@ async function initial(res, rej)
     
     if( !thisAccount ) thisAccount = "";
 
-    if( thisSearching != null )
+    if( !thisSearching )
     {
-        thisSearching = JSON.parse( thisSearching );
-    }
-
-    if( !thisSearching || (thisSearching.content.length == 0 && thisSearching.hashtag.length == 0) )
-    {
-        await new Promise( ( resolve, reject ) => forNormal( resolve, reject ) );
+        await new Promise( (res, rej) => { forNormal(res, rej) });
+        // forNormal();
     }
     else
     {
-        await new Promise( ( resolve, reject ) => forSearching( resolve, reject ) );
+        thisSearching = JSON.parse( thisSearching );
+        await new Promise( (res, rej) => { forSearching(res, rej) });
     }
     
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
@@ -404,7 +400,7 @@ function forNormal( res, rej )
     
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
-    cmd[ "account"] = thisAccount;
+    cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
     $.post( "../index.php", cmd, function( dataDB )
     {
@@ -502,7 +498,7 @@ function forSearching( res, rej)
 {
     let cmd = {};
     cmd[ "act" ] = "search";
-    cmd[ "account"] = thisAccount;
+    cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
     if( thisSearching.content.length != 0 )
@@ -515,6 +511,7 @@ function forSearching( res, rej)
         cmd[ "searchWord" ] = thisSearching.hashtag;
         cmd[ "option" ] = "hashtag";
     }
+
 
     $.post( "../index.php", cmd, function( dataDB )
     {
