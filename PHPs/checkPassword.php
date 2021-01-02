@@ -5,7 +5,6 @@
     cmd["act"] = "checkPassword";
     cmd["account"] = "00757003";(base64加密後) //cmd["token"]
     cmd["password"] = "00757003";(base64加密後)
-
     後端 to 前端:
     dataDB = JSON.parse(data);
     dataDB.status
@@ -18,17 +17,16 @@
 	*/
     function doCheckPassword($input){ //密碼是否正確
         global $conn;
-        $sql="SELECT `UserID` FROM `Users` WHERE `UserID`=? AND `Password`=?";
+        $sql="SELECT EXISTS(SELECT 1 FROM `Users` WHERE `UserID`=? AND `Password`=? LIMIT 1)";
         //$arr = array(base64_decode($input['account']),base64_decode($input['password']) );
         $arr = array($input['account'],$input['password']);
         $result = query($conn,$sql,$arr,"SELECT");
-        $resultCount = count($result);
-        if($resultCount <= 0){
+        if(!$result[0][0]){
             errorCode("Your password is wrong,you need to try again.");
         }
         else{
             $rtn = successCode("Your password is correct");
+            echo json_encode($rtn);
         }
-        echo json_encode($rtn);
     }
 ?>
