@@ -21,15 +21,16 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
+        //     errorCode("token doesn't exist.");
         // }
-        // 	$userInfo = $_SESSION[$token];
+        // $userInfo = $_SESSION[$token];
         // $user = $userInfo['account'];
-        $user =  $input['account']
+
+        $user = $input['account'];
         $sql="SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=? LIMIT 1)";
         $arr = array($input['articleID'], $user, $input['dirName']);
         $result = query($conn,$sql,$arr,"SELECT");
-        if($result[0][0] ==0){
+        if(!$result[0][0]){
             errorCode("Keep article not exist in ".$input['dirName'].".");
         }
         $sql="DELETE FROM `FollowKeep` WHERE  `DirName`=? AND`UserID`=? AND`ArticleID`=?";
@@ -38,7 +39,7 @@
         $sql="SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=? LIMIT 1)";
         $arr = array($input['articleID'], $user, $input['dirName']);
         $result = query($conn,$sql,$arr,"SELECT");
-        if($result[0][0]==1){
+        if($result[0][0]){
             errorCode("Failed to remove article in keepDir,Database exception.");
         }
         else{

@@ -53,12 +53,12 @@
             else{
                 $hashTag = json_decode($result[0][6]);
                 // if(isset($input['token'])){// 非訪客
+                //     $token =$input['token'];
                 //     if(!isset($_SESSION[$token])){
-                //         errorCode("account doesn't exist.");
-                //     }else{
-                //         $userInfo = $_SESSION[$token];
-                //         $user = $userInfo['account'];
+                //         errorCode("token doesn't exist.");
                 //     }
+                //     $userInfo = $_SESSION[$token];
+                //     $user = $userInfo['account'];
                 // }
                 if(isset($input['account'])){
                     $user=$input['account'];

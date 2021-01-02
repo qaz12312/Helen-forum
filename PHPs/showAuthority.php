@@ -11,25 +11,25 @@
     dataDB.info = ""
     dataDB.data.permission // 0(訪客)、1(一般使用者)、2(版主)、3(admin)
     如果是2 or 3: dataDB.data.boardName[0] //旅遊
-                dataDB.data.boardName[1] //星座
-                .....
+                  dataDB.data.boardName[1] //星座
+                  .....
 	*/
     function doShowAuthority($input){
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-        $rtn = array();
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
         $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`=? AND `UserID` not in ('admin')";
-        $arr = array($input['account']);
-        $result = query($conn,$sql,$arr,"SELECT");
+        $result = query($conn,$sql,array($user),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
             $sql="SELECT `IsAdmin` FROM `Users` WHERE `UserID`=?";
-            $arr = array($input['account']);
-            $result = query($conn,$sql,$arr,"SELECT");
+            $result = query($conn,$sql,array($user),"SELECT");
             $resultCount = count($result);
             if($resultCount <= 0){
                 $rtn = successCode("",array("permission"=>0));

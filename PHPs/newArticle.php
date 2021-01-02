@@ -24,31 +24,31 @@
 		global $conn;
 		// $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-        // 	$userInfo = $_SESSION[$token];
-//             $user = $userInfo['account'];
-            $user = $input['account'];
-            if(empty($input['hashTag'])){
-                $hashTag = json_encode(array());
-            }
-            else{
-                $hashTag = json_encode($input['hashTag']);
-            }
-            $sql="SELECT EXISTS(SELECT 1  FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? LIMIT 1)";
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        if(empty($input['hashTag'])){
+            $hashTag = json_encode(array());
+        }
+        else{
+            $hashTag = json_encode($input['hashTag']);
+        }
+        $sql="SELECT EXISTS(SELECT 1  FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? LIMIT 1)";
+        $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        if($result[0][0]){
+            errorCode("You have been already published this article before.");
+        }
+        else{
+            $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
             $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            if($result[0][0]==1){
-                errorCode("You have been already published this article before.");
-            }
-            else{
-                $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
-                $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
-                query($conn,$sql,$arr,"INSERT");
-                // writeRecord($user,$userInfo["log"],"publish the articleID:".$input['articleID']);
-                $rtn = successCode("Successfully new the Article.",array());
-            }
-                echo json_encode($rtn);
-		// }
+            query($conn,$sql,$arr,"INSERT");
+            // writeRecord($user,$userInfo["log"],"publish the articleID:".$input['articleID']);
+            $rtn = successCode("Successfully new the Article.",array());
+        }
+            echo json_encode($rtn);
     }
 ?>

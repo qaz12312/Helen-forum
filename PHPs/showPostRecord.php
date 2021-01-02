@@ -17,26 +17,27 @@
             dataDB.data[i].articleID
         ) 
     否則
-            dataDB.errorCode = "No article right now."
+        dataDB.errorCode = "No article right now."
         dataDB.data = ""
     */
-    function doShowPostRecord($input){
+    function doShowPostRecord($input){ // 發文紀錄
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
         $sql="SELECT `BlockName`,`Title`,`ArticleID` FROM `Article`  WHERE `AuthorID`=? order by `Times` DESC";
-        $arr = array($input['account']);
-        $result = query($conn,$sql,$arr,"SELECT");
+        $result = query($conn,$sql,array($user),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
             $rtn = successCode("No article right now.");
         }
         else{
             $arr=array();
-            // foreach($result as $row){
             for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
                 $arr[$i]=array("blockName"=>$row[0],"title"=>$row[1],"articleID"=>$row[2]);

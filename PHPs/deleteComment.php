@@ -21,37 +21,33 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-            $sql="SELECT `ArticleID` FROM `Comments` NATURAL JOIN `Users`  WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";  
-            //$arr = array($input['articleID'], $userInfo['account'], $input['floors']);
-            $arr = array($input['articleID'], $input['account'], $input['floors']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-            
-            if($resultCount <= 0){
-                errorCode("Comment doesn't exit.");
-            }
-            else{    
-                $sql="DELETE FROM `Comments` WHERE  `AuthorID`=? AND`Floor`=?";
-                // $arr = array($userInfo['account'], $input['floors']);
-                $arr = array($input['account'], $input['floors']);
-                query($conn,$sql,$arr,"DELETE");
-                
-                $sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor` FROM `Comments` WHERE `AuthorID`=? AND`Floor`=?";
-                // $arr = array($userInfo['account'], $input['floors']);
-                $arr = array($input['account'], $input['floors']);
-                $result = query($conn,$sql,$arr,"SELECT");
-                $resultCount = count($result);
-                if($resultCount > 0){
-                    errorCode("Failed to delete,Database exception.");
-                }
-                else{
-                    $rtn = successCode("Successfully deleted this comment.");
-                }
-            }
-            echo json_encode($rtn);
+        //     errorCode("token doesn't exist.");
         // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        $sql="SELECT EXISTS(SELECT 1 FROM `Comments` NATURAL JOIN `Users`  WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=? LIMIT 1)"; //留言是否存在
+        $arr = array($input['articleID'], $user, $input['floors']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        if(!$result[0][0]){
+            errorCode("Comment doesn't exit.");
+        }
+        else{    
+            $sql="DELETE FROM `Comments` WHERE  `AuthorID`=? AND`Floor`=?";
+            $arr = array($user, $input['floors']);
+            query($conn,$sql,$arr,"DELETE");
+            
+            $sql="SELECT EXISTS(SELECT 1 FROM `Comments` WHERE `AuthorID`=? AND`Floor`=? LIMIT 1)";
+            $arr = array($user, $input['floors']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            if($result[0][0]){
+                errorCode("Failed to delete,Database exception.");
+            }
+            else{
+                $rtn = successCode("Successfully deleted this comment.");
+            }
+        }
+        echo json_encode($rtn);
     }
 ?>

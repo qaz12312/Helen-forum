@@ -7,10 +7,11 @@
 	cmd["dirName"] ="搞笑";
 
 	後端 to 前端
+	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = ""
-		dataDB.data = "Successfully new the dir.";
+		dataDB.info = "Successfully new the dir.";
+		dataDB.data = "";
 	否則
 		dataDB.errorCode = "Failed to upload dir,Database exception.";
 		dataDB.data = "";
@@ -18,28 +19,27 @@
     function doNewDir($input){
 		global $conn;
 		// $token =$input['token'];
-        // if(!isset($_SESSION[$token])){
+		// if(!isset($_SESSION[$token])){
 		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-		$sql="SELECT `DirName` FROM `KeepDir` WHERE `UserID` = ? AND `DirName` = ?";
-		$arr = array($input['account'], $input['dirName']);
-		$result = query($conn,$sql,$arr,"SELECT");
-		$resultCount = count($result);
+		// }
+		// $userInfo = $_SESSION[$token];
+		// $user = $userInfo['account'];
 
-        if($resultCount > 0){
+		$user = $input['account'];
+		$sql="SELECT EXISTS(SELECT 1 FROM `KeepDir` WHERE `UserID` = ? AND `DirName` = ? LIMIT 1)";//收藏資料夾是否存在
+		$arr = array($user, $input['dirName']);
+		$result = query($conn,$sql,$arr,"SELECT");
+        if($result[0][0]){
             errorCode("Folder exist.");
 		}
 		else{
         	$sql="INSERT INTO `KeepDir`(`UserID`,`DirName`) VALUES(?,?)";
-        	$arr = array($input['account'], $input['dirName']);
+        	$arr = array($user, $input['dirName']);
 			query($conn,$sql,$arr,"INSERT");
-
-			$sql="SELECT `DirName` FROM `KeepDir` WHERE `UserID` = ? AND `DirName` = ?";
-			$arr = array($input['account'], $input['dirName']);
+			$sql="SELECT EXISTS(SELECT 1 FROM `KeepDir` WHERE `UserID` = ? AND `DirName` = ? LIMIT 1)";//是否成功新增收藏資料夾
+			$arr = array($user, $input['dirName']);
 			$result = query($conn,$sql,$arr,"SELECT");
-			$resultCount = count($result);
-			if($resultCount <= 0){
+			if(!$result[0][0]){
 				errorCode("Failed to upload folder ,Database exception.");
 			}
 			else{

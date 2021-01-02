@@ -12,7 +12,7 @@
 	dataDB.status
 	若 status = true:
 		dataDB.info = ""
-		dataDB.data= ""
+		dataDB.data = ""
 	否則
 		dataDB.errorCode = "You have been reported this article before." / "Failed to send report,Database exception."
 		dataDB.data = ""
@@ -21,37 +21,38 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-        // 	$userInfo = $_SESSION[$token];
-        $sql = "SELECT EXISTS(SELECT 1 FROM `Report` WHERE `ArticleID`=? AND `UserID`=? LIMIT 1)";
-        $arr = array($input['articleID'], $input['account']);
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        $sql = "SELECT EXISTS(SELECT 1 FROM `Report` WHERE `ArticleID`=? AND `UserID`=? LIMIT 1)";//檢舉是否已存在
+        $arr = array($input['articleID'],$user);
         $result = query($conn,$sql,$arr,"SELECT");
-        if($result[0][0]==1){
+        if($result[0][0]){
             errorCode("You have been reported this article before.");
         }else{
             $sql="INSERT INTO `Report`(`UserID`,`ArticleID`,`Reason`) VALUES(?,?,?)";
-            $arr = array($input['account'], $input['articleID'], $input['reason']);
+            $arr = array($user, $input['articleID'], $input['reason']);
             query($conn,$sql,$arr,"INSERT");
             
-            $sql="SELECT `ArticleID`,`Reason`,`Times` FROM `Report` WHERE `ArticleID`=? AND `reason`=?";
+            $sql="SELECT EXISTS(SELECT 1 FROM `Report` WHERE `ArticleID`=? AND `reason`=? LIMIT 1)";
             $arr = array($input['articleID'],$input['reason'] );
             $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-            if($resultCount <= 0){
+            if(!$result[0][0]){
                 errorCode("Failed to send report,Database exception.");
             }
             else{
                 // send issue
                 $sql = "SELECT `Title`,`AuthorID` FROM `Article` WHERE `ArticleID`=?";
-        	$arr = array($input['articleID']);
-                $result = query($conn,$sql,$arr,"SELECT");
+                $result = query($conn,$sql,array($input['articleID']),"SELECT");
                 
-                $con = "Sorry - Your article-【".$result[0][0]."】 has been report.";
+                $content = "Sorry - Your article-【".$result[0][0]."】 has been report.";
                 $sql = "SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `Content`=? AND `UserID`=? AND `Type`=? LIMIT 1)";
-                $arr = array($con, $result[0][1],2);
+                $arr = array($content,$result[0][1],2);
                 $result = query($conn,$sql,$arr,"SELECT");
-                doSendNotification(array("recipient" => $result[0][1], "content" => $con),0);
+                doSendNotification(array("recipient" => $result[0][1], "content" => $content),0);
                 $rtn = successCode("Successfully send the report.");
             }
             echo json_encode($rtn);

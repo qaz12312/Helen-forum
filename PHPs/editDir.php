@@ -1,5 +1,4 @@
 <?php
-// ????? 記得修改: 無duplicate
 	/* 
 	前端 to 後端:
 	let cmd = {};
@@ -7,42 +6,42 @@
 	cmd["account"] = "UserID"; //cmd["token"]
 	cmd["old"] ="我喜歡的"; (oldDirName)
 	cmd["new"] ="我不喜歡的"; (newDirName)
-
-	後端 to 前端
+    
+    後端 to 前端:
+	dataDB = JSON.parse(data);
 	dataDB.status
     若 status = true:
-        dataDB.status = true
 		dataDB.info = ""
-		dataDB.data=更新後的資料夾名稱
+		dataDB.data = 更新後的資料夾名稱
     否則 status = false:
-        dataDB.status = false
+        dataDB.errorCode = "Update without permission." / "Failed to found the update folder."
 		dataDB.data=""
-		dataDB.errorCode = "Update without permission." / "Failed to found the update folder."
 	*/
     function doEditDir($input){
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-        $sql="SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";  
-        $arr = array($input['old'], $input['account']);
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        $sql="SELECT EXISTS(SELECT 1 FROM `KeepDir` WHERE `DirName`=? AND `UserID`=? LIMIT 1)";//收藏資料夾是否存在
+        $arr = array($input['old'], $user);
 		$result = query($conn,$sql,$arr,"SELECT");
-        $resultCount = count($result);
-        if($resultCount <= 0){
+        if(!$result[0][0]){
             errorCode("Update without permission.");
         }
         else{
             $sql="UPDATE `KeepDir` SET `DirName`=? WHERE `UserID`=? AND`DirName`=?";
-            $arr = array($input['new'],$input['account'],$input['old']);
+            $arr = array($input['new'],$user,$input['old']);
             query($conn,$sql,$arr,"UPDATE");
 
-            $sql="SELECT `UserID`,`DirName` FROM `KeepDir` WHERE `UserID`=?  AND`DirName`=?";
-            $arr = array($input['account'],$input['new'] );
+            $sql="SELECT EXISTS(SELECT 1 FROM `KeepDir` WHERE `UserID`=?  AND`DirName`=? LIMIT 1)";//收藏資料夾是否已改名
+            $arr = array($user,$input['new'] );
             $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-            if($resultCount <= 0){
+            if(!$result[0][0]){
                 errorCode("Failed to found the update folder.");
             }
             else{

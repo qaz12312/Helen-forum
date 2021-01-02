@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "search";
-    cmd["where"] = ["home"] / ["board","boardName(版的名字)"] / ["dir","dirName(收藏資料夾的名字)"];
+    cmd["where"] = ["home"] / ["board","boardName(版的名字)"];
     cmd["option"] = "normal" / "hashTag";
     cmd["sort"] = "time" / "hot" / "collect" / "comment";
     cmd["searchWord"] = ["好吃","讚"];
@@ -35,18 +35,16 @@
         dataDB.errorCode = "Didn't find any relational article." / "Failed to search in board."
         dataDB.data = ""
     */
-
     $where = $input["where"];
     switch($where[0]){
         case "home": // 在首頁搜尋
             break;
         case "board": // 板內搜尋
             $sql = "SELECT `TopArticleID`,`Rule` FROM `Board`  WHERE `BoardName`= ?";
-            $result = query($conn,$sql,array($where[1]),"SELECT");
-            if(count($result)<=0){
+            $boardInfo = query($conn,$sql,array($where[1]),"SELECT");
+            if(count($boardInfo)<=0){
                 errorCode("This boardName: [".$where[1]."] doesn't exist");
             }
-            $boardInfo = $result;
             break;
         // case "dir": // 收藏文件中搜尋
         //     $user = $input['account'];
@@ -152,13 +150,13 @@ function doSearch($where,$boardInfo,$sql,$orderWay,$search,$user){
             $row = $result[$i];
             $articleID = $row['ArticleID'];
             if(!empty($user)) {
-                $sql = "SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?";
+                $sql = "SELECT EXISTS(SELECT 1 FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
                 $heart = query($conn, $sql, array($articleID, $user), "SELECT");
-                $hasLike = count($heart)> 0 ? 1 : 0;
+                $hasLike = $heart[0][0];
 
-                $sql = "SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?";
+                $sql = "SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
                 $keep = query($conn, $sql, array($articleID, $user), "SELECT");
-                $hasKeep = count($keep)> 0 ? 1 : 0;
+                $hasKeep = $keep[0][0];
             } 
             else{
                 $hasLike = 0 ;

@@ -24,6 +24,7 @@
         // }
         // $userInfo = $_SESSION[$token];
         // $user = $userInfo['account'];
+        
         $user = $input['account'];
         $sql = "SELECT EXISTS(SELECT 1 FROM `FollowHeart` WHERE `UserID`=? AND `ArticleID`=? LIMIT 1";
         $arr = array($user,$input['articleID']);

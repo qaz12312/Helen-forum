@@ -9,11 +9,12 @@
     cmd["endTime"] = "202012/25";
     cmd["text"] = "一起來吃聖誕大餐";
 
-	後端 to 前端
+	後端 to 前端:
+	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = ""
-		dataDB.data = "Successfully Apply the Board.";
+		dataDB.info = "Successfully Apply the Board.";
+		dataDB.data = 空array;
 	否則
 		dataDB.errorCode = "Failed to Apply the Board,Database exception.";
 		dataDB.data = "";
@@ -22,9 +23,12 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
         $sql="SELECT `IsValid` FROM `Calendars`WHERE `Title`=? AND `Start`=? AND `END`=?";
         $arr = array($input['title'],$input['startTime'],$input['endTime']);
         $result = query($conn,$sql,$arr,"SELECT");
@@ -37,7 +41,7 @@
         }
 		else{
 			$sql="INSERT INTO `Calendars`(`UserID`,`Title`,`Start`,`END`,`Text`) VALUES(?,?,?,?,?)";
-        	$arr = array($input['account'],$input['title'],$input['startTime'],$input['endTime'],$input['text']);
+        	$arr = array($user,$input['title'],$input['startTime'],$input['endTime'],$input['text']);
             $result = query($conn,$sql,$arr,"SELECT");
             $rtn = successCode("Successfully new the Article.",array());
 		}	

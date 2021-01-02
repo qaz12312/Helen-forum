@@ -20,37 +20,34 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-            $sql="SELECT `ArticleID` FROM `Article` NATURAL JOIN `Users`  WHERE `ArticleID`=? AND `AuthorID`=?";  
-            // $arr = array($input['articleID'], $userInfo['account']);
-            $arr = array($input['articleID'], $input['account']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-            if($resultCount <= 0){
-                errorCode("The query failed,This article does not exist.");
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        $sql="SELECT EXISTS(SELECT 1 FROM `Article` NATURAL JOIN `Users`  WHERE `ArticleID`=? AND `AuthorID`=? LIMIT 1)"; //文章是否存在
+        $arr = array($input['articleID'], $user);
+        $result = query($conn,$sql,$arr,"SELECT");
+        if(!$result[0][0]){
+            errorCode("The query failed,This article does not exist.");
+        }
+        else{
+            $sql="DELETE FROM `Article` WHERE `ArticleID` =? AND  `AuthorID` =?";
+            $arr = array($input['articleID'], $user);
+            query($conn,$sql,$arr,"DELETE");
+            
+            $sql="SELECT EXISTS(SELECT 1 FROM `Article` WHERE `ArticleID` =? LIMIT 1)";
+            $arr = array($input['articleID']);
+            $result = query($conn,$sql,$arr,"SELECT");        
+            if($result[0][0]){
+                errorCode("Failed to delete,Database exception.");
             }
             else{
-                $sql="DELETE FROM `Article` WHERE `ArticleID` =? AND  `AuthorID` =?";
-            // $arr = array($input['articleID'], $userInfo['account']);
-                $arr = array($input['articleID'], $input['account']);
-                query($conn,$sql,$arr,"DELETE");
-                
-                $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID` =?";
-                $arr = array($input['articleID']);
-                $result = query($conn,$sql,$arr,"SELECT");
-                $resultCount = count($result);
-                
-                if($resultCount > 0){
-                    errorCode("Failed to delete,Database exception.");
-                }
-                else{
-				//writeRecord($userInfo["account"],$userInfo["log"],"delete articleID:".$input['articleID']);
-                    $rtn = successCode("Successfully deleted this article.");
-                }
+            //writeRecord($user,$userInfo["log"],"delete articleID:".$input['articleID']);
+                $rtn = successCode("Successfully deleted this article.");
             }
-            echo json_encode($rtn);
-        // }
+        }
+        echo json_encode($rtn);
     }
 ?>

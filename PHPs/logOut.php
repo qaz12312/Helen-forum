@@ -7,8 +7,7 @@
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
-	dataDB.status
-	status = true
+	dataDB.status = true
     dataDB.info = "Successfully log out!"
     dataDB.data = ""
 	*/
