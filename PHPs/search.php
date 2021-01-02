@@ -68,15 +68,18 @@
             break;
     }
     
-    $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` ,`Hashtag` ,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE ";
+    $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` ,`Hashtag` ,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep`";
     switch($input["sort"]){
         case "time": // 最新
+            $sql = $sql. " WHERE ";
             $orderWay = "Times";
             break;
         case "hot": // 最多愛心
+            $sql = $sql. " WHERE ";
             $orderWay = "cntHeart";
             break;
         case "collect": //最多收藏
+            $sql = $sql. " WHERE ";
             $orderWay = "cntKeep";
             break;
         case "comment": //最多留言數
