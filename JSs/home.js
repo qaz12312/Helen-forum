@@ -376,6 +376,11 @@ $(document).ready(async function(){
 async function initial(res, rej)
 {
 
+    if(sessionStorage.getItem( "Helen-boardName" )!="")
+    {
+        console.log("刪除")
+        sessionStorage.removeItem( "Helen-boardName" );
+    }
     
     if( !thisAccount ) thisAccount = "";
 
@@ -496,16 +501,17 @@ function forNormal( res, rej )
 
 function forSearching( res, rej)
 {
-    if(sessionStorage.getItem( "Helen-boardName" )!="")
-    {
-        sessionStorage.removeItem( "Helen-boardName" );
-    }
+   
     
     let cmd = {};
     cmd[ "act" ] = "search";
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
+    if( thisSearching.content != null )
+    {
+        document.getElementById('searchBtn').disabled = false;
+    }
     if( thisSearching.content.length != 0 )
     {
         cmd[ "searchWord" ] = thisSearching.content;
@@ -610,6 +616,16 @@ function forSearching( res, rej)
                             "</tr>";
                 $( ".tabContent tbody" ).append( isEmpty );
             }
+            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
+            {
+                let isEmpty = "<tr>" +
+                                "<td>" +
+                                    "文章列表為空";
+                                "</td>" +
+                            "</tr>";
+                $( ".tabContent tbody" ).append( isEmpty );
+            }
+
 
 
         }
