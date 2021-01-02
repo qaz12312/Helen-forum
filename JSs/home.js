@@ -511,7 +511,7 @@ function forSearching( res, rej)
 
     if( thisSearching.content.length != 0 )
     {
-        document.getElementById('name').disabled = true;
+        
         cmd[ "searchWord" ] = thisSearching.content;
         cmd[ "option" ] = "normal";
     }
