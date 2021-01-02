@@ -543,7 +543,7 @@ function forSearching( res, rej)
         {
         
             articles = dataDB.data;
-            console(articles)
+            console.log(articles)
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
