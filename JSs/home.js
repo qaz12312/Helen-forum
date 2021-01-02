@@ -496,6 +496,11 @@ function forNormal( res, rej )
 
 function forSearching( res, rej)
 {
+    if(sessionStorage.getItem( "Helen-boardName" )!="")
+    {
+        sessionStorage.removeItem( "Helen-boardName" );
+    }
+    
     let cmd = {};
     cmd[ "act" ] = "search";
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
