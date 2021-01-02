@@ -35,7 +35,7 @@
         dataDB.errorCode = "Didn't find any relational article." / "Failed to search in board."
         dataDB.data = ""
     */
-    if(empty($input["searchWord"])) {
+    if(!isset($input["searchWord"])) {
         errorCode("You didn't input anything.");
     }
     $where = $input["where"];
