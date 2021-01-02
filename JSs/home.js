@@ -538,7 +538,8 @@ function forSearching( res, rej)
         }
         else
         {
-            articles = dataDB.data.articleList;
+        
+            articles = dataDB.data;
 
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
             "<button class='addPost' id='addPost'>+ 發文</button>"
@@ -548,19 +549,20 @@ function forSearching( res, rej)
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
-
+            
             for( let i in articles )
             {
+                
                 let oneRow = "<tr>" +
                                 "<td>" +
-                                "<div class='card'>" +
-                                    "<div class='card-body row'>" +
-                                        "<span class='col-md-2'>" + 
-                                            "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"</h5>"+
-                                        "</span>" +
-                                        "<span class='col-md-6'>" +
-                                            "<span class='articleTitle' style='cursor:pointer'>" + articles[i].title + "</span>" +
-                                        "</span>" +
+                                    "<div class='card'>" +
+                                        "<div class='card-body row'>" +
+                                            "<span class='col-md-2'>" + 
+                                                "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h5>"+
+                                            "</span>" +
+                                            "<span class='col-md-6'>" +
+                                                "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
+                                            "</span>" +
                                             "<span class='col-md-4'>";
 
                 if( articles[i].hasLike == 1 )
@@ -592,6 +594,16 @@ function forSearching( res, rej)
                 oneRow += "</span></div></div></td></tr>";
 
                 $( ".tabContent tbody" ).append( oneRow );
+            }
+
+            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
+            {
+                let isEmpty = "<tr>" +
+                                "<td>" +
+                                    "文章列表為空";
+                                "</td>" +
+                            "</tr>";
+                $( ".tabContent tbody" ).append( isEmpty );
             }
 
 
