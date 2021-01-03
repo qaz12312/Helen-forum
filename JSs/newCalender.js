@@ -25,7 +25,7 @@ $("#allday").click(function () {
 
 $('#activityStartDate').change(function(){
     if($("#allday").prop("checked"))
-        console.log('Updated Date');
+        console.log($("#activityEndDate").val());
 });
 
 
