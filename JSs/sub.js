@@ -80,7 +80,7 @@ async function initial(res, rej){
     
     var keepDir= sessionStorage.getItem("Helen-keepDir");
     $(".tabContent").find("h2").text(keepDir);
-    $(".tabContent").find("p").html("<a href= \"../HTMLs/CollectionCatalog.html\">收藏目錄</a> > "+ keepDir);
+    $(".tabContent").find("p").html("<a href= \"../HTMLs/CollectionCatalog.html\" style= \"text-decoration: none; color: #3c537c;\">收藏目錄</a> > "+ keepDir);
     let cmd = {};
     cmd["act"] = "showArticleInDir";
     cmd["account"] = sessionStorage.getItem("Helen-account");
