@@ -363,7 +363,7 @@ async function initial(res, rej)
     if( !thisAccount ) 
     {
         thisAccount = "";
-        location.reload();
+        
 
     }
 
@@ -422,6 +422,7 @@ function forNormal( res, rej )
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
             );
+            
             $( ".tabContent h3" ).html( thisSort );
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
