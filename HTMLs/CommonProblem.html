@@ -53,6 +53,16 @@
             background: #545871;
             color: #e0d5d5;
           }
+          .conrow{
+            display: block;
+            text-align: left;
+          }
+          .subject{
+            font-size:28px;
+          }
+         .ans{
+            font-size:18px;
+         }
     </style>
 </head>
 <body>
@@ -109,46 +119,84 @@
       
 
 <div class= "tabContent">
-    <h2>Common Problem</h2>
-    <!-- <button class='addPost' id='addPost'>+ 發文</button> -->
+    <h2>Q&A</h2>
     <div class="contentArea">
             <div class= "content">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <a href='#Q1'>Q1:發布文章如何標記?</a>
-                            </td>
-                            <td>
-                                <a href='#Q2'>Q2:如何聯絡Helen?</a>
-                            </td>
-                            <td>
-                                <a href='#Q3'>Q3:如何回到首頁?</a>
-                            </td>
-                            <td>
-                                <a href='#Q4'>Q4:如何成為版主?</a>
-                            </td>
-                            <td>
-                                <a href='#Q5'>Q5:網路連線正常，系統為什麼會跑那麼慢?</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class= "postContent">
-                    <span style="font-size:32px;text-align: left;display:block;" id='Q1'>Q1:發布文章如何標記?</span>
-                    <span style="font-size:20px;text-align: left;display:block;">A:輸入完之後要按下Enter</span>
-                    <br/>
-                    <span style="font-size:32px;text-align: left;display:block;" id='Q2'>Q2:如何聯絡Helen?</span>
-                    <span style="font-size:20px;text-align: left;display:block;">A:Helen聯絡信箱 : softwareengineeringhelen@gmail.com</span>
-                    <br/>
-                    <span style="font-size:32px;text-align: left;display:block;" id='Q3'>Q3:如何回到首頁?</span>
-                    <span style="font-size:20px;text-align: left;display:block;">A:點擊logo-Helen，就可回到首頁</span>
-                    <br/>
-                    <span style="font-size:32px;text-align: left;display:block;" id='Q4'>Q4:如何成為版主?</span>
-                    <span style="font-size:20px;text-align: left;display:block;">A:點擊</span>
-                    <br/>
-                    <span style="font-size:32px;text-align: left;display:block;" id='Q5'>Q5:網路連線正常，系統為什麼會跑那麼慢?</span>
-                    <span style="font-size:20px;text-align: left;display:block;">A:因為系統人數過多，故系統仔路較忙碌，請見諒💦</span>
+                <div class= "postContent conrow">
+                    <a href="#publishArticle" data-toggle="collapse"  class="subject" >
+                        發布文章問題
+                    </a>
+                    <hr>
+                    <div class="collapse" id="publishArticle">
+                        <a href="#toTag" data-toggle="collapse">
+                            Q : 發布文章如何標記?
+                        </a>
+                        <hr>
+                        <div class="collapse ans" id="toTag">
+                            <p>A : 輸入完之後要按下Enter</p>  
+                        </div> 
+                    </div>
+
+                    <a href="#home" data-toggle="collapse"  class="subject" >
+                    首頁
+                    </a>
+
+                    <hr>
+                    <div class="collapse" id="home">
+                        <a href="#toHome" data-toggle="collapse">
+                            Q:如何回到首頁?
+                        </a>
+                        <hr>
+                        <div class="collapse ans" id="toHome">
+                            <p>A:點擊logo-Helen，就可回到首頁</p>  
+                        </div>
+                    </div>
+
+                        <a href="#moderator" data-toggle="collapse"  class="subject" >
+                            版主問題
+                        </a>
+
+                    <hr>
+                      <div class="collapse" id="moderator">
+                        <a href="#beModerator" data-toggle="collapse">
+                            Q:如何申請成為版主?
+                        </a>
+                        <hr>
+                        <div class="collapse ans" id="beModerator">
+                            <p>A:點擊列表，點選我要當版主，即可向管理員申請</p>  
+                        </div>
+                    </div>
+
+                        <a href="#talk" data-toggle="collapse"  class="subject">
+                            聯絡Helen
+                        </a>
+
+                    <hr>
+                    <div class="collapse" id="talk">
+                        <a href="#email" data-toggle="collapse">
+                            Q: 如何聯絡Helen?
+                        </a>
+                        <hr>
+                        <div class="collapse ans" id="email">
+                            <p> A: Helen聯絡信箱 : softwareengineeringhelen@gmail.com</p>
+                        </div>
+                    </div>
+
+                        <a href="#internet" data-toggle="collapse" class="subject" >
+                            速度問題
+                        </a>
+
+                    <hr>
+                      <div class="collapse" id="internet">
+                        <a href="#people" data-toggle="collapse">
+                            Q: 網路連線正常，系統為什麼會跑那麼慢?
+                        </a>
+                        <hr>
+                        <div class="collapse ans" id="people">
+                            <p> A: 因為系統人數過多，故系統仔路較忙碌，請見諒💦</p>
+                        </div>
+
+                    </div>   
                 </div>
             </div> 
     </div>
@@ -156,10 +204,10 @@
 </script>
 <script>
     $( document ).ready( function() 
-{
-    barInitial();
-});
-</script>
+        {
+    barInitial();	 
+    });
+</script>	
 <script src="../JSs/bar.js"></script>
 </body>
 

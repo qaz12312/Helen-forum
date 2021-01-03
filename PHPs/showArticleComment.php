@@ -20,7 +20,8 @@
             dataDB.data.comment[i].time     //第i筆留言的時間
             dataDB.data.comment[i].isOwn      //第i筆留言是我留的
         ) 
-        dataDB.data.title   //文章的標題
+        dataDB.data.boardName   //文章的所屬版
+	dataDB.data.title   //文章的標題
         dataDB.data.content //文章的內容
         dataDB.data.like    //文章的總愛心數
         dataDB.data.keep    //文章的總收藏數
@@ -37,7 +38,7 @@
     function doShowArticleComment($input){
         global $conn;
         $articleID = $input['articleID'];
-        $sql="SELECT `AuthorID`,`Title`,`Content`,`cntHeart`,`cntKeep`,`Times`,`Hashtag` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?"; //文章 相關資訊
+        $sql="SELECT `AuthorID`,`Title`,`Content`,`cntHeart`,`cntKeep`,`Times`,`Hashtag`,`boardName` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?"; //文章 相關資訊
         $result = query($conn,$sql,array($articleID),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
@@ -73,7 +74,7 @@
                     $hasLike = "" ;
                     $hasKeep = "" ;
                 }
-                $arr = array("title"=>$result[0][1],"content"=>$result[0][2],"like"=>$result[0][3],"keep"=>$result[0][4],"time"=>$result[0][5],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
+                $arr = array("boardName"=>$result[0][7],"title"=>$result[0][1],"content"=>$result[0][2],"like"=>$result[0][3],"keep"=>$result[0][4],"time"=>$result[0][5],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 
                 $sql ="SELECT `UserID`, `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
                 $comment = query($conn,$sql,array($articleID),"SELECT");
