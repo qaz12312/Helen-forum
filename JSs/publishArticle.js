@@ -197,7 +197,7 @@ async function initial(res, rej){
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
-                $("#chooseBoard").find("option[text= '" + article.blockName+ "版']").attr("selected", true);
+                $("#chooseBoard").find("option[text= '" + article.boardName+ "版']").attr("selected", true);
                 //依 text 為"看版名(美食版)"的項選中
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
