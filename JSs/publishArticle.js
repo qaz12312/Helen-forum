@@ -198,8 +198,8 @@ async function initial(res, rej){
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
                 for(var i= 0; i< boards.length; i++){
-                    console.log(i);
-                    if(borads[i]== article.boardName){
+                    if((borads[i]+ "版")== article.boardName){
+                        console.log(i);
                         $("#chooseBoard").selectIndex= i;
                     }
                 }
