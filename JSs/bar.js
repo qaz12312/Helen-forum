@@ -180,11 +180,13 @@ function setSearchData() {
     let searchArr = searchStr.split(" ");
     var contents = [];
     var hashtags = [];
+    if(searchArr.length== 0) return;
     for (var i = 0; i < searchArr.length; i++) {
+        if(!searchArr[i].trim()) continue;
         if(searchType== 1){ // hashTag
-            hashtags.push(searchArr[i]);
+            hashtags.push(searchArr[i].trim());
         }else{ // == 2, content
-            contents.push(searchArr[i]);
+            contents.push(searchArr[i].trim());
         }
     }
     let searchData = {};
