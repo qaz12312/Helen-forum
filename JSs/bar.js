@@ -180,8 +180,7 @@ function setSearchData() {
     let searchArr = searchStr.split(" ");
     var contents = [];
     var hashtags = [];
-    console.log(searchArr);
-    if(searchArr.length== 0) return; // 輸入空格
+    
     for (var i = 0; i < searchArr.length; i++) {
         if(!searchArr[i].trim()) continue; // 空格
         if(searchType== 1){ // hashTag
@@ -190,6 +189,8 @@ function setSearchData() {
             contents.push(searchArr[i].trim());
         }
     }
+    if(hashtags.length== 0&& contents.length== 0) return; // 輸入空格
+    
     let searchData = {};
     searchData["content"] = contents;
     searchData["hashtag"] = hashtags;
