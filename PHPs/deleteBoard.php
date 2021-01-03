@@ -34,7 +34,7 @@
                 errorCode("Failed to delete,Database exception.");
             } 
             else {
-                doToAllNotification(array("content" => "The board 【".$board."】 does not exit."));
+                doToAllNotification(array("content" => "The board 【".$board."】 does not exit."),0);
                 $rtn = successCode("Successfully deleted this board.");
             }
         }

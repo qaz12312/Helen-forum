@@ -15,7 +15,7 @@
 		dataDB.errorCode = "Failed to send Notification to everyone,Database exception."
 		dataDB.data = ""
 	*/
-    function doToAllNotification($input){   // send Notification to everyone
+    function doToAllNotification($input,$print=1){   // send Notification to everyone
         global $conn;
         $sql="SELECT `UserID` FROM `Users`";
         $result = query($conn,$sql,array(),"SELECT");
@@ -38,6 +38,10 @@
             }
             $rtn = successCode("Successfully send notice to everyone.");
         }
-        echo json_encode($rtn);
+        if($print){
+            echo json_encode($rtn);
+        }
+        else
+            return true;
     }
 ?>
