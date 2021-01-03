@@ -140,21 +140,23 @@ $(document).ready(function () {
                 swal({
                     title: 'ERROR',
                     type: 'error',
-                    text: dataDB.errorCode,
+                    text: "錯誤信箱格式",
                     animation: false,
                     customClass: 'animated rotateOutUpLeft',
                     confirmButtonText: 'okay!',
-                    // confirmButtonColor: '#eda2b6',
+                   
                     confirmButtonColor: '#ff0000',
 
                 }).then((result) => {}, ( dismiss ) => {});
             }
             else {
-             
+               
                 swal({
-                    title: "請輸入驗證碼",
+                    title: "請輸入驗證碼\n<small>&lt;"
+                    + "若找不到，請至學校信箱的垃圾郵件查看，謝謝"
+                    + "&gt;</small>",
                     input: "textarea",
-                    input: "textarea",
+                    
                     inputPlaceholder: "請輸入文字...",
                     showCancelButton: true,
                     confirmButtonText: "確認",
@@ -165,7 +167,7 @@ $(document).ready(function () {
                 }).then((result) => {
                    
                     if (result == dataDB.data) {
-                    
+                        
                         swal({
                             title: "驗證成功",
                             type: "success",
