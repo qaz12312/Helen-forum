@@ -584,25 +584,22 @@ function forNormal( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            if( topArticleID !== undefined && articles.find( (ele) => ele.articleID == topArticleID ) !== undefined )
+            let topArticle = articles.find( (element) => element.articleID === topArticleID );
+
+            if( topArticleID && topArticle !== undefined )
             {
-                let topArticle = articles.find( (element) => element.articleID === topArticleID );
+                let tempTr = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( "tr" );
+                let tempTbody = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( ".tabContent tbody" );
 
-                if( topArticle !== undefined )
-                {
-                    let tempTr = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( "tr" );
-                    let tempTbody = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( ".tabContent tbody" );
-
-                    tempTr.remove();
-                    tempTbody.prepend( tempTr );
-                }
+                tempTr.remove();
+                tempTbody.prepend( tempTr );
             }
             else
             {
-                topArticleID = undefined;
+                topArticleID = null;
             }
 
-            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
+            if( articles.length == 0 )
             {
                 let isEmpty = "<tr>" +
                                 "<td>" +
@@ -718,21 +715,22 @@ function forSearching( resolve, reject )
                 $( ".tabContent tbody" ).append( oneRow );
             }
 
-            if( topArticleID !== undefined )
+            let topArticle = articles.find( (element) => element.articleID === topArticleID );
+
+            if( topArticleID && topArticle !== undefined )
             {
-                let topArticle = articles.find( (element) => element.articleID == topArticleID );
+                let tempTr = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( "tr" );
+                let tempTbody = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( ".tabContent tbody" );
 
-                if( topArticle !== undefined )
-                {
-                    let tempTr = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( "tr" );
-                    let tempTbody = $( "span.articleTitle:contains('" + topArticle.title + "')" ).closest( ".tabContent tbody" );
-
-                    tempTr.remove();
-                    tempTbody.prepend( tempTr );
-                }
+                tempTr.remove();
+                tempTbody.prepend( tempTr );
+            }
+            else
+            {
+                topArticleID = null;
             }
 
-            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
+            if( articles.length == 0 )
             {
                 let isEmpty = "<tr>" +
                                 "<td>" +
