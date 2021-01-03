@@ -17,7 +17,7 @@
     */
     function doDeleteBoard($input)
     {
-        require_once("./toAllNotification.php");
+        require_once("toAllNotification.php");
         global $conn;
         $board = $input['boardName'];
         $sql = "SELECT EXISTS(SELECT 1 FROM `Board` NATURAL JOIN `Users` WHERE `BoardName`=? LIMIT 1)";//版是否存在
