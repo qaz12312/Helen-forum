@@ -56,6 +56,7 @@
             require_once("./PHPs/toAllNotification.php");
             doToAllNotification($input);
             break;
+	/*	    
         case "searchBoard": //【訪客】看板內搜尋
             require_once("./PHPs/searchInBoard.php");
             doSearchBoard($input);
@@ -63,8 +64,8 @@
 	case "searchMenu": //【訪客】主頁搜尋
             require_once("./PHPs/searchInMenu.php");
             doSearchMenu($input);
-            break;
-	case "search":
+            break;*/
+	case "search": //【訪客】主頁/看板內 搜尋
             require_once("./PHPs/search.php"); 
             break;
         case "sortInBoard": // 【系統】版內排序
@@ -188,7 +189,7 @@
         doCheckPassword($input);
         break;
     case "showApplyBoard":	
-        require_once("./PHPs/showApplyBoard.php");
+        require_once("./PHPs/showApply.php");
         doShowApplyBoard($input);
         break;
     case "newApplyBoard":	
@@ -196,7 +197,7 @@
         doNewApplyBoard($input);
         break;
     case "deleteApplyBoard":	
-        require_once("./PHPs/deleteApplyBoard.php");
+        require_once("./PHPs/deleteApply.php");
         doDeleteApplyBoard($input);
         break;
     case "newActivityInCanlendar":	

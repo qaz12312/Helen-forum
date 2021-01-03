@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "removeKeepArticle";
     cmd["account"] = "00857210"; //cmd["token"]
-    cmd["articleID"] = "1";
+    cmd["articleID"] = 1;
     cmd["dirName"] ="旅遊景點";
 		
     後端 to 前端:
@@ -21,31 +21,31 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-        $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=?";
-        $arr = array($input['articleID'], $input['account'], $input['dirName']);
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        $sql="SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=? LIMIT 1)";
+        $arr = array($input['articleID'], $user, $input['dirName']);
         $result = query($conn,$sql,$arr,"SELECT");
-        $resultCount = count($result);
-        if($resultCount <= 0){
+        if(!$result[0][0]){
             errorCode("Keep article not exist in ".$input['dirName'].".");
         }
-
         $sql="DELETE FROM `FollowKeep` WHERE  `DirName`=? AND`UserID`=? AND`ArticleID`=?";
-        $arr = array($input['dirName'], $input['account'], $input['articleID']);
-        query($conn,$sql,$arr,"DELETE");
-            
-        $sql="SELECT `ArticleID`,`UserID`,`DirName` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=?";
-        $arr = array($input['articleID'], $input['account'], $input['dirName']);
+        $arr = array($input['dirName'], $user, $input['articleID']);
+        query($conn,$sql,$arr,"DELETE");   
+        $sql="SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=? LIMIT 1)";
+        $arr = array($input['articleID'], $user, $input['dirName']);
         $result = query($conn,$sql,$arr,"SELECT");
-        $resultCount = count($result);
-        if($resultCount > 0){
+        if($result[0][0]){
             errorCode("Failed to remove article in keepDir,Database exception.");
         }
         else{
+            //writeRecord($user,$userInfo["log"],"remove articleID:".$input['articleID']."from dir-".$input['dirName'].".");
             $rtn = successCode("Successfully remove article in keepDir.");
+            echo json_encode($rtn);
         }
-        echo json_encode($rtn);
     }
 ?>

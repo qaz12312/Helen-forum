@@ -6,10 +6,11 @@
     cmd["account"] = "00757015";
 
     後端 to 前端:
+    dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""    
-        dataDB.data="success to verify"
+        dataDB.info = "success to verify"    
+        dataDB.data = ""
     否則
         dataDB.errorCode = "fail to find the password"
         dataDB.data = ""

@@ -153,14 +153,6 @@ async function initial(res, rej){
     $("#activityStartDate").val(sessionStorage.getItem("Helen-startTime"));
     if(!r) return;
 
-    //selector 載入所有看版(從 session)
-    let boardData= sessionStorage.getItem("Helen-boards");
-    boards= JSON.parse(boardData);
-
-    $("#chooseBoard").empty();
-    for(var i= 0; i< boards.length; i++){
-        $("#chooseBoard").append(new Option(boards[i]+ "版"), i, false);
-    }
     $("#allday").prop('checked', false);
     $("#activityStartDate").val("");
     $("#activityStartTime").val("");

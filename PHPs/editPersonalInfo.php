@@ -11,11 +11,9 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.status = true
-        dataDB.info = ""
-        dataDB.data = "success to change the (password/nickname/color)"
-    否則 status = false:
-        dataDB.status = false
+        dataDB.info = "success to change the (password/nickname/color)"
+        dataDB.data = ""
+    否則 
         dataDB.errorCode = "Cannot find the user.Failed to Update personal information in (password/nickname/color) .You need to login again." / 
         "Failed to Update personal information in (password/nickname/color) .You need to login again."/
         dataDB.data = "" 
@@ -39,19 +37,20 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-        $sql="SELECT `UserID` FROM `Users` WHERE `UserID`=?";
-        $arr = array($input['account']);
-        $result = query($conn,$sql,$arr,"SELECT");
-        $resultCount = count($result);
-        if($resultCount <= 0){
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        $sql="SELECT EXISTS(SELECT 1 FROM `Users` WHERE `UserID`=? LIMIT 1)";
+        $result = query($conn,$sql,array($user),"SELECT");
+        if(!$result[0][0]){
             errorCode("Cannot find the user.Failed to Update personal information in ".$input["option"].".You need to login again.");
         }
         else{
             $sql="UPDATE `Users` SET `".$optionAttr."`=? WHERE `UserID` =?";
-            $arr = array($input['new'], $input['account']);
+            $arr = array($input['new'],$user);
             query($conn,$sql,$arr,"UPDATE");
             $rtn = successCode("Success to change the ".$input["option"]);
         }

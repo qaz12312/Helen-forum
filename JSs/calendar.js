@@ -10,8 +10,6 @@ $( document ).ready(async function()
     {
         window.location.href = "./newCalender.html";
     });
-
-    
 });
 
 function initial(resolve, reject)
@@ -63,7 +61,7 @@ function initial(resolve, reject)
                     });
 
                     let startT=info.event.startStr.split(/[\T\+]/);
-                    let endT=info.event.startStr.split(/[\T\+]/);
+                    let endT=info.event.endStr.split(/[\T\+]/);
 
                     swal({
                             title: "<cite>"+info.event.title+ "</cite>",

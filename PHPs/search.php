@@ -3,7 +3,7 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "search";
-    cmd["where"] = ["home"] / ["board","boardName(版的名字)"] / ["dir","dirName(收藏資料夾的名字)"];
+    cmd["where"] = ["home"] / ["board","boardName(版的名字)"];
     cmd["option"] = "normal" / "hashTag";
     cmd["sort"] = "time" / "hot" / "collect" / "comment";
     cmd["searchWord"] = ["好吃","讚"];
@@ -35,18 +35,19 @@
         dataDB.errorCode = "Didn't find any relational article." / "Failed to search in board."
         dataDB.data = ""
     */
-
+    if(!isset($input["searchWord"])) {
+        errorCode("You didn't input anything.");
+    }
     $where = $input["where"];
     switch($where[0]){
         case "home": // 在首頁搜尋
             break;
         case "board": // 板內搜尋
             $sql = "SELECT `TopArticleID`,`Rule` FROM `Board`  WHERE `BoardName`= ?";
-            $result = query($conn,$sql,array($where[1]),"SELECT");
-            if(count($result)<=0){
+            $boardInfo = query($conn,$sql,array($where[1]),"SELECT");
+            if(count($boardInfo)<=0){
                 errorCode("This boardName: [".$where[1]."] doesn't exist");
             }
-            $boardInfo = $result;
             break;
         // case "dir": // 收藏文件中搜尋
         //     $user = $input['account'];
@@ -67,15 +68,18 @@
             break;
     }
     
-    $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` ,`Hashtag` ,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE ";
+    $sql = "SELECT `Title`,`BoardName`,`ArticleID` ,`cntHeart` ,`cntKeep` ,`Hashtag` ,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep`";
     switch($input["sort"]){
         case "time": // 最新
+            $sql = $sql. " WHERE ";
             $orderWay = "Times";
             break;
         case "hot": // 最多愛心
+            $sql = $sql. " WHERE ";
             $orderWay = "cntHeart";
             break;
         case "collect": //最多收藏
+            $sql = $sql. " WHERE ";
             $orderWay = "cntKeep";
             break;
         case "comment": //最多留言數
@@ -91,24 +95,25 @@
     $arrsize = count($searchWord);
     switch($input["option"]){
         case "normal": // 一般正常搜尋
-            $sql = $sql .str_repeat("`Content` LIKE ? OR ",  $arrsize-1);
-            $sql = $sql . "`Content` LIKE ? OR  ";
+            $sql = $sql ."(";
+            $sql = $sql .str_repeat("`Content` LIKE ? OR ",  $arrsize);
             $sql = $sql .str_repeat("`Title` LIKE  ? OR ",  $arrsize-1);
-            $sql = $sql . "`Title` LIKE  ?";
+            $sql = $sql . "`Title` LIKE  ?) ";
             //input query value
             [$search,$idx] = inputArr(2,$searchWord);
             if($where[0]=="board"){
-                $sql = $sql . "  AND `BoardName` =?";
+                $sql = $sql . "AND `BoardName` =?";
                 $search[$idx] = $where[1];
             }
             break;
         case "hashTag": // hashTag搜尋
+            $sql = $sql ."(";
             $sql = $sql .str_repeat("`Hashtag` LIKE  ? OR ",  $arrsize-1);
-            $sql = $sql . "`Hashtag` LIKE  ?";
+            $sql = $sql . "`Hashtag` LIKE  ?) ";
             //input query value
             [$search,$idx] = inputArr(1,$searchWord,"\"");
             if($where[0]=="board"){
-                $sql = $sql . "  AND `BoardName` =?";
+                $sql = $sql . "AND `BoardName` =?";
                 $search[$idx] = $where[1];
             }
             break;
@@ -152,13 +157,13 @@ function doSearch($where,$boardInfo,$sql,$orderWay,$search,$user){
             $row = $result[$i];
             $articleID = $row['ArticleID'];
             if(!empty($user)) {
-                $sql = "SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?";
+                $sql = "SELECT EXISTS(SELECT 1 FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
                 $heart = query($conn, $sql, array($articleID, $user), "SELECT");
-                $hasLike = count($heart)> 0 ? 1 : 0;
+                $hasLike = $heart[0][0];
 
-                $sql = "SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?";
+                $sql = "SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
                 $keep = query($conn, $sql, array($articleID, $user), "SELECT");
-                $hasKeep = count($keep)> 0 ? 1 : 0;
+                $hasKeep = $keep[0][0];
             } 
             else{
                 $hasLike = 0 ;

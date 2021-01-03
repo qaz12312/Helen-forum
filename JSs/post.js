@@ -141,6 +141,7 @@ $("#reportBtn").click(function(){
             cmd["reason"] = result;
 
             $.post( "../index.php", cmd, function(dataDB){
+                console.log(dataDB);
                 dataDB = JSON.parse(dataDB);
 
                 if(dataDB.status== false ){
@@ -202,6 +203,7 @@ $("#heartBtn").click( function(){
     let heartText= $(this).find("span"); // Text: 愛心 & 數字
 
     $.post( "../index.php", cmd, function(dataDB){
+        console.log(dataDB);
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false ){

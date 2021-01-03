@@ -21,36 +21,31 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-            $sql = "SELECT `DirName`,`UserID` FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
-            // $arr = array($input['dirName'], $userInfo['account'] );
-            $arr = array($input['dirName'], $input['account'] );
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-            
-            if ($resultCount <= 0) {
-                errorCode("This folder doesn't exit.");
-            } else {
-                $sql = "DELETE FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
-            // $arr = array($input['dirName'], $userInfo['account'] );
-                $arr = array($input['dirName'], $input['account']);
-                query($conn,$sql,$arr,"DELETE");
-                
-                $sql = "SELECT `DirName` FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
-            // $arr = array($input['dirName'], $userInfo['account'] );
-                $arr = array($input['dirName'],  $input['account']);
-                $result = query($conn,$sql,$arr,"SELECT");
-                $resultCount = count($result);
-
-                if ($resultCount > 0) {
-                    errorCode("Failed to delete,Database exception.");
-                } else {
-                    $rtn = successCode("Successfully deleted this folder.");
-                }
-            }
-            echo json_encode($rtn);
+        //     errorCode("token doesn't exist.");
         // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        $sql = "SELECT EXISTS(SELECT 1 FROM `KeepDir` WHERE `DirName`=? AND `UserID`=? LIMIT 1)";
+        $arr = array($input['dirName'],$user);
+        $result = query($conn,$sql,$arr,"SELECT");
+        if (!$result[0][0]) {
+            errorCode("This folder doesn't exit.");
+        } else {
+            $sql = "DELETE FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
+            $arr = array($input['dirName'],$user);
+            query($conn,$sql,$arr,"DELETE");
+            
+            $sql = "SELECT EXISTS(SELECT 1 FROM `KeepDir` WHERE `DirName`=? AND `UserID`=? LIMIT 1)";
+            $arr = array($input['dirName'],$user);
+            $result = query($conn,$sql,$arr,"SELECT");
+            if ($result[0][0]) {
+                errorCode("Failed to delete,Database exception.");
+            } else {
+                $rtn = successCode("Successfully deleted this folder.");
+            }
+        }
+        echo json_encode($rtn);
     }
 ?>

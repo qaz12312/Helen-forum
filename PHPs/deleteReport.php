@@ -19,7 +19,7 @@
     function doDeleteReport($input){ //審核被檢舉文章
         global $conn;
         if($input['isPass']){//刪除文章
-            $sql="SELECT `ArticleID` FROM `Article` WHERE `ArticleID`=?";  
+            $sql="SELECT `AuthorID`,`Title`,`Times` FROM `Article` WHERE `ArticleID`=?"; //檢查是否存在被檢舉文章
             $arr = array($input['articleID']);
             $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
@@ -28,18 +28,19 @@
                 errorCode("This article which you report doesn't exit.");
             }
             else{
-                $sql="DELETE FROM `Article` WHERE `ArticleID` = ?";
+                $sql="DELETE FROM `Article` WHERE `ArticleID` = ?";//刪除此文章
                 $arr = array($input['articleID']);
-			    query($conn,$sql,$arr,"DELETE");
+                query($conn,$sql,$arr,"DELETE");
+
+                doSendNotification(array("recipient" => $result[0][0], "content" => "Your post 【".$result[0][1]."】which is published in ".$result[0][2]." has been reported and deleted."),0);
                 $rtn = successCode("Successfully deleted this article which you report.");
             }
         }
-        else {
-			$sql="DELETE FROM `Report` WHERE `ArticleID`= ?";
-            $arr = array($input['articleID']);
-			query($conn,$sql,$arr,"DELETE");
-            $rtn = successCode("Successfully canceled this report.");
-		}
+        // 無論審核是否通過，刪除關於此文章的所有檢舉
+		$sql="DELETE FROM `Report` WHERE `ArticleID`= ?";
+        $arr = array($input['articleID']);
+		query($conn,$sql,$arr,"DELETE");
+        $rtn = successCode("Successfully canceled this report.");
         echo json_encode($rtn);
     }
 ?>

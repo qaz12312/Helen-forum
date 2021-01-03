@@ -155,11 +155,11 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
-    //await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
-    //( error ) =>
-    //{
-    //    res(1);
-    //});
+    await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
+    ( error ) =>
+    {
+       res(1);
+    });
 
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
@@ -222,32 +222,89 @@ async function initial( res, rej )
     });
 }   
 
-// function checkPermission( resolve, reject )
-// {
-//     if( !thisAccount )
-//     {
-//         swal({
-//             title: "載入頁面失敗",
-//             type: "error",
-//             text: "您沒有權限瀏覽此頁面",
-//             confirmButtonText: "確定",
+async function checkPermission( resolve, reject )
+{
+    if( !thisAccount )
+    {
+        await swal({
+            title: "載入頁面失敗",
+            type: "error",
+            text: "您沒有權限瀏覽此頁面",
+            confirmButtonText: "確定",
             
-//         }).then(( result ) => {
-//             $( ".tabContent" ).empty();
-//             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-//             $( ".tabContent" ).append( httpStatus );
+        }).then(( result ) =>
+        {
+            $( ".tabContent" ).empty();
+            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+            $( ".tabContent" ).append( httpStatus );
 
-//         }, ( dismiss ) => {
-//             $( ".tabContent" ).empty();
-//             let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-//             $( ".tabContent" ).append( httpStatus );
-//         });
+        }, ( dismiss ) => {
+            $( ".tabContent" ).empty();
+            let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+            $( ".tabContent" ).append( httpStatus );
+        });
 
-//         reject(1);
+        reject(0);
 
-//         return;
-//     }
+        return;
+    }
 
+    let cmd = {};
+    cmd[ "act" ] = "showAuthority";
+    cmd[ "account" ] = thisAccount;
+
+    $.post( "../index.php", cmd, async function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
+
+        if( dataDB.status == false )
+        {
+            await swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: dataDB.errorCode,
+                confirmButtonText: "確定",
+    
+            }).then(( result ) =>
+            {
+                $( ".tabContent" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( ".tabContent" ).append( httpStatus );
+    
+            }, ( dismiss ) => {
+                $( ".tabContent" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( ".tabContent" ).append( httpStatus );
+            });
+            
+            reject(0);
+        }
+        else if( dataDB.data.permission == undefined || dataDB.data.permission < 3 )
+        {
+            await swal({
+                title: "載入頁面失敗",
+                type: "error",
+                text: "您沒有權限瀏覽此頁面",
+                confirmButtonText: "確定",
+
+            }).then(( result ) =>
+            {
+                $( ".tabContent" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( ".tabContent" ).append( httpStatus );
+    
+            }, ( dismiss ) => {
+                $( ".tabContent" ).empty();
+                let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
+                $( ".tabContent" ).append( httpStatus );
+            });
+    
+            reject(0);
+        }
+    
+        resolve(0);
+    });
+}
 function escapeHtml(str)
 {
     return $('<div/>').text(str).html();

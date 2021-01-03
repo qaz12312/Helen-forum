@@ -6,7 +6,7 @@
     cmd["account"] = "userid"; //cmd["token"]
     cmd["dirName"] = "abc";
 
-    後端 to 前端
+    後端 to 前端:
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
@@ -24,11 +24,14 @@
         global $conn;
         // $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
         $sql="SELECT `Title`,`ArticleID`  FROM `KeepDir` NATURAL JOIN `FollowKeep` NATURAL JOIN`Article` WHERE `UserID`=? AND`DirName`=?";
-        $arr = array($input['account'], $input['dirName']);
+        $arr = array($user, $input['dirName']);
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
@@ -36,7 +39,6 @@
         }
         else{
             $arr=array();
-            // foreach($result as $row){
             for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
                 $arr[$i] = array("title"=>$row[0],"articleID"=>$row[1]);

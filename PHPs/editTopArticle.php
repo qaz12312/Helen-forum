@@ -8,29 +8,30 @@
 	cmd["account"] = "admin"; //cmd["token"]
 	
     後端 to 前端:
-	dataDB.status
+	dataDB = JSON.parse(data);
+    dataDB.status
 	若 status = true:
-		dataDB.status = true
 		dataDB.info = ""
 		dataDB.data[0]	// TopArticleID
 		dataDB.data[1]  // title
 	否則 status = false:
-		dataDB.status = false
 		dataDB.errorCode ="Update without permission." / "Failed to set Top article."
 		dataDB.data = ""
     */
     function doEditTopArticle($input){
 		global $conn;
 		// $token =$input['token'];
-        // if(!isset($_SESSION[$token])){
+		// if(!isset($_SESSION[$token])){
 		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-		$sql="SELECT `BoardName` FROM `Board` WHERE `BoardName`=? AND `UserID`=? ";  
-		$arr = array($input['boardName'], $input['account']);
+		// }
+		// $userInfo = $_SESSION[$token];
+		// $user = $userInfo['account'];
+
+		$user = $input['account'];
+		$sql="SELECT EXISTS(SELECT 1 FROM `Board` WHERE `BoardName`=? AND `UserID`=? LIMIT 1)";  
+		$arr = array($input['boardName'],$user);
 		$result = query($conn,$sql,$arr,"SELECT");
-		$resultCount = count($result);
-		if($resultCount <= 0){
+		if(!$result[0][0]){
 			errorCode("Update without permission.");
 		}
 		else{

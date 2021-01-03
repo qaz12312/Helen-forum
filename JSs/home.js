@@ -1,5 +1,4 @@
-// var articles = [{ "title": "海大附近有甚麼推薦的美食嗎？", "articleID": "123", "like": 1111, "keep": 2222 ,"boardName":"美食版", "hasLike": 1, "hasKeep": 0}, 
-//                 { "title": "學餐評價", "articleID": "456", "like": 1000, "keep": 2188 ,"boardName":"詢問版", "hasLike": 1, "hasKeep": 0}];
+
 var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisSearching = sessionStorage.getItem( "Helen-search" );
@@ -400,7 +399,7 @@ function forNormal( res, rej )
     
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
-    cmd[ "account"] = thisAccount;
+    cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
     $.post( "../index.php", cmd, function( dataDB )
     {
@@ -496,17 +495,31 @@ function forNormal( res, rej )
 
 function forSearching( res, rej)
 {
+   
+    
     let cmd = {};
-    cmd[ "act" ] = "searchBoard";
-    cmd[ "account"] = thisAccount;
+    cmd[ "act" ] = "search";
+    cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
+    cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
-    cmd[ "content" ] = thisSearching.content;
-    cmd[ "hashtag" ] = thisSearching.hashtag;
+
+    if( thisSearching.content.length != 0 )
+    {
+        
+        cmd[ "searchWord" ] = thisSearching.content;
+        cmd[ "option" ] = "normal";
+    }
+    else
+    {
+        cmd[ "searchWord" ] = thisSearching.hashtag;
+        cmd[ "option" ] = "hashtag";
+    }
+
 
     $.post( "../index.php", cmd, function( dataDB )
     {
         dataDB = JSON.parse( dataDB );
-        sessionStorage.setItem( "Helen-search", "" );
+        sessionStorage.removeItem( "Helen-search" );
         thisSearching = "";
 
         if( dataDB.status == false )
@@ -528,8 +541,9 @@ function forSearching( res, rej)
         }
         else
         {
-            articles = dataDB.data.articleList;
-
+        
+            articles = dataDB.data;
+            console.log(articles)
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
@@ -538,19 +552,20 @@ function forSearching( res, rej)
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
-
+            
             for( let i in articles )
             {
+                
                 let oneRow = "<tr>" +
                                 "<td>" +
-                                "<div class='card'>" +
-                                    "<div class='card-body row'>" +
-                                        "<span class='col-md-2'>" + 
-                                            "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"</h5>"+
-                                        "</span>" +
-                                        "<span class='col-md-6'>" +
-                                            "<span class='articleTitle' style='cursor:pointer'>" + articles[i].title + "</span>" +
-                                        "</span>" +
+                                    "<div class='card'>" +
+                                        "<div class='card-body row'>" +
+                                            "<span class='col-md-2'>" + 
+                                                "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h5>"+
+                                            "</span>" +
+                                            "<span class='col-md-6'>" +
+                                                "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
+                                            "</span>" +
                                             "<span class='col-md-4'>";
 
                 if( articles[i].hasLike == 1 )
@@ -583,6 +598,26 @@ function forSearching( res, rej)
 
                 $( ".tabContent tbody" ).append( oneRow );
             }
+
+            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
+            {
+                let isEmpty = "<tr>" +
+                                "<td>" +
+                                    "文章列表為空";
+                                "</td>" +
+                            "</tr>";
+                $( ".tabContent tbody" ).append( isEmpty );
+            }
+            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
+            {
+                let isEmpty = "<tr>" +
+                                "<td>" +
+                                    "文章列表為空";
+                                "</td>" +
+                            "</tr>";
+                $( ".tabContent tbody" ).append( isEmpty );
+            }
+
 
 
         }

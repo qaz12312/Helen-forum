@@ -15,50 +15,40 @@
 	dataDB.status
     若 status = true:
 		dataDB.info = ""
-		dataDB.data[0]	// ArticleID
-		dataDB.data[1]	// Title
-		dataDB.data[2]	// Content
-		dataDB.data[3]	// Image
-		dataDB.data[4]	// HashTag
-		dataDB.data[5]	// Time
-		dataDB.data[6]	// Color
+		dataDB.data = ""
     否則
-		dataDB.errorCode = "Failed to upload article,Database exception."
+		dataDB.errorCode = "You have been already published this article before." / "Failed to upload article,Database exception."
 		dataDB.data = ""
 	*/
     function doNewArticle($input){
 		global $conn;
 		// $token =$input['token'];
         // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
-			$sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
-	    		if(!isset($input['hashTag'])){
-				$hashTag = json_encode(array());
-			}else{
-				$hashTag = json_encode($input['hashTag']);
-			}
-			// $hashTag = $input['hashTag'];
-			//$arr = array($userInfo['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
-			$arr = array($input['account'], $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
-			query($conn,$sql,$arr,"INSERT");
-			$rtn = successCode("Successfully new the Article.",array());
-			/*
-			流水號問題!!!!!!!!!!!!!!!!!
-			$articleID=mysqli_insert_id($conn);//取得流水號
-			$sql="SELECT `ArticleID`,`Title`,`Content`,`Image`,`HashTag`,`Times`,`Color` FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `ArticleID`=?";
-			$arr = array($articleID);
-			$result = query($conn,$sql,$arr,"SELECT");
-			$resultCount = count($result);
-			if($resultCount <= 0){
-				errorCode("Failed to upload article,Database exception.");
-			}
-			else{
-				$rtn = successCode("Successfully new the Article.",$result[0]);
-			}
-			*/
-			echo json_encode($rtn);
-		// }
+        //     errorCode("token doesn't exist.");
+        // }
+        // $userInfo = $_SESSION[$token];
+        // $user = $userInfo['account'];
+
+        $user = $input['account'];
+        if(empty($input['hashTag'])){
+            $hashTag = json_encode(array());
+        }
+        else{
+            $hashTag = json_encode($input['hashTag']);
+        }
+        $sql="SELECT EXISTS(SELECT 1  FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? LIMIT 1)";
+        $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
+        $result = query($conn,$sql,$arr,"SELECT");
+        if($result[0][0]){
+            errorCode("You have been already published this article before.");
+        }
+        else{
+            $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
+            $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
+            query($conn,$sql,$arr,"INSERT");
+            // writeRecord($user,$userInfo["log"],"publish the articleID:".$input['articleID']);
+            $rtn = successCode("Successfully new the Article.",array());
+        }
+            echo json_encode($rtn);
     }
 ?>

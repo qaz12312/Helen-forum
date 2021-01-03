@@ -21,28 +21,24 @@
     function doDeleteApplyBoard($input){ //審核被檢舉文章
         global $conn;
 		if ($input['type'] == "board" || $input['type'] == "moderator") {
-		  if ($input['type'] == "board")
-		    $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=1";  
-		  else
-		    $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=0"; 
-			
-		  $arr = array($input['account'],$input['content']);
-          $result = query($conn,$sql,$arr,"SELECT");
-          $resultCount = count($result);
-          if($resultCount <= 0){
-            errorCode("This user apply doesn't exit.");
-          }
-          else{
-            $sql="DELETE FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=1";
-            $arr = array($input['account'],$input['content']);
-						query($conn,$sql,$arr,"DELETE");
-						doSendNotification(array("recipient" => $result[0][4], "content" => "Your apply can't be added.",""));
-            $rtn = successCode("Successfully deleted all this user's apply.");
-          }
+		    $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=?";  
+			$arr = array($input['account'],$input['content'],($input['type'] == "board" ? 1 : 0 ));
+			$result = query($conn,$sql,$arr,"SELECT");
+			$resultCount = count($result);
+			if($resultCount <= 0){
+				errorCode("This user's application doesn't exit.");
+			}
+			else{
+				$sql="DELETE FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=?";
+				$arr = array($input['account'],$input['content'],($input['type'] == "board" ? 1 : 0 ));
+				query($conn,$sql,$arr,"DELETE");
+				doSendNotification(array("recipient" => $input['account'], "content" => "Your application can't be added."),0);
+				$rtn = successCode("Successfully deleted all this user's application.");
+			}
 		}
-        else {
-			errorCode("Failed to delete any apply.");
-		}
+        else 
+			errorCode("Failed to delete any application.",array());
+
         echo json_encode($rtn);
     }
 ?>
