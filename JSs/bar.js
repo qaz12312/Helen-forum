@@ -1,4 +1,5 @@
 var userPermission= 0; // 0(訪客) 1(一般使用者) 2(版主) 3(admin)
+let userBoard = [];
 var canApplyModerator = false;
 var InvalidBoards = [];
 var applyError = "";
@@ -17,18 +18,20 @@ async function barInitial() {
     // 最左邊的 ham menu 初始化
     $("#menu").empty();
     let boards = sessionStorage.getItem("Helen-boards");
-	let userBoard = sessionStorage.getItem("User-boards");
     boards = JSON.parse(boards);
-	userBoard = JSON.parse(userBoard);
 	//console.log(userBoard.find(element => element == boards[10]));
 	//console.log(boards.length);
     for (var i = 0; i < boards.length; i++) {
         var oneBoard = boards[i];
-		
+		if (userBoard.find(element => element == oneBoard)) {
+			$("#menu").append("<a href=\"../HTMLs/sticky.html\"><li>" + oneBoard +
+                                "版 <a href=\"../HTMLs/report.html\" class= \"glyphicon glyphicon-alert\"></li></a>");
+		}
+		else {
 			$("#menu").append("<a href=\"../HTMLs/sticky.html\"><li>" +
 				oneBoard +
 				"版</li></a>");
-
+		}
     }
 
     if (userPermission >= 3) // admin 可新增看版
@@ -200,7 +203,6 @@ function getUserInfo(resolve, reject) {
     }
     else {
         let cmd = {};
-		let userBoard = [];
         cmd["act"] = "showAuthority";
         cmd["account"] = sessionStorage.getItem("Helen-account");
         $.post("../index.php", cmd, function (dataDB) {
@@ -254,7 +256,7 @@ function getBoards(resolve, reject) {
             if (boards.length == 0) {
                 console.log("沒有看版");
             }
-			console.log(dataDB);
+			//console.log(dataDB);
             sessionStorage.setItem("Helen-boards", JSON.stringify(boards));
         }
         resolve(0);
