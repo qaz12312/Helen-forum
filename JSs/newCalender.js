@@ -141,7 +141,7 @@ $("#newActivity").on("click", function(){
             // ?依最新排序的首頁
             sessionStorage.setItem("Helen-act", "home");
             sessionStorage.setItem("Helen-sort", "最新");
-            window.location.href = "../HTMLs/home.html";
+            window.location.href = "../HTMLs/calendar.html";
         }
     })
 })
