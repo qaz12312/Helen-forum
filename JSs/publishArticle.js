@@ -198,6 +198,7 @@ async function initial(res, rej){
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
                 console.log(article.boardName);
+                console.log(borads);
                 for(var i= 0; i< boards.length; i++){
                     console.log(borads[i]+ "版");
                     if((borads[i]+ "版")== article.boardName){
