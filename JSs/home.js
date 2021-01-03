@@ -8,7 +8,7 @@ var keepMenu;
 
 $(document).ready(async function(){
     barInitial();
-
+    
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
 
     $( ".topnav a" ).click( function()
@@ -360,7 +360,12 @@ async function initial(res, rej)
 {
 
     
-    if( !thisAccount ) thisAccount = "";
+    if( !thisAccount ) 
+    {
+        thisAccount = "";
+        
+
+    }
 
     if( !thisSearching )
     {
@@ -385,6 +390,7 @@ function forNormal( res, rej )
     cmd[ "act" ] = "sortInMenu";
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
+
     $.post( "../index.php", cmd, function( dataDB )
     {
         
@@ -606,6 +612,7 @@ function checkPermission(res, rej)
     if( !thisAccount )
     {
         $( ".addPost" ).remove();
+
         
     }
     else{
