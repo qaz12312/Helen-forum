@@ -170,6 +170,7 @@ async function initial(res, rej){
     $("#chooseBoard").empty();
     for(var i= 0; i< boards.length; i++){
         $("#chooseBoard").append(new Option(boards[i]+ "版"), i, false);
+        console.log(i);
     }
 
     //編輯文章
@@ -199,6 +200,7 @@ async function initial(res, rej){
                 //從後端拿資料
                 // $("#chooseBoard").find("option[text= '" + article.boardName+ "版']").attr("selected", true);
                 $("#chooseBoard").find("option[text= '疫情版']").attr("selected", true);
+                console.log("end.")
                 //依 text 為"看版名(美食版)"的項選中
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
