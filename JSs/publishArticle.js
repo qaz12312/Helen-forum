@@ -198,7 +198,7 @@ async function initial(res, rej){
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
                 for(var i= 0; i< boards.length; i++){
-                    if((boards[i]+ "版")== article.boardName){
+                    if((boards[i])== article.boardName){
                         console.log(i);
                         $("#chooseBoard")[0].selectedIndex= i;
                     }
