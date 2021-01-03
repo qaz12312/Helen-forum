@@ -20,7 +20,7 @@ async function barInitial() {
 	let userBoard = sessionStorage.getItem("User-boards");
     boards = JSON.parse(boards);
 	userBoard = JSON.parse(userBoard);
-	console.log(userBoard.find(element => element == boards[10]));
+	//console.log(userBoard.find(element => element == boards[10]));
 	//console.log(boards.length);
     for (var i = 0; i < boards.length; i++) {
         var oneBoard = boards[i];
@@ -221,12 +221,12 @@ function getUserInfo(resolve, reject) {
                 // Test
                 //  userData= {permission: 2};
                 // Test End
-				console.log(userData.boardName[0].BoardName);
+				//console.log(userData.boardName[0].BoardName);
 				
 				for (var i = 0; i < userData.boardName.length; i++) {
 					userBoard.push(userData.boardName[i].BoardName);
 				}
-				console.log(userBoard);
+				//console.log(userBoard);
 				sessionStorage.setItem("User-boards", JSON.stringify(userBoard));
                 userPermission = userData.permission;
                 delete userData.permission;
