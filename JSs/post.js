@@ -46,10 +46,11 @@ async function initial(res, rej){
         else{
             let article= dataDB.data;
             comments= article.comment;
-            var contentStr= article.content;
-            contentStr+= "\n";
-            for(var i= 0; i< article.hashTag.length; i++){
-                contentStr+= "#"+ article.hashTag[i]+ " ";
+            var contentStr= article.content; // 文章內文
+            contentStr= contentStr.replace("\n", "<br />"); // 文章內文的換行變成html
+            contentStr+= "<br />";
+            for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
+                contentStr+= '<span class="badge badge-pill">#'+ article.hashTag[h]+ "</span> ";
             }
 
             $(".tabContent").find("h2").text(article.title); // 文章標題
@@ -57,7 +58,7 @@ async function initial(res, rej){
                                             "&emsp;"+ article.authorNickName); // 原po暱稱
             
             $("#authorDiv").css("background-color", article.authorColor); // 原po頭像
-            $(".tabContent").find("p").text(contentStr); // 文章內容
+            $(".tabContent").find("p").html(contentStr); // 文章內容
 
             let heartText= $("#heartBtn").find("span"); // Text: 愛心 & 數字
             if(article.hasLike== 1){
