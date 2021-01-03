@@ -488,6 +488,7 @@ async function initial( res, rej )
     else
     {
         await new Promise( ( resolve, reject ) => forSearching( resolve, reject ) );
+        sessionStorage.removeItem( "Helen-search" );
     }
 
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) );
