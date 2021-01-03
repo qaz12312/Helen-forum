@@ -199,7 +199,7 @@ $( document ).ready( async function()
                         {
                             if( dismiss )
                             {
-                                // location.reload();
+                                location.reload();
                             }
                         });
                     }
