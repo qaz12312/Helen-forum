@@ -32,6 +32,7 @@ $( document ).ready( async function()
 
                 $.post( "../index.php", cmd, function( dataDB )
                 {
+                    console.log(dataDB);
                     dataDB = JSON.parse( dataDB );
 
                     if( dataDB.status == false )
@@ -173,8 +174,11 @@ $( document ).ready( async function()
                 cmd[ "boardName" ] = result[0];
                 cmd[ "rule" ] = result[1];
 
+                console.log(cmd);
+
                 $.post( "../index.php", cmd, function( dataDB )
                 {
+                    console.log(dataDB);
                     dataDB = JSON.parse( dataDB );
 
                     if( dataDB.status == false )
@@ -199,7 +203,7 @@ $( document ).ready( async function()
                         {
                             if( dismiss )
                             {
-                                location.reload();
+                                // location.reload();
                             }
                         });
                     }
