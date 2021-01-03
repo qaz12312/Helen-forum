@@ -227,7 +227,7 @@ async function initial( res, rej )
             for( let i in articles )
             {
                 let oneRow = "<tr>" + 
-                                "<td>" + articles[i][0].title + "</td>" +
+                                "<td style='cursor: pointer;'>" + articles[i][0].title + "</td>" +
                                 "<td>" +
                                     "<button type='button' class='btn btn-default btn-warning'>" +
                                         "<span class='glyphicon glyphicon-book'></span> 原因" +
