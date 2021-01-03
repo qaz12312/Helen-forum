@@ -141,6 +141,7 @@ $("#reportBtn").click(function(){
             cmd["reason"] = result;
 
             $.post( "../index.php", cmd, function(dataDB){
+                console.log(dataDB);
                 dataDB = JSON.parse(dataDB);
 
                 if(dataDB.status== false ){
