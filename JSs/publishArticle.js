@@ -1,5 +1,5 @@
 var fileStr; // add picture
-var borads= [];
+var boards= [];
 var hashtags= [];
 
 //this is test data for edit article
@@ -197,12 +197,9 @@ async function initial(res, rej){
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
-                console.log(article.boardName);
-                console.log(borads);
                 for(var i= 0; i< boards.length; i++){
-                    console.log(borads[i]+ "版");
-                    if((borads[i]+ "版")== article.boardName){
-                        console.log(i);
+                    console.log(boards[i]+ "版");
+                    if((boards[i]+ "版")== article.boardName){
                         $("#chooseBoard").selectedIndex= i;
                     }
                 }
