@@ -5,7 +5,7 @@
     cmd["act"] = "forgetPwd";
     cmd["option"] = "verify" / "change";
     cmd["token"] = "email裡的";
-    cmd["pwd"] = password;("change"才要)
+    cmd["pwd"] = password;("change"才要)(base64加密後)
 
     後端 to 前端
     dataDB.status
@@ -21,6 +21,7 @@
             verifyPwd($input);
             break;
         case "change": // 修改密碼
+            // $input['pwd'] = base64_decode($input['pwd']);
             changePwd($input);
             break;
     }

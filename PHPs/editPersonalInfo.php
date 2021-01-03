@@ -20,7 +20,7 @@
 	*/
     switch($input["option"]){
         case "password": // 修改密碼
-            $input['new'] = base64_decode($input['new']);
+            // $input['new'] = base64_decode($input['new']);
             $optionAttr = "Password";
             break;
         case "nickname": // 修改暱稱
