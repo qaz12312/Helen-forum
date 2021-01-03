@@ -196,9 +196,9 @@ function setSearchData() {
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if (sessionStorage.getItem("Helen-boardName") == null) {
-        location.href = "../HTMLs/home.html";
+        // location.href = "../HTMLs/home.html";
     }else{
-        location.href = "../HTMLs/sticky.html";
+        // location.href = "../HTMLs/sticky.html";
     }
 }
 
