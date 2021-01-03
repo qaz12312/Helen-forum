@@ -5,7 +5,66 @@ $( document ).ready( async function()
 {
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
+    $( document ).on( "click", ".btn-default", function()
+    {   
+            
+            let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
+            
+            
+                   console.log(thisArticle)
 
+                  swal({
+                    title: "確定要刪除此通知嗎？<br /><small>&lt;" + articles[ thisArticle ].content + "&gt;</small>",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+                    animation: false,
+    
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        let cmd = {};
+                        cmd[ "act" ] = "clickNotice";
+                        cmd["account"] = sessionStorage.getItem( "Helen-account" );
+                        cmd["articleID"] =  articles[ thisArticle ].articleID;
+                        cmd["detail"] = articles[thisArticle].content;
+                        $.post( "../index.php", cmd, function( dataDB ){
+                            dataDB = JSON.parse( dataDB );
+    
+                            if( dataDB.status == false )
+                            {
+                                swal({
+                                    title: "刪除失敗<br /><small>&lt;" + articles[ thisArticle ].content +"&gt;</small>",
+                                    type: "error",
+                                    text: dataDB.errorCode,
+        
+                                }).then((result) => {}, ( dismiss ) => {});
+                            }
+                            else
+                            {
+                                swal({
+                                    title: "已成功刪除通知！<br /><small>&lt;" + articles[ thisArticle ].content+ "&gt;</small>",
+                                    type: "success",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    
+                                }).then((result) => {}, ( dismiss ) => {});
+        
+                                location.reload();
+                                delete articles[ thisArticle ];
+        
+                                if( $.isEmptyObject(articles) )
+                                {
+                                    let emptyMessage = "<tr>" + 
+                                                            "<td colspan='4'>發文紀錄列表為空</td>" +
+                                                        "</tr>";
+                                    $( ".tabContent tbody" ).append( emptyMessage );
+                                }
+                            }
+                        });
+                    }
+                }, ( dismiss ) => {});
+    });
     
 });
 
@@ -58,10 +117,15 @@ async function initial( res, rej )
                 console.log(articles[i].time)
                 
                 let oneRow = "<tr>" +
-                
-                                "<td rowspan='2'>" + articles[i].time  + "</td>" +
-                                "<td rowspan='6'>" + articles[i].content  + "</td>" 
-                                ;
+                                "<td>" + articles[i].content  + "</td>" +
+                                "<td>" + articles[i].time  + "</td>" +
+                                "<td>" +
+                                "<button type='button' class='btn btn-default'>" +
+                                        "<span class='glyphicon glyphicon-remove'></span> 刪除" +
+                                    "</button>" +
+                                "</td>" +
+                            "</tr>";
+                                
 
                 content.append( oneRow );
             }
