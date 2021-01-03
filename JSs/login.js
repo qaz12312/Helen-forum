@@ -71,7 +71,77 @@ $(document).ready(function () {
         }
 
     });
+    $("#Log-inBtn").keypress(function (event) {
+        if (event.keyCode == 13) { // 按下 ENTER
+            let act = $("#account").val(),
+            pw = $("#password").val();
+        let format = Restrict();
 
+        if ((!act)) {
+            swal({
+                title: 'Wrong',
+                type: 'error',
+                html: $('<h3>').text('請輸入學號 \u2620'),
+                animation: false,
+                customClass: 'animated tada',
+                confirmButtonText: 'okay!',
+                confirmButtonColor: '#ecba73'
+            })
+            $("#account").focus().val("");
+        }
+        else if (!pw) {
+            swal({
+                title: 'Wrong',
+                type: 'error',
+                html: $('<h3>').text('沒輸入密碼喔 \u2620'),
+                animation: false,
+                customClass: 'animated tada',
+                confirmButtonText: 'okay!',
+                confirmButtonColor: '#b9cd74'
+            }).then(( result ) => {}, ( dismiss ) => {});
+        }
+        else if (format) {
+            let cmd = {};
+            cmd["act"] = "logIn";
+            cmd["account"] = act;
+            cmd["password"] = pw;
+            $.post("../index.php", cmd, function (data) {
+                
+                dataDB = JSON.parse(data);
+                if (dataDB.status == false) {
+                    dataDB.data = ""
+                    swal({
+                        title: 'OOPS...',
+                        type: 'error',
+                        text: '帳號或密號錯誤 \u2620',
+                        animation: false,
+                        customClass: 'animated rotateOutUpLeft',
+                        confirmButtonText: 'okay!',
+                        confirmButtonColor: '#eda2b6'
+                    }).then(( result ) => {}, ( dismiss ) => {});
+                }
+                else {//登入成功
+                    
+                    leaveUserDetails(dataDB.data[0], dataDB.data[1], dataDB.data[2]);
+                    swal({
+                        title: 'Welcome To Helen',
+                        type: 'success',
+                        text: '本訊息1秒後自動關閉',
+                        showConfirmButton: false,
+                        timer: 1000,
+                    }).then(
+                        function () { },
+                        function (dismiss) {
+                            if (dismiss === 'timer') {
+                                window.location.href = "../HTMLs/home.html";
+                            }
+                        }
+                    )
+                }
+            });
+        }
+        }
+    });
     $("#Sign-upBtn").click(function () {
         swal({
             title: '歡迎',
