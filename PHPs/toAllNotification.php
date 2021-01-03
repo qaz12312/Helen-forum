@@ -25,8 +25,8 @@
         }
         else{
             foreach($result as $userID){
-                $sql="INSERT INTO `Issue`(`UserID`,`Content`) VALUES(?,?)";
-                $arr = array($userID[0], $input['content']);
+                $sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?)";
+                $arr = array($userID[0], $input['content'],2);
                 query($conn,$sql,$arr,"INSERT");
         
                 $sql="SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type` = ? LIMIT 1)";
