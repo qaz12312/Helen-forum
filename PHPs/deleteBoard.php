@@ -9,8 +9,8 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
-        dataDB.data= "Successfully deleted this board."
+        dataDB.info = "Successfully deleted this board."
+        dataDB.data = ""
     否則
         dataDB.errorCode = "This board doesn't exist." / "Failed to delete,Database exception."
         dataDB.data = ""
@@ -18,28 +18,22 @@
     function doDeleteBoard($input)
     {
         global $conn;
-        $sql = "SELECT `BoardName` FROM `Board` NATURAL JOIN `Users` WHERE `BoardName`=?";
-        $arr = array($input['boardName']);
-		$result = query($conn,$sql,$arr,"SELECT");
-		$resultCount = count($result);
-        
-        if ($resultCount <= 0) {
+        $board = $input['boardName'];
+        $sql = "SELECT EXISTS(SELECT 1 FROM `Board` NATURAL JOIN `Users` WHERE `BoardName`=? LIMIT 1)";//版是否存在
+		$result = query($conn,$sql,array($board),"SELECT");
+        if (!$result[0][0]) {
             errorCode("This board doesn't exist.");
         } else {
             $sql = "DELETE FROM `Board`  WHERE `BoardName`=?";
-            $arr = array($input['boardName']);
-			query($conn,$sql,$arr,"DELETE");
+			query($conn,$sql,array($board),"DELETE");
 
-            $sql = "SELECT `BoardName` FROM `Board` WHERE `BoardName` = ?";
-            $arr = array($input['boardName']);
-		    $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-            
-            if ($resultCount > 0) {
+            $sql = "SELECT EXISTS(SELECT 1 FROM `Board` WHERE `BoardName` = ? LIMIT 1)";
+		    $result = query($conn,$sql, array($board),"SELECT");     
+            if ($result[0][0]) {
                 errorCode("Failed to delete,Database exception.");
             } 
             else {
-                doToAllNotification(array("content" => "The board ".$input['boardName']." does not exit."));
+                doToAllNotification(array("content" => "The board 【".$board."】 does not exit."));
                 $rtn = successCode("Successfully deleted this board.");
             }
         }

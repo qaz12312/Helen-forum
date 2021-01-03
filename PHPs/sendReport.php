@@ -11,11 +11,11 @@
     dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = ""
-		dataDB.data = ""
+		dataDB.info = "Successfully send the report.";
+		dataDB.data = "";
 	否則
-		dataDB.errorCode = "You have been reported this article before." / "Failed to send report,Database exception."
-		dataDB.data = ""
+		dataDB.errorCode = "You have been reported this article before." / "Failed to send report,Database exception.";
+		dataDB.data = "";
     */
     function doSendReport($input){
         global $conn;
@@ -49,10 +49,13 @@
                 $result = query($conn,$sql,array($input['articleID']),"SELECT");
                 
                 $content = "Sorry - Your article-【".$result[0][0]."】 has been report.";
+
                 $sql = "SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `Content`=? AND `UserID`=? AND `Type`=? LIMIT 1)";
                 $arr = array($content,$result[0][1],2);
                 $result = query($conn,$sql,$arr,"SELECT");
-                doSendNotification(array("recipient" => $result[0][1], "content" => $content),0);
+                if(!$result[0][0]){//若issue不存在
+                    doSendNotification(array("recipient" => $result[0][1], "content" => $content),0);
+                }
                 $rtn = successCode("Successfully send the report.");
             }
             echo json_encode($rtn);

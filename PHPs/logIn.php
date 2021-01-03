@@ -10,7 +10,7 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.errorCode = ""
+		dataDB.info = "Successfully log in."
 		dataDB.data[0] // account:"00757007" // token:"c93b3e8ab496d786030fbf8a17c3da51"
 		dataDB.data[1] // color:"#ffffff"
 		dataDB.data[2] // nickname:"00757007"

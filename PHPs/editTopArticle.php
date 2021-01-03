@@ -11,10 +11,9 @@
 	dataDB = JSON.parse(data);
     dataDB.status
 	若 status = true:
-		dataDB.info = ""
-		dataDB.data[0]	// TopArticleID
-		dataDB.data[1]  // title
-	否則 status = false:
+		dataDB.info = "Successfully edited this topArticle."
+		dataDB.data = ""
+	否則
 		dataDB.errorCode ="Update without permission." / "Failed to set Top article."
 		dataDB.data = ""
     */
@@ -29,8 +28,7 @@
 
 		$user = $input['account'];
 		$sql="SELECT EXISTS(SELECT 1 FROM `Board` WHERE `BoardName`=? AND `UserID`=? LIMIT 1)";  
-		$arr = array($input['boardName'],$user);
-		$result = query($conn,$sql,$arr,"SELECT");
+		$result = query($conn,$sql,array($input['boardName'],$user),"SELECT");
 		if(!$result[0][0]){
 			errorCode("Update without permission.");
 		}
@@ -39,15 +37,15 @@
 			$arr = array($input['articleID'], $input['boardName']);
 			query($conn,$sql,$arr,"UPDATE");
 
-			$sql="SELECT `TopArticleID` FROM `Board` WHERE `TopArticleID`=? AND `BoardName`=?";
+			$sql="SELECT EXISTS(SELECT 1 FROM `Board` WHERE `TopArticleID`=? AND `BoardName`=? LIMIT 1)";
 			$arr = array($input['articleID'], $input['boardName']);
 			$result = query($conn,$sql,$arr,"SELECT");
-			$resultCount = count($result);
-			if($resultCount <= 0){
+			if(!$result[0][0]){
 				errorCode("Failed to set Top article.");
 			}
 			else{
-				$rtn = successCode("Successfully edited this topArticle.",$result);
+            	// writeRecord($user,$userInfo["log"],"changed the 【".$input['boardName']."】's topArticle which topArticleID is ".$input['articleID'].".");
+				$rtn = successCode("Successfully edited this topArticle.");
 			}
 		}
 		echo json_encode($rtn);

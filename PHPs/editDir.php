@@ -11,9 +11,9 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
     若 status = true:
-		dataDB.info = ""
+		dataDB.info = "Successfully edited this dictionary."
 		dataDB.data = 更新後的資料夾名稱
-    否則 status = false:
+    否則
         dataDB.errorCode = "Update without permission." / "Failed to found the update folder."
 		dataDB.data=""
 	*/

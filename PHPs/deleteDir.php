@@ -11,7 +11,7 @@
     dataDB.status
     若 status = true:
         dataDB.info = "Successfully deleted this folder."
-        dataDB.data= ""
+        dataDB.data = ""
     否則
         dataDB.errorCode = "This folder doesn't exit." / "Failed to delete,Database exception."
         dataDB.data = ""

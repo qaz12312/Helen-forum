@@ -9,7 +9,7 @@
     dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = ""
+		dataDB.info = "Don't have any apply." / "Successfully show apply.";
 		dataDB.data[i] 
 		(
             dataDB.data[i].account //
@@ -17,8 +17,8 @@
 			dataDB.data[i].content	// Content
 		)
 	否則
-		dataDB.errorCode = "No notifications right now."
-		dataDB.data = ""
+		dataDB.errorCode = "Failed to show who is applying.";
+		dataDB.data = "";
 	*/
     function doShowApplyBoard($input){
         global $conn;

@@ -10,6 +10,7 @@
 	dataDB.status
     若 status = true:
         若有行程 {
+            dataDB.data.comment.info = "Successfully show boardName list."
 		    dataDB.data[i].title //第i筆標題
             dataDB.data[i].startTime //第i筆startTime
             dataDB.data[i].endTime//第i筆endTime
@@ -17,12 +18,11 @@
             dataDB.data[i].id//第i筆text
         }
         否則 {
-            dataDB.data.status = true;
-           dataDB.data.comment.info= "Non't any activity.";
-            dataDB.data.comment.data="";
+            dataDB.data.comment.info = "Non't any activity.";
+            dataDB.data.comment.data = "";
         }
 	否則
-		dataDB.errorCode = "【SQL SELECT -query】failed: ."
+		dataDB.errorCode = 
 		dataDB.data = ""
 	*/
     function doShowCalendar($input){

@@ -26,7 +26,7 @@
         // $user = $userInfo['account'];
         
         $user = $input['account'];
-        $sql = "SELECT EXISTS(SELECT 1 FROM `FollowHeart` WHERE `UserID`=? AND `ArticleID`=? LIMIT 1";
+        $sql = "SELECT EXISTS(SELECT 1 FROM `FollowHeart` WHERE `UserID`=? AND `ArticleID`=? LIMIT 1)";
         $arr = array($user,$input['articleID']);
         $result = query($conn,$sql,$arr,"SELECT");
         if ($result[0][0] == 0) {//新增HEART

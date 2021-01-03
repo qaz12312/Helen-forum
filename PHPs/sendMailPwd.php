@@ -9,7 +9,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = "success to verify"    
+        dataDB.info = "Message Sent! Thank you for contacting us."    
         dataDB.data = ""
     否則
         dataDB.errorCode = "fail to find the password"

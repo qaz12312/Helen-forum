@@ -1,9 +1,9 @@
 <?php
-    /*  板歸rule 置頂文章 top articleID
+    /*  
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "sortInBoard";
-    cmd["account"]="00757033"; //cmd["token"]
+    cmd["account"]="00757033"; //cmd["token"] (若是訪客則不用)
     cmd["boardName"] = "美食";
     cmd["sort"] = "time/hot/collect/comment";
 
@@ -11,8 +11,8 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
+        dataDB.info = "Without any article in board now." / "Successfully sort in board.";
         dataDB.data[i] //有i筆文章
-        dataDB.info
         (
             dataDB.data[i].title //第i筆文章的標題
             dataDB.data[i].articleID
@@ -25,7 +25,7 @@
         dataDB.data.topArticleID //置頂文章
         dataDB.data.rule // 板規
     否則
-        dataDB.errorCode = "Failed to sort in board." / "Without any article in board now."
+        dataDB.errorCode = "Failed to sort in board."
         dataDB.data = ""
     */
     function doSortBoard($input){
@@ -59,27 +59,36 @@
             } 
             else {
                 $articleList = array();
-                // foreach($result as $row){
                 for($i=0;$i<$resultCount;$i++){
                     $row = $result[$i];
                     $articleID = $row['ArticleID'];
+                    // if(isset($input['token'])){
+                    //     $token =$input['token'];
+                    //     if(!isset($_SESSION[$token])){
+                    //         errorCode("token doesn't exist.");
+                    //     }
+                    //     $userInfo = $_SESSION[$token];
+                    //     $user = $userInfo['account'];
+                    // } 
                     if(isset($input['account'])){
-                        $sql="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
-                        $arr = array($articleID, $input['account']);
-                        $heart = query($conn,$sql,$arr,"SELECT");
-                        $heartCount = count($heart);
-    
-                        $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?" ;
-                        $arr = array($articleID, $input['account']);
-                        $keep = query($conn,$sql,$arr,"SELECT");
-                        $keepCount = count($keep);
-    
-                        $articleList[$i] = array("title" => $row['Title'], "articleID" => $articleID , "like" => $row['cntHeart'], "keep" => $row['cntKeep'], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
-                    } else
-                        $articleList[$i] = array("title" => $row['Title'], "articleID" => $articleID , "like" => $row['cntHeart'], "keep" => $row['cntKeep'], "hasLike" => NULL, "hasKeep" =>NULL);
+                        $user = $input['account'];
+
+                        $sql = "SELECT EXISTS(SELECT 1 FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
+                        $heart = query($conn, $sql, array($articleID, $user), "SELECT");
+                        $hasLike = $heart[0][0];
+
+                        $sql = "SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
+                        $keep = query($conn, $sql, array($articleID, $user), "SELECT");
+                        $hasKeep = $keep[0][0];
+                    } 
+                    else{
+                        $hasLike = 0 ;
+                        $hasKeep = 0 ;
+                    }
+                    $articleList[$i] = array("title" => $row['Title'], "articleID" => $articleID , "like" => $row['cntHeart'], "keep" => $row['cntKeep'], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 }
-                 $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[0]['TopArticleID'],"rule"=>$result2[0]['Rule']);
-                 $rtn = successCode("Successfully sort in board.",$arr);
+                $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[0]['TopArticleID'],"rule"=>$result2[0]['Rule']);
+                $rtn = successCode("Successfully sort in board.",$arr);
             }
         } else {
             errorCode("Failed to sort in board.");

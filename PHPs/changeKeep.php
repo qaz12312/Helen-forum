@@ -10,10 +10,10 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = "Successfully kept this article." / "Successfully deleted this article." /"Keep without folder."
+		dataDB.info = "Successfully kept this article." / "Successfully deleted this article.";
 		dataDB.data = ""
 	否則
-		dataDB.errorCode = "【SQL XXXX-query】failed: ..." / "【query XXXX-execute】failed: ..."
+		dataDB.errorCode = "Keep without folder.";
 		dataDB.data = "" 
 	*/
 	function doAddDeleteKeep($input)

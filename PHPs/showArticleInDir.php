@@ -10,14 +10,14 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
+        dataDB.info = "Article not in the dir which names ".$input['dirName']." in this user." / "Successfully article in dictionary."
         dataDB.data[i] //有i筆文章在此收藏資料夾下
         (
         dataDB.data[i].title //第i筆文章的標題
         dataDB.data[i].articleID
         ) 
     否則
-        dataDB.errorCode = "Article not in the dir which names ".$input['dirName']." in this user."
+        dataDB.errorCode = "";
         dataDB.data = ""
     */
     function doShowArticleInDir($input){

@@ -8,10 +8,11 @@
     (if option = "create":)cmd["password"] = "123123";
 
     後端 to 前端:
+    dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
-        dataDB.data = "success to change the password"
+        dataDB.info = "send token." / "Successfully sign up and send email to user."
+        dataDB.data = 
     否則
         dataDB.errorCode = "fail to find the password"
         dataDB.data = ""
@@ -33,11 +34,9 @@
     function haveAccount($input){
         global $conn;
         try {
-            $sql="SELECT `UserID` FROM `Users` WHERE `UserID`=?";
-            $arr = array($input['account']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-            if($resultCount > 0){
+            $sql="SELECT EXISTS(SELECT 1 FROM `Users` WHERE `UserID`=? LIMIT 1)";
+            $result = query($conn,$sql,array($input['account']),"SELECT");
+            if($result[0][0]){
                 errorCode("Account has been registered.");
             }
             else{

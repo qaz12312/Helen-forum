@@ -3,14 +3,14 @@
     前端 to 後端:
     let cmd = {};
     cmd["act"] = "sortInMenu";
-    cmd["account"] = "00757033"; //cmd["token"]
+    cmd["account"] = "00757033"; //cmd["token"] (若是訪客則不用)
     cmd["sort"] = "time/hot/collect/comment";
 
     後端 to 前端:
     dataDB = JSON.parse(data);
     dataDB.status
     若 dataDB.status = true:
-        dataDB.info = "Without any article now. / Successfully sort in home."
+        dataDB.info = "Without any article now. / Successfully sort in home.";
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title //第i筆文章的標題
@@ -29,11 +29,6 @@
     */ 
     function doSortMenu($input){
         global $conn;
-        // $token =$input['token'];
-        // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
         if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect" || $input['sort'] == "comment" ) {
             if ($input['sort'] == "time") {
                 $sql="SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` ORDER BY `Times` DESC";
@@ -53,20 +48,30 @@
                 for($i=0;$i<$resultCount;$i++){
                     $row = $result[$i];
                     $articleID = $row['ArticleID'];
+                    // if(isset($input['token'])){
+                    //     $token =$input['token'];
+                    //     if(!isset($_SESSION[$token])){
+                    //         errorCode("token doesn't exist.");
+                    //     }
+                    //     $userInfo = $_SESSION[$token];
+                    //     $user = $userInfo['account'];
+                    // } 
                     if(isset($input['account'])){
-                        $sql ="SELECT `UserID` FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=?" ;
-                        $arr = array($articleID, $input['account']);
-                        $heart = query($conn,$sql,$arr,"SELECT");
-                        $heartCount = count($heart);
+                        $user = $input['account'];
 
-                        $sql ="SELECT `UserID` FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=?" ;
-                        $arr = array($articleID, $input['account']);
-                        $keep = query($conn,$sql,$arr,"SELECT");
-                        $keepCount = count($keep);
+                        $sql = "SELECT EXISTS(SELECT 1 FROM `FollowHeart` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
+                        $heart = query($conn, $sql, array($articleID, $user), "SELECT");
+                        $hasLike = $heart[0][0];
 
-                        $articleList[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasLike" => ( $heartCount>0 ? 1 : 0), "hasKeep" => ($keepCount>0 ? 1 : 0 ));
-                    }else
-                        $articleList[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasLike" => "", "hasKeep" =>"");
+                        $sql = "SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
+                        $keep = query($conn, $sql, array($articleID, $user), "SELECT");
+                        $hasKeep = $keep[0][0];
+                    } 
+                    else{
+                        $hasLike = 0 ;
+                        $hasKeep = 0 ;
+                    }
+                    $articleList[$i] = array("title" => $row[0], "boardName" => $row[1], "articleID" => $articleID , "like" => $row[3], "keep" => $row[4], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 }
                 $rtn = successCode("Successfully sort in home.",$articleList);
             }
