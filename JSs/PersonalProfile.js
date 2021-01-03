@@ -72,7 +72,18 @@ $( document ).ready(function()
             
         }
         else{
-            
+            if (value.length<3) {
+                            
+                swal({
+                    title: 'OOPS...',
+                    type: 'error',
+                    text: '密碼需大於3 ',
+                    animation: false,
+                    customClass: 'animated rotateOutUpLeft',
+                    confirmButtonText: 'okay!',
+                    confirmButtonColor: '#eda2b6'
+                })
+            }
             let cmd = {};
                 cmd["act"] = "checkPassword";
                 cmd[ "account" ] =sessionStorage.getItem("Helen-account");
@@ -80,18 +91,7 @@ $( document ).ready(function()
                
                 $.post( "../index.php", cmd, function( dataDB ){
                     dataDB = JSON.parse( dataDB );
-                        if (value.length<3) {
-                            
-                            swal({
-                                title: 'OOPS...',
-                                type: 'error',
-                                text: '密碼需大於3 ',
-                                animation: false,
-                                customClass: 'animated rotateOutUpLeft',
-                                confirmButtonText: 'okay!',
-                                confirmButtonColor: '#eda2b6'
-                            })
-                        }
+                        
                         if (dataDB.status  == false) {
                             dataDB.data = ""
                             swal({
