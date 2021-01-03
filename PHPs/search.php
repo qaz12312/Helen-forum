@@ -18,7 +18,7 @@
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title        //文章的標題
-            dataDB.data[i].blockName    //文章的所屬看板 (cmd["where"] = board 沒有)
+            dataDB.data[i].boardName    //文章的所屬看板 (cmd["where"] = board 沒有)
             dataDB.data[i].articleID    //文章的id
             dataDB.data[i].like         //文章的總愛心數
             dataDB.data[i].keep         //文章的總收藏數
