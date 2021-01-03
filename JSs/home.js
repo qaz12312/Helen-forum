@@ -433,7 +433,7 @@ function forNormal( res, rej )
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
             );
-            $( ".tabContent h3" ).html( thisSort );
+            $( ".tabContent h3" ).html( $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) ) );
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
