@@ -1,10 +1,5 @@
 <?php
     function connSql(){    
- 
-        // $serverName = "localhost";
-        // $userName = "root";
-        // $password = "";
-        // $databaseName = "test";
 
         // aws的
         $serverName = "helendb.chw8qvtxo3mu.us-east-1.rds.amazonaws.com";
