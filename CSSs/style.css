@@ -237,8 +237,8 @@ body{
 }
 .postContent h3{
 	color: #fff;
-	border-radius: 10px;
-	padding: 4%;
+	border-radius: 5px;
+	padding: 3%;
 }
 .postContent button{
 	width: 75px;
