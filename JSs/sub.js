@@ -23,50 +23,46 @@ $(document).ready(async function(){
     {
         let articleIndex = $(".tabContent tr").index(this.closest("tr"));
         
+        swal({
+        title: "確定要刪除此篇文章於此收藏嗎？<br /><small>&lt;" + articles[ articleIndex ].title + "&gt;</small>",
+        showCancelButton: true,
+        confirmButtonText: "確定",
+        cancelButtonText: "取消",
+        animation: false,
 
-                  swal({
-                    title: "確定要刪除此篇文章於此收藏嗎？<br /><small>&lt;" + articles[ articleIndex ].title + "&gt;</small>",
-                    showCancelButton: true,
-                    confirmButtonText: "確定",
-                    cancelButtonText: "取消",
-                    animation: false,
-    
-                }).then(( result ) => {
-                    if ( result ) 
+        }).then(( result ) => {
+            if ( result ) 
+            {
+                let cmd= {};
+                cmd["act"] = "removeKeepArticle";
+                cmd["account"] = sessionStorage.getItem("Helen-account");
+                cmd["articleID"] = articles[articleIndex].articleID;
+                cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
+                $.post( "../index.php", cmd, function( dataDB ){
+                    dataDB = JSON.parse( dataDB );
+
+                    if( dataDB.status == false )
                     {
-                        let cmd= {};
-                        cmd["act"] = "removeKeepArticle";
-                        cmd["account"] = sessionStorage.getItem("Helen-account");
-                        cmd["articleID"] = articles[articleIndex].articleID;
-                        cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
-                        $.post( "../index.php", cmd, function( dataDB ){
-                            dataDB = JSON.parse( dataDB );
-    
-                            if( dataDB.status == false )
-                            {
-                                swal({
-                                    title: "刪除失敗<br /><small>&lt;" + articles[ articleIndex ].title +"&gt;</small>",
-                                    type: "error",
-                                    text: dataDB.errorCode,
-        
-                                }).then((result) => {}, ( dismiss ) => {});
-                            }
-                            else
-                            {
-                                swal({
-                                    title: "已成功刪除文章！<br /><small>&lt;" + articles[ articleIndex ].title+ "&gt;</small>",
-                                    type: "success",
-                                    showConfirmButton: false,
-                                    timer: 1000,
-                                    
-                                }).then((result) => {}, ( dismiss ) => {location.reload();});
-        
-                                
-                               
-                            }
-                        });
+                        swal({
+                            title: "刪除失敗<br /><small>&lt;" + articles[ articleIndex ].title +"&gt;</small>",
+                            type: "error",
+                            text: dataDB.errorCode,
+
+                        }).then((result) => {}, ( dismiss ) => {});
                     }
-                }, ( dismiss ) => {});
+                    else
+                    {
+                        swal({
+                            title: "已成功刪除文章！<br /><small>&lt;" + articles[ articleIndex ].title+ "&gt;</small>",
+                            type: "success",
+                            showConfirmButton: false,
+                            timer: 1000,
+                            
+                        }).then((result) => {}, ( dismiss ) => {location.reload();});
+                    }
+                });
+            }
+        }, ( dismiss ) => {});
     });
 
 });
@@ -84,7 +80,7 @@ async function initial(res, rej){
     
     var keepDir= sessionStorage.getItem("Helen-keepDir");
     $(".tabContent").find("h2").text(keepDir);
-    $(".tabContent").find("p").text("收藏目錄 > "+ keepDir);
+    $(".tabContent").find("p").html("<a href= \"../HTMLs/CollectionCatalog.html\">收藏目錄</a> > "+ keepDir);
     let cmd = {};
     cmd["act"] = "showArticleInDir";
     cmd["account"] = sessionStorage.getItem("Helen-account");
