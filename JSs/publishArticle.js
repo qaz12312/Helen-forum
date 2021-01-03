@@ -197,10 +197,12 @@ async function initial(res, rej){
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
+                console.log(article.boardName);
                 for(var i= 0; i< boards.length; i++){
+                    console.log(borads[i]+ "版");
                     if((borads[i]+ "版")== article.boardName){
                         console.log(i);
-                        $("#chooseBoard").selectIndex= i;
+                        $("#chooseBoard").selectedIndex= i;
                     }
                 }
                 // $("#chooseBoard").find("option[text= '" + article.boardName+ "版']").attr("selected", true);
