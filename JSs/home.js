@@ -8,7 +8,7 @@ var keepMenu;
 
 $(document).ready(async function(){
     barInitial();
-    
+
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
 
     $( ".topnav a" ).click( function()
@@ -29,7 +29,6 @@ $(document).ready(async function(){
   {
       let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
       sessionStorage.setItem( "Helen-articleID", thisArticle.articleID );
-      sessionStorage.setItem( "Helen-sort", "熱門" );
       location.href =  "./post.html";
   });
 
@@ -93,6 +92,24 @@ $(document).ready(async function(){
             }
         });
 
+        // if( $( chosen ).hasClass( "text-danger" ) )
+        // {
+        //     $( chosen ).removeClass( "text-danger" );
+        //     $( chosen ).addClass( "text-light" );
+        //     $( this ).addClass( "btn-danger" );
+            
+        //     thisArticle.like = parseInt(thisArticle.like) + 1;
+        //     $( chosen ).eq(1).html( thisArticle.like );
+        // }
+        // else
+        // {
+        //     $( this ).removeClass( "btn-danger" );
+        //     $( chosen ).addClass( "text-danger" );
+        //     $( chosen ).removeClass( "text-light" );
+
+        //     thisArticle.like = parseInt(thisArticle.like) - 1;
+        //     $( chosen ).eq(1).html( thisArticle.like );
+        // }
     });
 
     $( "button" ).has( ".glyphicon-star" ).click( async function()
@@ -360,12 +377,7 @@ async function initial(res, rej)
 {
 
     
-    if( !thisAccount ) 
-    {
-        thisAccount = "";
-        
-
-    }
+    if( !thisAccount ) thisAccount = "";
 
     if( !thisSearching )
     {
@@ -390,7 +402,6 @@ function forNormal( res, rej )
     cmd[ "act" ] = "sortInMenu";
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
-
     $.post( "../index.php", cmd, function( dataDB )
     {
         
@@ -612,8 +623,6 @@ function checkPermission(res, rej)
     if( !thisAccount )
     {
         $( ".addPost" ).remove();
-
-        
     }
     else{
         
