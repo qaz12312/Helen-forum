@@ -72,7 +72,9 @@ async function barInitial() {
         //                     " 未登入"+
         //                     "</span></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-calendar\">"+
-                            "<a href=\"../HTMLs/calendar.html\"> 行事曆</a></li>")                 
+                            "<a href=\"../HTMLs/calendar.html\"> 行事曆</a></li>")   
+        $("#userDD").append("<li class= \"glyphicon glyphicon-question-sign\">"+
+                            "<a href=\"../HTMLs/CommonProblem.html\"> 常見問題</a></li>")                                     
     }else{ // 一般使用者(已登入)
         
         $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span> "+
@@ -91,7 +93,8 @@ async function barInitial() {
                             "<a href=\"../HTMLs/notice.html\"> 我的通知</a></li>")
         $("#userDD").append("<li class= \"glyphicon glyphicon-calendar\">"+
                             "<a href=\"../HTMLs/calendar.html\"> 行事曆</a></li>")
-
+        $("#userDD").append("<li class= \"glyphicon glyphicon-question-sign\">"+
+                            "<a href=\"../HTMLs/CommonProblem.html\"> 常見問題</a></li>")   
 		/*
         if(userPermission>= 2){ // 版主
             $("#userDD").append("<li class= \"glyphicon glyphicon-alert\">"+
