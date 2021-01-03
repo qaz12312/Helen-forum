@@ -173,6 +173,8 @@ $( document ).ready( async function()
                 cmd[ "boardName" ] = result[0];
                 cmd[ "rule" ] = result[1];
 
+                console.log(cmd);
+
                 $.post( "../index.php", cmd, function( dataDB )
                 {
                     dataDB = JSON.parse( dataDB );
