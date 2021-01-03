@@ -171,7 +171,7 @@ function checkPermission(res, rej)
                 });
                 
                 res(0);
-                console.log("1....")
+                
                 
                 
             }

@@ -12,7 +12,6 @@ var thisAccount = sessionStorage.getItem( "Helen-account" );
             let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
             
             
-                   console.log(thisArticle)
 
                   swal({
                     title: "確定要刪除此篇文章嗎？<br /><small>&lt;" + articles[ thisArticle ].title + "&gt;</small>",

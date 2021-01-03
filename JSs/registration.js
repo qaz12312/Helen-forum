@@ -150,7 +150,7 @@ $(document).ready(function () {
                 }).then((result) => {}, ( dismiss ) => {});
             }
             else {
-                console.log($(".createBtn").disabled)
+             
                 swal({
                     title: "請輸入驗證碼",
                     input: "textarea",
@@ -163,9 +163,9 @@ $(document).ready(function () {
                     animation: false
 
                 }).then((result) => {
-                    console.log(result)
+                   
                     if (result == dataDB.data) {
-                        console.log("123")
+                    
                         swal({
                             title: "驗證成功",
                             type: "success",
