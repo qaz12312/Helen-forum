@@ -361,13 +361,13 @@ function moderatorInitial( resolve, reject )
                                         "<span class='glyphicon glyphicon-plus'></span>" +
                                     "</td>" +
                                     "<td>" +
-                                        "<div class='input-group input-group-lg' style='margin: 0 !important;'>" +
+                                        // "<div class='input-group input-group-lg' style='margin: 0 !important;'>" +
                                             "<input id='users' list='userList' value='' class='textInput'>" +
                                             "<datalist id='userList' class='textInput'>" +
                                                 userOptions +
                                             "</datalist>" +
-                                            "@mail.ntou.edu.tw" +
-                                        "</div>" +
+                                            "<br/>@mail.ntou.edu.tw" +
+                                        // "</div>" +
                                     "</td>" +
                                     "<td>" +
                                         "<div class='input-group input-group-lg mt-3'>" +
