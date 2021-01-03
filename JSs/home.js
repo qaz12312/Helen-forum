@@ -397,7 +397,7 @@ async function initial(res, rej)
 }
 function forNormal( res, rej )
 {
-    
+    var thisSort = sessionStorage.getItem( "Helen-sort" );
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
