@@ -53,7 +53,7 @@ $( document ).ready( async function()
                     cmd[ "isPass" ] = 1;
                     
                     $.post( "../index.php", cmd, function( dataDB ){
-                        console.log(dataDB)
+                        //console.log(dataDB)
                         dataDB = JSON.parse( dataDB );
 
                         if( dataDB.status == false )
@@ -113,7 +113,7 @@ $( document ).ready( async function()
 
                     $.post( "../index.php", cmd, function( dataDB )
                     {
-                        console.log(dataDB);
+                        //console.log(dataDB);
                         dataDB = JSON.parse( dataDB );
 
                         if( dataDB.status == false )
