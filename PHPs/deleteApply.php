@@ -5,27 +5,25 @@
 	cmd["act"] = "deleteApplyBoard";
 	cmd["account"] = "00757033";
 	cmd["type"] = "board/moderator";
-    cmd["content"] = "00757033";
+	cmd["content"] = "00757033";
+	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
 	dataDB.status
     若 status = true:
-        dataDB.status = true
-		dataDB.info = "Successfully deleted all this user's apply."
+		dataDB.info = "Successfully deleted all this user's apply.";
 		dataDB.data = ""
     否則 status = false:
-        dataDB.status = false
 		dataDB.errorCode = "This user apply doesn't exit."
 		dataDB.data = "" 
 	*/
-    function doDeleteApplyBoard($input){ //審核被檢舉文章
+    function doDeleteApplyBoard($input){ //刪除 申請版或版主 的請求
         global $conn;
 		if ($input['type'] == "board" || $input['type'] == "moderator") {
-		    $sql="SELECT `Content` FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=?";  
+		    $sql="SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=? LIMIT 1)"; //是否存在此Issue
 			$arr = array($input['account'],$input['content'],($input['type'] == "board" ? 1 : 0 ));
 			$result = query($conn,$sql,$arr,"SELECT");
-			$resultCount = count($result);
-			if($resultCount <= 0){
+			if(!$result[0][0]){
 				errorCode("This user's application doesn't exit.");
 			}
 			else{
@@ -37,7 +35,7 @@
 			}
 		}
         else 
-			errorCode("Failed to delete any application.",array());
+			errorCode("Failed to delete any application.");
 
         echo json_encode($rtn);
     }

@@ -9,15 +9,15 @@
     dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = ""
+		dataDB.info = "No notifications right now." / "Successfully show person's notices."
 		dataDB.data[i] //有i筆通知
 		(
 			dataDB.data.time	// Time
 			dataDB.data.content	// Content
 		)
 	否則
-		dataDB.errorCode = "No notifications right now."
-		dataDB.data = ""
+		dataDB.errorCode = "";
+		dataDB.data = "";
 	*/
     function doShowNotification($input){
         global $conn;
@@ -26,11 +26,10 @@
         $result = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
-            $rtn = successCode("No notifications right now.");
+            $rtn = successCode("No notifications right now.",array());
         }
         else{
             $arr=array();
-            // foreach($result as $row){
             for($i=0;$i<$resultCount;$i++){
                 $row = $result[$i];
                 $arr[$i]=array("time"=>$row[0],"content"=>$row[1]);

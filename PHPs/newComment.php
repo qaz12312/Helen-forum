@@ -11,7 +11,7 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = ""
+		dataDB.info = "Successfully new this comment."
 		dataDB.data[0]	// AuthorID
 		dataDB.data[1]	// Content
 		dataDB.data[2]	// ArticleID

@@ -13,7 +13,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
+        dataDB.info = "Didn't find any relational article." / "Successfully search in home/board."
         (cmd["where"] = home)
         dataDB.data[i] //有i筆文章
         (
@@ -177,7 +177,7 @@ function doSearch($where,$boardInfo,$sql,$orderWay,$search,$user){
         if($where=="board"){
             $arr = array("articleList" => $arr, "topArticleID" => $boardInfo[0][1], "rule" => $boardInfo[0][0]);
         }
-        $rtn = successCode("",$arr);
+        $rtn = successCode("Successfully search in ".$where.".",$arr);
     }
     echo json_encode($rtn);
 }

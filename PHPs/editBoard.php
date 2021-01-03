@@ -11,7 +11,7 @@
     dataDB = JSON.parse(data);
 	dataDB.status
     若 status = true:
-        dataDB.info = ""
+        dataDB.info = "Successfully edited this board."
         dataDB.data = 更新後的版
     否則
         dataDB.errorCode = "Failed to found the update board."/ "Delete without permission." 

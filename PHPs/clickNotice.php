@@ -10,8 +10,8 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
-        dataDB.data = "Successfully deleted this notification. "
+        dataDB.info = "Successfully deleted this notification.";
+        dataDB.data = ""
     否則
         dataDB.errorCode = "Without notice."
         dataDB.data = ""

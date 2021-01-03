@@ -10,7 +10,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
+        dataDB.info = "Successfully show article and comment."
         dataDB.data[i].comment //有i筆留言
         (
             dataDB.data.comment[i].content  //第i筆留言的內文

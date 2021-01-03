@@ -14,7 +14,7 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
     若 status = true:
-		dataDB.info = ""
+		dataDB.info = "Successfully new the Article."
 		dataDB.data = ""
     否則
 		dataDB.errorCode = "You have been already published this article before." / "Failed to upload article,Database exception."

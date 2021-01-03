@@ -13,7 +13,7 @@
 	dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = "Successfully Apply the Board.";
+		dataDB.info = "Activity has been approved" / "Activity has not been approved yet." / "Successfully Apply the Board.";
 		dataDB.data = 空array;
 	否則
 		dataDB.errorCode = "Failed to Apply the Board,Database exception.";
@@ -42,7 +42,7 @@
 		else{
 			$sql="INSERT INTO `Calendars`(`UserID`,`Title`,`Start`,`END`,`Text`) VALUES(?,?,?,?,?)";
         	$arr = array($user,$input['title'],$input['startTime'],$input['endTime'],$input['text']);
-            $result = query($conn,$sql,$arr,"SELECT");
+            query($conn,$sql,$arr,"INSERT");
             $rtn = successCode("Successfully new the Article.",array());
 		}	
         echo json_encode($rtn);

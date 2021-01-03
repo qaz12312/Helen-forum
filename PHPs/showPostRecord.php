@@ -9,7 +9,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
+        dataDB.info = "No article right now." / "Successfully show person's article records.";
         dataDB.data[i] //有i筆文章
         (
             dataDB.data[i].title //第i筆文章的標題
@@ -17,8 +17,8 @@
             dataDB.data[i].articleID
         ) 
     否則
-        dataDB.errorCode = "No article right now."
-        dataDB.data = ""
+        dataDB.errorCode = "";
+        dataDB.data = "";
     */
     function doShowPostRecord($input){ // 發文紀錄
         global $conn;

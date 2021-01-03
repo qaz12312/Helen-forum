@@ -11,7 +11,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
+        dataDB.info = "Don't have any article in board." / "Successfully search in menu."
         dataDB.data[i] //有i筆文章
         (
         dataDB.data[i].title //第i筆文章的標題

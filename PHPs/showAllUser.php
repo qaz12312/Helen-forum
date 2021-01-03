@@ -8,11 +8,11 @@
     dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = ""
+		dataDB.info = "Without any user except moderator now." / "Successfully show user list.";
 		dataDB.data[i] //有i筆UserID
 	否則
-		dataDB.errorCode = "Without any user except moderator now."
-		dataDB.data = ""
+		dataDB.errorCode = "";
+		dataDB.data = "";
 	*/
     function doShowAllUser($input){
         global $conn;

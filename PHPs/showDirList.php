@@ -9,10 +9,10 @@
     dataDB = JSON.parse(data);
 	dataDB.status
 	若 status = true:
-		dataDB.info = ""
+		dataDB.info = "User didn't create any folder." / "Successfully show dirctionaryName list.";
 		dataDB.data[i] = array形式 // 資料夾名稱
 	否則
-		dataDB.errorCode = "User didn't create any folder.";
+		dataDB.errorCode = "";
 		dataDB.data = ""
 	*/
     function doShowDirList($input){

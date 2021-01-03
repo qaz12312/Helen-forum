@@ -9,7 +9,7 @@
     dataDB = JSON.parse(data);
     dataDB.status
     若 status = true:
-        dataDB.info = ""
+        dataDB.info = "No report right now." / "Successfully show the board's reports.";
         dataDB.data // 檢舉
         (
             dataDB.data[0].title  // 第1筆檢舉的Title
@@ -18,8 +18,8 @@
             ...
         )
     否則
-        dataDB.errorCode = "No report right now."
-        dataDB.data = ""
+        dataDB.errorCode = "No report right now.";
+        dataDB.data = "";
     */
 function doShowReport($input){ //查看board底下的文章檢舉
     global $conn;
@@ -30,8 +30,6 @@ function doShowReport($input){ //查看board底下的文章檢舉
     if ($resultCount <= 0) {
         $rtn = successCode("No report right now.");
     } else {
-        // $arr = array();
-        // foreach($result as $row){
         $arr = array();
         for($i=0;$i<$resultCount;$i++){
             $row = $result[$i];
