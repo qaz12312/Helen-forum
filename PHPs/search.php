@@ -171,7 +171,7 @@ function doSearch($where,$boardInfo,$sql,$orderWay,$search,$user){
             }
             $arr[$i] = array("title" => $row[0], "articleID" => $articleID, "like" => $row[3], "keep" => $row[4], "hasLike" => $hasLike, "hasKeep" => $hasKeep, "Hashtag" => json_decode($row[5]), "time" => $row[6]);
             if($where=="home"){
-                $arr[$i] += ["blockName" => $row[1]];
+                $arr[$i] += ["boardName" => $row[1]];
             }
         }
         if($where=="board"){
