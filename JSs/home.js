@@ -3,6 +3,7 @@ var articles = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 var thisSearching = sessionStorage.getItem( "Helen-search" );
 var thisSort = sessionStorage.getItem( "Helen-sort" );
+sessionStorage.removeItem( "Helen-boardName" );
 var keepMenu;
 
 $(document).ready(async function(){
