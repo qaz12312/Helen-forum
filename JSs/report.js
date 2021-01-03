@@ -134,7 +134,7 @@ $( document ).ready( async function()
             {
                 if ( result ) 
                 {
-                    let cmd = {};D
+                    let cmd = {};
                     cmd[ "act" ] = "deleteReport";
                     cmd[ "isPass" ] = false;
                     cmd[ "articleID" ] = thisArticle;
