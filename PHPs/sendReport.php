@@ -46,15 +46,15 @@
             else{
                 // send issue
                 $sql = "SELECT `Title`,`AuthorID` FROM `Article` WHERE `ArticleID`=?";
-                $result = query($conn,$sql,array($input['articleID']),"SELECT");
+                $articleInfo = query($conn,$sql,array($input['articleID']),"SELECT");
                 
-                $content = "Sorry - Your article-【".$result[0][0]."】 has been report.";
+                $content = "Sorry - Your article-【".$articleInfo[0][0]."】 has been report.";
 
                 $sql = "SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `Content`=? AND `UserID`=? AND `Type`=? LIMIT 1)";
-                $arr = array($content,$result[0][1],2);
+                $arr = array($content,$articleInfo[0][1],2);
                 $result = query($conn,$sql,$arr,"SELECT");
                 if(!$result[0][0]){//若issue不存在
-                    doSendNotification(array("recipient" => $result[0][1], "content" => $content),0);
+                    doSendNotification(array("recipient" => $articleInfo[0][1], "content" => $content),0);
                 }
                 $rtn = successCode("Successfully send the report.");
             }

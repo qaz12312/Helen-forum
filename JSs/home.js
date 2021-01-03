@@ -609,15 +609,7 @@ function forSearching( res, rej)
                             "</tr>";
                 $( ".tabContent tbody" ).append( isEmpty );
             }
-            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
-            {
-                let isEmpty = "<tr>" +
-                                "<td>" +
-                                    "文章列表為空";
-                                "</td>" +
-                            "</tr>";
-                $( ".tabContent tbody" ).append( isEmpty );
-            }
+            
 
 
 

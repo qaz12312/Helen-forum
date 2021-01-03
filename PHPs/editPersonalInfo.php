@@ -5,7 +5,7 @@
     cmd["act"] = "editPersonalInfo";
     cmd["option"] = "password" / "nickname" / "color";
     cmd["account"] = "00757007"; //cmd["token"]
-    cmd["new"] = "987654321" / "beauty cook" / "\#028d5f";
+    cmd["new"] = "987654321"(base64加密後) / "beauty cook" / "\#028d5f";
 
     後端 to 前端:
     dataDB = JSON.parse(data);
@@ -20,6 +20,7 @@
 	*/
     switch($input["option"]){
         case "password": // 修改密碼
+            $input['new'] = base64_decode($input['new']);
             $optionAttr = "Password";
             break;
         case "nickname": // 修改暱稱
