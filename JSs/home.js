@@ -27,7 +27,8 @@ $(document).ready(async function(){
   
   $( ".boardName" ).parent().click( function() 
   {
-      sessionStorage.setItem( "Helen-boardName", $( ".boardName", this ).text() );
+        let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
+      sessionStorage.setItem( "Helen-boardName",articles[thisArticle].boardName );
       location.href =  "./sticky.html";
   });
   $( ".articleTitle" ).parent().click( function() 
