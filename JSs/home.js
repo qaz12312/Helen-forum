@@ -448,8 +448,8 @@ function forNormal( res, rej )
                                             "<span class='col-md-2'>" + 
                                                 "<h3 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h3>"+
                                             "</span>" +
-                                            "<span class='col-md-6'>" +
-                                                "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
+                                            "<span class='col-md-6'style='cursor:pointer'>" +
+                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
                                             "</span>" +
                                             "<span class='col-md-4'>";
 
@@ -564,8 +564,8 @@ function forSearching( res, rej)
                                             "<span class='col-md-2'>" + 
                                                 "<h3 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h3>"+
                                             "</span>" +
-                                            "<span class='col-md-6'>" +
-                                                "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
+                                            "<span class='col-md-6'style='cursor:pointer'>" +
+                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
                                             "</span>" +
                                             "<span class='col-md-4'>";
 
