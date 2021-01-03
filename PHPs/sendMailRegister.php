@@ -84,7 +84,7 @@
         $mail->SMTPAuth = true;
         $mail->Username = 'softwareengineeringhelen@gmail.com'; // Gmail address which you want to use as SMTP server
         $mail->Password = 'soft123soft'; // Gmail address Password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->SMTPSecure = 'tls';
         $mail->Port = '465';
         $mail->setFrom('softwareengineeringhelen@gmail.com'); // Gmail address which you used as SMTP server
         $mail->addAddress($email . "@mail.ntou.edu.tw"); // Email address where you want to receive emails (you can use any of your gmail address including the gmail address which you used as SMTP server)
