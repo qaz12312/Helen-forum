@@ -363,9 +363,7 @@ async function initial(res, rej)
     if( !thisAccount ) 
     {
         thisAccount = "";
-        $( ".topnav a" ).removeClass( "active" );
-        $( ".topnav " ).closest( "a" ).addClass( "active" );
-        sessionStorage.setItem( "Helen-sort", $( ".topnav " ).closest( "a" ).text() );
+        
 
     }
 
@@ -424,7 +422,6 @@ function forNormal( res, rej )
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
             );
-            
             $( ".tabContent h3" ).html( thisSort );
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
