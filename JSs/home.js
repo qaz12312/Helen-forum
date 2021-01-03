@@ -446,7 +446,7 @@ function forNormal( res, rej )
                                     "<div class='card'>" +
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'>" + 
-                                                "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h5>"+
+                                                "<h3 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h3>"+
                                             "</span>" +
                                             "<span class='col-md-6'>" +
                                                 "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
@@ -562,7 +562,7 @@ function forSearching( res, rej)
                                     "<div class='card'>" +
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'>" + 
-                                                "<h5 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h5>"+
+                                                "<h3 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h3>"+
                                             "</span>" +
                                             "<span class='col-md-6'>" +
                                                 "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
