@@ -24,8 +24,8 @@ $("#allday").click(function () {
 });
 
 $('#activityStartDate').change(function(){
-    if($("#allday").prop("checked"))
-        console.log($("#activityEndDate").val());
+    if($("#allday").prop("checked") && $("#activityEndDate").val()==NULL)
+        $("#activityEndDate").val($("#activityStartDate").val());
 });
 
 
