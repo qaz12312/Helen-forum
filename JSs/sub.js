@@ -18,71 +18,57 @@ $(document).ready(async function(){
             location.href =  "../HTMLs/post.html";
         }
     });
-
-    $(".tabContent button").on( "click", function(){
+    
+    $( document ).on( "click", ".btn-default", function()
+    {
         let articleIndex = $(".tabContent tr").index(this.closest("tr"));
-        if( $(this).text().trim() == "刪除"){
-            let cmd= {};
-            cmd["act"] = "removeKeepArticle";
-            cmd["account"] = sessionStorage.getItem("Helen-account");
-            cmd["articleID"] = articles[articleIndex].articleID;
-            cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
+        
 
-            $.post( "../index.php", cmd, function( dataDB ){
-                alert(dataDB);
-                console.log(dataDB);
-                dataDB = JSON.parse( dataDB );
-
-                swal({
-                    title: "確定要刪除此篇文章嗎？<br /><small>&lt;"
-                     + articles[ articleIndex ].title
-                      + "&gt;</small>",
+                  swal({
+                    title: "確定要刪除此篇文章於此收藏嗎？<br /><small>&lt;" + articles[ articleIndex ].title + "&gt;</small>",
                     showCancelButton: true,
                     confirmButtonText: "確定",
                     cancelButtonText: "取消",
-                    animation: false
+                    animation: false,
     
-                    }).then(( result ) => {
-                        if ( result ) 
-                        {
-                            if( status == false )
+                }).then(( result ) => {
+                    if ( result ) 
+                    {
+                        let cmd= {};
+                        cmd["act"] = "removeKeepArticle";
+                        cmd["account"] = sessionStorage.getItem("Helen-account");
+                        cmd["articleID"] = articles[articleIndex].articleID;
+                        cmd["dirName"] = sessionStorage.getItem("Helen-keepDir");
+                        $.post( "../index.php", cmd, function( dataDB ){
+                            dataDB = JSON.parse( dataDB );
+    
+                            if( dataDB.status == false )
                             {
                                 swal({
-                                    title: "移除失敗<br /><small>&lt;"
-                                    //  + articles[ articleIndex ].title
-                                      + "&gt;</small>",
+                                    title: "刪除失敗<br /><small>&lt;" + articles[ articleIndex ].title +"&gt;</small>",
                                     type: "error",
-                                    // text: dataDB.errorCode,
-                                    animation: false
-                                }, ( dismiss ) => {});
+                                    text: dataDB.errorCode,
+        
+                                }).then((result) => {}, ( dismiss ) => {});
                             }
                             else
                             {
                                 swal({
-                                    title: "已成功移除收藏文章！<br /><small>&lt;"
-                                     + articles[ articleIndex ].title
-                                      + "&gt;</small>",
+                                    title: "已成功刪除文章！<br /><small>&lt;" + articles[ articleIndex ].title+ "&gt;</small>",
                                     type: "success",
-                                }).then(( result ) => {}, ( dismiss ) => {});
-                                $(this).closest( "tr" ).remove();
-                                articles.splice( articleIndex, 1 );
-    
-                                if( articles.length == 0 )
-                                {
-                                    console.log( "這個收藏目錄沒有收藏任何文章" );
-                                    let emptyMessage = "<tr>" + 
-                                                            "<td colspan='2'>還沒有收藏文章呦！</td>" +
-                                                        "</tr>";
-                                    $( ".tabContent tbody" ).append( emptyMessage );
-                                }
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                    
+                                }).then((result) => {}, ( dismiss ) => {location.reload();});
+        
+                                
+                               
                             }
-                        }
-                    }, function( dismiss ) {
-                        if ( dismiss === 'cancel' );
-                });
-            });
-        }
+                        });
+                    }
+                }, ( dismiss ) => {});
     });
+
 });
 
 async function initial(res, rej){

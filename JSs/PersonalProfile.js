@@ -10,7 +10,7 @@ $( document ).ready(function()
     document.querySelector('.PersonEditBtn').addEventListener('click',
     function () {
         const div = document.createElement('div'); 
-        console.log(document.getElementById('name').disabled)
+       
         if(document.getElementById('name').disabled == true){
             
             document.getElementById('name').disabled = !document.getElementById('name').disabled;
@@ -24,7 +24,7 @@ $( document ).ready(function()
             cmd[ "account" ] =sessionStorage.getItem("Helen-account");
             cmd[ "new" ] =document.getElementById("name").value;
             
-            console.log(cmd[ "new" ])
+           
             $.post( "../index.php", cmd, function( dataDB ){
                 dataDB = JSON.parse( dataDB );
                 if (dataDB.status  == false) {
@@ -77,7 +77,7 @@ $( document ).ready(function()
                 cmd["act"] = "checkPassword";
                 cmd[ "account" ] =sessionStorage.getItem("Helen-account");
                 cmd["password"] = value;
-                console.log(value)
+               
                 $.post( "../index.php", cmd, function( dataDB ){
                     dataDB = JSON.parse( dataDB );
                         if (dataDB.status  == false) {
@@ -106,7 +106,7 @@ $( document ).ready(function()
                             }).then(
                                 function () { },
                                 function (dismiss) {
-                                    console.log("驗證成功");
+                                   
                                     document.getElementById('password').disabled = !document.getElementById('password').disabled;
                                     document.getElementById("editPw").value = 'Edit'
                                             let yourQueue = [];
@@ -225,7 +225,7 @@ $( document ).ready(function()
                     else {
                         
                         sessionStorage.setItem("Helen-color",'#'+hex )
-                        console.log('#'+hex)
+                      
                         $("#color").css("border-right", "100px solid "+ '#'+hex);
                         location.reload();//重整
                         }

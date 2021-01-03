@@ -35,8 +35,7 @@ $(document).ready(function () {
             cmd["account"] = act;
             cmd["password"] = pw;
             $.post("../index.php", cmd, function (data) {
-                //console.log("connect success");
-                //console.log(data);
+                
                 dataDB = JSON.parse(data);
                 if (dataDB.status == false) {
                     dataDB.data = ""
@@ -51,7 +50,7 @@ $(document).ready(function () {
                     }).then(( result ) => {}, ( dismiss ) => {});
                 }
                 else {//登入成功
-                    //console.log("log in sucess")
+                    
                     leaveUserDetails(dataDB.data[0], dataDB.data[1], dataDB.data[2]);
                     swal({
                         title: 'Welcome To Helen',

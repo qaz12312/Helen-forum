@@ -11,7 +11,7 @@ $( document ).ready( async function()
             let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
             
             
-                   console.log(thisArticle)
+                  
 
                   swal({
                     title: "確定要刪除此通知嗎？<br /><small>&lt;" + articles[ thisArticle ].content + "&gt;</small>",
@@ -101,7 +101,7 @@ async function initial( res, rej )
             content.empty();
 
             articles = dataDB.data;
-            console.log(articles)
+           
             if( $.isEmptyObject(articles) )
             {
                 let emptyMessage = "<tr>" + 
@@ -114,7 +114,7 @@ async function initial( res, rej )
 
             for( let i in articles )
             { 
-                console.log(articles[i].time)
+                
                 
                 let oneRow = "<tr>" +
                                 "<td>" + articles[i].content  + "</td>" +
