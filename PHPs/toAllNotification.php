@@ -25,7 +25,7 @@
         }
         else{
             foreach($result as $userID){
-                $sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?)";
+                $sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?,?)";
                 $arr = array($userID[0], $input['content'],2);
                 query($conn,$sql,$arr,"INSERT");
         
