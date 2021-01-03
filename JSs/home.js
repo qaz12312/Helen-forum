@@ -397,7 +397,7 @@ async function initial(res, rej)
 }
 function forNormal( res, rej )
 {
-    
+    var thisSort = sessionStorage.getItem( "Helen-sort" );
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
@@ -433,7 +433,7 @@ function forNormal( res, rej )
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
             );
-            $( ".tabContent h3" ).html( $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) ) );
+            $( ".tabContent h3" ).html( thisSort );
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
