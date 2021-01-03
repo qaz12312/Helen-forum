@@ -12,6 +12,9 @@ async function barInitial() {
     if(location.pathname== "/home.html"){ // 在首頁
         sessionStorage.removeItem("Helen-boardName") // 刪除看版
     }
+    if(location.pathname!= "/CollectionCatalog.html"){ // 不在收藏頁面
+        sessionStorage.removeItem("Helen-act") // 刪除看版
+    }
 
     await new Promise ((resolve, reject) => {getUserInfo(resolve, reject);});
     await new Promise ((resolve, reject) => {getBoards(resolve, reject);});
