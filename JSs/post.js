@@ -47,9 +47,11 @@ async function initial(res, rej){
             let article= dataDB.data;
             comments= article.comment;
             var contentStr= article.content; // 文章內文
-            contentStr= contentStr.replace("\n", "<br />"); // 文章內文的換行變成html
+            let brRe= /(\n)/g;
+            contentStr= contentStr.replace(brRe, "<br />"); // 文章內文的換行變成html的<br>
             contentStr+= "<br />";
             for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
+                if(h== 0) contentStr+= "<br />";
                 contentStr+= '<span class="badge badge-pill">#'+ article.hashTag[h]+ "</span> ";
             }
 
