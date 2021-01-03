@@ -53,7 +53,7 @@
             $resultCount = count($result);
 
             if ($resultCount <= 0) {
-                $rtn = successCode("Without any article in board now.", array("topArticleID"=>$boardInfo[0]['TopArticleID'],"rule"=>$boardInfo[0]['Rule']));
+                $rtn = successCode("Without any article in board now.", array("articleList"=>array(),"topArticleID"=>$boardInfo[0]['TopArticleID'],"rule"=>$boardInfo[0]['Rule']));
             } 
             else {
                 $articleList = array();
