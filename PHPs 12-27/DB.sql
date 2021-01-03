@@ -9,6 +9,7 @@ CREATE TABLE Users (
 	Nickname varchar(21) ,
 	PRIMARY KEY (UserID)
 ) CHARSET=utf8mb4 ;
+CREATE INDEX Users_index on Users(UserID);
 
 DROP TABLE IF EXISTS Board;
 CREATE TABLE Board (
@@ -21,6 +22,7 @@ CREATE TABLE Board (
 	PRIMARY KEY (BoardName),
 	FOREIGN KEY (UserID) REFERENCES Users (UserID) 
 ) CHARSET=utf8mb4 ;
+CREATE INDEX Board_index on Board(BoardName);
 
 DROP TABLE IF EXISTS Article;
 CREATE TABLE Article (
@@ -36,6 +38,7 @@ PRIMARY KEY (ArticleID),
 FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
 FOREIGN KEY (BlockName) REFERENCES Board (BoardName) ON UPDATE CASCADE  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
+CREATE INDEX ArticleID_index on Article(ArticleID);
 
 DROP TABLE IF EXISTS Report;
 CREATE TABLE Report (
@@ -46,6 +49,7 @@ CREATE TABLE Report (
 	PRIMARY KEY (UserID, ArticleID),
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID) ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
+CREATE INDEX Report_index on Report(UserID, ArticleID);
 
 DROP TABLE IF EXISTS Comments;
 CREATE TABLE Comments (
@@ -60,17 +64,6 @@ FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
 FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
-DROP TABLE IF EXISTS Calendar;
-CREATE TABLE Calendar (
-	UserID varchar(101) NOT NULL,
-	Title varchar(255) NOT NULL,
-    Start varchar(101) NOT NULL,
-    END varchar(101) NOT NULL,
-    Text text,
-    PRIMARY KEY (UserID, Title),
-    FOREIGN KEY (UserID) REFERENCES Users (UserID)
-)	CHARSET=utf8mb4 ;
-
 DROP TABLE IF EXISTS FollowHeart;
 CREATE TABLE FollowHeart (
 	ArticleID bigint(255) NOT NULL,
@@ -79,6 +72,7 @@ CREATE TABLE FollowHeart (
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE,
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
+CREATE INDEX FollowHeart_index on FollowHeart(ArticleID, UserID);
 
 DROP TABLE IF EXISTS FollowKeep;
 CREATE TABLE FollowKeep (
@@ -90,13 +84,14 @@ CREATE TABLE FollowKeep (
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)   ON DELETE CASCADE,
 	FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON UPDATE CASCADE ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
+CREATE INDEX FollowKeep_index on FollowKeep(ArticleID, UserID);
 
-DROP TABLE IF EXISTS Notice;
-CREATE TABLE Notice (
+DROP TABLE IF EXISTS Issue;
+CREATE TABLE Issue (
 	UserID varchar(101) NOT NULL,
 	Times datetime DEFAULT CURRENT_TIMESTAMP,
 	Content varchar(255) NOT NULL,
-	PRIMARY KEY (UserID, Times, Content),
+    Type int(2) NOT NULL,
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
@@ -107,6 +102,7 @@ CREATE TABLE KeepDir (
 	PRIMARY KEY (UserID, DirName),
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
+CREATE INDEX KeepDir_index on KeepDir(UserID, DirName);
 
 DROP TABLE IF EXISTS Calendars;
 CREATE TABLE Calendars (
@@ -120,19 +116,18 @@ CREATE TABLE Calendars (
     PRIMARY KEY (ID),
     FOREIGN KEY (UserID) REFERENCES Users (UserID)
 )	CHARSET=utf8mb4 ;
+CREATE INDEX Calendars_index on Calendars(ID);
 
-
-# 總愛心數
 DROP VIEW IF EXISTS HomeHeart;
-CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`cntHeart`,`Times`, `AuthorID`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowHeart.UserID),`Times`, `AuthorID`
+CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntHeart`,`Times`, `Hashtag`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`, `AuthorID`, COUNT(FollowHeart.UserID),`Times`, `Hashtag`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowHeart` ON Article.ArticleID = FollowHeart.ArticleID
 GROUP BY `ArticleID` ;
 
 # 總收藏數
 DROP VIEW IF EXISTS HomeKeep;
-CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`cntKeep`,`Times`, `AuthorID`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,COUNT(FollowKeep.UserID),`Times`, `AuthorID`
+CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntKeep`,`Times`, `Hashtag`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,`AuthorID`,COUNT(FollowKeep.UserID),`Times`, `Hashtag`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
 GROUP BY `ArticleID` ;
 
