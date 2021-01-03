@@ -28,146 +28,7 @@ body{
 		border: none;
 		margin: 20px;
 	}
-  /*star*/
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
-.star-btn{
-  position: relative;
-  top:20px;
-  left: 60%;
-  width: 50px;
-  height: 25px;
-  transform: translate(-50%,-50%);
-}
-.starContent{
-  padding: 13px 16px;
-  display: flex;
-  border: 2px solid #eae2e1;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 125px;
-  
-  height: 25px;
-}
-.starContent.star-active{
-  border-color: #8d8ed6d5;
-  background:#8d8ed6d5;
-}
-.star{
-  position: absolute;
-  background: url("../Imgs/img.jpg") no-repeat;
-  background-position: left;
-  background-size: 50%;
-  height: 90px;
-  width: 90px;
-  top: 50%;
-  left: 21%;
-  transform: translate(-50%,-50%);
-}
-.starText{
-	position: relative;
-  font-size: 21px;
-  margin-left: 30px;
-  color: grey;
-  font-family: 'Montserrat',sans-serif;
-}
-.starnumb:before{
-  content: 'no';
-  font-size: 21px;
-  margin-left: 7px;
-  font-weight: 600;
-  color: #9C9496;
-  font-family: sans-serif;
-}
-.starnumb.star-active:before{
-  content: 'yes';
-  color: #000;
-}
-.feartText.star-active{
-  color: #000;
-}
-.star.star-active{
-  animation: animate .8s steps(28) 1;
-  background-position: right;
-}
-@keyframes animate {
-  0%{
-    background-position: left;
-  }
-  100%{
-    background-position: right;
-  }
-}
-/*star*/
-/*heart*/
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600&display=swap');
-.heart-btn{
-  position: relative;
-  top:20px;
-  left: 60%;
-  width: 50px;
-  height: 25px;
-  transform: translate(-50%,-50%);
-}
-.heartContent{
-  padding: 13px 16px;
-  display: flex;
-  border: 2px solid #eae2e1;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 125px;
-  
-  height: 25px;
-}
-.heartContent.heart-active{
-  border-color: #f9b9c4;
-  background: #fbd0d8;
-}
-.heart{
-  position: absolute;
-  background: url("../Imgs/img.png") no-repeat;
-  background-position: left;
-  background-size: 2900%;
-  height: 90px;
-  width: 90px;
-  top: 50%;
-  left: 21%;
-  transform: translate(-50%,-50%);
-}
-.heartText{
-	position: relative;
-  font-size: 21px;
-  margin-left: 30px;
-  color: grey;
-  font-family: 'Montserrat',sans-serif;
-}
-.numb:before{
-  content: '12';
-  font-size: 21px;
-  margin-left: 7px;
-  font-weight: 600;
-  color: #9C9496;
-  font-family: sans-serif;
-}
-.numb.heart-active:before{
-  content: '13';
-  color: #000;
-}
-.feartText.heart-active{
-  color: #000;
-}
-.heart.heart-active{
-  animation: animate .8s steps(28) 1;
-  background-position: right;
-}
-@keyframes animate {
-  0%{
-    background-position: left;
-  }
-  100%{
-    background-position: right;
-  }
-}
-/*heart*/
+ 
 .tabContent{
 	color:  #3c537c;
 	background: #9da9be;
@@ -237,8 +98,8 @@ body{
 }
 .postContent h3{
 	color: #fff;
-	border-radius: 5px;
-	padding: 3%;
+	border-radius: 10px;
+	padding: 10%;
 }
 .postContent button{
 	width: 75px;
