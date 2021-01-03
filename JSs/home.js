@@ -363,7 +363,9 @@ async function initial(res, rej)
     if( !thisAccount ) 
     {
         thisAccount = "";
-        
+        $( ".topnav a" ).removeClass( "active" );
+        $( ".topnav " ).closest( "a" ).addClass( "active" );
+        sessionStorage.setItem( "Helen-sort", $( ".topnav " ).closest( "a" ).text() );
 
     }
 
