@@ -25,7 +25,7 @@
         dataDB.data.topArticleID //置頂文章
         dataDB.data.rule // 板規
     否則
-        dataDB.errorCode = "Failed to sort in board."
+        dataDB.errorCode = "Failed to sort in board." / "Failed."
         dataDB.data = ""
     */
     function doSortBoard($input){
@@ -45,17 +45,20 @@
             } else {
 				$sql = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` LEFT JOIN `HomeComment` USING (ArticleID) WHERE `BoardName` = ? ORDER BY `cntComment` DESC";
 			}
-            $arr = array($input['boardName']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            $resultCount = count($result);
-
             $sql="SELECT `Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`=?";
             $arr = array($input['boardName']);
             $result2 = query($conn,$sql,$arr,"SELECT");
             $result2Count = count($result);
+            if ($result2Count <= 0) {
+                $rtn = successCode("Failed.", array());
+            } 
+            $arr = array($input['boardName']);
+            $result = query($conn,$sql,$arr,"SELECT");
+            $resultCount = count($result);
+
 
             if ($resultCount <= 0) {
-                $rtn = successCode("Without any article in board now.", array());
+                $rtn = successCode("Without any article in board now.", array("topArticleID"=>$result2[0]['TopArticleID'],"rule"=>$result2[0]['Rule']));
             } 
             else {
                 $articleList = array();
