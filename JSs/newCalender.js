@@ -22,7 +22,13 @@ $("#allday").click(function () {
         $(this).val("false");
     }
 });
-  
+
+$('#activityStartDate').change(function(){
+    if($("#allday").prop("checked"))
+        console.log('Updated Date');
+});
+
+
 $("#newActivity").on("click", function(){
     console.log("I want publish.");
     var titleStr= $("#activityTitle").val().trim();
