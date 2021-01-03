@@ -29,6 +29,7 @@ $(document).ready(async function(){
   {
       let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
       sessionStorage.setItem( "Helen-articleID", thisArticle.articleID );
+      sessionStorage.setItem( "Helen-sort", "熱門" );
       location.href =  "./post.html";
   });
 
@@ -92,24 +93,6 @@ $(document).ready(async function(){
             }
         });
 
-        // if( $( chosen ).hasClass( "text-danger" ) )
-        // {
-        //     $( chosen ).removeClass( "text-danger" );
-        //     $( chosen ).addClass( "text-light" );
-        //     $( this ).addClass( "btn-danger" );
-            
-        //     thisArticle.like = parseInt(thisArticle.like) + 1;
-        //     $( chosen ).eq(1).html( thisArticle.like );
-        // }
-        // else
-        // {
-        //     $( this ).removeClass( "btn-danger" );
-        //     $( chosen ).addClass( "text-danger" );
-        //     $( chosen ).removeClass( "text-light" );
-
-        //     thisArticle.like = parseInt(thisArticle.like) - 1;
-        //     $( chosen ).eq(1).html( thisArticle.like );
-        // }
     });
 
     $( "button" ).has( ".glyphicon-star" ).click( async function()
