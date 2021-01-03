@@ -10,10 +10,7 @@ async function barInitial() {
         sessionStorage.setItem("Helen-sort", "熱門"); // 初始排序為熱門
     }
     if(location.pathname== "/home.html"){ // 在首頁
-        sessionStorage.removeItem("Helen-boardName") // 刪除看版
-    }
-    if(location.pathname!= "/CollectionCatalog.html"){ // 不在收藏頁面
-        sessionStorage.removeItem("Helen-act") // 刪除看版
+        sessionStorage.removeItem("Helen-boardName"); // 刪除看版
     }
 
     await new Promise ((resolve, reject) => {getUserInfo(resolve, reject);});
@@ -76,46 +73,46 @@ async function barInitial() {
         // $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span>"+
         //                     " 未登入"+
         //                     "</span></li>")
-        $("#userDD").append("<li class= \"glyphicon glyphicon-calendar\">"+
-                            "<a href=\"../HTMLs/calendar.html\"> 行事曆</a></li>")   
-        $("#userDD").append("<li class= \"glyphicon glyphicon-question-sign\">"+
-                            "<a href=\"../HTMLs/CommonProblem.html\"> 常見問題</a></li>")                                     
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/calendar.html\"><span class= \"glyphicon glyphicon-calendar\">  行事曆</span></a></li>")   
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/CommonProblem.html\"><span class= \"glyphicon glyphicon-question-sign\">  常見問題</span></a></li>")                                     
     }else{ // 一般使用者(已登入)
         
-        $("#userDD").append("<li class= \"glyphicon glyphicon-user\"><span> "+
+        $("#userDD").append("<li><span class= \"glyphicon glyphicon-user\"> "+
                             sessionStorage.getItem("Helen-nickname")+
                             "</span></li>")
         $("#userDD").append("<li class= \"divider\"></li>")
-        $("#userDD").append("<li class= \"glyphicon glyphicon-edit\">"+
-                            "<a href=\"../HTMLs/PersonalProfile.html\"> 個人資料</a></li>")
-        $("#userDD").append("<li class= \"glyphicon glyphicon-pencil\">"+
-                            "<a href=\"../HTMLs/publishArticle.html\"> 發佈新文章</a></li>")
-        $("#userDD").append("<li class= \"glyphicon glyphicon-star-empty\">"+
-                            "<a href=\"../HTMLs/CollectionCatalog.html\"> 我的收藏</a></li>")
-        $("#userDD").append("<li class= \"glyphicon glyphicon-time\">"+
-                            "<a href=\"../HTMLs/PostingRecord.html\"> 發文紀錄</a></li>")
-        $("#userDD").append("<li class= \"glyphicon glyphicon-bell\">"+
-                            "<a href=\"../HTMLs/notice.html\"> 我的通知</a></li>")
-        $("#userDD").append("<li class= \"glyphicon glyphicon-calendar\">"+
-                            "<a href=\"../HTMLs/calendar.html\"> 行事曆</a></li>")
-        $("#userDD").append("<li class= \"glyphicon glyphicon-question-sign\">"+
-                            "<a href=\"../HTMLs/CommonProblem.html\"> 常見問題</a></li>")   
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/PersonalProfile.html\"><span class= \"glyphicon glyphicon-edit\">  個人資料</span></a></li>")
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/publishArticle.html\" onclick= \"{sessionStorage.removeItem(\"Helen-act\");}\"><span class= \"glyphicon glyphicon-pencil\"> 發佈新文章</span></a></li>")
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/CollectionCatalog.html\"><span class= \"glyphicon glyphicon-star-empty\">  我的收藏</span></a></li>")
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/PostingRecord.html\"><span class= \"glyphicon glyphicon-time\">  發文紀錄</span></a></li>")
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/notice.html\"><span class= \"glyphicon glyphicon-bell\">  我的通知</span></a></li>")
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/calendar.html\"><span class= \"glyphicon glyphicon-calendar\">  行事曆</span></a></li>")
+        $("#userDD").append("<li>"+
+                            "<a href=\"../HTMLs/CommonProblem.html\"><span class= \"glyphicon glyphicon-question-sign\">  常見問題</span></a></li>")   
 		/*
         if(userPermission>= 2){ // 版主
-            $("#userDD").append("<li class= \"glyphicon glyphicon-alert\">"+
-                                "<a href=\"../HTMLs/report.html\"> 檢舉區</a></li>")
+            $("#userDD").append("<li>"+
+                                "<a href=\"../HTMLs/report.html\"><span class= \"glyphicon glyphicon-alert\">  檢舉區</span></a></li>")
         }
 		*/
 		
         if(userPermission>= 3){
-            $("#userDD").append("<li class= \"glyphicon glyphicon-th-list\">"+
-                                "<a href=\"../HTMLs/manageBoard.html\"> 管理看版</a></li>")
-            $("#userDD").append("<li class= \"glyphicon glyphicon-king\">"+
-                                "<a href=\"../HTMLs/moderator.html\"> 管理版主</a></li>")
-            $("#userDD").append("<li class= \"glyphicon glyphicon-bullhorn\">"+
-                                "<a href=\"../HTMLs/sendAlert.html\"> 發送通知</a></li>")
-            $("#userDD").append("<li class= \"glyphicon glyphicon-ok\">"+
-                                "<a href=\"../HTMLs/CheckCalendar.html\"> 審核行事曆</a></li>")
+            $("#userDD").append("<li>"+
+                                "<a href=\"../HTMLs/manageBoard.html\"><span class= \"glyphicon glyphicon-th-list\">  管理看版</span></a></li>")
+            $("#userDD").append("<li>"+
+                                "<a href=\"../HTMLs/moderator.html\"><span class= \"glyphicon glyphicon-king\">  管理版主</span></a></li>")
+            $("#userDD").append("<li>"+
+                                "<a href=\"../HTMLs/sendAlert.html\"><span class= \"glyphicon glyphicon-bullhorn\">  發送通知</span></a></li>")
+            $("#userDD").append("<li>"+
+                                "<a href=\"../HTMLs/CheckCalendar.html\"><span class= \"glyphicon glyphicon-ok\">  審核行事曆</span></a></li>")
 
         }
     }
