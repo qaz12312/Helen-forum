@@ -155,7 +155,9 @@ $("#reportBtn").click(function(){
                 else{
                     swal({
                         title: "已成功檢舉此文章",
-                        type: "success"
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 1000,
                     })
                     .then((result)=> {}, (dismiss)=> {});
                     hasReport= true;
@@ -201,6 +203,7 @@ $("#heartBtn").click( function(){
     cmd["account"] = sessionStorage.getItem("Helen-account");
     cmd["articleID"] = sessionStorage.getItem("Helen-articleID");
     let heartText= $(this).find("span"); // Text: 愛心 & 數字
+    let heartBtn= $(this);
 
     $.post( "../index.php", cmd, function(dataDB){
         console.log(dataDB);
@@ -218,15 +221,15 @@ $("#heartBtn").click( function(){
             if( $(heartText).hasClass("text-danger")){ // 沒按過愛心
                 $(heartText).removeClass("text-danger");
                 $(heartText).addClass("text-light");
-                $(this).removeClass("btn-secondary");
-                $(this).addClass("btn-danger");
+                $(heartBtn).removeClass("btn-secondary");
+                $(heartBtn).addClass("btn-danger");
                 
                 var heartCount= parseInt($(heartText).eq(1).text())+ 1; // 愛心數
                 $(heartText).eq(1).html(" "+ heartCount);
             }
             else{ // 按過愛心
-                $(this).removeClass("btn-danger");
-                $(this).addClass("btn-secondary");
+                $(heartBtn).removeClass("btn-danger");
+                $(heartBtn).addClass("btn-secondary");
                 $(heartText).addClass("text-danger" );
                 $(heartText).removeClass("text-light" );
 
@@ -247,6 +250,7 @@ $("#keepBtn").click(async function(){
         return;
     }
     let keepText = $(this).find("span");
+    let keepBtn = $(this);
     await new Promise ((resolve, reject) => {getKeepMenu(resolve, reject);});
 	
     if(keepMenu.length== 0){
@@ -294,8 +298,8 @@ $("#keepBtn").click(async function(){
                     }).then(( result ) => {}, ( dismiss ) => {
                         $(keepText).removeClass("text-warning");
                         $(keepText).addClass("text-light");
-                        $(this).addClass("btn-warning");
-                        $(this).removeClass("btn-secondary");
+                        $(keepBtn).addClass("btn-warning");
+                        $(keepBtn).removeClass("btn-secondary");
 
                         var keepCount= parseInt($(keepText).eq(1).text())+ 1; // 收藏數
                         $(keepText).eq(1).html(" "+ keepCount);
@@ -323,8 +327,8 @@ $("#keepBtn").click(async function(){
                 }).then((result)=> {}, (dismiss)=> {});
             }
             else{
-                $(this).removeClass("btn-warning");
-                $(this).addClass("btn-secondary");
+                $(keepBtn).removeClass("btn-warning");
+                $(keepBtn).addClass("btn-secondary");
                 $(keepText).addClass("text-warning");
                 $(keepText).removeClass("text-light");
 
