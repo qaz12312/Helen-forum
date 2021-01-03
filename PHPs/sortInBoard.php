@@ -30,11 +30,14 @@
     */
     function doSortBoard($input){
         global $conn;
-        // $token =$input['token'];
-        // if(!isset($_SESSION[$token])){
-		// 	errorCode("token doesn't exist.");
-        // }else{
-		// 	$userInfo = $_SESSION[$token];
+        $sql="SELECT `Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`=?";
+        $arr = array($input['boardName']);
+        $boardInfo = query($conn,$sql,$arr,"SELECT");
+        $resultCount = count($boardInfo);
+        if ($resultCount <= 0) {
+            $rtn = successCode("Failed.", array());
+        } 
+
         if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect" || $input['sort'] == "comment") {
             if ($input['sort'] == "time") {
                 $sql="SELECT `Title`,`ArticleID` ,`cntHeart` ,`cntKeep`,`Times` FROM `HomeHeart` NATURAL JOIN `HomeKeep` WHERE `BoardName` = ? ORDER BY `Times` DESC";
@@ -45,20 +48,12 @@
             } else {
 				$sql = "SELECT `Title`,`BoardName`,`ArticleID`, `cntHeart` ,`cntKeep` FROM `HomeHeart` NATURAL JOIN `HomeKeep` LEFT JOIN `HomeComment` USING (ArticleID) WHERE `BoardName` = ? ORDER BY `cntComment` DESC";
 			}
-            $sql="SELECT `Rule`,`TopArticleID` FROM `Board` WHERE `BoardName`=?";
-            $arr = array($input['boardName']);
-            $result2 = query($conn,$sql,$arr,"SELECT");
-            $result2Count = count($result);
-            if ($result2Count <= 0) {
-                $rtn = successCode("Failed.", array());
-            } 
             $arr = array($input['boardName']);
             $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
 
-
             if ($resultCount <= 0) {
-                $rtn = successCode("Without any article in board now.", array("topArticleID"=>$result2[0]['TopArticleID'],"rule"=>$result2[0]['Rule']));
+                $rtn = successCode("Without any article in board now.", array("topArticleID"=>$boardInfo[0]['TopArticleID'],"rule"=>$boardInfo[0]['Rule']));
             } 
             else {
                 $articleList = array();
@@ -90,7 +85,7 @@
                     }
                     $articleList[$i] = array("title" => $row['Title'], "articleID" => $articleID , "like" => $row['cntHeart'], "keep" => $row['cntKeep'], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 }
-                $arr = array("articleList"=>$articleList,"topArticleID"=>$result2[0]['TopArticleID'],"rule"=>$result2[0]['Rule']);
+                $arr = array("articleList"=>$articleList,"topArticleID"=>$boardInfo[0]['TopArticleID'],"rule"=>$boardInfo[0]['Rule']);
                 $rtn = successCode("Successfully sort in board.",$arr);
             }
         } else {
