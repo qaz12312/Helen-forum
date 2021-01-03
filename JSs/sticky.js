@@ -548,8 +548,8 @@ function forNormal( resolve, reject )
                                     "<div class='card'>" +
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'></span>" + 
-                                            "<span class='col-md-6'>" +
-                                                "<span class='articleTitle' style='cursor: pointer;'>" + articles[i].title + "</span>" +
+                                            "<span class='col-md-6' style='cursor: pointer;'>" +
+                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
                                             "</span>" +
                                             "<span class='col-md-4'>";
 
@@ -679,8 +679,8 @@ function forSearching( resolve, reject )
                                     "<div class='card'>" +
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'></span>" + 
-                                            "<span class='col-md-6'>" +
-                                                "<span class='articleTitle' style='cursor: pointer;'>" + articles[i].title + "</span>" +
+                                            "<span class='col-md-6' style='cursor: pointer;'>" +
+                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
                                             "</span>" +
                                             "<span class='col-md-4'>";
 
