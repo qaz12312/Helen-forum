@@ -58,11 +58,16 @@
             text-align: left;
           }
           .subject{
-            font-size:28px;
+            font-size:26px;
           }
          .ans{
             font-size:18px;
          }
+         .glyphicon-question-sign{
+            color: #7f4cb1;
+            font-size:20px;
+         }
+
     </style>
 </head>
 <body>
@@ -121,84 +126,65 @@
 <div class= "tabContent">
     <h2>Q&A</h2>
     <div class="contentArea">
-            <div class= "content">
-                <div class= "postContent conrow">
-                    <a href="#publishArticle" data-toggle="collapse"  class="subject" >
-                        發布文章問題
-                    </a>
-                    <hr>
-                    <div class="collapse" id="publishArticle">
-                        <a href="#toTag" data-toggle="collapse">
-                            Q : 發布文章如何標記?
-                        </a>
-                        <hr>
-                        <div class="collapse ans" id="toTag">
-                            <p>A : 輸入完之後要按下Enter</p>  
-                        </div> 
-                    </div>
+        <div class= "conrow content">
+            <a href="#publishArticle" data-toggle="collapse"  class="subject" >文章相關問題</a>
+            <hr>
+            <div class="collapse " id="publishArticle">
+                <a href="#toTag" data-toggle="collapse"class="glyphicon glyphicon-question-sign">發布文章如何標記?</a>
+                <hr>
+                <div class="collapse ans" id="toTag">
+                    <p>輸入完之後要按下Enter</p>
+                </div> 
+            </div>
 
-                    <a href="#home" data-toggle="collapse"  class="subject" >
-                    首頁
-                    </a>
-
-                    <hr>
-                    <div class="collapse" id="home">
-                        <a href="#toHome" data-toggle="collapse">
-                            Q:如何回到首頁?
-                        </a>
-                        <hr>
-                        <div class="collapse ans" id="toHome">
-                            <p>A:點擊logo-Helen，就可回到首頁</p>  
-                        </div>
-                    </div>
-
-                        <a href="#moderator" data-toggle="collapse"  class="subject" >
-                            版主問題
-                        </a>
-
-                    <hr>
-                      <div class="collapse" id="moderator">
-                        <a href="#beModerator" data-toggle="collapse">
-                            Q:如何申請成為版主?
-                        </a>
-                        <hr>
-                        <div class="collapse ans" id="beModerator">
-                            <p>A:點擊列表，點選我要當版主，即可向管理員申請</p>  
-                        </div>
-                    </div>
-
-                        <a href="#talk" data-toggle="collapse"  class="subject">
-                            聯絡Helen
-                        </a>
-
-                    <hr>
-                    <div class="collapse" id="talk">
-                        <a href="#email" data-toggle="collapse">
-                            Q: 如何聯絡Helen?
-                        </a>
-                        <hr>
-                        <div class="collapse ans" id="email">
-                            <p> A: Helen聯絡信箱 : softwareengineeringhelen@gmail.com</p>
-                        </div>
-                    </div>
-
-                        <a href="#internet" data-toggle="collapse" class="subject" >
-                            速度問題
-                        </a>
-
-                    <hr>
-                      <div class="collapse" id="internet">
-                        <a href="#people" data-toggle="collapse">
-                            Q: 網路連線正常，系統為什麼會跑那麼慢?
-                        </a>
-                        <hr>
-                        <div class="collapse ans" id="people">
-                            <p> A: 因為系統人數過多，故系統仔路較忙碌，請見諒💦</p>
-                        </div>
-
-                    </div>   
+            <a href="#home" data-toggle="collapse"  class="subject" >首頁相關問題</a>
+            <hr>
+            <div class="collapse " id="home">
+                <a href="#toHome" data-toggle="collapse" class="glyphicon glyphicon-question-sign">如何回到首頁?</a>
+                <hr>
+                <div class="collapse ans" id="toHome">
+                    <p>點擊logo-Helen，就可回到首頁</p>  
                 </div>
-            </div> 
+            </div>
+
+            <a href="#moderator" data-toggle="collapse"  class="subject" >版主相關問題</a>
+            <hr>
+            <div class="collapse " id="moderator">
+                <a href="#beModerator" data-toggle="collapse"class="glyphicon glyphicon-question-sign">如何申請成為版主?</a>
+                <hr>
+                <div class="collapse ans" id="beModerator">
+                    <p>點擊列表，點選我要當版主，即可向管理員申請</p>  
+                </div>
+            </div>
+
+            <a href="#internet" data-toggle="collapse" class="subject" >速度相關問題</a>
+            <hr>
+            <div class="collapse " id="internet">
+                <a href="#people" data-toggle="collapse"class="glyphicon glyphicon-question-sign">網路連線正常，系統為什麼會跑那麼慢?</a>
+                <hr>
+                <div class="collapse ans" id="people">
+                    <p>因為系統人數過多，故系統仔路較忙碌，請見諒💦</p>
+                </div>
+            </div>
+
+            <a href="#talk" data-toggle="collapse"  class="subject">其他問題</a>
+            <hr>
+            <div class="collapse " id="talk">
+                <a href="#email" data-toggle="collapse"class="glyphicon glyphicon-question-sign">如何聯絡Helen?</a>
+                <hr>
+                <div class="collapse ans" id="email">
+                    <p>Helen聯絡信箱 : softwareengineeringhelen@gmail.com</p>
+                </div>
+
+                <a href="#findEmail" data-toggle="collapse"class="glyphicon glyphicon-question-sign">找不到郵件</a>
+                <hr>
+                <div class="collapse ans" id="findEmail">
+                    <p>到海大信箱，點擊垃圾郵件，你可以找到來自Helen發送的郵件</p>
+                </div>
+               
+            </div>
+
+        </div> 
     </div>
 </div>
 </script>
