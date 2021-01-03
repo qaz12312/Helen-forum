@@ -187,6 +187,8 @@ $( document ).ready( async function()
         location.href =  "../HTMLs/post.html";
     });
 
+    $( ".articleTitle" ).parent().css( 'cursor', 'pointer' );
+
     $( "button" ).has( ".glyphicon-heart" ).click( async function()
     {
         if( !thisAccount )
