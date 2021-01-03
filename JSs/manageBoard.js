@@ -10,7 +10,11 @@ $( document ).ready( async function()
     {
         let content = $(this).text().trim();
 
-        if( content == "刪除" )
+        if( content == "審核申請" )
+        {
+            location.href = "../HTMLs/applyForBoard.html";
+        }
+        else if( content == "刪除" )
         {
             let chosen = $( this ).closest( "tr" );
             let deleteBoardName = chosen.find( "td" ).first().text();

@@ -7,6 +7,11 @@ $( document ).ready( async function()
 {
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
+    
+    $( ".tabContent h2 button" ).click( function()
+    {
+        location.href = "../HTMLs/applyForModerator.html";
+    }); 
 
     (function () {
         let previous;
