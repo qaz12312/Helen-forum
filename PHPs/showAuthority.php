@@ -32,13 +32,13 @@
             $result = query($conn,$sql,array($user),"SELECT");
             $resultCount = count($result);
             if($resultCount <= 0){
-                $rtn = successCode("",array("permission"=>0));
+                $rtn = successCode("",array("permission"=>0,"boardName"=>array()));
             }else if($result[0][0]){
                 $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`='admin'";
                 $result = query($conn,$sql,array(),"SELECT");
                 $rtn = successCode("",array("permission"=>3,"boardName"=>$result));
             }else{
-                $rtn = successCode("",array("permission"=>1));
+                $rtn = successCode("",array("permission"=>1,"boardName"=>array()));
             }
         }
         else{
