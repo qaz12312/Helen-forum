@@ -132,7 +132,7 @@ $( document ).ready(function()
                                             swal.queue( yourQueue ).then( ( result ) => 
                                             {
                                                 
-                                                if( result[0]==result[1] )
+                                                if( result[0]==result[1]&& result[0].length>=3 )
                                                 {
                                                     let cmd = {};
                                                     cmd["act"] = "editPersonalInfo";
@@ -170,6 +170,7 @@ $( document ).ready(function()
                                                     
                                                     
                                                     });
+                                                    location.reload();
                                                 }
                                                 else{
                                                     swal({
@@ -181,6 +182,7 @@ $( document ).ready(function()
                                                         confirmButtonText: 'okay!',
                                                         confirmButtonColor: '#eda2b6',
                                                     }).then(( result ) => {location.reload();}, ( dismiss ) => {location.reload();});
+                                                    location.reload();
                                                 }
                                                 
                                                 swal.setDefaults( { progressSteps: false } );
