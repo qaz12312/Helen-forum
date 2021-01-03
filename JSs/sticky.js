@@ -752,7 +752,7 @@ function checkPermission( resolve, reject )
     if( !thisAccount && topArticleID !== null && topArticleID !== undefined )
     {
         $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
-            "<button type='button' class='btn pushpinBtn top'>" +
+            "<button type='button' class='btn pushpinBtn top' style='cursor: default;'>" +
                 "<span class='glyphicon glyphicon-pushpin'></span>" +
             "</button>"
         );
@@ -801,7 +801,7 @@ function checkPermission( resolve, reject )
             else if( topArticleID !== null && topArticleID !== undefined )
             {
                 $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
-                    "<button type='button' class='btn pushpinBtn top'>" +
+                    "<button type='button' class='btn pushpinBtn top' style='cursor: default;'>" +
                         "<span class='glyphicon glyphicon-pushpin'></span>" +
                     "</button>"
                 );
@@ -810,7 +810,7 @@ function checkPermission( resolve, reject )
         else if( topArticleID !== null && topArticleID !== undefined )
         {
             $( ".tabContent tbody tr" ).first().find( "td span" ).first().append( 
-                "<button type='button' class='btn pushpinBtn top'>" +
+                "<button type='button' class='btn pushpinBtn top' style='cursor: default;'>" +
                     "<span class='glyphicon glyphicon-pushpin'></span>" +
                 "</button>"
             );
