@@ -197,9 +197,15 @@ async function initial(res, rej){
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
+                for(var i= 0; i< boards.length; i++){
+                    if((borads[i]+ "版")== article.boardName){
+                        console.log(i);
+                        $("#chooseBoard").selectIndex= i;
+                    }
+                }
                 // $("#chooseBoard").find("option[text= '" + article.boardName+ "版']").attr("selected", true);
-                $("#chooseBoard").find("option[text= '疫情版']").attr("selected", true);
-                console.log( $("#chooseBoard").find("option[text= '疫情版']") )
+                // $("#chooseBoard").find("option[text= '疫情版']").attr("selected", true);
+                // console.log( $("#chooseBoard").find("option[text= '疫情版']") )
                 //依 text 為"看版名(美食版)"的項選中
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
