@@ -4,6 +4,7 @@ $(document).ready(function () {
     document.onkeydown=function(event){
         var e = event || window.event || arguments.callee.caller.arguments[0];
         if(e && e.keyCode==13){ 
+           
             $('#Log-inBtn').click();
         }
     
@@ -19,7 +20,7 @@ $(document).ready(function () {
         let act = $("#account").val(),
             pw = $("#password").val();
         let format = Restrict();
-
+        
         if ((!act)) {
             swal({
                 title: 'Wrong',
@@ -30,9 +31,10 @@ $(document).ready(function () {
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#ecba73'
             })
-            $("#account").focus().val("");
+            $("#account").focus();
         }
-        else if (!pw) {
+        else if ((!pw)) {
+            
             swal({
                 title: 'Wrong',
                 type: 'error',
@@ -40,8 +42,10 @@ $(document).ready(function () {
                 animation: false,
                 customClass: 'animated tada',
                 confirmButtonText: 'okay!',
-                confirmButtonColor: '#b9cd74'
-            }).then(( result ) => {}, ( dismiss ) => {});
+                confirmButtonColor: '#b9cd74',
+                timer:5000
+            })
+            $("#password").focus();
         }
         else if (format) {
             let cmd = {};
@@ -146,7 +150,9 @@ function Restrict() {
             html: '密碼字數只能在3~20內!!!!',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#7a96a2'
-        }).then(( result ) => {}, ( dismiss ) => {});
+        })
+            $("#password").focus();
+       
         return false;
     }
     /*else if (okPassword) {
