@@ -7,13 +7,15 @@ var searchType = "";
 
 async function barInitial() {
     if (sessionStorage.getItem("Helen-sort") == null) {
-        sessionStorage.setItem("Helen-sort", "熱門");
+        sessionStorage.setItem("Helen-sort", "熱門"); // 初始排序為熱門
+    }
+    if(location.pathname== "/home.html"){ // 在首頁
+        sessionStorage.removeItem("Helen-boardName") // 刪除看版
     }
 
     await new Promise ((resolve, reject) => {getUserInfo(resolve, reject);});
     await new Promise ((resolve, reject) => {getBoards(resolve, reject);});
     await new Promise ((resolve, reject) => {getInvalidBoards(resolve, reject);});
-    
     
     // 最左邊的 ham menu 初始化
     $("#menu").empty();
@@ -190,16 +192,16 @@ function setSearchData() {
         }
     }
     if(hashtags.length== 0&& contents.length== 0) return; // 輸入空格
-    
+
     let searchData = {};
     searchData["content"] = contents;
     searchData["hashtag"] = hashtags;
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if (sessionStorage.getItem("Helen-boardName") == null) {
-        // location.href = "../HTMLs/home.html";
+        location.href = "../HTMLs/home.html";
     }else{
-        // location.href = "../HTMLs/sticky.html";
+        location.href = "../HTMLs/sticky.html";
     }
 }
 
