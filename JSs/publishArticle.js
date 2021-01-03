@@ -169,7 +169,7 @@ async function initial(res, rej){
 
     $("#chooseBoard").empty();
     for(var i= 0; i< boards.length; i++){
-        $("#chooseBoard").append(new Option(boards[i]+ "版"), i, false);
+        $("#chooseBoard").append(new Option(boards[i]+ "版", i));
     }
 
     //編輯文章
