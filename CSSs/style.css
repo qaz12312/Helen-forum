@@ -235,11 +235,11 @@ body{
 .postContent span{
 	letter-spacing: 0px;
 }
-.postContent h5{
+/* .postContent h5{
 	color: #fff;
 	border-radius: 10px;
 	padding: 10%;
-}
+} */
 .postContent button{
 	width: 75px;
 	margin-right: 3%;
