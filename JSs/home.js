@@ -606,6 +606,7 @@ function checkPermission(res, rej)
     if( !thisAccount )
     {
         $( ".addPost" ).remove();
+        
     }
     else{
         
