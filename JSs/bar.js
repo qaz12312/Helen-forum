@@ -24,15 +24,11 @@ async function barInitial() {
 	//console.log(boards.length);
     for (var i = 0; i < boards.length; i++) {
         var oneBoard = boards[i];
-		if (userBoard.find(element => element == oneBoard)) {
-			$("#menu").append("<a href=\"../HTMLs/sticky.html\"><li>" + oneBoard +
-                                "版 <a href=\"../HTMLs/report.html\" class= \"glyphicon glyphicon-alert\"></li></a>");
-		}
-		else {
+		
 			$("#menu").append("<a href=\"../HTMLs/sticky.html\"><li>" +
 				oneBoard +
 				"版</li></a>");
-		}
+
     }
 
     if (userPermission >= 3) // admin 可新增看版
