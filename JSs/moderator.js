@@ -360,7 +360,7 @@ function moderatorInitial( resolve, reject )
                                     "<td style='text-align: center;'>" +
                                         "<span class='glyphicon glyphicon-plus'></span>" +
                                     "</td>" +
-                                    "<td'>" +
+                                    "<td>" +
                                         "<div class='input-group input-group-lg' style='margin: 0;'>" +
                                             "<input id='users' list='userList' value='' class='textInput'>" +
                                             "<datalist id='userList' class='textInput'>" +
