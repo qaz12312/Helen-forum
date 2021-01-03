@@ -92,6 +92,7 @@ CREATE TABLE Issue (
 	Times datetime DEFAULT CURRENT_TIMESTAMP,
 	Content varchar(255) NOT NULL,
     Type int(2) NOT NULL,
+    PRIMARY KEY (UserID, Times, Content, Type),
 	FOREIGN KEY (UserID) REFERENCES Users (UserID)
 ) CHARSET=utf8mb4 ;
 
