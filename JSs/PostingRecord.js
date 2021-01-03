@@ -48,18 +48,18 @@ var thisAccount = sessionStorage.getItem( "Helen-account" );
                                     showConfirmButton: false,
                                     timer: 1000,
                                     
-                                }).then((result) => {}, ( dismiss ) => {});
+                                }).then((result) => {}, ( dismiss ) => {location.reload();});
         
-                                location.reload();
-                                delete articles[ thisArticle ];
+                                
+                                // delete articles[ thisArticle ];
         
-                                if( $.isEmptyObject(articles) )
-                                {
-                                    let emptyMessage = "<tr>" + 
-                                                            "<td colspan='4'>發文紀錄列表為空</td>" +
-                                                        "</tr>";
-                                    $( ".tabContent tbody" ).append( emptyMessage );
-                                }
+                                // if( $.isEmptyObject(articles) )
+                                // {
+                                //     let emptyMessage = "<tr>" + 
+                                //                             "<td colspan='4'>發文紀錄列表為空</td>" +
+                                //                         "</tr>";
+                                //     $( ".tabContent tbody" ).append( emptyMessage );
+                                // }
                             }
                         });
                     }

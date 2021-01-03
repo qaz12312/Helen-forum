@@ -91,7 +91,6 @@ $( document ).ready(function()
                                 confirmButtonText: 'okay!',
                                 confirmButtonColor: '#eda2b6'
                             }).then(( result ) => {}, ( dismiss ) => {});
-                            location.reload();//重整
                         }
                         else { 
                             swal({
@@ -153,8 +152,7 @@ $( document ).ready(function()
                                                                 customClass: 'animated rotateOutUpLeft',
                                                                 confirmButtonText: 'okay!',
                                                                 confirmButtonColor: '#eda2b6'
-                                                            }).then(( result ) => {}, ( dismiss ) => {});
-                                                            location.reload();//重整
+                                                            }).then(( result ) => {location.reload();}, ( dismiss ) => {location.reload();});
                                                         }
                                                         else{
                                                             swal({
@@ -166,9 +164,7 @@ $( document ).ready(function()
                                                                 confirmButtonText: 'okay!',
                                                                 confirmButtonColor: '#eda2b6',
                                                                 timer: 2000
-                                                            }).then(( result ) => {}, ( dismiss ) => {});
-                                                           
-                                                            location.reload();//重整
+                                                            }).then(( result ) => {}, ( dismiss ) => {location.reload();});
                                                         }
 
                                                     
@@ -184,8 +180,7 @@ $( document ).ready(function()
                                                         customClass: 'animated rotateOutUpLeft',
                                                         confirmButtonText: 'okay!',
                                                         confirmButtonColor: '#eda2b6',
-                                                    }).then(( result ) => {}, ( dismiss ) => {});
-                                                    location.reload();//重整
+                                                    }).then(( result ) => {location.reload();}, ( dismiss ) => {location.reload();});
                                                 }
                                                 
                                                 swal.setDefaults( { progressSteps: false } );
