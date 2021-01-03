@@ -187,8 +187,6 @@ $( document ).ready( async function()
         location.href =  "../HTMLs/post.html";
     });
 
-    $( ".articleTitle" ).parent().css( 'cursor', 'pointer' );
-
     $( "button" ).has( ".glyphicon-heart" ).click( async function()
     {
         if( !thisAccount )
@@ -551,7 +549,7 @@ function forNormal( resolve, reject )
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'></span>" + 
                                             "<span class='col-md-6'>" +
-                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
+                                                "<span class='articleTitle' style='cursor: pointer;'>" + articles[i].title + "</span>" +
                                             "</span>" +
                                             "<span class='col-md-4'>";
 
