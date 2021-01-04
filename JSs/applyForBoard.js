@@ -44,7 +44,6 @@ $( document ).ready( async function()
                         cmd[ "act" ] = "newBoard";
                         cmd[ "boardName" ] = thisBoardName.split("版")[0];
                         cmd[ "rule" ] = result;
-                        console.log(cmd);
     
                         $.post( "../index.php", cmd, function( dataDB )
                         {
@@ -78,7 +77,6 @@ $( document ).ready( async function()
                             }
                         });
                         
-                        let cmd = {};
                         cmd[ "act" ] = "deleteApplyBoard";
                         cmd[ "account" ] = thisApplicant;
                         cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
