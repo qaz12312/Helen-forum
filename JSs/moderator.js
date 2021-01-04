@@ -397,8 +397,8 @@ function moderatorInitial( resolve, reject )
                                 "<td>";
                 }
         
-                selectBlock = "<div class='input-group'>" +
-                                    "<select class='form-control' style='background-color: brown; color: white;'>" +
+                selectBlock = "<div class='input-group'> style='display: inline-block;" +
+                                    "<select class='form-control' style='background-color: brown; color: white;display: inline;'>" +
                                         "<option value='" + dataDB.data[i].boardName + "' selected>" + dataDB.data[i].boardName + "版</option>" +
                                         validOptions + 
                                     "</select>" +
