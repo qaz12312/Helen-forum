@@ -1,4 +1,4 @@
-var fileStr; // add picture
+var fileStr,fileIn; // add picture
 var boards= [];
 var hashtags= [];
 
@@ -28,9 +28,8 @@ fileInput.addEventListener( "change", function( event ) {
     var fileStr= this.value;
     fileStr= fileStr.substring(12, fileStr.length);
     the_return.innerHTML = fileStr;
-    const myFile = document.querySelector('#file');
-// myFile.addEventListener('change', function(e) {
-//   const file = e.target.files[0];
+    const myFile = document.querySelector("#my-file");
+    const file = event.target.files[0];
 //   const reader = new FileReader();
 //   // 轉換成 DataURL
 //   reader.readAsDataURL(file);
@@ -40,13 +39,12 @@ fileInput.addEventListener( "change", function( event ) {
 //     img.src = reader.result;
 //     console.log(img.src);
 //   }
-// });
 });
 
 $(document).ready(async function(){
     barInitial();
     await new Promise((resolve, reject) => initial(resolve, reject));
-})
+});
 
 $("#publishBtn").on("click", function(){
     console.log("I want publish.");
@@ -54,7 +52,7 @@ $("#publishBtn").on("click", function(){
     var contentStr= $("#articleContent").val().trim();
 
     if(titleStr.length< 1){
-        console.log("(Title) Too short.")
+        console.log("(Title) Too short.");
         swal({
             title: "文章標題太短嘍！",
             type: "warning",
@@ -62,7 +60,7 @@ $("#publishBtn").on("click", function(){
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }else if(titleStr.length> 127){
-        console.log("(Title) Too long.")
+        console.log("(Title) Too long.");
         swal({
             title: "文章標題太長嘍！",
             type: "warning",
@@ -71,7 +69,7 @@ $("#publishBtn").on("click", function(){
         return;
     }
     if(contentStr.length< 10){
-        console.log("(Content) Too shor.")
+        console.log("(Content) Too shor.");
         swal({
             title: "文章內容太少嘍！",
             type: "warning",
@@ -79,7 +77,7 @@ $("#publishBtn").on("click", function(){
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }else if(contentStr.length> 20000){
-        console.log("(Content) Too long.")
+        console.log("(Content) Too long.");
         swal({
             title: "文章內容太多嘍！",
             type: "warning",
@@ -123,7 +121,7 @@ $("#publishBtn").on("click", function(){
             location.href =  "../HTMLs/home.html";
         }
     })
-})
+});
 
 $("#cancelPublish").on("click", function(){
     if(sessionStorage.getItem("Helen-act")== "editArticle"){
@@ -131,7 +129,7 @@ $("#cancelPublish").on("click", function(){
     }
     else location.href =  "../HTMLs/home.html";
     sessionStorage.removeItem('Helen-act');
-})
+});
 
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
@@ -153,7 +151,7 @@ $("#inputHashtag").keypress(function (event){
         }
         console.log(hashtags);
     }
-})
+});
 
 $("#hashtags").on( "click", "#clearHashtags", function(){
     hashtags= [];
