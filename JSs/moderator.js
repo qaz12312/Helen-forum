@@ -363,13 +363,11 @@ function moderatorInitial( resolve, reject )
                                         "<span class='glyphicon glyphicon-plus'></span>" +
                                     "</td>" +
                                     "<td>" +
-                                        // "<div class='input-group input-group-lg' style='margin: 0 !important;'>" +
-                                            "<input id='users' list='userList' value='' class='textInput' placeholder='" + noUser + "'>" +
-                                            "<datalist id='userList' class='textInput'>" +
-                                                userOptions +
-                                            "</datalist>" +
-                                            "<br/>@mail.ntou.edu.tw" +
-                                        // "</div>" +
+                                        "<input id='users' list='userList' value='' class='textInput' placeholder='" + noUser + "'>" +
+                                        "<datalist id='userList' class='textInput'>" +
+                                            userOptions +
+                                        "</datalist>" +
+                                        "<br/>@mail.ntou.edu.tw" +
                                     "</td>" +
                                     "<td>" +
                                         "<div class='input-group input-group-lg mt-3'>" +
@@ -404,6 +402,8 @@ function moderatorInitial( resolve, reject )
                                         "<option value='" + dataDB.data[i].boardName + "' selected>" + dataDB.data[i].boardName + "版</option>" +
                                         validOptions + 
                                     "</select>" +
+                                    "<button class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;'>" +
+                                    "</button>" +
                               "</div>";
         
                 oneRow += selectBlock;
@@ -419,8 +419,6 @@ function moderatorInitial( resolve, reject )
                                         "<ul class='dropdown-menu'>" +
                                             validlis +
                                         "</ul>" +
-                                        "<button class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;'>" +
-                                        "</button>" +
                                     "</div>" +
                                   "</div>";
         
