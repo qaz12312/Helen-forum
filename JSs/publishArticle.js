@@ -142,7 +142,7 @@ $("#cancelpic").on("click", function(){
     imagesrc="";
     preview.removeAttribute('src');
     $("#deletepic").attr('disabled',false);
-    
+    $("#insertpic").attr('disabled',true);
 });
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
@@ -233,8 +233,15 @@ async function initial(res, rej){
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
                 console.log(article.image);
-                if(article.image)
+                if(article.image){
+                    $("#insertpic").attr('disabled',false);
+                    $("#deletepic").attr('disabled',true);
                     preview.src=article.image;
+                }else{
+                    $("#insertpic").attr('disabled',true);
+                    $("#deletepic").attr('disabled',false);
+                }
+                    
                 hashtags= article.hashTag;
                 printHashtag();
             }
