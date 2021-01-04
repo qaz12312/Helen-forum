@@ -28,7 +28,7 @@ button.addEventListener( "click", function( event ) {
 fileInput.addEventListener( "change", function( event ) { 
     $("#deletepic").show();
     $("#preview").show();
-    
+
     const myFile = document.querySelector("#my-file");
     const file = event.target.files[0];
     console.log(file);
@@ -233,13 +233,12 @@ async function initial(res, rej){
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
                 console.log(article.image);
+                $("#deletepic").hide();
+                $("#preview").hide();
                 if(article.image){
                     $("#deletepic").show();
                     preview.src=article.image;
                     $("#preview").show();
-                }else{
-                    $("#deletepic").hide();
-                    $("#preview").hide();
                 }
                     
                 hashtags= article.hashTag;
