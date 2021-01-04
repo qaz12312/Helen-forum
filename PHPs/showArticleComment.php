@@ -38,7 +38,7 @@
     function doShowArticleComment($input){
         global $conn;
         $articleID = $input['articleID'];
-        $sql="SELECT `AuthorID`,`Title`,`Content`,`cntHeart`,`cntKeep`,`Times`,`Hashtag`,`boardName` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?"; //文章 相關資訊
+        $sql="SELECT `AuthorID`,`Title`,`Content`,`cntHeart`,`cntKeep`,`Times`,`Hashtag`,`boardName`,`Image` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?"; //文章 相關資訊
         $result = query($conn,$sql,array($articleID),"SELECT");
         $resultCount = count($result);
         if($resultCount <= 0){
@@ -74,7 +74,7 @@
                     $hasLike = "" ;
                     $hasKeep = "" ;
                 }
-                $arr = array("boardName"=>$result[0][7],"title"=>$result[0][1],"content"=>$result[0][2],"like"=>$result[0][3],"keep"=>$result[0][4],"time"=>$result[0][5],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
+                $arr = array("boardName"=>$result[0][7],"title"=>$result[0][1],"content"=>$result[0][2],"like"=>$result[0][3],"keep"=>$result[0][4],"time"=>$result[0][5],"image"=>$result[0][8],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 
                 $sql ="SELECT `UserID`, `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
                 $comment = query($conn,$sql,array($articleID),"SELECT");
