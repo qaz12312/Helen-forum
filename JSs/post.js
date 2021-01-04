@@ -55,6 +55,7 @@ async function initial(res, rej){
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
             contentStr+= "<br/>";
+            console.log(article.image);
             if(article.image)
                 contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
 		
