@@ -85,7 +85,7 @@ $("#publishBtn").on("click", function(){
     }
     cmd["account"]= sessionStorage.getItem("Helen-account")
     cmd["title"]= titleStr;
-    let chooseStr= $("#chooseBoard :selected").val();
+    let chooseStr= $("#chooseBoard option:selected").text();
     cmd["blockName"]= chooseStr.substring(0, chooseStr.length- 1);//text()
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;

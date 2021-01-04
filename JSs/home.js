@@ -25,6 +25,12 @@ $(document).ready(async function(){
     window.location.href = "./publishArticle.html";
   });
   
+  $( ".boardName" ).parent().click( function() 
+  {
+        let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
+      sessionStorage.setItem( "Helen-boardName",articles[thisArticle].boardName );
+      location.href =  "./sticky.html";
+  });
   $( ".articleTitle" ).parent().click( function() 
   {
       let thisArticle = articles.find( (element) => element.title == $( ".articleTitle", this ).text() );
@@ -92,24 +98,7 @@ $(document).ready(async function(){
             }
         });
 
-        // if( $( chosen ).hasClass( "text-danger" ) )
-        // {
-        //     $( chosen ).removeClass( "text-danger" );
-        //     $( chosen ).addClass( "text-light" );
-        //     $( this ).addClass( "btn-danger" );
-            
-        //     thisArticle.like = parseInt(thisArticle.like) + 1;
-        //     $( chosen ).eq(1).html( thisArticle.like );
-        // }
-        // else
-        // {
-        //     $( this ).removeClass( "btn-danger" );
-        //     $( chosen ).addClass( "text-danger" );
-        //     $( chosen ).removeClass( "text-light" );
-
-        //     thisArticle.like = parseInt(thisArticle.like) - 1;
-        //     $( chosen ).eq(1).html( thisArticle.like );
-        // }
+        
     });
 
     $( "button" ).has( ".glyphicon-star" ).click( async function()
@@ -428,28 +417,28 @@ function forNormal( res, rej )
         {
         
             articles = dataDB.data;
-
+            console.log(thisSort)
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
             );
-            $( ".tabContent h3" ).html( thisSort );
+            $( ".tabContent h3" ).html( sessionStorage.getItem( "Helen-sort" ) );
             $( ".topnav a" ).removeClass( "active" );
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
             $( ".tabContent tbody" ).empty();
             
             for( let i in articles )
             {
-                
+                console.log("home2")
                 let oneRow = "<tr>" +
                                 "<td>" +
                                     "<div class='card'>" +
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'>" + 
-                                                "<h3 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h3>"+
+                                                "<h5 style='background-color: orange; cursor:pointer; display:inline-block'class='boardName'>"+articles[i].boardName+"版</h5>"+
                                             "</span>" +
-                                            "<span class='col-md-6'style='cursor:pointer'>" +
-                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
+                                            "<span class='col-md-6'>" +
+                                                "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
                                             "</span>" +
                                             "<span class='col-md-4'>";
 
@@ -562,10 +551,10 @@ function forSearching( res, rej)
                                     "<div class='card'>" +
                                         "<div class='card-body row'>" +
                                             "<span class='col-md-2'>" + 
-                                                "<h3 style='background-color: orange; display:inline-block'>"+articles[i].boardName+"版</h3>"+
+                                                "<h5 style='background-color: orange ;cursor:pointer; display:inline-block'class='boardName'>"+articles[i].boardName+"版</h5>"+
                                             "</span>" +
-                                            "<span class='col-md-6'style='cursor:pointer'>" +
-                                                "<span class='articleTitle'>" + articles[i].title + "</span>" +
+                                            "<span class='col-md-6'>" +
+                                                "<span class='articleTitle'style='cursor:pointer'>" + articles[i].title + "</span>" +
                                             "</span>" +
                                             "<span class='col-md-4'>";
 

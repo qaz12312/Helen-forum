@@ -148,7 +148,7 @@ $("#newActivity").on("click", function(){
 
 $("#cancelActivity").on("click", function(){//取消
     console.log("Back To HOME Page.")
-    window.location.href =  "./home.html";
+    window.location.href =  "./calendar.html";
 })
 
 
