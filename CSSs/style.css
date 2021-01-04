@@ -47,15 +47,20 @@ body{
     line-height: 20px;/*每一行之間的空間*/
     letter-spacing: 10px;
 }
-.tabContent img{
-	width: 360px;
-}
 
 #commentTable a{
   text-decoration: none;
   /* color: #545871; */
   letter-spacing: 0px;
+  
 }
+#commentTable {
+	overflow-x:hidden;
+	overflow-y:hiddeN;
+	max-height: 50%;
+	
+  }
+
 #commentTable a:hover{
   cursor: pointer;
 }
@@ -153,3 +158,26 @@ button{
 .content p{
     letter-spacing: 0px;
 }
+
+	/*关键设置 tbody出现滚动条*/
+	#commentTable tbody {
+		display: block;
+		height: 300px;
+		overflow-y: scroll;
+	}
+	
+	#commentTable  thead,
+	#commentTable tbody tr {
+		display: table;
+		width: 100%;
+		table-layout: fixed;
+	}
+	/*关键设置：滚动条默认宽度是16px 将thead的宽度减16px*/
+	#commentTable  thead {
+		width: calc( 100% - 1em)
+	}
+	
+	
+	#commentTable  thead th {
+		background: #ccc;
+	}
