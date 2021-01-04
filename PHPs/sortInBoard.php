@@ -35,7 +35,7 @@
         $boardInfo = query($conn,$sql,$arr,"SELECT");
         $resultCount = count($boardInfo);
         if ($resultCount <= 0) {
-            $rtn = successCode("Failed.", array("articleList"=>array(),"topArticleID"=>$boardInfo[0]['TopArticleID'],"rule"=>$boardInfo[0]['Rule']));
+            $rtn = successCode("Failed.", array());
         } 
 
         if ($input['sort'] == "time" || $input['sort'] == "hot" || $input['sort'] == "collect" || $input['sort'] == "comment") {
