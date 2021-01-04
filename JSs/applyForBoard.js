@@ -67,13 +67,7 @@ $( document ).ready( async function()
                                     showConfirmButton: false,
                                     timer: 1000,
     
-                                }).then(( result ) => {}, ( dismiss ) =>
-                                {
-                                    if( dismiss )
-                                    {
-                                        location.reload();
-                                    }
-                                });
+                                }).then(( result ) => {}, ( dismiss ) => {});
                             }
                         });
                         
