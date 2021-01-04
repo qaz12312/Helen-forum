@@ -1,4 +1,4 @@
-var fileStr,image; // add picture
+var fileStr,imagesrc; // add picture
 var boards= [];
 var hashtags= [];
 
@@ -43,6 +43,7 @@ fileInput.addEventListener( "change", function( event ) {
         image.title = file.name;
         image.src = reader.result;
         preview=image.src;
+        imagesrc=image.src;
    }
 });
 
@@ -105,7 +106,7 @@ $("#publishBtn").on("click", function(){
     cmd["blockName"]= chooseStr.substring(0, chooseStr.length- 1);//text()
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
-    cmd["picture"]=  preview; // no picture
+    cmd["picture"]=  imagesrc; // no picture
     console.log(cmd);
     
     $.post("../index.php", cmd, function(dataDB){
