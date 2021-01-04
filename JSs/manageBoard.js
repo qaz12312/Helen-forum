@@ -300,6 +300,14 @@ function manageBoard( resolve, reject )
             }
 
             $( ".tabContent tbody" ).append( content );
+        
+            if( boardList.length == 0 )
+            {
+                let emptyMessage = "<tr>" + 
+                                        "<td colspan='3'>目前沒有看板</td>" +
+                                    "</tr>";
+                content.append( emptyMessage );
+            }
         }
 
         resolve(0);
