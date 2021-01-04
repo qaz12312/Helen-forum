@@ -42,7 +42,7 @@ fileInput.addEventListener( "change", function( event ) {
         image.height = 100;
         image.title = file.name;
         image.src = reader.result;
-        preview.appendChild( image.src );
+        preview=image.src;
         console.log(preview );
         image=preview;
    }
