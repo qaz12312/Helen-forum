@@ -398,7 +398,7 @@ function moderatorInitial( resolve, reject )
                 }
         
                 selectBlock = "<div class='input-group input-group-lg mt-3 row'>" +
-                                    "<select class='form-control col-10' style='background-color: brown; color: white;'>" +
+                                    "<select class='col-10' style='background-color: brown; color: white;'>" +
                                         "<option value='" + dataDB.data[i].boardName + "' selected>" + dataDB.data[i].boardName + "版</option>" +
                                         validOptions + 
                                     "</select>" +
