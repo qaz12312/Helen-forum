@@ -54,9 +54,9 @@ async function initial(res, rej){
             contentStr= contentStr.replace(imgRe, function(word){ // 加上圖片
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
-	contentStr+= "<br/>";
-	console.log(article.image);//圖片 - 本地端
-            contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
+            contentStr+= "<br/>";
+            if(article.image!="")
+                contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
 		
             if(article.hashTag){
                 contentStr+= "<p>";
