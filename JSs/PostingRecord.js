@@ -124,7 +124,7 @@ async function initial(res, rej)
 
             for( let i in dataDB.data )
             {
-            
+                console.log(dataDB.data)
                 let oneRow = "<tr>" + 
                                 "<td>" + dataDB.data[i].blockName + "版"+"</td>" +
                                 "<td>" +"<span class='articleTitle'>"+ dataDB.data[i].title +"</span>"+ "</td>" +
