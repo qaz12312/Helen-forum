@@ -299,15 +299,15 @@ function manageBoard( resolve, reject )
                            "</tr>";
             }
 
-            $( ".tabContent tbody" ).append( content );
-        
             if( boardList.length == 0 )
             {
                 let emptyMessage = "<tr>" + 
-                                        "<td colspan='3'>目前沒有看板</td>" +
+                                        "<td colspan='4'>目前沒有看板</td>" +
                                     "</tr>";
-                content.append( emptyMessage );
+                content += emptyMessage;
             }
+
+            $( ".tabContent tbody" ).append( content );
         }
 
         resolve(0);

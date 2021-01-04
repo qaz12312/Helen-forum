@@ -260,11 +260,105 @@ $("#keepBtn").click(async function(){
 	
     if(keepMenu.length== 0){
         swal({
-            title: "錯誤",
-            type: "error",
-            text: "沒有可用的收藏分類哦！",
+            title: "警告",
+            type: "warning",
+            text: "沒有可用的收藏分類哦",
+            showCancelButton: true,
+            confirmButtonText: "\u002b 分類",
+            cancelButtonText: "取消",
 
-        }).then(( result ) => {}, ( dismiss ) => {} );
+        }).then(( result ) => {
+            swal({
+                title: "新增收藏分類",
+                input: "text",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                
+            }).then( async ( result ) =>{
+                let dirName = result;
+
+                while( dirName == "" ){
+                    let dismissing = await swal({
+
+                        title: "請輸入收藏分類名稱",
+                        type: "warning",
+                        input: "text",
+                        showCancelButton: true,
+                        confirmButtonText: "確定",
+                        cancelButtonText: "取消",
+
+                    }).then((result) =>{
+                        dirName = result;
+                        return false
+
+                    }, ( dismiss ) =>{
+                        return true;
+                    });
+
+                    if( dismissing ) break;
+                }
+
+                let cmd = {};
+                cmd[ "act" ] = "newDir";
+                cmd[ "account" ] = thisAccount;
+                cmd[ "dirName" ] = dirName;
+
+                $.post( "../index.php", cmd, function( dataDB ){
+                    dataDB = JSON.parse( dataDB );
+
+                    if(dataDB.status== false){
+                        swal({
+                            title: "新增收藏分類失敗",
+                            type: "error",
+                            text: dataDB.errorCode,
+                            confirmButtonText: "確定",
+
+                        }).then(( result ) => {}, ( dismiss ) => {});
+                    }
+                    else{
+                        keepMenu.push( dirName );
+                        let cmd = {};
+                        cmd[ "act" ] = "keep";
+                        cmd[ "account" ] = thisAccount;
+                        cmd[ "articleID" ] = thisArticle.articleID;
+                        cmd[ "dirName" ] =  dirName;
+
+                        $.post( "../index.php", cmd, function(dataDB){
+                            dataDB = JSON.parse( dataDB );
+
+                            if( dataDB.status == false ){
+                                swal({
+                                    title: "錯誤！",
+                                    type: "error",
+                                    text: dataDB.errorCode,
+                        
+                                }).then(( result ) => {}, ( dismiss ) => {} );
+                            }
+                            else{
+                                swal({
+                                    title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
+                                    type: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                            
+                                }).then(( result ) => {}, ( dismiss ) => {
+                                    $(keepText).removeClass("text-warning");
+                                    $(keepText).addClass("text-light");
+                                    $(keepBtn).addClass("btn-warning");
+                                    $(keepBtn).removeClass("btn-secondary");
+
+                                    var keepCount= parseInt($(keepText).eq(1).text())+ 1; // 收藏數
+                                    $(keepText).eq(1).html(" "+ keepCount);
+                                });
+                            }
+                        });
+                        
+                    }
+                });
+            }, ( dismiss ) => {});
+        }, ( dismiss ) => {} );
+        return;
     }
     else if( $(keepText).hasClass("text-warning") ){ // 沒按過收藏
         swal({
