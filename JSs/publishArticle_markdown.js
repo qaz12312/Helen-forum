@@ -1,5 +1,5 @@
 var fileStr; // add picture
-var borads= [];
+var boards= [];
 var hashtags= [];
 
 //this is test data for edit article
@@ -38,7 +38,7 @@ $(document).ready(async function(){
 $("#publishBtn").on("click", function(){
     console.log("I want publish.");
     var titleStr= $("#articleTitle").val().trim();
-    var contentStr= $("#articleContent").val().trim();
+    var contentStr= $("#editor").val();
 
     if(titleStr.length< 1){
         console.log("(Title) Too short.")
@@ -46,7 +46,7 @@ $("#publishBtn").on("click", function(){
             title: "文章標題太短嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }else if(titleStr.length> 127){
         console.log("(Title) Too long.")
@@ -54,7 +54,7 @@ $("#publishBtn").on("click", function(){
             title: "文章標題太長嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
     if(contentStr.length< 10){
@@ -63,7 +63,7 @@ $("#publishBtn").on("click", function(){
             title: "文章內容太少嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }else if(contentStr.length> 20000){
         console.log("(Content) Too long.")
@@ -71,7 +71,7 @@ $("#publishBtn").on("click", function(){
             title: "文章內容太多嘍！",
             type: "warning",
             // text: dataDB.errorCode
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
     
@@ -85,7 +85,7 @@ $("#publishBtn").on("click", function(){
     }
     cmd["account"]= sessionStorage.getItem("Helen-account")
     cmd["title"]= titleStr;
-    let chooseStr= $("#chooseBoard :selected").val();
+    let chooseStr= $("#chooseBoard option:selected").text();
     cmd["blockName"]= chooseStr.substring(0, chooseStr.length- 1);//text()
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
@@ -93,6 +93,7 @@ $("#publishBtn").on("click", function(){
     console.log(cmd);
     
     $.post("../index.php", cmd, function(dataDB){
+        console.log(dataDB);
         var dataDB= JSON.parse(dataDB);
         if(dataDB.status== false){
             swal({
@@ -100,7 +101,7 @@ $("#publishBtn").on("click", function(){
                 type: "error",
                 text: dataDB.errorCode,
                 animation: false
-            });
+            }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{
             // ?依最新排序的首頁
@@ -112,7 +113,7 @@ $("#publishBtn").on("click", function(){
 })
 
 $("#cancelPublish").on("click", function(){
-    console.log("Back To HOME Page.")
+    sessionStorage.removeItem('Helen-act');
     location.href =  "../HTMLs/home.html";
 })
 
@@ -168,7 +169,7 @@ async function initial(res, rej){
 
     $("#chooseBoard").empty();
     for(var i= 0; i< boards.length; i++){
-        $("#chooseBoard").append(new Option(boards[i]+ "版"), i, false);
+        $("#chooseBoard").append(new Option(boards[i]+ "版", i));
     }
 
     //編輯文章
@@ -189,18 +190,22 @@ async function initial(res, rej){
                     title: "載入頁面失敗",
                     type: "error",
                     text: dataDB.errorCode
-                });
+                }).then(( result ) => {}, ( dismiss ) => {});
             }
             else{
                 article= dataDB.data
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
-                $("#chooseBoard").find("option[text= '" + article.blockName+ "版']").attr("selected", true);
-                //依 text 為"看版名(美食版)"的項選中
-                $("#articleTitle").val()= article.title;
-                $("#articleContent").val()= article.content;
-                hashtags= article.hashtag;
+                for(var i= 0; i< boards.length; i++){ // 選取看版
+                    if((boards[i])== article.boardName){
+                        $("#chooseBoard")[0].selectedIndex= i; //依 text 為"看版名(美食版)"的項選中
+                    }
+                }
+                
+                $("#articleTitle").val(article.title);
+                $("#articleContent").val(article.content);
+                hashtags= article.hashTag;
                 printHashtag();
             }
         })
@@ -223,7 +228,7 @@ function checkPermission(resolve, reject){
                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
                 $( "body" ).append( httpStatus );
             }
-        });
+        }).then(( result ) => {}, ( dismiss ) => {});
         resolve(false);
     }
 }
