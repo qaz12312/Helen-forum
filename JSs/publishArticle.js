@@ -187,7 +187,7 @@ async function initial(res, rej){
     );
 
     if(!r) return;
-
+    $("#deletepic").hide();
     //selector 載入所有看版(從 session)
     let boardData= sessionStorage.getItem("Helen-boards");
     boards= JSON.parse(boardData);
