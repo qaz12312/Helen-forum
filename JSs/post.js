@@ -55,7 +55,7 @@ async function initial(res, rej){
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
             contentStr+= "<br/>";
-            console.log(article.image);
+            //console.log(article.image);
             if(article.image)
                 contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
 		
@@ -115,7 +115,9 @@ async function initial(res, rej){
                             comments[i].nickname;
                 if(comments[i].isOwn== 1){ // 是自己的留言
                     oneRow+= "<button type=\"button\" class=\"btn btn-dark deleteComment\">"+
-                            "<span class=\"glyphicon glyphicon-trash\"></span></button>"
+                            "<span class=\"glyphicon glyphicon-trash\"></span></button>"+
+                            "<button type=\"button\" class=\"btn btn-dark editComment\">"+
+                            "<span class=\"glyphicon glyphicon-pencil\"></span></button>"
                 }
                 oneRow+= "</td></tr><tr><td>"+ newStr+ "</td></tr>";
                 
@@ -541,8 +543,9 @@ function leaveComment(){
         }
     });
 }
-
-$("#commentTable").on("click", "button", function(){
+/*刪除此留言*/
+$("#commentTable").on("click", ".deleteComment", function(){
+    console.log("delete")
     let commentIndex= $(this).parent().prev().text().trim().substring(1);
     commentIndex= parseInt(commentIndex);
 
@@ -583,6 +586,71 @@ $("#commentTable").on("click", "button", function(){
                 }
             });
     }, ( dismiss ) => {})
+})
+/*修改留言*/ 
+$("#commentTable").on("click", ".editComment", function(){
+    let commentIndex= $(this).parent().prev().text().trim().substring(1);
+    commentIndex= parseInt(commentIndex);
+    console.log("edit")
+    swal({
+        title: "修改留言",
+        input: "textarea",
+        inputPlaceholder: "請輸入文字...",
+        showCancelButton: true,
+        confirmButtonText: "確認",
+        cancelButtonText: "取消",
+        animation: false
+            
+        }).then(( result ) => {
+            let cmd = {};
+            cmd["act"] = "editComment";
+            cmd["account"] = sessionStorage.getItem("Helen-account");
+            cmd["detail"] = result;
+            cmd["articleID"] = sessionStorage.getItem("Helen-articleID");
+            cmd["floors"] = commentIndex;
+            $.post( "../index.php", cmd, function( dataDB ){
+            dataDB = JSON.parse( dataDB );
+               
+                    if( dataDB.status == false )
+                    {
+                                
+                        swal({
+                            title: "修改失敗",
+                            
+                            type: "error",
+                             text: dataDB.errorCode,
+                            animation: false
+                        }).then(( result ) => {}, ( dismiss ) => {});
+                    }
+                    else
+                    {
+                        console.log(result)
+                            
+                        swal({
+                            title: "已成功修改留言！",
+                            type: "success",
+                            timer: 1000,
+                            showConfirmButton: false,
+
+                        }).then(( result ) => {}, ( dismiss ) => {
+                            if ( dismiss ) 
+                            {
+                                
+                                location.reload();
+                            }
+                        }).then(( result ) => {}, ( dismiss ) => {
+                            if ( dismiss ) 
+                            {
+                                
+                                location.reload();
+                            }
+                        });
+
+                    }
+                
+            });
+        
+        }, ( dismiss ) => {} );           
 })
 
 // 點擊樓層tag

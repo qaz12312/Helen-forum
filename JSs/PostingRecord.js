@@ -127,7 +127,7 @@ async function initial(res, rej)
                 console.log(dataDB.data)
                 let oneRow = "<tr>" + 
                                 "<td>" + dataDB.data[i].blockName + "版"+"</td>" +
-                                "<td>" +"<span class='articleTitle'>"+ dataDB.data[i].title +"</span>"+ "</td>" +
+                                "<td>" +"<span class='articleTitle'style='cursor:pointer'>"+ dataDB.data[i].title +"</span>"+ "</td>" +
                                 "<td>" +
                                     "<button type='button' class='btn btn-default'>" +
                                         "<span class='glyphicon glyphicon-book'></span> 編輯" +
