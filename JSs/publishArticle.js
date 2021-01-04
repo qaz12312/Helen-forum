@@ -26,6 +26,9 @@ button.addEventListener( "click", function( event ) {
 });  
 
 fileInput.addEventListener( "change", function( event ) { 
+    $("#deletepic").show();
+    $("#preview").show();
+    
     const myFile = document.querySelector("#my-file");
     const file = event.target.files[0];
     console.log(file);
@@ -42,8 +45,7 @@ fileInput.addEventListener( "change", function( event ) {
         preview.src=image.src;
         imagesrc=image.src;
    }
-   $("#deletepic").show();
-    $("#preview").show();
+  
     console.log("show");
 });
 
