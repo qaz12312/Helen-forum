@@ -386,7 +386,7 @@ async function initial(res, rej)
 }
 function forNormal( res, rej )
 {
-    
+    var thisSort = sessionStorage.getItem( "Helen-sort" );
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
@@ -394,6 +394,7 @@ function forNormal( res, rej )
     $.post( "../index.php", cmd, function( dataDB )
     {
         
+
         dataDB = JSON.parse( dataDB );
 
         if( dataDB.status == false )
@@ -415,7 +416,8 @@ function forNormal( res, rej )
         }
         else
         {
-        
+            let content = $( ".tabContent tbody" );
+            content.empty();
             articles = dataDB.data;
             console.log(thisSort)
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
@@ -471,6 +473,15 @@ function forNormal( res, rej )
                 oneRow += "</span></div></div></td></tr>";
 
                 $( ".tabContent tbody" ).append( oneRow );
+            }
+            if( Array.isArray(dataDB.data) && dataDB.data.length == 0 )
+            {
+                let isEmpty = "<tr>" +
+                                "<td>" +
+                                    "文章列表為空";
+                                "</td>" +
+                            "</tr>";
+                $( ".tabContent tbody" ).append( isEmpty );
             }
 
 
@@ -531,7 +542,8 @@ function forSearching( res, rej)
         }
         else
         {
-        
+            let content = $( ".tabContent tbody" );
+            content.empty();
             articles = dataDB.data;
             console.log(articles)
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
