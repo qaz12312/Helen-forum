@@ -407,8 +407,7 @@ function moderatorInitial( resolve, reject )
                                         "</div>" +
                                     "</div>"
                                     
-                                    "<button class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;'>" +
-                                    "</button>" +
+                                    "<input class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;'/>" +
                               "</div>";
         
                 oneRow += selectBlock;
