@@ -28,11 +28,12 @@ DROP TABLE IF EXISTS Article;
 CREATE TABLE Article (
 	ArticleID bigint(255) NOT NULL AUTO_INCREMENT,
 	AuthorID varchar(101) NOT NULL,
+	Anonymous boolean default false,
 	Title varchar(255) NOT NULL,
 	Content text ,
 	Image longblob ,
 	HashTag varchar(255) ,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	BlockName varchar(255) NOT NULL,
 PRIMARY KEY (ArticleID),
 FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
