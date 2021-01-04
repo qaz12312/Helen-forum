@@ -29,6 +29,7 @@ fileInput.addEventListener( "change", function( event ) {
     fileStr= fileStr.substring(12, fileStr.length);
     the_return.innerHTML = fileStr;
     const myFile = document.querySelector("#my-file");
+    var preview = document.querySelector('#preview');
     const file = event.target.files[0];
     console.log(file);
     const reader = new FileReader();
@@ -37,7 +38,7 @@ fileInput.addEventListener( "change", function( event ) {
   
     reader.onload = function() {
     // 將圖片 src 替換為 DataURL
-        img.src = reader.result;
+        preview.src = reader.result;
         console.log(img.src);
    }
 });
