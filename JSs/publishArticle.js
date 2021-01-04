@@ -35,7 +35,7 @@ fileInput.addEventListener( "change", function( event ) {
     const reader = new FileReader();
     // 轉換成 DataURL
     reader.readAsDataURL(file);
-  
+    console.log(reader);
     reader.onload = function() {
     // 將圖片 src 替換為 DataURL
         preview.src = reader.result;
