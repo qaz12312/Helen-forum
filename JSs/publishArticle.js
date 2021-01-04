@@ -226,6 +226,7 @@ async function initial(res, rej){
                 
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
+                console.log(article.image);
                 if(article.image)
                     preview.src=article.image;
                 hashtags= article.hashTag;
