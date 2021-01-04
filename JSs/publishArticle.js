@@ -141,8 +141,7 @@ $("#cancelPublish").on("click", function(){
 $("#cancelpic").on("click", function(){
     imagesrc="";
     preview.removeAttribute('src');
-    $("#deletepic").attr('disabled',false);
-    $("#insertpic").attr('disabled',true);
+    $("#deletepic").show();
 });
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
@@ -234,12 +233,10 @@ async function initial(res, rej){
                 $("#articleContent").val(article.content);
                 console.log(article.image);
                 if(article.image){
-                    $("#insertpic").attr('disabled',false);
-                    $("#deletepic").attr('disabled',true);
+                    $("#deletepic").show();
                     preview.src=article.image;
                 }else{
-                    $("#insertpic").attr('disabled',true);
-                    $("#deletepic").attr('disabled',false);
+                    $("#deletepic").hide();
                 }
                     
                 hashtags= article.hashTag;
