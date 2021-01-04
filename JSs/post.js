@@ -49,6 +49,10 @@ async function initial(res, rej){
             var contentStr= article.content; // 文章內文
             let brRe= /(\n)/g;
             contentStr= contentStr.replace(brRe, "<br />"); // 文章內文的換行變成html的<br>
+
+            let imgRe= /^!\[http\S+\]/g;
+            contentStr= contentStr.replace(imgRe, "<img src= \""+ "$1".substring(2, "$1".length- 1)+ "\">")
+
             if(article.hashTag){
                 contentStr+= "<br />";
                 for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
