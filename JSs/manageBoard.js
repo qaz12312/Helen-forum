@@ -299,8 +299,6 @@ function manageBoard( resolve, reject )
                            "</tr>";
             }
 
-            $( ".tabContent tbody" ).append( content );
-        
             if( boardList.length == 0 )
             {
                 let emptyMessage = "<tr>" + 
@@ -308,6 +306,8 @@ function manageBoard( resolve, reject )
                                     "</tr>";
                 content.append( emptyMessage );
             }
+            
+            $( ".tabContent tbody" ).append( content );
         }
 
         resolve(0);
