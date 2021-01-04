@@ -404,7 +404,7 @@ function moderatorInitial( resolve, reject )
                                     "</select>" +
 
                                     "<div class='input-group-append'>" +
-                                        "<button class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;>" +
+                                        "<button class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;'>" +
                                         "</button>" +
                                     "</div>" +
                               "</div>";
