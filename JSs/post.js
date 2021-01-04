@@ -52,10 +52,8 @@ async function initial(res, rej){
 
             let imgRe= /!\[http\S+\]/g;
             contentStr= contentStr.replace(imgRe, function(word){
-                console.log(word);
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
-            console.log(contentStr);
 
             if(article.hashTag){
                 contentStr+= "<br />";

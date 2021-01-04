@@ -47,6 +47,9 @@ body{
     line-height: 20px;/*每一行之間的空間*/
     letter-spacing: 10px;
 }
+.tabContent img{
+	width: fit-content;
+}
 
 #commentTable a{
   text-decoration: none;
