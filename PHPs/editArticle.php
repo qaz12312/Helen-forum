@@ -42,6 +42,9 @@
 			}else{
 				$hashTag = json_encode($input['hashTag']);
 			}
+			if(empty($input['picture'])){
+				$input['picture'] = json_encode(array());
+			}
 			$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=? WHERE `ArticleID` = ? AND `AuthorID`=?";
 			$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['articleID'], $user);
 			query($conn,$sql,$arr,"UPDATE");
