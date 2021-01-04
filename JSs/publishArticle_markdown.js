@@ -57,23 +57,23 @@ $("#publishBtn").on("click", function(){
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
-    if(contentStr.length< 10){
-        console.log("(Content) Too shor.")
-        swal({
-            title: "文章內容太少嘍！",
-            type: "warning",
-            // text: dataDB.errorCode
-        }).then(( result ) => {}, ( dismiss ) => {});
-        return;
-    }else if(contentStr.length> 20000){
-        console.log("(Content) Too long.")
-        swal({
-            title: "文章內容太多嘍！",
-            type: "warning",
-            // text: dataDB.errorCode
-        }).then(( result ) => {}, ( dismiss ) => {});
-        return;
-    }
+    // if(contentStr.length< 10){
+    //     console.log("(Content) Too shor.")
+    //     swal({
+    //         title: "文章內容太少嘍！",
+    //         type: "warning",
+    //         // text: dataDB.errorCode
+    //     }).then(( result ) => {}, ( dismiss ) => {});
+    //     return;
+    // }else if(contentStr.length> 20000){
+    //     console.log("(Content) Too long.")
+    //     swal({
+    //         title: "文章內容太多嘍！",
+    //         type: "warning",
+    //         // text: dataDB.errorCode
+    //     }).then(( result ) => {}, ( dismiss ) => {});
+    //     return;
+    // }
     
     let cmd= {};
     if(sessionStorage.getItem("Helen-act")== "editArticle"){ // 編輯文章
