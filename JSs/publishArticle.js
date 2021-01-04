@@ -113,8 +113,11 @@ $("#publishBtn").on("click", function(){
 })
 
 $("#cancelPublish").on("click", function(){
+    if(sessionStorage.getItem("Helen-act")== "editArticle"){
+        location.href =  "../HTMLs/PostingRecord.html";
+    }
+    else location.href =  "../HTMLs/home.html";
     sessionStorage.removeItem('Helen-act');
-    location.href =  "../HTMLs/home.html";
 })
 
 $("#inputHashtag").keypress(function (event){
