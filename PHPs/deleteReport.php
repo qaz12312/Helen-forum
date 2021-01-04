@@ -3,7 +3,7 @@
 	前端 to 後端:
 	let cmd = {};
 	cmd["act"] = "deleteReport";
-	cmd["isPass"] = true / false; (通過審核/審核不通過)
+	cmd["isPass"] = 1 / 0; (通過審核/審核不通過)
     cmd["articleID"] = 1;
 
 	後端 to 前端:
@@ -18,13 +18,6 @@
 	*/
     function doDeleteReport($input){ //審核被檢舉文章
         global $conn;
-	    if($input['isPass']){
-		    echo "cmd[isPass]: true";
-	    }
-	    else{
-		    echo "cmd[isPass]: false";
-	    }
-	
         if($input['isPass']){//刪除文章
             $sql="SELECT `AuthorID`,`Title`,`Times` FROM `Article` WHERE `ArticleID`=?"; //檢查是否存在被檢舉文章
             $arr = array($input['articleID']);
