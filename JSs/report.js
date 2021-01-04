@@ -138,11 +138,9 @@ $( document ).ready( async function()
                     cmd[ "act" ] = "deleteReport";
                     cmd[ "isPass" ] = 0;
                     cmd[ "articleID" ] = thisArticle;
-                    console.log( cmd );
 
                     $.post( "../index.php", cmd, function( dataDB )
                     {
-                        console.log( dataDB );
                         dataDB = JSON.parse( dataDB );
 
                         if( dataDB.status == false )
