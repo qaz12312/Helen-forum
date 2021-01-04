@@ -45,10 +45,10 @@
             }
             else{
                 // send issue
-                $sql = "SELECT `Title`,`AuthorID` FROM `Article` WHERE `ArticleID`=?";
+                $sql = "SELECT `Title`,`AuthorID`,`Times` FROM `Article` WHERE `ArticleID`=?";
                 $articleInfo = query($conn,$sql,array($input['articleID']),"SELECT");
                 
-                $content = "Sorry - Your article-【".$articleInfo[0][0]."】 has been report.";
+                $content = "Sorry - Your article-【".$articleInfo[0][0]."】which is published in".$articleInfo[0][2]." has been report.";
 
                 $sql = "SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `Content`=? AND `UserID`=? AND `Type`=? LIMIT 1)";
                 $arr = array($content,$articleInfo[0][1],2);
