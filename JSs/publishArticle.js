@@ -26,11 +26,7 @@ button.addEventListener( "click", function( event ) {
 });  
 
 fileInput.addEventListener( "change", function( event ) { 
-    var fileStr= this.value;
-    fileStr= fileStr.substring(12, fileStr.length);
-    the_return.innerHTML = fileStr;
     const myFile = document.querySelector("#my-file");
-    
     const file = event.target.files[0];
     console.log(file);
     const reader = new FileReader();
