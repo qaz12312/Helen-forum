@@ -1,7 +1,7 @@
 var fileStr; // add picture
 var boards= [];
 var hashtags= [];
-var imgSrc=[];
+var imgSrc;
 
 //this is test data for edit article
 // let articleData= {boardName: "美食版", 
@@ -29,20 +29,17 @@ fileInput.addEventListener( "change", function( event ) {
     var fileStr= this.value;
     fileStr= fileStr.substring(12, fileStr.length);
     the_return.innerHTML = fileStr;
-    const numFiles = fileList.length;
-    for (let i = 0, numFiles = fileList.length; i < numFiles; i++) {
-        const file = event.target.files[i];
-        const reader = new FileReader();
-        // 轉換成 DataURL
-        reader.readAsDataURL(file);
-        reader.onload = function() {
-        // 將圖片 src 替換為 DataURL
-        img.src = reader.result;
-        imgSrc.push(img.src);
-        console.log(img.src);
-        }
-    }
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    // 轉換成 DataURL
+    reader.readAsDataURL(file);
     
+    reader.onload = function() {
+      // 將圖片 src 替換為 DataURL
+      img.src = reader.result;
+      imgSrc.push(img.src);
+      console.log(img.src)
+    }
 });
 /* <input type="file" name="file" id="file">
     <img id="img">*/
