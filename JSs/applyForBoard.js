@@ -40,46 +40,43 @@ $( document ).ready( async function()
                         animation: false,
                     }).then((result) =>
                     {
-                        if( result )
+                        let cmd = {};
+                        cmd[ "act" ] = "newBoard";
+                        cmd[ "boardName" ] = thisBoardName.split("版")[0];
+                        cmd[ "rule" ] = result;
+                        console.log(cmd);
+    
+                        $.post( "../index.php", cmd, function( dataDB )
                         {
-                            let cmd = {};
-                            cmd[ "act" ] = "newBoard";
-                            cmd[ "boardName" ] = thisBoardName.split("版")[0];
-                            cmd[ "rule" ] = result;
-                            console.log(cmd);
-        
-                            $.post( "../index.php", cmd, function( dataDB )
+                            dataDB = JSON.parse( dataDB );
+    
+                            if( dataDB.status == false )
                             {
-                                dataDB = JSON.parse( dataDB );
-        
-                                if( dataDB.status == false )
+                                swal({
+                                    title: "新增看版失敗<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                                    type: "error",
+                                    text: data.errorCode,
+                                    confirmButtonText: "確定",
+                                    
+                                }).then(( result ) => {}, ( dismiss ) => {});
+                            }
+                            else
+                            {
+                                swal({
+                                    title: "新增看版成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                                    type: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+    
+                                }).then(( result ) => {}, ( dismiss ) =>
                                 {
-                                    swal({
-                                        title: "新增看版失敗<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
-                                        type: "error",
-                                        text: data.errorCode,
-                                        confirmButtonText: "確定",
-                                        
-                                    }).then(( result ) => {}, ( dismiss ) => {});
-                                }
-                                else
-                                {
-                                    swal({
-                                        title: "新增看版成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
-                                        type: "success",
-                                        showConfirmButton: false,
-                                        timer: 1000,
-        
-                                    }).then(( result ) => {}, ( dismiss ) =>
+                                    if( dismiss )
                                     {
-                                        if( dismiss )
-                                        {
-                                            location.reload();
-                                        }
-                                    });
-                                }
-                            });
-                        }
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        });
                     }, ( dismiss ) => {});
                 }
             }, ( dismiss ) => {});
