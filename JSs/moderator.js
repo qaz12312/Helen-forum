@@ -405,7 +405,7 @@ function moderatorInitial( resolve, reject )
                                                 validOptions + 
                                             "</select>" +
                                         "</div>" +
-                                    "</div>"
+                                    "</div>" +
                                     
                                     "<input class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;'/>" +
                               "</div>";
