@@ -62,7 +62,7 @@ async function initial(res, rej){
                     contentStr+= '<span class="badge badge-pill">#'+ article.hashTag[h]+ "</span> ";
                 }
             }
-
+            contentStr+= "<img src= \""+ article.image+ "\">";
             $(".tabContent").find("h2").text(article.title); // 文章標題
             $("#authorDiv").parent().html("<div id= \"authorDiv\" class= \"head\" style=\"float:left;\"></div>"+
                                             "&emsp;"+ article.authorNickName); // 原po暱稱

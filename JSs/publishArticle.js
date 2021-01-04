@@ -43,7 +43,6 @@ fileInput.addEventListener( "change", function( event ) {
         image.title = file.name;
         image.src = reader.result;
         preview=image.src;
-        console.log(preview );
         image=preview;
    }
 });
@@ -214,7 +213,7 @@ async function initial(res, rej){
                 }).then(( result ) => {}, ( dismiss ) => {});
             }
             else{
-                article= dataDB.data
+                article= dataDB.data;
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
