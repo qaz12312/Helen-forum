@@ -44,6 +44,7 @@ fileInput.addEventListener( "change", function( event ) {
    }
    $("#deletepic").show();
     $("#preview").show();
+    console.log("show");
 });
 
 $(document).ready(async function(){
