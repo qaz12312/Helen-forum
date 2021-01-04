@@ -51,7 +51,9 @@ async function initial(res, rej){
             contentStr= contentStr.replace(brRe, "<br />"); // 文章內文的換行變成html的<br>
 
             let imgRe= /^!\[http\S+\]/g;
-            contentStr= contentStr.replace(imgRe, "<img src= \""+ "$1".substring(2, "$1".length- 1)+ "\">")
+            contentStr= contentStr.replace(imgRe, function(word){
+                return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
+            });
             console.log(contentStr);
 
             if(article.hashTag){
