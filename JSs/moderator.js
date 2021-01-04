@@ -398,11 +398,11 @@ function moderatorInitial( resolve, reject )
                 }
         
                 selectBlock = "<div class='input-group' style='display: inline-block;'>" +
-                                    "<select class='form-control' style='background-color: brown; color: white;display: inline;'>" +
+                                    "<select class='form-control' style='background-color: brown; color: white; display: inline;'>" +
                                         "<option value='" + dataDB.data[i].boardName + "' selected>" + dataDB.data[i].boardName + "版</option>" +
                                         validOptions + 
                                     "</select>" +
-                                    "<button class='btn btn-danger fa fa-minus' type='button' style='float: right; width: 40px !important;'>" +
+                                    "<button class='btn btn-danger fa fa-minus' type='button' style='display: inline; width: 40px !important;'>" +
                                     "</button>" +
                               "</div>";
         
