@@ -138,6 +138,10 @@ $("#cancelPublish").on("click", function(){
     sessionStorage.removeItem('Helen-act');
 });
 
+$("#cancelpic").on("click", function(){
+    imagesrc="";
+    preview.src="";
+});
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
     if(event.keyCode== 13){
