@@ -48,7 +48,7 @@ body{
     letter-spacing: 10px;
 }
 .tabContent img{
-	width: fit-content;
+	width: 360px;
 }
 
 #commentTable a{
