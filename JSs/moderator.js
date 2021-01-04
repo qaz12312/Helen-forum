@@ -355,6 +355,8 @@ function moderatorInitial( resolve, reject )
             {
                 userOptions += "<option value='" + userList[j] + "'>" + userList[j] + "</option>";
             }
+
+            let noUser = (userList.length == 0) ? "目前沒有使用者" : "";
         
             let addNewModerator = "<tr>" +
                                     "<td style='text-align: center;'>" +
@@ -362,7 +364,7 @@ function moderatorInitial( resolve, reject )
                                     "</td>" +
                                     "<td>" +
                                         // "<div class='input-group input-group-lg' style='margin: 0 !important;'>" +
-                                            "<input id='users' list='userList' value='' class='textInput'>" +
+                                            "<input id='users' list='userList' value='' class='textInput' placeholder='" + noUser + "'>" +
                                             "<datalist id='userList' class='textInput'>" +
                                                 userOptions +
                                             "</datalist>" +
