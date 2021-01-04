@@ -78,7 +78,7 @@ $( document ).ready( async function()
                     let cmd = {};
                     cmd[ "act" ] = "deleteReport";
                     cmd[ "articleID" ] = thisArticle;
-                    cmd[ "isPass" ] = true;
+                    cmd[ "isPass" ] = 1;
                     
                     $.post( "../index.php", cmd, function( dataDB ){
                         dataDB = JSON.parse( dataDB );
@@ -136,8 +136,9 @@ $( document ).ready( async function()
                 {
                     let cmd = {};
                     cmd[ "act" ] = "deleteReport";
-                    cmd[ "isPass" ] = false;
+                    cmd[ "isPass" ] = 0;
                     cmd[ "articleID" ] = thisArticle;
+                    console.log( cmd );
 
                     $.post( "../index.php", cmd, function( dataDB )
                     {
