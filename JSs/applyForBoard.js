@@ -1,5 +1,6 @@
 var applications = {};
 var thisAccount = sessionStorage.getItem( 'Helen-account' );
+var boardList = [];
 
 $( document ).ready( async function() 
 {
@@ -21,10 +22,161 @@ $( document ).ready( async function()
                 title: "申請原因&emsp;<cite>" + thisTime + "</cite><br />" +
                         "<small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
                 html: escapeHtml( (!thisContent) ? "無" : thisContent ).split( "\n" ).join( "<br/>" ),
-                confirmButtonText: "確定",
+                showCancelButton: true,
+                confirmButtonText: "&plus; 看板",
+                cancelButtonText: "取消",
                 animation: false,
 
-            }).then((result) => {}, ( dismiss ) => {});
+            }).then((result) =>
+            {
+                if( result )
+                {
+                    let addingQueue = [];
+                    let steps = [1, 2];
+        
+                    addingQueue.push(
+                    {
+                        title: "新增看板<br /><small>&lt;看板名稱&gt;</small>",
+                        input: "text",
+                        inputPlaceholder: "請輸入看板名稱(不包含「版」)...",
+                        showCancelButton: true,
+                        confirmButtonText: "送出",
+                        cancelButtonText: "取消",
+                        animation: false,
+                    });
+        
+                    addingQueue.push(
+                    {
+                        title: "新增看板<br /><small>&lt;版規&gt;</small>",
+                        input: "textarea",
+                        inputPlaceholder: "請輸入版規...",
+                        showCancelButton: true,
+                        confirmButtonText: "送出",
+                        cancelButtonText: "取消",
+                        animation: false,
+                    });
+        
+                    swal.setDefaults( { progressSteps: steps } );
+        
+                    swal.queue( addingQueue ).then( async ( result ) => 
+                    {
+                        swal.setDefaults( { progressSteps: false } );
+        
+                        let dup = boardList.find((element) => element.boardName == result[0]) !== undefined;
+        
+                        while( result[0] !== false && ( result[0] === "" || result[0].includes("版") || dup ) )
+                        {
+                            if( result[0] === "" )
+                            {
+                                result[0] = await swal({
+                                    title: "看板名稱不得為空",
+                                    type: "warning",
+                                    input: "text",
+                                    inputPlaceholder: "請輸入看板名稱...",
+                                    showCancelButton: true,
+                                    confirmButtonText: "確定",
+                                    cancelButtonText: "取消",
+            
+                                }).then(( result ) =>
+                                {
+                                    return result;
+            
+                                }, ( dismiss ) =>
+                                {
+                                    return false;
+                                });
+                            }
+        
+                            if( dup )
+                            {
+                                result[0] = await swal({
+                                    title: "看板名稱重複，請重新輸入",
+                                    type: "warning",
+                                    input: "text",
+                                    inputPlaceholder: "請輸入看板名稱...",
+                                    showCancelButton: true,
+                                    confirmButtonText: "確定",
+                                    cancelButtonText: "取消",
+            
+                                }).then(( result ) =>
+                                {
+                                    return result;
+            
+                                }, ( dismiss ) =>
+                                {
+                                    return false;
+                                });
+                            }
+        
+                            if( typeof result[0] == "string" && result[0].includes("版") )
+                            {
+                                result[0] = await swal({
+                                    title: "看板名稱不得含有「版」",
+                                    type: "warning",
+                                    input: "text",
+                                    inputPlaceholder: "請輸入看板名稱...",
+                                    showCancelButton: true,
+                                    confirmButtonText: "確定",
+                                    cancelButtonText: "取消",
+            
+                                }).then(( result ) =>
+                                {
+                                    return result;
+            
+                                }, ( dismiss ) =>
+                                {
+                                    return false;
+                                });
+                            }
+        
+                            dup = boardList.find((element) => element.boardName == result[0]) !== undefined
+                        }
+        
+                        if( result[0] === false ) return;
+        
+                        let cmd = {};
+                        cmd[ "act" ] = "newBoard";
+                        cmd[ "boardName" ] = result[0];
+                        cmd[ "rule" ] = result[1];
+        
+                        $.post( "../index.php", cmd, function( dataDB )
+                        {
+                            dataDB = JSON.parse( dataDB );
+        
+                            if( dataDB.status == false )
+                            {
+                                swal({
+                                    title: "新增看版失敗<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                                    type: "error",
+                                    text: data.errorCode,
+                                    confirmButtonText: "確定",
+                                    
+                                }).then(( result ) => {}, ( dismiss ) => {});
+                            }
+                            else
+                            {
+                                swal({
+                                    title: "新增看版成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                                    type: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+        
+                                }).then(( result ) => {}, ( dismiss ) =>
+                                {
+                                    if( dismiss )
+                                    {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        });
+        
+                    }, ( dismiss ) =>
+                    {
+                        swal.setDefaults( { progressSteps: false } );
+                    });
+                }
+            }, ( dismiss ) => {});
 
         }
         else if( $(this).text().trim() == "移除" )
@@ -97,6 +249,12 @@ async function initial( res, rej )
 {
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
     ( error ) =>
+    {
+        res(1);
+    });
+
+    boardList = await new Promise( ( resolve, reject ) => getBoardList( resolve, reject ) ).catch(
+    ( error) =>
     {
         res(1);
     });
@@ -245,6 +403,26 @@ async function checkPermission( resolve, reject )
         }
     
         resolve(0);
+    });
+}
+
+function getBoardList( resolve, reject )
+{
+    let cmd = {};
+    cmd[ "act" ] = "showBoardList";
+
+    $.post( "../index.php", cmd, function( dataDB )
+    {
+        dataDB = JSON.parse( dataDB );
+
+        if( dataDB.status == false )
+        {
+            reject([]);
+        }
+        else
+        {
+            resolve( dataDB.data );
+        }
     });
 }
 
