@@ -56,7 +56,7 @@ async function initial(res, rej){
             });
 	contentStr+= "<br/>";
 	console.log(article.image);//圖片 - 本地端
-            contentStr+= "<img src= \""+ article.image+ "\" style='width: 30%;height: 30%;'>";
+            contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
 		
             if(article.hashTag){
                 contentStr+= "<p>";
