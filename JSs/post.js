@@ -63,6 +63,7 @@ async function initial(res, rej){
             
             $("#authorDiv").css("background-color", article.authorColor); // 原po頭像
             $(".tabContent").find("p").html(contentStr); // 文章內容
+            $("#getm").val(contentStr); // markdown
 
             let heartText= $("#heartBtn").find("span"); // Text: 愛心 & 數字
             if(article.hasLike== 1){

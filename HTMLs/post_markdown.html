@@ -168,6 +168,10 @@
             <tr class="row" style="text-align:left; color:black;">
                 <td colspan="3" class="col-md-7 text-left">
                     <p style="overflow-X: hidden; overflow-y: scroll;">
+                        <div id="editor">
+                            <textarea class="syncscroll" name="sync" id="getm" placeholder="add markdown here ✨" onkeyup="Preview.Update()" onmouseup="mouseUp()" style="visibility: hidden;"></textarea>
+                        </div>
+                        <div class="markdown syncscroll" name="sync" id="viewer" style="display: none;"></div>
                         <div class="markdown syncscroll" name="sync" id="buffer"></div>
                     <!-- 奇異博士已經確認演出，聽說最新消息是陶比麥奎爾與安德魯加菲爾德，也就是前兩代索尼版蜘蛛人也確認將會加入演出。<br>
                     也就是說，粉絲將有機會看到三代蜘蛛人出現在同一部電影！<br>
