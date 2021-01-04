@@ -24,17 +24,11 @@
             $rtn = successCode("Without any user.");
         }
         else{
+            $content = "系統廣播:【".$input['content']."】";
             foreach($result as $userID){
                 $sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?,?)";
-                $arr = array($userID[0], $input['content'],2);
+                $arr = array($userID[0], $content,2);
                 query($conn,$sql,$arr,"INSERT");
-        
-                $sql="SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type` = ? LIMIT 1)";
-                $arr = array($userID[0], $input['content'],2);
-                $result = query($conn,$sql,$arr,"SELECT");
-                if(!$result[0][0]){
-                    errorCode("Failed to send Notification to everyone,Database exception.");
-                }
             }
             $rtn = successCode("Successfully send notice to everyone.");
         }
