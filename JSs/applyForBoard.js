@@ -21,7 +21,9 @@ $( document ).ready( async function()
                 title: "申請原因&emsp;<cite>" + thisTime + "</cite><br />" +
                         "<small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
                 html: escapeHtml( (!thisContent) ? "無" : thisContent ).split( "\n" ).join( "<br/>" ),
-                confirmButtonText: "確定",
+                confirmButtonText: "&plus; 看板",
+                showCancelButton: true,
+                cancelButtonText: "取消",
                 animation: false,
 
             }).then((result) =>
