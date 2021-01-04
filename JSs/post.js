@@ -52,6 +52,7 @@ async function initial(res, rej){
 
             let imgRe= /^!\[http\S+\]/g;
             contentStr= contentStr.replace(imgRe, "<img src= \""+ "$1".substring(2, "$1".length- 1)+ "\">")
+            console.log(contentStr);
 
             if(article.hashTag){
                 contentStr+= "<br />";
