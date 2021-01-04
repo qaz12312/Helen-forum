@@ -149,7 +149,7 @@ function doSearch($where,$boardInfo,$sql,$orderWay,$search,$user){
     $result = query($conn, $sql, $search, "SELECT");
     $resultCount = count($result);
     if ($resultCount <= 0) { //找不到文章
-        $rtn =successCode("Didn't find any relational article.", array());
+        $rtn =successCode("Didn't find any relational article.", array("articleList"=>array(),"topArticleID"=>$boardInfo[0][1],"rule"=>$boardInfo[0][0]));
     } 
     else {
         $arr = array();
