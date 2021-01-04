@@ -46,6 +46,8 @@ fileInput.addEventListener( "change", function( event ) {
         preview.src=image.src;
         imagesrc=image.src;
    }
+   $("#deletepic").show();
+    $("#preview").show();
 });
 
 $(document).ready(async function(){
@@ -138,10 +140,11 @@ $("#cancelPublish").on("click", function(){
     sessionStorage.removeItem('Helen-act');
 });
 
-$("#cancelpic").on("click", function(){
+$("#deletepic").on("click", function(){
     imagesrc="";
     preview.removeAttribute('src');
-    $("#deletepic").show();
+    $("#deletepic").hide();
+    $("#preview").hide();
 });
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
@@ -235,8 +238,10 @@ async function initial(res, rej){
                 if(article.image){
                     $("#deletepic").show();
                     preview.src=article.image;
+                    $("#preview").show();
                 }else{
                     $("#deletepic").hide();
+                    $("#preview").hide();
                 }
                     
                 hashtags= article.hashTag;
