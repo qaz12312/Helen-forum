@@ -1,7 +1,7 @@
 var fileStr,imagesrc=""; // add picture
 var boards= [];
 var hashtags= [];
-
+var preview = document.querySelector('#preview');
 //this is test data for edit article
 // let articleData= {boardName: "美食版", 
 //                 articleTitle: "測試文章標題",
@@ -30,7 +30,7 @@ fileInput.addEventListener( "change", function( event ) {
     fileStr= fileStr.substring(12, fileStr.length);
     the_return.innerHTML = fileStr;
     const myFile = document.querySelector("#my-file");
-    var preview = document.querySelector('#preview');
+    
     const file = event.target.files[0];
     console.log(file);
     const reader = new FileReader();
