@@ -56,21 +56,21 @@ function previewFiles() {
   
   }
 
-fileInput.addEventListener( "change", function( event ) { 
-    const reader = new FileReader();
-    // 轉換成 DataURL
-    reader.readAsDataURL(file);
-    console.log(reader);
-    reader.onload = function() {
-    // 將圖片 src 替換為 DataURL
-    var image = new Image();
-        image.height = 100;
-        image.title = file.name;
-        image.src = reader.result;
-        preview.src=image.src;
-        imagesrc=image.src;
-   }
-});
+// fileInput.addEventListener( "change", function( event ) { 
+//     const reader = new FileReader();
+//     // 轉換成 DataURL
+//     reader.readAsDataURL(file);
+//     console.log(reader);
+//     reader.onload = function() {
+//     // 將圖片 src 替換為 DataURL
+//     var image = new Image();
+//         image.height = 100;
+//         image.title = file.name;
+//         image.src = reader.result;
+//         preview.src=image.src;
+//         imagesrc=image.src;
+//    }
+// });
 
 $(document).ready(async function(){
     barInitial();
