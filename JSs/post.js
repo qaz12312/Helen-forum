@@ -63,7 +63,7 @@ async function initial(res, rej){
                 }
             }
             console.log(article.image);
-            contentStr+= "<img src= \""+ article.image+ "\" style='width: 130px;height: 40px;'>";
+            contentStr+= "<img src= \""+ article.image+ "\" style='width: 150px;height: 150px;'>";
             $(".tabContent").find("h2").text(article.title); // 文章標題
             $("#authorDiv").parent().html("<div id= \"authorDiv\" class= \"head\" style=\"float:left;\"></div>"+
                                             "&emsp;"+ article.authorNickName); // 原po暱稱
