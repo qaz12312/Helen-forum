@@ -140,7 +140,7 @@ $("#cancelPublish").on("click", function(){
 
 $("#cancelpic").on("click", function(){
     imagesrc="";
-    preview.src="";
+    preview.removeAttribute('src');
 });
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
