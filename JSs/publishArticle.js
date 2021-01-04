@@ -1,4 +1,4 @@
-var fileStr,fileIn; // add picture
+var fileStr,image; // add picture
 var boards= [];
 var hashtags= [];
 
@@ -38,8 +38,13 @@ fileInput.addEventListener( "change", function( event ) {
     console.log(reader);
     reader.onload = function() {
     // 將圖片 src 替換為 DataURL
-        preview.src = reader.result;
-        console.log(img.src);
+    var image = new Image();
+        image.height = 100;
+        image.title = file.name;
+        image.src = reader.result;
+        preview.appendChild( image.src );
+        console.log(preview );
+        image=preview;
    }
 });
 
@@ -102,7 +107,7 @@ $("#publishBtn").on("click", function(){
     cmd["blockName"]= chooseStr.substring(0, chooseStr.length- 1);//text()
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
-    cmd["picture"]= "Image"; // no picture
+    cmd["picture"]=  image; // no picture
     console.log(cmd);
     
     $.post("../index.php", cmd, function(dataDB){
