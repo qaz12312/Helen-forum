@@ -54,7 +54,10 @@ async function initial(res, rej){
             contentStr= contentStr.replace(imgRe, function(word){ // 加上圖片
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
-
+	contentStr+= "<br/>";
+	console.log(article.image);//圖片 - 本地端
+            contentStr+= "<img src= \""+ article.image+ "\" style='width: 150px;height: 150px;'>";
+		
             if(article.hashTag){
                 contentStr+= "<p>";
                 for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
@@ -63,8 +66,7 @@ async function initial(res, rej){
                 }
 		contentStr+= "</p>";
             }
-            console.log(article.image);
-            contentStr+= "<img src= \""+ article.image+ "\" style='width: 150px;height: 150px;'>";
+            
             $(".tabContent").find("h2").text(article.title); // 文章標題
             $("#authorDiv").parent().html("<div id= \"authorDiv\" class= \"head\" style=\"float:left;\"></div>"+
                                             "&emsp;"+ article.authorNickName); // 原po暱稱
