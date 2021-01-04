@@ -51,16 +51,17 @@ async function initial(res, rej){
             contentStr= contentStr.replace(brRe, "<br />"); // 文章內文的換行變成html的<br>
 
             let imgRe= /!\[http\S+\]/g;
-            contentStr= contentStr.replace(imgRe, function(word){
+            contentStr= contentStr.replace(imgRe, function(word){ // 加上圖片
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
 
             if(article.hashTag){
-                contentStr+= "<br />";
+                contentStr+= "<p>";
                 for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
                     if(h== 0) contentStr+= "<br />";
                     contentStr+= '<span class="badge badge-pill">#'+ article.hashTag[h]+ "</span> ";
                 }
+		contentStr+= "</p>";
             }
             console.log(article.image);
             contentStr+= "<img src= \""+ article.image+ "\" style='width: 150px;height: 150px;'>";
