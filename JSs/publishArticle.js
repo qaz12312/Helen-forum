@@ -141,6 +141,8 @@ $("#cancelPublish").on("click", function(){
 $("#cancelpic").on("click", function(){
     imagesrc="";
     preview.removeAttribute('src');
+    $("#deletepic").attr('disabled',false);
+    
 });
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
