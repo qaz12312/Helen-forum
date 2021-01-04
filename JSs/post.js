@@ -94,10 +94,10 @@ async function initial(res, rej){
             $("#myColor").css("background-color", sessionStorage.getItem("Helen-color")); // 自己的頭像
 
             // 載入留言
-            $("#commentTable").empty();
+            $("#commentTable tbody").empty();
         
             if(comments.length== 0){
-                $("#commentTable").append("<tr><td colspan=\"2\" style= \"width: 750px;\">&emsp;No Comments</td></tr>");
+                $("#commentTable tbody").append("<tr><td colspan=\"2\" style= \"width: 250px;\" \"max-height: 500px;\" overflow-x:hidden;\" overflow-y:auto;\">&emsp;No Comments</td></tr>");
             }
             for(var i= 0; i< comments.length; i++){
                 let oldStr= comments[i].content;
@@ -114,7 +114,7 @@ async function initial(res, rej){
                 }
                 oneRow+= "</td></tr><tr><td>"+ newStr+ "</td></tr>";
                 
-                $("#commentTable").append(oneRow);
+                $("#commentTable tbody").append(oneRow);
             }
         }
     });
