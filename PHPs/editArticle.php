@@ -16,10 +16,10 @@
 	dataDB.status
 	若 status = true:
 		dataDB.info = "Successfully edited this article."
-		dataDB.data = 
+		dataDB.data = ""
 	否則
 		dataDB.errorCode = "Update without permission."/"Failed to Update Article,Database exception."
-		dataDB.data = 
+		dataDB.data = ""
 	*/
     function doEditArticle($input){ 
 		global $conn;    

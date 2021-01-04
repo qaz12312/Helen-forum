@@ -50,12 +50,10 @@ async function initial(res, rej){
             let brRe= /(\n)/g;
             contentStr= contentStr.replace(brRe, "<br />"); // 文章內文的換行變成html的<br>
 
-            let imgRe= /^!\[http\S+\]/g;
+            let imgRe= /!\[http\S+\]/g;
             contentStr= contentStr.replace(imgRe, function(word){
-                console.log(word);
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
-            console.log(contentStr);
 
             if(article.hashTag){
                 contentStr+= "<br />";

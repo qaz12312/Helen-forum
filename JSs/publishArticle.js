@@ -1,6 +1,7 @@
 var fileStr; // add picture
 var boards= [];
 var hashtags= [];
+var imgSrc=[];
 
 //this is test data for edit article
 // let articleData= {boardName: "美食版", 
@@ -28,7 +29,19 @@ fileInput.addEventListener( "change", function( event ) {
     var fileStr= this.value;
     fileStr= fileStr.substring(12, fileStr.length);
     the_return.innerHTML = fileStr;
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    // 轉換成 DataURL
+    reader.readAsDataURL(file);
+    
+    reader.onload = function() {
+      // 將圖片 src 替換為 DataURL
+      img.src = reader.result;
+      imgSrc.push(img.src);
+    }
 });
+/* <input type="file" name="file" id="file">
+    <img id="img">*/
 
 $(document).ready(async function(){
     barInitial();
@@ -89,7 +102,7 @@ $("#publishBtn").on("click", function(){
     cmd["blockName"]= chooseStr.substring(0, chooseStr.length- 1);//text()
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
-    cmd["picture"]= "Image"; // no picture
+    cmd["picture"]= imgSrc; 
     console.log(cmd);
     
     $.post("../index.php", cmd, function(dataDB){
@@ -158,6 +171,8 @@ function printHashtag(){
     }
     $("#hashtags").append(temp);
 }
+
+
 
 async function initial(res, rej){
     let r = await new Promise((resolve, reject) => checkPermission(resolve, reject)
