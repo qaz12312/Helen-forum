@@ -19,10 +19,10 @@
     function doDeleteReport($input){ //審核被檢舉文章
         global $conn;
 	    if($input['isPass']){
-		    echo "$input['isPass']: true";
+		    echo "cmd[isPass]: true";
 	    }
 	    else{
-		    echo "$input['isPass']: false";
+		    echo "cmd[isPass]: false";
 	    }
 	
         if($input['isPass']){//刪除文章
