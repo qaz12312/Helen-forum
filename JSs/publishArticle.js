@@ -30,15 +30,15 @@ fileInput.addEventListener( "change", function( event ) {
     the_return.innerHTML = fileStr;
     const myFile = document.querySelector("#my-file");
     const file = event.target.files[0];
-//   const reader = new FileReader();
-//   // 轉換成 DataURL
-//   reader.readAsDataURL(file);
+   const reader = new FileReader();
+   // 轉換成 DataURL
+   reader.readAsDataURL(file);
   
-//   reader.onload = function() {
-//     // 將圖片 src 替換為 DataURL
-//     img.src = reader.result;
-//     console.log(img.src);
-//   }
+   reader.onload = function() {
+    // 將圖片 src 替換為 DataURL
+    img.src = reader.result;
+     console.log(img.src);
+   }
 });
 
 $(document).ready(async function(){
