@@ -18,6 +18,13 @@
 	*/
     function doDeleteReport($input){ //審核被檢舉文章
         global $conn;
+	    if($input['isPass']){
+		    echo "$input['isPass']: true";
+	    }
+	    else{
+		    echo "$input['isPass']: false";
+	    }
+	
         if($input['isPass']){//刪除文章
             $sql="SELECT `AuthorID`,`Title`,`Times` FROM `Article` WHERE `ArticleID`=?"; //檢查是否存在被檢舉文章
             $arr = array($input['articleID']);
@@ -33,14 +40,15 @@
                 query($conn,$sql,$arr,"DELETE");
 
                 doSendNotification(array("recipient" => $result[0][0], "content" => "Your post 【".$result[0][1]."】which is published in ".$result[0][2]." has been reported and deleted."),0);
-                $rtn = successCode("Successfully deleted this article which you report.");
+                $rtn = successCode("Successfully deleted the article which is reported.");
             }
-        }
+        }else{
+		$rtn = successCode("Successfully canceled this report.");
+	}
         // 無論審核是否通過，刪除關於此文章的所有檢舉
-		$sql="DELETE FROM `Report` WHERE `ArticleID`= ?";
+	$sql="DELETE FROM `Report` WHERE `ArticleID`= ?";
         $arr = array($input['articleID']);
-		query($conn,$sql,$arr,"DELETE");
-        $rtn = successCode("Successfully canceled this report.");
+	query($conn,$sql,$arr,"DELETE");
         echo json_encode($rtn);
     }
 ?>
