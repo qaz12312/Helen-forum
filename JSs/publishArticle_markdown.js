@@ -38,8 +38,8 @@ $(document).ready(async function(){
 $("#publishBtn").on("click", function(){
     console.log("I want publish.");
     var titleStr= $("#articleTitle").val().trim();
-    var contentStr= $("#getm").val().trim();
-    
+    var contentStr= $("#getm").value;
+    //console.log
     if(titleStr.length< 1){
         console.log("(Title) Too short.")
         swal({
