@@ -1,7 +1,6 @@
-var fileStr; // add picture
+var fileStr,imagesrc; // add picture
 var boards= [];
 var hashtags= [];
-var imagesrc=[];
 
 //this is test data for edit article
 // let articleData= {boardName: "美食版", 
@@ -25,38 +24,15 @@ button.addEventListener( "click", function( event ) {
     fileInput.focus();
     return false;
 });  
-function previewFiles() {
 
+fileInput.addEventListener( "change", function( event ) { 
+    var fileStr= this.value;
+    fileStr= fileStr.substring(12, fileStr.length);
+    the_return.innerHTML = fileStr;
+    const myFile = document.querySelector("#my-file");
     var preview = document.querySelector('#preview');
-    var files   = document.querySelector('input[type=file]').files;
-  
-    function readAndPreview(file) {
-  
-      // Make sure `file.name` matches our extensions criteria
-      if ( /\.(jpe?g|png|gif)$/i.test(file.name) ) {
-        var reader = new FileReader();
-  
-        reader.addEventListener("load", function () {
-          var image = new Image();
-          image.height = 100;
-          image.title = file.name;
-          image.src = this.result;
-          preview.appendChild( image );
-          imagesrc.push(image.src);
-        }, false);
-  
-        reader.readAsDataURL(file);
-      }
-  
-    }
-  
-    if (files) {
-      [].forEach.call(files, readAndPreview);
-    }
-  
-  }
-
-// fileInput.addEventListener( "change", function( event ) { 
+    const file = event.target.files[0];
+    console.log(file);
 //     const reader = new FileReader();
 //     // 轉換成 DataURL
 //     reader.readAsDataURL(file);
@@ -70,7 +46,8 @@ function previewFiles() {
 //         preview.src=image.src;
 //         imagesrc=image.src;
 //    }
-// });
+        img.src = URL.createObjectURL(file)
+});
 
 $(document).ready(async function(){
     barInitial();
