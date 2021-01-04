@@ -402,11 +402,8 @@ function moderatorInitial( resolve, reject )
                                         "<option value='" + dataDB.data[i].boardName + "' selected>" + dataDB.data[i].boardName + "版</option>" +
                                         validOptions + 
                                     "</select>" +
-
-                                    "<div class='input-group-append col-2'>" +
-                                        "<button class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;'>" +
-                                        "</button>" +
-                                    "</div>" +
+                                    "<button class='btn btn-danger fa fa-minus col-2' type='button' style='width: 40px !important;'>" +
+                                    "</button>" +
                               "</div>";
         
                 oneRow += selectBlock;
