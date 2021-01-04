@@ -37,7 +37,7 @@
             $hashTag = json_encode($input['hashTag']);
         }
 	if(empty($input['picture'])){
-            $input['picture'] = array();
+            $input['picture'] = "";
         }
         $sql="SELECT EXISTS(SELECT 1  FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? LIMIT 1)";
         $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
