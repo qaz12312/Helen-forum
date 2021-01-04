@@ -397,13 +397,11 @@ function moderatorInitial( resolve, reject )
                                 "<td>";
                 }
         
-                selectBlock = "<div class='input-group' style='display: inline-block;'>" +
-                                    "<select class='form-control' style='background-color: brown; color: white; display: inline;'>" +
+                selectBlock = "<div class='input-group input-group-lg mt-3'>" +
+                                    "<select class='form-control' style='background-color: brown; color: white;'>" +
                                         "<option value='" + dataDB.data[i].boardName + "' selected>" + dataDB.data[i].boardName + "版</option>" +
                                         validOptions + 
                                     "</select>" +
-                                    "<button class='btn btn-danger fa fa-minus' type='button' style='display: inline; width: 40px !important;'>" +
-                                    "</button>" +
                               "</div>";
         
                 oneRow += selectBlock;
@@ -419,6 +417,8 @@ function moderatorInitial( resolve, reject )
                                         "<ul class='dropdown-menu'>" +
                                             validlis +
                                         "</ul>" +
+                                        "<button class='btn btn-danger fa fa-minus' type='button' style='width: 40px !important;'>" +
+                                        "</button>" +
                                     "</div>" +
                                   "</div>";
         
