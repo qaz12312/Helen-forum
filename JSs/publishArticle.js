@@ -1,4 +1,4 @@
-var fileStr,imagesrc=0; // add picture
+var fileStr,imagesrc=""; // add picture
 var boards= [];
 var hashtags= [];
 
@@ -107,7 +107,7 @@ $("#publishBtn").on("click", function(){
     cmd["blockName"]= chooseStr.substring(0, chooseStr.length- 1);//text()
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
-    cmd["picture"]=  ( imagesrc==0 ? "":imagesrc); // no picture
+    cmd["picture"]=  imagesrc; // no picture
     console.log(cmd);
     
     $.post("../index.php", cmd, function(dataDB){
