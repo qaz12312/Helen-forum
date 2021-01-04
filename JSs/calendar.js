@@ -36,14 +36,6 @@ function initial(resolve, reject)
         else
         {
             let activity= dataDB.data;
-            if( $.isEmptyObject(activity) ) {
-                let emptyMessage = "<tr>" + 
-                                        "<td colspan='4'>檢舉文章列表為空</td>" +
-                                    "</tr>";
-                content.append( emptyMessage );
-
-                return;
-            }
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
