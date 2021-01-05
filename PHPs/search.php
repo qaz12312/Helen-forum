@@ -4,7 +4,7 @@
     let cmd = {};
     cmd["act"] = "search";
     cmd["where"] = ["home"] / ["board","boardName(版的名字)"];
-    cmd["option"] = "normal" / "hashTag";
+    cmd["option"] = "normal" / "hashTag" / "button";
     cmd["sort"] = "time" / "hot" / "collect" / "comment";
     cmd["searchWord"] = ["好吃","讚"];
     cmd["account"]="00757003"; //cmd["token"](如果使用者有登入)
@@ -106,13 +106,23 @@
                 $search[$idx] = $where[1];
             }
             break;
-        case "hashTag": // hashTag搜尋
+        case "hashTag": // hashTag模糊搜尋
             $sql = $sql ."(";
             $sql = $sql .str_repeat("`Hashtag` LIKE  ? OR ",  $arrsize-1);
             $sql = $sql . "`Hashtag` LIKE  ?) ";
             //input query value
-            //[$search,$idx] = inputArr(1,$searchWord,"\""); //(精確搜尋)
-            [$search,$idx] = inputArr(1,$searchWord);//(模糊搜尋)
+            [$search,$idx] = inputArr(1,$searchWord);
+            if($where[0]=="board"){
+                $sql = $sql . "AND `BoardName` =?";
+                $search[$idx] = $where[1];
+            }
+            break;
+        case "button": // hashTag精確搜尋
+            $sql = $sql ."(";
+            $sql = $sql .str_repeat("`Hashtag` LIKE  ? OR ",  $arrsize-1);
+            $sql = $sql . "`Hashtag` LIKE  ?) ";
+            //input query value
+            [$search,$idx] = inputArr(1,$searchWord,"\"");
             if($where[0]=="board"){
                 $sql = $sql . "AND `BoardName` =?";
                 $search[$idx] = $where[1];
