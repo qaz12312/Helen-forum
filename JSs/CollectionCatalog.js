@@ -9,8 +9,9 @@ $( document ).ready(async function()
     //initial()
     console.log("start");
     
-    $( document ).on( "click", ".edit", function()
+    $( document ).on( "click", ".edit", function(event)
     {
+        event.stopPropagation();
             let dirIndex = $("div .Page").index(this.closest(".Page"));
             swal({
             title: "修改收藏目錄名稱",
@@ -90,8 +91,9 @@ $( document ).ready(async function()
     });
     
     
-    $( document ).on( "click", ".delete", function()
+    $( document ).on( "click", ".delete", function(event)
     {
+        event.stopPropagation();
         let dirIndex = $("div .Page").index(this.closest(".Page"));
         
             
@@ -147,8 +149,9 @@ $( document ).ready(async function()
             }, ( dismiss ) => {});
             
     });
-        $( document ).on( "click", ".value", function()
+        $( document ).on( "click", ".Page", function(event)
     {
+        event.stopPropagation();
         let dirIndex = $("div .Page").index(this.closest(".Page"));
             swal({
             title: '歡迎',
