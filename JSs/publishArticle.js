@@ -109,8 +109,11 @@ $("#publishBtn").on("click", function(){
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
     cmd["picture"]=  imagesrc; // no picture
-    cmd['anonymous'] = $("#anonymousCheckbox").prop("checked");// 匿名
-    console.log(cmd);
+    if($("#anonymousCheckbox").prop("checked")){// 匿名
+        cmd['anonymous'] = 1;
+    }else{
+        cmd['anonymous'] = 0;
+    }
     alert(cmd['anonymous']);
     
     $.post("../index.php", cmd, function(dataDB){
