@@ -110,10 +110,12 @@
 		height: 50px;
 		font-size: 16px;
 		background-color: #e0d4bc;
-		color: white;
+		color:#3c537c;
 		font-size: large;
-		border: none;
+		border-style:solid;
+		border-width:5px;
 		margin: 5px;
+		border-color: #8794aa ;
 	}
 	.edit {
 		float:right; 
