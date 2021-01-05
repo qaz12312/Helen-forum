@@ -127,7 +127,13 @@ async function initial(res, rej){
     });
     res(0);
 }
-
+// edit article
+$(document).on("click", ".btn-default", function () {
+    // let thisArticle = $(".tabContent tr").index(this.closest("tr"));
+    sessionStorage.setItem("Helen-act", "editArticle");
+    window.location.href = "../HTMLs/publishArticle.html";
+});
+// edit article
 $("#reportBtn").click(function(){
     if(hasReport){
         swal({
