@@ -513,7 +513,7 @@ function forSearching( res, rej)
     else
     {
         cmd[ "searchWord" ] = thisSearching.hashtag;
-        cmd[ "option" ] = "hashtag";
+        cmd[ "option" ] = "hashTag";
     }
 
 
