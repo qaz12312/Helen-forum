@@ -79,16 +79,13 @@
             <div class= "content">
         <table>
             <tr class="row" style="text-align:left; color:black;">
-                <td colspan="2" class="col-md-7 text-left"><!-- 改成2 -->
+                <td colspan="2" class="col-md-7 text-left">
                     <div id= "authorDiv" class= "head" style="background-color: white; float:left;"></div>
                     &emsp;Author
                 </td>
-                <!-- edit article -->
-                <td id="editArticle">
-                    
+                <td id="editArticle"><!-- edit article -->
                 </td>
-                <!-- edit article -->
-                <td rowspan="3" class="col-md-1"></td>
+                <td rowspan="4" class="col-md-1"></td>
                 <td style="background-color: white;" class="col-md-4">
                     <table style="border: 10px white solid">
                         <tr>
@@ -154,7 +151,11 @@
                     </table>
                 </td>
             </tr>
-            
+            <tr>
+                <td id="postTime" style="text-align: right;">
+                    <!-- 2020/11/05 15:36 -->
+                </td>
+            </tr>
             <tr class="row">
                 <td>
                     <button type='button' class='btn btn-secondary' id= "heartBtn">
@@ -170,9 +171,7 @@
                 <td><button type="button" class="btn" id= "reportBtn">
                     <span class="glyphicon glyphicon-alert"></span> 檢舉</button>
                 </td>
-                <td id= "postTime">
-                    <!-- 2020/11/05 15:36 -->
-                </td>
+                <td colspan="4" class="col-md-1"></td>
             </tr>
         </table>
             </div>

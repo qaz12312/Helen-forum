@@ -135,6 +135,7 @@ async function initial(res, rej){
     });
     res(0);
 }
+
 // edit article
 $(document).on("click", ".btn-default", function () {
     sessionStorage.setItem("Helen-act", "editArticle");
