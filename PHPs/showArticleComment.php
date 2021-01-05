@@ -31,6 +31,7 @@
 		dataDB.data.hashTag
         dataDB.data.authorNickname 
         dataDB.data.authorColor    
+	dataDB.data.anonymous //匿名(編輯文章用)
         dataDB.data.isAuthor // user是否為發文者(0/1)
     否則
         dataDB.errorCode = "Article is disappear." / "Author is disappear."
@@ -86,7 +87,7 @@
                     $hasKeep = "" ;
                     $isAuthor = 0 ;
                 }
-                $arr = array("isAuthor"=>$isAuthor,"boardName"=>$articleInfo[0][7],"title"=>$articleInfo[0][1],"content"=>$articleInfo[0][2],"like"=>$articleInfo[0][3],"keep"=>$articleInfo[0][4],"time"=>$articleInfo[0][5],"image"=>$articleInfo[0][8],"hashTag"=>$hashTag,"authorNickName"=>$authorNickname ,"authorColor"=>$authorColor, "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
+                $arr = array("anonymous"=>$articleInfo[0][9],"isAuthor"=>$isAuthor,"boardName"=>$articleInfo[0][7],"title"=>$articleInfo[0][1],"content"=>$articleInfo[0][2],"like"=>$articleInfo[0][3],"keep"=>$articleInfo[0][4],"time"=>$articleInfo[0][5],"image"=>$articleInfo[0][8],"hashTag"=>$hashTag,"authorNickName"=>$authorNickname ,"authorColor"=>$authorColor, "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 
                 $sql ="SELECT `UserID`, `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
                 $comment = query($conn,$sql,array($articleID),"SELECT");
