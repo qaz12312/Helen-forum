@@ -111,6 +111,7 @@ $("#publishBtn").on("click", function(){
     cmd["picture"]=  imagesrc; // no picture
     cmd['anonymous'] = $("#anonymousCheckbox").val();// 匿名
     console.log(cmd);
+    alert(cmd['anonymous']);
     
     $.post("../index.php", cmd, function(dataDB){
         console.log(dataDB);
