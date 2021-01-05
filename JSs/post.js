@@ -46,6 +46,14 @@ async function initial(res, rej){
         else{
             let article= dataDB.data;
             comments= article.comment;
+            // 如果是我的文章，就會出現 編輯文章button
+            if (article.isAuthor){
+                let editCol = $("#editArticle");
+                let editBtn = "<button type='button' class='btn btn-default'>" +
+                                "<span class='glyphicon glyphicon-book'></span> 編輯" +
+                              "</button>";
+                editCol.append(editBtn);
+            }
             var contentStr= article.content; // 文章內文
             let brRe= /(\n)/g;
             contentStr= contentStr.replace(brRe, "<br />"); // 文章內文的換行變成html的<br>
@@ -55,7 +63,7 @@ async function initial(res, rej){
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
             contentStr+= "<br/>";
-            //console.log(article.image);
+            // 加上本地端圖片
             if(article.image)
                 contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
 		
@@ -65,7 +73,7 @@ async function initial(res, rej){
                     if(h== 0) contentStr+= "<br />";
                     contentStr+= '<span class="badge badge-pill">#'+ article.hashTag[h]+ "</span> ";
                 }
-		contentStr+= "</p>";
+		        contentStr+= "</p>";
             }
             
             $(".tabContent").find("h2").text(article.title); // 文章標題
@@ -129,7 +137,6 @@ async function initial(res, rej){
 }
 // edit article
 $(document).on("click", ".btn-default", function () {
-    // let thisArticle = $(".tabContent tr").index(this.closest("tr"));
     sessionStorage.setItem("Helen-act", "editArticle");
     window.location.href = "../HTMLs/publishArticle.html";
 });
