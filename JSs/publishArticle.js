@@ -234,18 +234,23 @@ async function initial(res, rej){
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
                 console.log(article.image);
-                $("#deletepic").hide();
-                $("#preview").hide();
                 if(article.image){
                     $("#deletepic").show();
                     preview.src=article.image;
                     $("#preview").show();
+                }
+                else{
+                    $("#deletepic").hide();
+                    $("#preview").hide();
                 }
                     
                 hashtags= article.hashTag;
                 printHashtag();
             }
         })
+    }
+    else{
+        $("#deletepic").hide();
     }
     res(0);
 }
