@@ -109,7 +109,7 @@ $("#publishBtn").on("click", function(){
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
     cmd["picture"]=  imagesrc; // no picture
-    cmd['anonymous'] = $("#anonymousCheckbox").val();// 匿名
+    cmd['anonymous'] = $("#anonymousCheckbox").prop("checked");// 匿名
     console.log(cmd);
     alert(cmd['anonymous']);
     
@@ -245,7 +245,9 @@ async function initial(res, rej){
                     $("#deletepic").hide();
                     $("#preview").hide();
                 }
-                    
+                if(article.anonymous){
+                    $("#anonymousCheckbox").prop("checked") = true;
+                }  
                 hashtags= article.hashTag;
                 printHashtag();
             }
