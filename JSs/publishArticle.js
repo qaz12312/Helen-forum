@@ -142,6 +142,7 @@ $("#cancelPublish").on("click", function(){
 $("#deletepic").on("click", function(){
     imagesrc="";
     preview.removeAttribute('src');
+    $(".input-file").val('');
     $("#deletepic").hide();
     $("#preview").hide();
 });
