@@ -33,26 +33,33 @@
         dataDB.data.authorColor    
         dataDB.data.isAuthor // user是否為發文者(0/1)
     否則
-        dataDB.errorCode = "Article doesn't exit."
+        dataDB.errorCode = "Article is disappear." / "Author is disappear."
         dataDB.data = ""
     */
     function doShowArticleComment($input){
         global $conn;
         $articleID = $input['articleID'];
-        $sql="SELECT `AuthorID`,`Title`,`Content`,`cntHeart`,`cntKeep`,`Times`,`Hashtag`,`boardName`,`Image` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?"; //文章 相關資訊
+        $sql="SELECT `AuthorID`,`Title`,`Content`,`cntHeart`,`cntKeep`,`Times`,`Hashtag`,`boardName`,`Image`,`Anonymous` FROM HomeHeart NATURAL JOIN HomeKeep WHERE `ArticleID`=?"; //文章 相關資訊
         $articleInfo = query($conn,$sql,array($articleID),"SELECT");
         $resultCount = count($articleInfo);
         if($resultCount <= 0){
-            errorCode("Article doesn't exit.");
+            errorCode("Article is disappear.");
         }
         else{
-            $sql="SELECT `Nickname`,`Color` FROM `Users` WHERE `UserID`=?"; //作者 相關資訊
-            $resultAuthor = query($conn,$sql,array($articleInfo[0][0]),"SELECT");
-            $resultCount = count($resultAuthor);
-            if($resultCount <= 0){
-                errorCode("AuthorID doesn't exit.");
+            if($articleInfo[0][9]){ // 要匿名
+                $authorNickname = "匿名";
+                $authorColor = "#708090";
+            }else{
+                $sql="SELECT `Nickname`,`Color` FROM `Users` WHERE `UserID`=?"; //作者 相關資訊
+                $resultAuthor = query($conn,$sql,array($articleInfo[0][0]),"SELECT");
+                $resultCount = count($resultAuthor);
+                if($resultCount <= 0){
+                    errorCode("Author is disappear.");
+                }
+                $authorNickname = $resultAuthor[0][0];
+                $authorColor = $resultAuthor[0][1];
             }
-            else{
+            
                 $hashTag = json_decode($articleInfo[0][6]);
                 // if(isset($input['token'])){// 非訪客
                 //     $token =$input['token'];
@@ -79,7 +86,7 @@
                     $hasKeep = "" ;
                     $isAuthor = 0 ;
                 }
-                $arr = array("isAuthor"=>$isAuthor,"boardName"=>$articleInfo[0][7],"title"=>$articleInfo[0][1],"content"=>$articleInfo[0][2],"like"=>$articleInfo[0][3],"keep"=>$articleInfo[0][4],"time"=>$articleInfo[0][5],"image"=>$articleInfo[0][8],"hashTag"=>$hashTag,"authorNickName"=>$resultAuthor[0][0] ,"authorColor"=>$resultAuthor[0][1], "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
+                $arr = array("isAuthor"=>$isAuthor,"boardName"=>$articleInfo[0][7],"title"=>$articleInfo[0][1],"content"=>$articleInfo[0][2],"like"=>$articleInfo[0][3],"keep"=>$articleInfo[0][4],"time"=>$articleInfo[0][5],"image"=>$articleInfo[0][8],"hashTag"=>$hashTag,"authorNickName"=>$authorNickname ,"authorColor"=>$authorColor, "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
                 
                 $sql ="SELECT `UserID`, `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
                 $comment = query($conn,$sql,array($articleID),"SELECT");
@@ -104,7 +111,7 @@
                 }
                 $arr['comment']=$commentArr;
                 $rtn = successCode("Successfully show article and comment.",$arr);
-            }
+
         }
         echo json_encode($rtn);
     }

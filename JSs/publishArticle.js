@@ -102,12 +102,6 @@ $("#publishBtn").on("click", function(){
     else{ //發布文章
         cmd["act"]= "newArticle";
     }
-    // 匿名 ------------------------------------------------------------------------------------------------------------
-    // if ($("#anonymousCheckbox").prop("checked")) { // 回傳布林值
-        cmd['anonymous'] = $("#anonymousCheckbox").val();
-    // } 
-    // 匿名 ------------------------------------------------------------------------------------------------------------
-
     cmd["account"]= sessionStorage.getItem("Helen-account")
     cmd["title"]= titleStr;
     let chooseStr= $("#chooseBoard option:selected").text();
@@ -115,6 +109,7 @@ $("#publishBtn").on("click", function(){
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
     cmd["picture"]=  imagesrc; // no picture
+    cmd['anonymous'] = $("#anonymousCheckbox").val();// 匿名
     console.log(cmd);
     
     $.post("../index.php", cmd, function(dataDB){
