@@ -39,9 +39,9 @@
 		}
 		else{
 			if(empty($input['hashTag'])){
-				$hashTag = json_encode(array());
+				$hashTag = json_encode(array(), JSON_UNESCAPED_UNICODE);
 			}else{
-				$hashTag = json_encode($input['hashTag']);
+				$hashTag = json_encode($input['hashTag'], JSON_UNESCAPED_UNICODE);
 			}
 			if(empty($input['picture'])){
 				$input['picture'] = "";

@@ -143,7 +143,7 @@ function doSearch($where,$boardInfo,$sql,$orderWay,$search,$user){
     //     $userInfo = $_SESSION[$token];
     //     $user = $userInfo['account'];
     //     global $input["searchWord"];
-    //     writeRecord($user,$userInfo["log"],"search in".$where." about: ".json_encode($input["searchWord"]));
+    //     writeRecord($user,$userInfo["log"],"search in".$where." about: ".json_encode($input["searchWord"], JSON_UNESCAPED_UNICODE));
     // }
     $sql = $sql." ORDER BY `".$orderWay."` DESC;";
     $result = query($conn, $sql, $search, "SELECT");
