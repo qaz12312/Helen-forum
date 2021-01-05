@@ -118,7 +118,7 @@ async function initial(res, rej){
                 
                 var oneRow = "<tr>" +
                                 "<td rowspan=\"2\" style=\"vertical-align: top;\">" +
-                                "<span class= \"head\" style=\"font-size: 15px; background-color: " + comments[i].color + ";\"> B" + comments[i].floor + "</span></td>" +
+                                "<div class= \"head\" style=\"font-size: 15px; background-color: " + comments[i].color + ";\"> B" + comments[i].floor + "</div></td>" +
                                 "<td style=\"font-size: 15px;\">&nbsp;" + comments[i].nickname;
                 if(comments[i].isOwn== 1){ // 是自己的留言
                     oneRow+= "<button type=\"button\" class=\"btn btn-dark deleteComment\">"+
