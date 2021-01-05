@@ -45,8 +45,6 @@ fileInput.addEventListener( "change", function( event ) {
         preview.src=image.src;
         imagesrc=image.src;
    }
-  
-    console.log("show");
 });
 
 $(document).ready(async function(){
@@ -60,7 +58,6 @@ $("#publishBtn").on("click", function(){
     var contentStr= $("#articleContent").val().trim();
 
     if(titleStr.length< 1){
-        console.log("(Title) Too short.");
         swal({
             title: "文章標題太短嘍！",
             type: "warning",
@@ -68,7 +65,6 @@ $("#publishBtn").on("click", function(){
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }else if(titleStr.length> 127){
-        console.log("(Title) Too long.");
         swal({
             title: "文章標題太長嘍！",
             type: "warning",
@@ -77,7 +73,6 @@ $("#publishBtn").on("click", function(){
         return;
     }
     if(contentStr.length< 10){
-        console.log("(Content) Too shor.");
         swal({
             title: "文章內容太少嘍！",
             type: "warning",
@@ -85,7 +80,6 @@ $("#publishBtn").on("click", function(){
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }else if(contentStr.length> 20000){
-        console.log("(Content) Too long.");
         swal({
             title: "文章內容太多嘍！",
             type: "warning",
@@ -114,8 +108,6 @@ $("#publishBtn").on("click", function(){
     }else{
         cmd['anonymous'] = 0;
     }
-    alert(cmd['anonymous']);
-    
     $.post("../index.php", cmd, function(dataDB){
         console.log(dataDB);
         var dataDB= JSON.parse(dataDB);
@@ -249,7 +241,7 @@ async function initial(res, rej){
                     $("#preview").hide();
                 }
                 if(article.anonymous){
-                    $("#anonymousCheckbox").prop("checked") = true;
+                    $("#anonymousCheckbox").prop("checked", true);
                 }  
                 hashtags= article.hashTag;
                 printHashtag();
