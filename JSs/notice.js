@@ -5,7 +5,7 @@ $( document ).ready( async function()
 {
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
-    $( document ).on( "click", ".btn-default", function()
+    $( document ).on( "click", ".articleTitle", function()
     {   
             
             let thisArticle = $( ".tabContent tr" ).index( this.closest( "tr" ) );
@@ -117,13 +117,8 @@ async function initial( res, rej )
                 
                 
                 let oneRow = "<tr>" +
-                                "<td>" + articles[i].content  + "</td>" +
+                                "<td>" +"<span class='articleTitle'style='cursor:pointer'>"+ articles[i].content  + "</td>" +
                                 "<td>" + articles[i].time  + "</td>" +
-                                "<td>" +
-                                "<button type='button' class='btn btn-default'>" +
-                                        "<span class='glyphicon glyphicon-remove'></span> 刪除" +
-                                    "</button>" +
-                                "</td>" +
                             "</tr>";
                                 
 

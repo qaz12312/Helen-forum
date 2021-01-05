@@ -88,28 +88,12 @@ $( document ).ready(async function()
             }, ( dismiss ) => {} );           
             
     });
-    $( document ).on( "click", ".more", function()
-    {
-        let dirIndex = $("div .Page").index(this.closest(".Page"));
-            swal({
-            title: '歡迎',
-            type: 'info',
-            text: '本訊息1秒後自動關閉',
-            width: 400,
-            showConfirmButton: false,
-            timer: 1000,
-            }).then(( result ) => {}, ( dismiss ) =>
-            {
-                sessionStorage.setItem("Helen-act", "showArticleInDir");
-               // sessionStorage.setItem("Helen-keepDir", CollectionCatalog.dirIndex);
-                sessionStorage.setItem("Helen-keepDir", CollectionCatalog[dirIndex]);
-                location.href = "../HTMLs/sub.html";
-            });
-    });
+    
+    
     $( document ).on( "click", ".delete", function()
     {
         let dirIndex = $("div .Page").index(this.closest(".Page"));
-          
+        
             
             
             swal({
@@ -163,13 +147,40 @@ $( document ).ready(async function()
             }, ( dismiss ) => {});
             
     });
+        $( document ).on( "click", ".value", function()
+    {
+        let dirIndex = $("div .Page").index(this.closest(".Page"));
+            swal({
+            title: '歡迎',
+            type: 'info',
+            text: '本訊息1秒後自動關閉',
+            width: 400,
+            showConfirmButton: false,
+            timer: 1000,
+            }).then(( result ) => {}, ( dismiss ) =>
+            {
+                sessionStorage.setItem("Helen-act", "showArticleInDir");
+               // sessionStorage.setItem("Helen-keepDir", CollectionCatalog.dirIndex);
+                sessionStorage.setItem("Helen-keepDir", CollectionCatalog[dirIndex]);
+                location.href = "../HTMLs/sub.html";
+            });
+    });
     
     $("#CollectionCatalog button").on( "click", async function(){
     
         
         if( $(this).text().trim() == "getValues")
         {
-            alert("你擁有的收藏目錄:  "+values);
+           
+            swal({
+                title: '你擁有的收藏目錄:',
+                type: 'success',
+                html: ""+values,
+                confirmButtonText: 'okay!',
+                confirmButtonColor: '#7a96a2'
+            })
+            
+            
         }
         if( $(this).text().trim() == "+ Add")
         {
@@ -249,7 +260,7 @@ $( document ).ready(async function()
 });
 async function initial(res, rej)
 {
-
+    
     values=[];
     console.log("initial")
      
@@ -302,19 +313,17 @@ async function initial(res, rej)
                             <button class="edit" >edit</button>`+`
                 
                         
-                                <div class="value"> `+`
-                                
-                                    
-                                    
+                                <div class="value" style="cursor: pointer;"> `+`
                                     <span class="currency" id="cjgtxt">`+ dataDB.data[i]+ `</span>`+`
                                         
                                 </div>`+`
                             
                             <ul class="deals">`+`
                                 <li>:):)`+`
-                                
+                                <li>`+`
+                                <li>`+`
                                 <li><button class="delete">delete</button></li>`+`
-                                <li><button class="more">more</button></li>`+`
+                                
                                 </ul>`+`
                             </div>
                         

@@ -94,7 +94,7 @@
 	/*收藏目錄*/
 	
 	/*每個板*/
-	.more{
+	/* .more{
 		width: 130px;
 		height: 40px;
 		font-size: 16px;
@@ -104,16 +104,15 @@
 		border: none;
 		
 		margin: 5px;
-	}
+	} */
 	.delete{
 		width: 130px;
-		height: 40px;
+		height: 50px;
 		font-size: 16px;
 		background-color: #e0d4bc;
 		color: white;
-		color: white;
+		font-size: large;
 		border: none;
-		
 		margin: 5px;
 	}
 	.edit {
@@ -129,18 +128,19 @@
 	}
 	
 	.Page {
+		
 		float:left;
 		display: inline-block;
 		margin: 20px;
 		padding-bottom: 25px;
 		background: #fff;
-		/*text-align: center;*/
 		overflow: hidden;
 		position: relative;
 		transition: all 0.3s ease-in-out;
 		box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
 		width: 300px;
 		height: 400px;
+		/* cursor: pointer; */
 	
 	}
 	.Page .WhichPage {
