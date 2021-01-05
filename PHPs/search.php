@@ -111,7 +111,8 @@
             $sql = $sql .str_repeat("`Hashtag` LIKE  ? OR ",  $arrsize-1);
             $sql = $sql . "`Hashtag` LIKE  ?) ";
             //input query value
-            [$search,$idx] = inputArr(1,$searchWord,"\"");
+            //[$search,$idx] = inputArr(1,$searchWord,"\""); //(精確搜尋)
+            [$search,$idx] = inputArr(1,$searchWord);//(模糊搜尋)
             if($where[0]=="board"){
                 $sql = $sql . "AND `BoardName` =?";
                 $search[$idx] = $where[1];
