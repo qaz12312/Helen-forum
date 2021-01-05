@@ -8,7 +8,8 @@
 	cmd["title"] = "Title";
 	cmd["content"] = "Content"
 	cmd["picture"] = "Image"
-	cmd["hashTag"] ="HashTag"
+    cmd["hashTag"] ="HashTag"
+    cmd['anonymous'] = 0/ 1 (是否要匿名)
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -36,18 +37,19 @@
         else{
             $hashTag = json_encode($input['hashTag']);
         }
-	if(empty($input['picture'])){
+	    if(empty($input['picture'])){
             $input['picture'] = "";
         }
-        $sql="SELECT EXISTS(SELECT 1  FROM `Article`  JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? LIMIT 1)";
+        $sql="SELECT EXISTS(SELECT 1 FROM `Article` JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? LIMIT 1)";
         $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
         $result = query($conn,$sql,$arr,"SELECT");
         if($result[0][0]){
             errorCode("You have been already published this article before.");
         }
         else{
-            $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`) VALUES(?,?,?,?,?,?)";
-            $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
+            ////
+            $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`,`Anonymous`) VALUES(?,?,?,?,?,?,?)";
+            $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['anonymous']);
             query($conn,$sql,$arr,"INSERT");
             // writeRecord($user,$userInfo["log"],"publish the articleID:".$input['articleID']);
             $rtn = successCode("Successfully new the Article.",array());

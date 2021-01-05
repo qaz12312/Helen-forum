@@ -10,6 +10,7 @@
 	cmd["content"] = "Content";
 	cmd["picture"] = "Image";
 	cmd["hashTag"] ="HashTag"(array);
+	cmd['anonymous'] = 0/ 1 (是否要匿名)
 
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -45,8 +46,9 @@
 			if(empty($input['picture'])){
 				$input['picture'] = "";
 			}
-			$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=? WHERE `ArticleID` = ? AND `AuthorID`=?";
-			$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['articleID'], $user);
+			///
+			$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=?,`Anonymous`=? WHERE `ArticleID` = ? AND `AuthorID`=?";
+			$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['anonymous'],$input['articleID'], $user);
 			query($conn,$sql,$arr,"UPDATE");
 
 			$sql="SELECT EXISTS(SELECT 1 FROM `Article` JOIN`Users` ON Users.UserID=Article.AuthorID WHERE `Title`=? AND `Content`=? AND `Image`=? AND `HashTag`=? LIMIT 1)";//文章是否修改成功
