@@ -30,7 +30,7 @@ $( document ).ready( async function()
 
             }).then((result) =>
             {
-                if( enableToNewModerator )
+                if( enableToNewBoard )
                 {
                     let cmd = {};
                     cmd[ "act" ] = "newBoard";
