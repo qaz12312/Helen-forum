@@ -62,7 +62,14 @@ async function initial(res, rej){
             contentStr= contentStr.replace(imgRe, function(word){ // 加上圖片
                 return "<img src= \""+ word.substring(2, word.length- 1)+ "\">";
             });
+
+            let videoRe= /!\{http\S+\}/g;
+            contentStr= contentStr.replace(videoRe, function(word){ // 加上影片連結
+                return "<iframe width=\"360\" src=\"h"+ word.substring(2, word.length- 1)+ 
+                "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
+            });
             contentStr+= "<br/>";
+
             // 加上本地端圖片
             if(article.image)
                 contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
