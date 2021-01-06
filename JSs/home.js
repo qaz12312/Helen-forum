@@ -504,17 +504,24 @@ function forSearching( res, rej)
     cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
 
-    if( thisSearching.content.length != 0 )
-    {
-        
-        cmd[ "searchWord" ] = thisSearching.content;
-        cmd[ "option" ] = "normal";
-    }
-    else
-    {
-        cmd[ "searchWord" ] = thisSearching.hashtag;
-        cmd[ "option" ] = "hashTag";
-    }
+        console.log(thisSearching)
+        if( thisSearching.content.length != 0 )
+        {
+            
+            cmd[ "searchWord" ] = thisSearching.content;
+            cmd[ "option" ] = "normal";
+        }
+        else if( thisSearching.hashtag.length != 0 )
+        {
+            cmd[ "searchWord" ] = thisSearching.hashtag;
+            cmd[ "option" ] = "hashTag";
+        }
+        else
+        {
+            console.log(thisSearching)
+            cmd[ "searchWord" ] = thisSearching.button;
+            cmd[ "option" ] = "button";
+        }
 
 
     $.post( "../index.php", cmd, function( dataDB )
