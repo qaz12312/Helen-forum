@@ -14,7 +14,9 @@ document.querySelector("html").classList.add('js');
 
 var fileInput  = document.querySelector( ".input-file" ),  
     button     = document.querySelector( ".input-file-trigger" ),
-    the_return = document.querySelector( ".file-return");
+    the_return = document.querySelector( ".file-return"),
+    myFile = document.querySelector('#video');
+    
     
 button.addEventListener( "keydown", function( event ) {  
     if ( event.keyCode == 13 || event.keyCode == 32 ) {  
@@ -60,7 +62,6 @@ fileInput.addEventListener( "change", function( event ) {
     }
 });
 
-const myFile = document.querySelector('#video');
 myFile.addEventListener('change', function(e) {
     var  file = e.target.files[0];
     if(file){
