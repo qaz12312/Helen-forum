@@ -15,7 +15,7 @@ document.querySelector("html").classList.add('js');
 var fileInput  = document.querySelector("#my-file"),  
     button     = document.querySelector( ".input-file-trigger" ),
     the_return = document.querySelector( ".file-return"),
-    myFile = document.querySelector("#video");
+    myFile = document.querySelector("#my-video");
     
     
 button.addEventListener( "keydown", function( event ) {  
