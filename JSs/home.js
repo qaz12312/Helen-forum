@@ -503,8 +503,9 @@ function forSearching( res, rej)
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
-    if( thisSearching.length==2)
+    if( thisSearching.length == 2)
     {
+        console.log(thisSearching)
         if( thisSearching.content.length != 0 )
         {
             
@@ -520,6 +521,7 @@ function forSearching( res, rej)
     
     else
     {
+        console.log(thisSearching)
         cmd[ "searchWord" ] = thisSearching.button;
         cmd[ "option" ] = "button";
     }
