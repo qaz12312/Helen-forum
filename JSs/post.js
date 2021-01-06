@@ -464,10 +464,21 @@ $("#keepBtn").click(async function(){
     }
 });
 
-// 搜尋
-$(".content p").on("click", ".hashTagSearch", function(){
-   alert($(this).text());
-	
+// 點下文章中 hashTag -> 搜尋
+$(".content p").on("click", ".hashTagSearch", function () {
+    var hashTagStr = $(this).text();
+    hashTagStr = hashTagStr.substring(1);
+    let searchData = {};
+    searchData["content"] = [];
+    searchData["hashtag"] = hashTagStr;
+    sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
+
+    if (sessionStorage.getItem("Helen-boardName") == null) {
+        location.href = "../HTMLs/home.html";
+    } else {
+        location.href = "../HTMLs/sticky.html";
+    }
+    console.log(searchData);
 });
 
 // 取得收藏目錄
