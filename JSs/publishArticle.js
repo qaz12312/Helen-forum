@@ -43,8 +43,7 @@ $("#deletevideo").on("click", function(){
     $("#video").hide();	
 });
 fileInput.addEventListener( "change", function( event ) { 
-    $("#deletepic").show();
-    $("#preview").show();
+    
     const file = event.target.files[0];
     if(file){
         var validExts = new Array(".gif", ".jpg", ".png");
@@ -68,6 +67,8 @@ fileInput.addEventListener( "change", function( event ) {
                 preview.src = reader.result;
                 imagesrc=image.src;
                 console.log(imagesrc);
+                $("#deletepic").show();
+                $("#preview").show();
             }
         }
     }
@@ -87,13 +88,14 @@ myFile.addEventListener('change', function(e) {
         return false;
     }
     else{
-        $("#deletevideo").show();
-        $("#video").show();
+        
 	    var reader = new FileReader();
 	    reader.readAsDataURL(this.files[0]);
 		reader.onload = function(file){
 		    var fileContent = reader.result;
 		    if(fileContent){
+                $("#deletevideo").show();
+                $("#video").show();
                 video.src=fileContent;
                 videosrc=video.src;
 			}
