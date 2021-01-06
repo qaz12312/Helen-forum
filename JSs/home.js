@@ -506,12 +506,13 @@ function forSearching( res, rej)
  
         if( thisSearching.content.length != 0 )
         {
-            
+            console.log(thisSearching)
             cmd[ "searchWord" ] = thisSearching.content;
             cmd[ "option" ] = "normal";
         }
         else if( thisSearching.hashtag.length != 0 )
         {
+            console.log(thisSearching)
             cmd[ "searchWord" ] = thisSearching.hashtag;
             cmd[ "option" ] = "hashTag";
         }
