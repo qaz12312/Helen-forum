@@ -314,6 +314,7 @@ async function initial(res, rej){
     else{
         $("#deletepic").hide();
         $("#deletevideo").hide();
+        $("#video").hide();
     }
     res(0);
 }
