@@ -72,7 +72,10 @@ $( document ).ready( async function()
                                         showConfirmButton: false,
                                         timer: 1000,
         
-                                    }).then(( result ) => {}, ( dismiss ) => {});
+                                    }).then(( result ) => {}, ( dismiss ) => 
+                                    {
+                                        boardList.push({"boardName": cmd.boardName, "rule": cmd.rule});
+                                    });
                                 }
                             });
                             
