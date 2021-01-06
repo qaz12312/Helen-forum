@@ -51,8 +51,8 @@ fileInput.addEventListener( "change", function( event ) {
                 image.height = 100;
                 image.title = file.name;
                 image.src = reader.result;
-                $('preview').append('<video src="' + image.src + '" width="320" height="240" controls></video>');
-			    $('preview').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除圖片</button>');
+                $('#preview').append('<video src="' + image.src + '" width="320" height="240" controls></video>');
+			    $('#preview').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除圖片</button>');
                 imagesrc.push(image.src);
             }
         }
