@@ -1,7 +1,8 @@
-var fileStr,imagesrc=""; // add picture
+var imagesrc=[]; // add picture
 var boards= [];
 var hashtags= [];
 var preview = document.querySelector('#preview');
+var i=0;
 //this is test data for edit article
 // let articleData= {boardName: "美食版", 
 //                 articleTitle: "測試文章標題",
@@ -31,20 +32,101 @@ fileInput.addEventListener( "change", function( event ) {
 
     const myFile = document.querySelector("#my-file");
     const file = event.target.files[0];
-    console.log(file);
-    const reader = new FileReader();
-    // 轉換成 DataURL
-    reader.readAsDataURL(file);
-    console.log(reader);
-    reader.onload = function() {
-    // 將圖片 src 替換為 DataURL
-    var image = new Image();
-        image.height = 100;
-        image.title = file.name;
-        image.src = reader.result;
-        preview.src=image.src;
-        imagesrc=image.src;
-   }
+    if(file){
+        var validExts = new Array(".gif", ".jpg", ".png");
+        var fileExt = myFile.value;
+        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+        if (validExts.indexOf(fileExt) < 0) {
+            alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+            myFile.value = null;
+            return false;
+        }else{
+            const reader = new FileReader();
+            // 轉換成 DataURL
+            reader.readAsDataURL(file);
+            console.log(reader);
+            reader.onload = function() {
+            // 將圖片 src 替換為 DataURL
+            var image = new Image();
+                image.height = 100;
+                image.title = file.name;
+                image.src = reader.result;
+                $('#preview').append('<img src="' + image.src + '" width="320" height="240" >');
+			    $('#preview').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "del'+i+'" >刪除圖片</button>');
+                imagesrc.push(image.src);
+                console.log(imagesrc);
+            }
+        }
+    }
+});
+
+const const myFile = document.querySelector('#video');
+var i=0;
+myFile.addEventListener('change', function(e) {
+  var  file = e.target.files[0];
+  if(file){
+   var validExts = new Array(".mp4", ".mov", ".mpg");
+	
+  var fileExt = myFile.value;
+  fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+  if (validExts.indexOf(fileExt) < 0) {
+    alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+    myFile.value = null;
+    return false;
+  }else{
+	  var reader = new FileReader();
+	  reader.readAsDataURL(this.files[0]);
+	  //if(reader.result)
+	  {
+		  reader.onload = function(file){
+		var fileContent = reader.result;
+		if(fileContent){
+			$('body').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
+			$('body').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
+			i++;
+			}
+		else{
+		alert("檔案太大");
+		}
+
+		}
+	}
+}
+}
+
+}); = document.querySelector('#video');
+myFile.addEventListener('change', function(e) {
+  var  file = e.target.files[0];
+  if(file){
+   var validExts = new Array(".mp4", ".mov", ".mpg");
+	
+  var fileExt = myFile.value;
+  fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+  if (validExts.indexOf(fileExt) < 0) {
+    alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+    myFile.value = null;
+    return false;
+  }else{
+	  var reader = new FileReader();
+	  reader.readAsDataURL(this.files[0]);
+	  //if(reader.result)
+	  {
+		  reader.onload = function(file){
+		var fileContent = reader.result;
+		if(fileContent){
+			$('body').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
+			$('body').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
+			i++;
+			}
+		else{
+		alert("檔案太大");
+		}
+
+		}
+	}
+}
+}
+
 });
 
 $(document).ready(async function(){
