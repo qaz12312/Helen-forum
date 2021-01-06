@@ -182,6 +182,8 @@ function setSearchData() {
     let searchArr = searchStr.split(" ");
     var contents = [];
     var hashtags = [];
+    var button = [];
+
     
     for (var i = 0; i < searchArr.length; i++) {
         if(!searchArr[i].trim()) continue; // 空格
@@ -196,7 +198,7 @@ function setSearchData() {
     let searchData = {};
     searchData["content"] = contents;
     searchData["hashtag"] = hashtags;
-    searchData["button"] = hashtags;
+    searchData["button"] = button;
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if (sessionStorage.getItem("Helen-boardName") == null) {

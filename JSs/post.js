@@ -468,12 +468,14 @@ $("#keepBtn").click(async function(){
 $(".content p").on("click", ".hashTagSearch", function () {
     var hashTagStr = $(this).text(); // #我是HASHTAG
     hashTagStr = hashTagStr.substring(1).trim(); // 我是HASHTAG
+    var contents = [];
     var hashtags = [];
+    var button = [];
     let searchData = {};
-    hashtags.push(hashTagStr);
+    hashtags.push(button);
     searchData["content"] = contents;
     searchData["hashtag"] = hashtags;
-    searchData["button"] = hashtags;
+    searchData["button"] = button;
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
     location.href = "../HTMLs/home.html";
 });
