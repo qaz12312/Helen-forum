@@ -1,4 +1,6 @@
 var applications = {};
+var boardList = [];
+var enableToNewBoard = true;
 var thisAccount = sessionStorage.getItem( 'Helen-account' );
 
 $( document ).ready( async function() 
@@ -28,84 +30,108 @@ $( document ).ready( async function()
 
             }).then((result) =>
             {
-                if( result )
+                if( enableToNewModerator )
+                {
+                    let cmd = {};
+                    cmd[ "act" ] = "newBoard";
+                    cmd[ "boardName" ] = thisBoardName.split("版")[0];                    
+
+                    if( !boardList.find((element) => element.boardName == cmd.boardName ) )
+                    {
+                        swal({
+                            title: "新增看板&emsp;" + thisBoardName + "<br /><small>&lt;版規&gt;</small>",
+                            input: "textarea",
+                            inputPlaceholder: "請輸入版規...",
+                            showCancelButton: true,
+                            confirmButtonText: "送出",
+                            cancelButtonText: "取消",
+                            animation: false,
+                        }).then((result) =>
+                        {
+                            cmd[ "rule" ] = result;
+        
+                            $.post( "../index.php", cmd, function( dataDB )
+                            {
+                                dataDB = JSON.parse( dataDB );
+        
+                                if( dataDB.status == false )
+                                {
+                                    swal({
+                                        title: "新增看版失敗<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                                        type: "error",
+                                        text: data.errorCode,
+                                        confirmButtonText: "確定",
+                                        
+                                    }).then(( result ) => {}, ( dismiss ) => {});
+                                }
+                                else
+                                {
+                                    swal({
+                                        title: "新增看版成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
+                                        type: "success",
+                                        showConfirmButton: false,
+                                        timer: 1000,
+        
+                                    }).then(( result ) => {}, ( dismiss ) => {});
+                                }
+                            });
+                            
+                            cmd[ "act" ] = "deleteApplyBoard";
+                            cmd[ "account" ] = thisApplicant;
+                            cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
+                            cmd[ "type" ] = "board";
+    
+                            $.post( "../index.php", cmd, function( dataDB )
+                            {
+                                dataDB = JSON.parse( dataDB );
+    
+                                if( dataDB.status == false )
+                                {
+                                    swal({
+                                        title: "移除申請失敗<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
+                                        type: "error",
+                                        text: dataDB.errorCode,
+                                        confirmButtonText: "確定",
+            
+                                    }).then((result) => {}, ( dismiss ) => {});
+                                }
+                                else
+                                {
+                                    applications.splice( thisApplcationID, 1 );
+                                    thisTr.remove();
+            
+                                    if( applications.length == 0 )
+                                    {
+                                        let emptyMessage = "<tr>" + 
+                                                                "<td colspan='4'>申請看板列表為空</td>" +
+                                                            "</tr>";
+                                                            
+                                        $( ".tabContent tbody" ).append( emptyMessage );
+                                    }
+                                }
+                            });
+                        }, ( dismiss ) => {});
+                    }
+                    else
+                    {
+                        swal({
+                            title: "錯誤",
+                            type: "error",
+                            text: "看板已經存在！",
+                            confirmButtonText: "確定",
+
+                        }).then((result) => {}, ( dismiss ) => {});
+                    }
+                }
+                else
                 {
                     swal({
-                        title: "新增看板&emsp;" + thisBoardName + "<br /><small>&lt;版規&gt;</small>",
-                        input: "textarea",
-                        inputPlaceholder: "請輸入版規...",
-                        showCancelButton: true,
-                        confirmButtonText: "送出",
-                        cancelButtonText: "取消",
-                        animation: false,
-                    }).then((result) =>
-                    {
-                        let cmd = {};
-                        cmd[ "act" ] = "newBoard";
-                        cmd[ "boardName" ] = thisBoardName.split("版")[0];
-                        cmd[ "rule" ] = result;
-    
-                        $.post( "../index.php", cmd, function( dataDB )
-                        {
-                            dataDB = JSON.parse( dataDB );
-    
-                            if( dataDB.status == false )
-                            {
-                                swal({
-                                    title: "新增看版失敗<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
-                                    type: "error",
-                                    text: data.errorCode,
-                                    confirmButtonText: "確定",
-                                    
-                                }).then(( result ) => {}, ( dismiss ) => {});
-                            }
-                            else
-                            {
-                                swal({
-                                    title: "新增看版成功<br /><small>&lt;" + cmd.boardName + "版&gt;</small>",
-                                    type: "success",
-                                    showConfirmButton: false,
-                                    timer: 1000,
-    
-                                }).then(( result ) => {}, ( dismiss ) => {});
-                            }
-                        });
-                        
-                        cmd[ "act" ] = "deleteApplyBoard";
-                        cmd[ "account" ] = thisApplicant;
-                        cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
-                        cmd[ "type" ] = "board";
+                        title: "錯誤",
+                        type: "error",
+                        text: "無法取得看板列表，因此不允許新增看板。",
+                        confirmButtonText: "確定",
 
-                        $.post( "../index.php", cmd, function( dataDB )
-                        {
-                            dataDB = JSON.parse( dataDB );
-
-                            if( dataDB.status == false )
-                            {
-                                swal({
-                                    title: "移除申請失敗<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
-                                    type: "error",
-                                    text: dataDB.errorCode,
-                                    confirmButtonText: "確定",
-        
-                                }).then((result) => {}, ( dismiss ) => {});
-                            }
-                            else
-                            {
-                                applications.splice( thisApplcationID, 1 );
-                                thisTr.remove();
-        
-                                if( applications.length == 0 )
-                                {
-                                    let emptyMessage = "<tr>" + 
-                                                            "<td colspan='4'>申請看板列表為空</td>" +
-                                                        "</tr>";
-                                                        
-                                    $( ".tabContent tbody" ).append( emptyMessage );
-                                }
-                            }
-                        });
-                    }, ( dismiss ) => {});
+                    }).then((result) => {}, ( dismiss ) => {});
                 }
             }, ( dismiss ) => {});
 
@@ -179,10 +205,16 @@ $( document ).ready( async function()
 async function initial( res, rej )
 {
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
-    ( error ) =>
-    {
-        res(1);
-    });
+        ( error ) => res(1)
+    );
+
+    boardList = await new Promise( ( resolve, reject ) => getBoardList( resolve, reject )).catch(
+        ( error ) => 
+        {
+            console.log( error );
+            enableToNewBoard = false;
+        }
+    );
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
@@ -328,6 +360,26 @@ async function checkPermission( resolve, reject )
         }
     
         resolve(0);
+    });
+}
+
+function getBoardList( resolve, reject )
+{
+    let cmd = {};
+    cmd[ "act" ] = "showBoardList";
+
+    $.post( "../index.php", cmd, function( dataDB )
+    {   
+        dataDB = JSON.parse( dataDB );
+
+        if( dataDB.status == false )
+        {
+            reject("Fail to get board list.");
+        }
+        else
+        {
+            resolve(dataDB.data);
+        }
     });
 }
 

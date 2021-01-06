@@ -1,4 +1,6 @@
 var applications = {};
+var moderatorList = [];
+var enableToNewModerator = true;
 var thisAccount = sessionStorage.getItem( 'Helen-account' );
 
 $( document ).ready( async function() 
@@ -21,10 +23,76 @@ $( document ).ready( async function()
                 title: "申請原因&emsp;<cite>" + thisTime + "</cite><br />" +
                         "<small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
                 html: escapeHtml( (!thisContent) ? "無" : thisContent ).split( "\n" ).join( "<br/>" ),
-                confirmButtonText: "確定",
+                showCancelButton: true,
+                confirmButtonText: "讓他當",
+                cancelButtonText: "取消",
                 animation: false,
 
-            }).then((result) => {}, ( dismiss ) => {});
+            }).then((result) =>
+            {
+                if( enableToNewModerator )
+                {
+                    let cmd = {};
+                    cmd[ "act" ] = "editModerator";
+                    cmd[ "account"] = thisApplicant;
+                    cmd[ "newBoardName"] = thisBoardName.split("版")[0];
+
+                    if( !moderatorList.find((element) => element.boardName == cmd.newBoardName ) )
+                    {
+                        $.post( "../index.php", cmd, function( dataDB ) 
+                        {
+                            dataDB = JSON.parse( dataDB );
+    
+                            if( dataDB.status == false )
+                            {
+                                swal({
+                                    title: "新增版主失敗<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
+                                    type: "error",
+                                    text: dataDB.errorCode,
+                                    confirmButtonText: "確定",
+                    
+                                }).then(( result ) => {}, ( dismiss ) => {});
+                            }
+                            else
+                            {
+                                swal({
+                                    title: "新增版主成功<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
+                                    type: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                    
+                                }).then(( result ) =>
+                                {
+                                    location.reload();
+                        
+                                }, ( dismiss ) => {
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                    else
+                    {
+                        swal({
+                            title: "錯誤",
+                            type: "error",
+                            text: "這個版已經有版主囉！",
+                            confirmButtonText: "確定",
+
+                        }).then((result) => {}, ( dismiss ) => {});
+                    }
+                }
+                else
+                {
+                    swal({
+                        title: "錯誤",
+                        type: "error",
+                        text: "無法取得版主列表，因此不允許新增版主。",
+                        confirmButtonText: "確定",
+
+                    }).then((result) => {}, ( dismiss ) => {});
+                }
+            }, ( dismiss ) => {});
 
         }
         else if( $(this).text().trim() == "移除" )
@@ -95,10 +163,16 @@ $( document ).ready( async function()
 async function initial( res, rej )
 {
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
-    ( error ) =>
-    {
-        res(1);
-    });
+        ( error ) => res(1)
+    );
+
+    moderatorList = await new Promise( ( resolve, reject ) => getModeratorList( resolve, reject )).catch(
+        ( error ) => 
+        {
+            console.log( error );
+            enableToNewModerator = false;
+        }
+    );
 
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
@@ -244,6 +318,26 @@ async function checkPermission( resolve, reject )
         }
     
         resolve(0);
+    });
+}
+
+function getModeratorList( resolve, reject )
+{
+    let cmd = {};
+    cmd[ "act" ] = "showModerator";
+
+    $.post( "../index.php", cmd, function( dataDB )
+    {   
+        dataDB = JSON.parse( dataDB );
+
+        if( dataDB.status == false )
+        {
+            reject("Fail to get moderator list.");
+        }
+        else
+        {
+            resolve(dataDB.data);
+        }
     });
 }
 
