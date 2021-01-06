@@ -60,71 +60,34 @@ fileInput.addEventListener( "change", function( event ) {
     }
 });
 
-const const myFile = document.querySelector('#video');
-var i=0;
+const myFile = document.querySelector('#video');
 myFile.addEventListener('change', function(e) {
-  var  file = e.target.files[0];
-  if(file){
-   var validExts = new Array(".mp4", ".mov", ".mpg");
+    var  file = e.target.files[0];
+    if(file){
+        var validExts = new Array(".mp4", ".mov", ".mpg");
 	
-  var fileExt = myFile.value;
-  fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-  if (validExts.indexOf(fileExt) < 0) {
-    alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
-    myFile.value = null;
-    return false;
-  }else{
-	  var reader = new FileReader();
-	  reader.readAsDataURL(this.files[0]);
-	  //if(reader.result)
-	  {
-		  reader.onload = function(file){
-		var fileContent = reader.result;
-		if(fileContent){
-			$('body').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
-			$('body').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
-			i++;
+        var fileExt = myFile.value;
+        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+    if (validExts.indexOf(fileExt) < 0) {
+        alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+        myFile.value = null;
+        return false;
+    }
+    else{
+	    var reader = new FileReader();
+	    reader.readAsDataURL(this.files[0]);
+		reader.onload = function(file){
+		    var fileContent = reader.result;
+		    if(fileContent){
+			    $('body').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
+			    $('body').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
+			    i++;
 			}
-		else{
-		alert("檔案太大");
+		    else{
+		        alert("檔案太大");
+		    }
 		}
-
-		}
-	}
-}
-}
-
-}); = document.querySelector('#video');
-myFile.addEventListener('change', function(e) {
-  var  file = e.target.files[0];
-  if(file){
-   var validExts = new Array(".mp4", ".mov", ".mpg");
-	
-  var fileExt = myFile.value;
-  fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-  if (validExts.indexOf(fileExt) < 0) {
-    alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
-    myFile.value = null;
-    return false;
-  }else{
-	  var reader = new FileReader();
-	  reader.readAsDataURL(this.files[0]);
-	  //if(reader.result)
-	  {
-		  reader.onload = function(file){
-		var fileContent = reader.result;
-		if(fileContent){
-			$('body').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
-			$('body').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
-			i++;
-			}
-		else{
-		alert("檔案太大");
-		}
-
-		}
-	}
-}
+    }
 }
 
 });
