@@ -181,7 +181,7 @@ button{
     border: none;
     outline: none;
     background-color: transparent;
-	display: inline-block;
+    display: contents;
 }
 .hashTagSearch span:hover {/*滑鼠移動上去的CSS（對應css:hover）*/
  background-color: #0C6;                PS：這裡可以改變背景顏色
