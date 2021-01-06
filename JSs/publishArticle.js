@@ -162,6 +162,7 @@ $("#publishBtn").on("click", function(){
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
     cmd["picture"]=  imagesrc; // no picture
+    cmd["video"]=  videosrc; // no picture
     if($("#anonymousCheckbox").prop("checked")){// 匿名
         cmd['anonymous'] = 1;
     }else{
@@ -261,7 +262,6 @@ async function initial(res, rej){
 
         $.post("../index.php", cmd, function(dataDB){
             dataDB= JSON.parse(dataDB);
-
             if(dataDB.status == false){
                 swal({
                     title: "載入頁面失敗",
@@ -284,17 +284,19 @@ async function initial(res, rej){
                 $("#articleContent").val(article.content);
                 console.log(article.image);
                 if(article.image){
+                    console.log(article.image);
                     $("#deletepic").show();
                     preview.src=article.image;
                     $("#preview").show();
                 }
                 else{
+                    console.log(article.image);
                     $("#deletepic").hide();
                     $("#preview").hide();
                 }
-                if(article.image){
+                if(article.video){
                     $("#deletevideo").show();
-                    preview.src=article.image;
+                    video.src=article.video;
                     $("#video").show();
                 }
                 else{
@@ -311,6 +313,7 @@ async function initial(res, rej){
     }
     else{
         $("#deletepic").hide();
+        $("#deletevideo").hide();
     }
     res(0);
 }
