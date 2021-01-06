@@ -12,9 +12,11 @@ var i=0;
 
 document.querySelector("html").classList.add('js');
 
-var fileInput  = document.querySelector( ".input-file" ),  
+var fileInput  = document.querySelector("#my-file"),  
     button     = document.querySelector( ".input-file-trigger" ),
-    the_return = document.querySelector( ".file-return");
+    the_return = document.querySelector( ".file-return"),
+    myFile = document.querySelector("#my-video");
+    
     
 button.addEventListener( "keydown", function( event ) {  
     if ( event.keyCode == 13 || event.keyCode == 32 ) {  
@@ -29,16 +31,14 @@ button.addEventListener( "click", function( event ) {
 fileInput.addEventListener( "change", function( event ) { 
     $("#deletepic").show();
     $("#preview").show();
-
-    const myFile = document.querySelector("#my-file");
     const file = event.target.files[0];
     if(file){
         var validExts = new Array(".gif", ".jpg", ".png");
-        var fileExt = myFile.value;
+        var fileExt = fileInput.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
         if (validExts.indexOf(fileExt) < 0) {
             alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
-            myFile.value = null;
+            fileInput.value = null;
             return false;
         }else{
             const reader = new FileReader();
@@ -60,71 +60,33 @@ fileInput.addEventListener( "change", function( event ) {
     }
 });
 
-const const myFile = document.querySelector('#video');
-var i=0;
 myFile.addEventListener('change', function(e) {
-  var  file = e.target.files[0];
-  if(file){
-   var validExts = new Array(".mp4", ".mov", ".mpg");
+    var  file = e.target.files[0];
+    if(file){
+        var validExts = new Array(".mp4", ".mov", ".mpg");
 	
-  var fileExt = myFile.value;
-  fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-  if (validExts.indexOf(fileExt) < 0) {
-    alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
-    myFile.value = null;
-    return false;
-  }else{
-	  var reader = new FileReader();
-	  reader.readAsDataURL(this.files[0]);
-	  //if(reader.result)
-	  {
-		  reader.onload = function(file){
-		var fileContent = reader.result;
-		if(fileContent){
-			$('body').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
-			$('body').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
-			i++;
+        var fileExt = myFile.value;
+        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+    if (validExts.indexOf(fileExt) < 0) {
+        alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+        myFile.value = null;
+        return false;
+    }
+    else{
+	    var reader = new FileReader();
+	    reader.readAsDataURL(this.files[0]);
+		reader.onload = function(file){
+		    var fileContent = reader.result;
+		    if(fileContent){
+			    $('#preview').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
+			    $('#preview').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
+			    i++;
 			}
-		else{
-		alert("檔案太大");
+		    else{
+		        alert("檔案太大");
+		    }
 		}
-
-		}
-	}
-}
-}
-
-}); = document.querySelector('#video');
-myFile.addEventListener('change', function(e) {
-  var  file = e.target.files[0];
-  if(file){
-   var validExts = new Array(".mp4", ".mov", ".mpg");
-	
-  var fileExt = myFile.value;
-  fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-  if (validExts.indexOf(fileExt) < 0) {
-    alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
-    myFile.value = null;
-    return false;
-  }else{
-	  var reader = new FileReader();
-	  reader.readAsDataURL(this.files[0]);
-	  //if(reader.result)
-	  {
-		  reader.onload = function(file){
-		var fileContent = reader.result;
-		if(fileContent){
-			$('body').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
-			$('body').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
-			i++;
-			}
-		else{
-		alert("檔案太大");
-		}
-
-		}
-	}
-}
+    }
 }
 
 });
