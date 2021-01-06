@@ -174,7 +174,14 @@ button{
 #commentTable  thead {
 	width: calc( 100% - 1em)
 }
-
+/*清除button樣式*/
+.hashTagSearch{
+	margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
 
 #commentTable  thead th {
 	background: #ccc;
