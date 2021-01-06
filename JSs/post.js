@@ -68,12 +68,11 @@ async function initial(res, rej){
                 contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
 		
             if(article.hashTag){
-                contentStr+= "<p>";
+                contentStr+= "<br/>";
                 for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
                     if(h== 0) contentStr+= "<br />";
-                    contentStr+= '<button type='button'><span class="badge badge-pill">#'+ article.hashTag[h]+ "</span> </button>";
+                    contentStr+= '<button type='button' class='hashTagSearch'><span class="badge badge-pill">#'+ article.hashTag[h]+ "</span> </button>";
                 }
-		        contentStr+= "</p>";
             }
             
             $(".tabContent").find("h2").text(article.title); // 文章標題
@@ -463,6 +462,12 @@ $("#keepBtn").click(async function(){
             }
         });
     }
+});
+
+// 搜尋
+$(".content p").on("click","hashTagSearch",function(){
+   alert($(this).innerText);
+	
 });
 
 // 取得收藏目錄
