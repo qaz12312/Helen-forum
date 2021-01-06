@@ -1,4 +1,4 @@
-var imagesrc=[]; // add picture
+var imagesrc="",videosrc=""; // add picture
 var boards= [];
 var hashtags= [];
 var preview = document.querySelector('#preview');
@@ -27,7 +27,21 @@ button.addEventListener( "click", function( event ) {
     fileInput.focus();
     return false;
 });  
-
+	
+$("#deletepic").on("click", function(){	
+    imagesrc="";	    
+    preview.removeAttribute('src');
+    $("#my-file").val('');
+    $("#deletepic").hide();	 
+    $("#preview").hide();	
+});
+$("#deletevideo").on("click", function(){	
+    imagesrc="";	    
+    preview.removeAttribute('src');
+    $("#my-video").val('');
+    $("#deletevideo").hide();	 
+    $("#video").hide();	
+});
 fileInput.addEventListener( "change", function( event ) { 
     $("#deletepic").show();
     $("#preview").show();
@@ -51,9 +65,8 @@ fileInput.addEventListener( "change", function( event ) {
                 image.height = 100;
                 image.title = file.name;
                 image.src = reader.result;
-                $('#preview').append('<img src="' + image.src + '" width="320" height="240"  id= "src'+i+'" >');
-			    $('#preview').append('<button type="button" class="btn glyphicon glyphicon-remove remove" id= "del'+i+'" >刪除圖片</button>');
-                imagesrc.push(image.src);
+                preview.src = reader.result;
+                imagesrc=image.src;
                 console.log(imagesrc);
             }
         }
@@ -61,6 +74,7 @@ fileInput.addEventListener( "change", function( event ) {
 });
 
 myFile.addEventListener('change', function(e) {
+    
     var  file = e.target.files[0];
     if(file){
         var validExts = new Array(".mp4", ".mov", ".mpg");
@@ -73,14 +87,15 @@ myFile.addEventListener('change', function(e) {
         return false;
     }
     else{
+        $("#deletevideo").show();
+        $("#video").show();
 	    var reader = new FileReader();
 	    reader.readAsDataURL(this.files[0]);
 		reader.onload = function(file){
 		    var fileContent = reader.result;
 		    if(fileContent){
-                $('#preview').append('<div id= "div'+i+'"><video src="' + fileContent + '" width="320" height="240" id= "src'+i+'" controls></video>'+
-                '<button type="button" class="remove btn glyphicon glyphicon-remove " id= "d'+i+'" >刪除影片</button></div>');
-			    i++;
+                video.src=fileContent;
+                videosrc=video.src;
 			}
 		    else{
 		        alert("檔案太大");
@@ -180,12 +195,6 @@ $("#cancelPublish").on("click", function(){
     sessionStorage.removeItem('Helen-act');
 });
 
-$('#d0').on("click", function(){
-    console.log(123);
-    let nowfile=$(this).attr('id').split("d")[1];
-    console.log(nowfile);
-    $("#div"+nowfile).remove();
-});
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
     if(event.keyCode== 13){
@@ -282,6 +291,15 @@ async function initial(res, rej){
                 else{
                     $("#deletepic").hide();
                     $("#preview").hide();
+                }
+                if(article.image){
+                    $("#deletevideo").show();
+                    preview.src=article.image;
+                    $("#video").show();
+                }
+                else{
+                    $("#deletevideo").hide();
+                    $("#video").hide();
                 }
                 if(article.anonymous){
                     $("#anonymousCheckbox").prop("checked", true);
