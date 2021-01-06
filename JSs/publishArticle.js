@@ -301,6 +301,7 @@ async function initial(res, rej){
                     console.log(article.image);
                     $("#deletepic").show();
                     preview.src=article.image;
+                    imagesrc=preview.src;
                     $("#preview").show();
                 }
                 else{
@@ -310,6 +311,7 @@ async function initial(res, rej){
                 if(article.video){
                     $("#deletevideo").show();
                     video.src=article.video;
+                    videosrc=video.src;
                     $("#video").show();
                 }
                 else{
