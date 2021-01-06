@@ -83,7 +83,7 @@ async function barInitial() {
                             sessionStorage.getItem("Helen-nickname")+
                             "</span></li>")
         $("#userDD").append("<li class= \"divider\"></li>")
-        $("#userDD").append("<li>"+
+        $("#userDD").append("<li style='cursor:pointer'>"+
                             "<a href=\"../HTMLs/PersonalProfile.html\"><span class= \"glyphicon glyphicon-edit\">  個人資料</span></a></li>")
         $("#userDD").append("<li>"+
                             "<a href=\"../HTMLs/publishArticle.html\" onclick= \"{sessionStorage.removeItem(\"Helen-act\");}\"><span class= \"glyphicon glyphicon-pencil\"> 發佈新文章</span></a></li>")
