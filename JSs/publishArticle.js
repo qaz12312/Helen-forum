@@ -1,4 +1,4 @@
-var fileStr,imagesrc=""; // add picture
+var imagesrc=[]; // add picture
 var boards= [];
 var hashtags= [];
 var preview = document.querySelector('#preview');
