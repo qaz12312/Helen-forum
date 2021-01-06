@@ -73,7 +73,7 @@
 /* .search-container {
   float: right;
 } */
-#userDD:hover {
+#userDD :hover {
    background-color:#d6d0b8;
    cursor: pointer;
 }
