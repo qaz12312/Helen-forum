@@ -51,8 +51,8 @@ fileInput.addEventListener( "change", function( event ) {
                 image.height = 100;
                 image.title = file.name;
                 image.src = reader.result;
-                $('#preview').append('<img src="' + image.src + '" width="320" height="240" >');
-			    $('#preview').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "del'+i+'" >刪除圖片</button>');
+                $('#preview').append('<img src="' + image.src + '" width="320" height="240"  id= "src'+i+'" >');
+			    $('#preview').append('<button type="button" class="btn glyphicon glyphicon-remove remove" id= "del'+i+'" >刪除圖片</button>');
                 imagesrc.push(image.src);
                 console.log(imagesrc);
             }
@@ -78,8 +78,8 @@ myFile.addEventListener('change', function(e) {
 		reader.onload = function(file){
 		    var fileContent = reader.result;
 		    if(fileContent){
-			    $('#preview').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
-			    $('#preview').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
+                $('#preview').append('<div id= "div'+i+'"><video src="' + fileContent + '" width="320" height="240" id= "src'+i+'" controls></video>'+
+                '<button type="button" class="remove btn glyphicon glyphicon-remove " id= "d'+i+'" >刪除影片</button></div>');
 			    i++;
 			}
 		    else{
@@ -180,12 +180,11 @@ $("#cancelPublish").on("click", function(){
     sessionStorage.removeItem('Helen-act');
 });
 
-$("#deletepic").on("click", function(){
-    imagesrc="";
-    preview.removeAttribute('src');
-    $(".input-file").val('');
-    $("#deletepic").hide();
-    $("#preview").hide();
+$('#d0').on("click", function(){
+    console.log(123);
+    let nowfile=$(this).attr('id').split("d")[1];
+    console.log(nowfile);
+    $("#div"+nowfile).remove();
 });
 $("#inputHashtag").keypress(function (event){
     var hashtagStr= $("#inputHashtag").val().trim();
