@@ -12,7 +12,7 @@ var i=0;
 
 document.querySelector("html").classList.add('js');
 
-var fileInput  = document.querySelector( ".input-file" ),  
+var fileInput  = document.querySelector("#my-file"),  
     button     = document.querySelector( ".input-file-trigger" ),
     the_return = document.querySelector( ".file-return"),
     myFile = document.querySelector("#video");
@@ -31,16 +31,14 @@ button.addEventListener( "click", function( event ) {
 fileInput.addEventListener( "change", function( event ) { 
     $("#deletepic").show();
     $("#preview").show();
-
-    const myFile = document.querySelector("#my-file");
     const file = event.target.files[0];
     if(file){
         var validExts = new Array(".gif", ".jpg", ".png");
-        var fileExt = myFile.value;
+        var fileExt = fileInput.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
         if (validExts.indexOf(fileExt) < 0) {
             alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
-            myFile.value = null;
+            fileInput.value = null;
             return false;
         }else{
             const reader = new FileReader();
