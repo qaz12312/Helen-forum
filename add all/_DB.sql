@@ -1,4 +1,5 @@
 use test;
+SET time_zone = '+08:00';
 
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
@@ -32,8 +33,10 @@ CREATE TABLE Article (
 	Content text ,
 	Image longblob ,
 	HashTag varchar(255) ,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	BlockName varchar(255) NOT NULL,
+    Anonymous boolean default false,
+    Video longblob,
 PRIMARY KEY (ArticleID),
 FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
 FOREIGN KEY (BlockName) REFERENCES Board (BoardName) ON UPDATE CASCADE  ON DELETE CASCADE
@@ -120,15 +123,15 @@ CREATE TABLE Calendars (
 CREATE INDEX Calendars_index on Calendars(ID);
 
 DROP VIEW IF EXISTS HomeHeart;
-CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntHeart`,`Times`, `Hashtag`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`, `AuthorID`, COUNT(FollowHeart.UserID),`Times`, `Hashtag`
+CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntHeart`,`Times`, `Hashtag`, `Image`, `Anonymous`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`, `AuthorID`, COUNT(FollowHeart.UserID),`Times`, `Hashtag`, `Image`, `Anonymous`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowHeart` ON Article.ArticleID = FollowHeart.ArticleID
 GROUP BY `ArticleID` ;
 
 # 總收藏數
 DROP VIEW IF EXISTS HomeKeep;
-CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntKeep`,`Times`, `Hashtag`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,`AuthorID`,COUNT(FollowKeep.UserID),`Times`, `Hashtag`
+CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntKeep`,`Times`, `Hashtag`, `Image`, `Anonymous`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,`AuthorID`,COUNT(FollowKeep.UserID),`Times`, `Hashtag`, `Image`, `Anonymous`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
 GROUP BY `ArticleID` ;
 
