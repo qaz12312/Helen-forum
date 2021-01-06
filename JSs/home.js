@@ -503,17 +503,25 @@ function forSearching( res, rej)
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
     cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
-
-    if( thisSearching.content.length != 0 )
+    if( thisSearching.length==2)
     {
-        
-        cmd[ "searchWord" ] = thisSearching.content;
-        cmd[ "option" ] = "normal";
-    }
+        if( thisSearching.content.length != 0 )
+        {
+            
+            cmd[ "searchWord" ] = thisSearching.content;
+            cmd[ "option" ] = "normal";
+        }
+        else
+        {
+            cmd[ "searchWord" ] = thisSearching.hashtag;
+            cmd[ "option" ] = "hashTag";
+        }
+        }
+    
     else
     {
-        cmd[ "searchWord" ] = thisSearching.hashtag;
-        cmd[ "option" ] = "hashTag";
+        cmd[ "searchWord" ] = thisSearching.button;
+        cmd[ "option" ] = "button";
     }
 
 
