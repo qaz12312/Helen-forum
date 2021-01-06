@@ -304,7 +304,6 @@ async function initial(res, rej){
                     $("#preview").show();
                 }
                 else{
-                    console.log(article.image);
                     $("#deletepic").hide();
                     $("#preview").hide();
                 }
