@@ -476,13 +476,7 @@ $(".content p").on("click", ".hashTagSearch", function () {
     searchData["content"] = contents;
     searchData["hashtag"] = hashtags;
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
-
-    if (sessionStorage.getItem("Helen-boardName") == null) {
-        location.href = "../HTMLs/home.html";
-    } else {
-        location.href = "../HTMLs/sticky.html";
-    }
-    alert(searchData);
+    location.href = "../HTMLs/home.html";
 });
 
 // 取得收藏目錄
