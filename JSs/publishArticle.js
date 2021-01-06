@@ -50,7 +50,11 @@ fileInput.addEventListener( "change", function( event ) {
         var fileExt = fileInput.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
         if (validExts.indexOf(fileExt) < 0) {
-            alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+            swal({
+                title: "檔案類型錯誤，可接受的副檔名有：" + validExts.toString(),
+                type: "warning",
+                // text: dataDB.errorCode
+            }).then(( result ) => {}, ( dismiss ) => {});
             fileInput.value = null;
             return false;
         }else{
@@ -83,7 +87,11 @@ myFile.addEventListener('change', function(e) {
         var fileExt = myFile.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
     if (validExts.indexOf(fileExt) < 0) {
-        alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+        swal({
+            title: "檔案類型錯誤，可接受的副檔名有：" + validExts.toString(),
+            type: "warning",
+            // text: dataDB.errorCode
+        }).then(( result ) => {}, ( dismiss ) => {});
         myFile.value = null;
         return false;
     }
@@ -100,7 +108,11 @@ myFile.addEventListener('change', function(e) {
                 videosrc=video.src;
 			}
 		    else{
-		        alert("檔案太大");
+                swal({
+                    title: "檔案太大",
+                    type: "warning",
+                    // text: dataDB.errorCode
+                }).then(( result ) => {}, ( dismiss ) => {});
 		    }
 		}
     }
