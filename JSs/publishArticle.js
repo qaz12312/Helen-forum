@@ -78,8 +78,8 @@ myFile.addEventListener('change', function(e) {
 		reader.onload = function(file){
 		    var fileContent = reader.result;
 		    if(fileContent){
-			    $('body').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
-			    $('body').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
+			    $('#preview').append('<video src="' + fileContent + '" width="320" height="240" controls></video>');
+			    $('#preview').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除影片</button>');
 			    i++;
 			}
 		    else{
