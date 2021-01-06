@@ -65,7 +65,7 @@ async function initial(res, rej){
 
             let videoRe= /!\{http\S+\}/g;
             contentStr= contentStr.replace(videoRe, function(word){ // 加上影片連結
-                return "<iframe width=\"360\" src=\"h"+ word.substring(2, word.length- 1)+ 
+                return "<iframe width=\"360\" src=\"h"+ word.substring(3, word.length- 1)+ 
                 "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>";
             });
             contentStr+= "<br/>";
