@@ -466,11 +466,15 @@ $("#keepBtn").click(async function(){
 
 // 點下文章中 hashTag -> 搜尋
 $(".content p").on("click", ".hashTagSearch", function () {
-    var hashTagStr = $(this).text();
-    hashTagStr = hashTagStr.substring(1);
+    var hashTagStr = $(this).text(); // #我是HASHTAG
+    hashTagStr = hashTagStr.substring(1); // 我是HASHTAG
+
+    var contents = [];
+    var hashtags = [];
     let searchData = {};
-    searchData["content"] = [];
-    searchData["hashtag"] = hashTagStr;
+    hashtags.push(hashTagStr);
+    searchData["content"] = contents;
+    searchData["hashtag"] = hashtags;
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if (sessionStorage.getItem("Helen-boardName") == null) {
