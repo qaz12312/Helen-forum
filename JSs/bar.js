@@ -196,6 +196,7 @@ function setSearchData() {
     let searchData = {};
     searchData["content"] = contents;
     searchData["hashtag"] = hashtags;
+    searchData["button"] = hashtags;
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
 
     if (sessionStorage.getItem("Helen-boardName") == null) {

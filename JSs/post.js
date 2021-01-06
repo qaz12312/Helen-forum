@@ -471,6 +471,8 @@ $(".content p").on("click", ".hashTagSearch", function () {
     var hashtags = [];
     let searchData = {};
     hashtags.push(hashTagStr);
+    searchData["content"] = contents;
+    searchData["hashtag"] = hashtags;
     searchData["button"] = hashtags;
     sessionStorage.setItem("Helen-search", JSON.stringify(searchData));
     location.href = "../HTMLs/home.html";
