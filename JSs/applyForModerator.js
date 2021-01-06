@@ -68,6 +68,51 @@ $( document ).ready( async function()
                                 }, ( dismiss ) => {
                                     location.reload();
                                 });
+
+                                let cmd = {};
+                                cmd[ "act" ] = "deleteApplyBoard";
+                                cmd[ "account" ] = thisApplicant;
+                                cmd[ "content" ] = "版主" + thisBoardName + " " + thisContent;
+                                cmd[ "type" ] = "moderator";
+
+                                $.post( "../index.php", cmd, function( dataDB )
+                                {
+                                    dataDB = JSON.parse( dataDB );
+            
+                                    if( dataDB.status == false )
+                                    {
+                                        swal({
+                                            title: "移除失敗<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
+                                            type: "error",
+                                            text: dataDB.errorCode,
+                                            confirmButtonText: "確定",
+                
+                                        }).then((result) => {}, ( dismiss ) => {});
+                                    }
+                                    else
+                                    {
+                                        swal({
+                                            title: "已成功移除此申請！<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
+                                            type: "success",
+                                            showConfirmButton: false,
+                                            timer: 1000,
+                                            
+                                        }).then((result) => {}, ( dismiss ) =>
+                                        {
+                                            applications.splice( thisApplcationID, 1 );
+                                            thisTr.remove();
+                    
+                                            if( applications.length == 0 )
+                                            {
+                                                let emptyMessage = "<tr>" + 
+                                                                        "<td colspan='4'>申請版主列表為空</td>" +
+                                                                    "</tr>";
+                                                                    
+                                                $( ".tabContent tbody" ).append( emptyMessage );
+                                            }
+                                        });
+                                    }
+                                });
                             }
                         });
                     }
