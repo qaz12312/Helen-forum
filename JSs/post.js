@@ -472,7 +472,7 @@ $(".content p").on("click", ".hashTagSearch", function () {
     var hashtags = [];
     var button = [];
     let searchData = {};
-    hashtags.push(hashTagStr);
+    hashtags.push(button);
     searchData["content"] = contents;
     searchData["hashtag"] = hashtags;
     searchData["button"] = button;
