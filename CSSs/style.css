@@ -182,7 +182,10 @@ button{
     outline: none;
     background-color: transparent;
 }
-
+.hashTagSearch span:hover {/*滑鼠移動上去的CSS（對應css:hover）*/
+ background-color: #0C6;                PS：這裡可以改變背景顏色
+ color: #FFF;                                       PS：這裡可以修改字的顏色
+}
 #commentTable  thead th {
 	background: #ccc;
 }
