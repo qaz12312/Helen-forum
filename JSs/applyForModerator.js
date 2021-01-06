@@ -68,8 +68,7 @@ $( document ).ready( async function()
                                 }, ( dismiss ) => {
                                     location.reload();
                                 });
-
-                                let cmd = {};
+                                
                                 cmd[ "act" ] = "deleteApplyBoard";
                                 cmd[ "account" ] = thisApplicant;
                                 cmd[ "content" ] = "版主" + thisBoardName + " " + thisContent;
