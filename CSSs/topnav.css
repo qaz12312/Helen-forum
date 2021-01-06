@@ -77,6 +77,10 @@
    background-color:#d6d0b8;
    cursor: pointer;
 }
+
+/* #searchOption{
+
+} */
 .search-container input[type=text] {
   padding: 10px;
   margin-top: 20px;
