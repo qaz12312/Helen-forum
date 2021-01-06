@@ -482,7 +482,7 @@ $(".content p").on("click", ".hashTagSearch", function () {
     } else {
         location.href = "../HTMLs/sticky.html";
     }
-    console.log(searchData);
+    alert(searchData);
 });
 
 // 取得收藏目錄
