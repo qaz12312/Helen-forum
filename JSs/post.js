@@ -465,7 +465,7 @@ $("#keepBtn").click(async function(){
 });
 
 // 搜尋
-$(".content p").on("click","hashTagSearch",function(){
+$(".content > p").on("click","hashTagSearch",function(){
    alert($(this).Text);
 	
 });
