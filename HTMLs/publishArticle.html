@@ -75,10 +75,6 @@
         <!-- 中間 -->
         <div class="brand-centered">
             <div class="search-container">
-				<select id="searchOption">
-                    <option value="1">HashTag</option>
-                    <option value="2">Normal</option>
-                </select>
                 <input type="text" placeholder="Search..." name="search" id= "searchInputText">
                 <button type="submit" id= "searchBtn"><span class="glyphicon glyphicon-search"></span> </button>
             </div>
@@ -201,13 +197,9 @@
                         <div class="input-file-container">  
                             <input class="input-file" id="my-file" type="file" >
                             <label tabindex="0" for="my-file" class="input-file-trigger">
-                            <span class="glyphicon glyphicon-open-file" id="insertpic" accept="image/*"/></span> 上傳圖片</label>
-                        </div>
-                        <div class="input-file-container">  
-                            <input class="input-file" id="my-video" type="file" >
-                            <label tabindex="0" for="my-video" class="input-file-trigger">
-                            <span class="glyphicon glyphicon-open-file" id="video" accept="video/*"></span> 上傳影片</label>
-                            <div id="preview"></div>
+                                 <span class="glyphicon glyphicon-open-file" id="insertpic"accept="image/*"></span> 插入圖片</label>
+                                 <button type="button" class="btn glyphicon glyphicon-remove" id= "deletepic" >刪除圖片</button>
+                            <img id="preview" style="width: 45%;height: 45%;">
                         </div>
                     </td>
                     <td>
