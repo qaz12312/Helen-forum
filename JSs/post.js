@@ -71,7 +71,7 @@ async function initial(res, rej){
                 contentStr+= "<br/>";
                 for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
                     if(h== 0) contentStr+= "<br />";
-                    contentStr+= '<button type='button' class='hashTagSearch'><span class="badge badge-pill">#'+ article.hashTag[h]+ "</span> </button>";
+                    contentStr+= "<button type='button' class='hashTagSearch'><span class='badge badge-pill'>#"+ article.hashTag[h]+ "</span> </button>";
                 }
             }
             
