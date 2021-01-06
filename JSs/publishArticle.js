@@ -2,6 +2,7 @@ var fileStr,imagesrc=""; // add picture
 var boards= [];
 var hashtags= [];
 var preview = document.querySelector('#preview');
+var i=0;
 //this is test data for edit article
 // let articleData= {boardName: "美食版", 
 //                 articleTitle: "測試文章標題",
@@ -50,8 +51,9 @@ fileInput.addEventListener( "change", function( event ) {
                 image.height = 100;
                 image.title = file.name;
                 image.src = reader.result;
-                preview.src=image.src;
-                imagesrc=image.src;
+                $('preview').append('<video src="' + image.src + '" width="320" height="240" controls></video>');
+			    $('preview').append('<button type="button" class="btn glyphicon glyphicon-remove" id= "d'+i+'" >刪除圖片</button>');
+                imagesrc.push(image.src);
             }
         }
     }
