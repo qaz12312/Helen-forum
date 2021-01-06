@@ -73,8 +73,8 @@
 /* .search-container {
   float: right;
 } */
-#userDD{
-   background-color:#f1f4c6;
+#userDD:havor{
+   background-color:#d6d0b8;
    cursor: pointer;
 }
 .search-container input[type=text] {
