@@ -38,19 +38,12 @@
 				$sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?,?)";
 				$arr = array($user, $input['content'],($input['type'] == "board" ? 1 : 0));
 				query($conn,$sql,$arr,"INSERT");
-
-				$sql="SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `UserID` = ? AND `Content` = ? AND `Type` = ? LIMIT 1)";
-				$arr = array($user, $input['content'],($input['type'] == "board" ? 1 : 0));
-				$result = query($conn,$sql,$arr,"SELECT");
-				if(!$result[0][0])
-					errorCode("Failed to Apply the Board,Database exception.");
-				else
-					$rtn = successCode("Successfully Apply the Board.");
+				$rtn = successCode("Successfully Apply the Board.");
 		  	}
 		}
-		else 
+		else{
 			errorCode("Failed to Apply.");
-
+		}
         echo json_encode($rtn);
     }
 ?>

@@ -18,23 +18,24 @@
     */
     function doSendNotification($input,$print=1){
         global $conn;
-        $sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?,?)";
-        $arr = array($input['recipient'], $input['content'],2);
-        query($conn,$sql,$arr,"INSERT");
-        
         $sql="SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`= ? LIMIT 1)";
         $arr = array($input['recipient'], $input['content'],2);
         $result = query($conn,$sql,$arr,"SELECT");
-        if(!$result[0][0]){
-            errorCode("Failed to send notification,Database exception.");
+        if($result[0][0]){
+            $sql="UPDATE `Issue` SET `Times`= current_timestamp() WHERE `UserID`=? AND`Content`=? AND `Type`= ?";
+            $arr = array($input['recipient'], $input['content'],2);
+            query($conn,$sql,$arr,"UPDATE");
         }
         else{
-			if($print){
-				$rtn = successCode("Successfully send the notice.");
-				echo json_encode($rtn);
-            }
-            else
-                return true;
+            $sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?,?)";
+            $arr = array($input['recipient'], $input['content'],2);
+            query($conn,$sql,$arr,"INSERT");
         }
+        if($print){
+            $rtn = successCode("Successfully send the notice.");
+            echo json_encode($rtn);
+        }
+        else
+            return true;
     }
 ?>
