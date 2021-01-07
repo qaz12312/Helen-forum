@@ -176,6 +176,7 @@ $( document ).ready(async function()
         {
            if(values!=[])
            {
+               console.log(values)
             swal({
                 title: '你擁有的收藏目錄:',
                 type: 'success',
