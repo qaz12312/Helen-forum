@@ -631,11 +631,12 @@ $("#commentTable").on("click", ".deleteComment", function(){
 $("#commentTable").on("click", ".editComment", function(){
     let commentIndex= $(this).parent().prev().text().trim().substring(1);
     commentIndex= parseInt(commentIndex);
-    console.log(comments[commentIndex-1].content)
+    let NowIndex = $("#commentTable").index(this.closest("td"));
+    console.log(comments[NowIndex].content)
     swal({
         title: "修改留言",
         input: "textarea",
-        inputValue: ""+comments[commentIndex].content,
+        inputValue: "wait",
         showCancelButton: true,
         confirmButtonText: "確認",
         cancelButtonText: "取消",
