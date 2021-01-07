@@ -633,11 +633,11 @@ $("#commentTable").on("click", ".editComment", function(){
     commentIndex= parseInt(commentIndex);
     let NowIndex = $("#commentTable tr" ).index( this.closest( "tr" ) );
     console.log(NowIndex)
-    console.log(comments[NowIndex].content)
+    console.log(comments[NowIndex/2].content)
     swal({
         title: "修改留言",
         input: "textarea",
-        inputValue: ""+comments[NowIndex].content,
+        inputValue: ""+comments[NowIndex/2].content,
         showCancelButton: true,
         confirmButtonText: "確認",
         cancelButtonText: "取消",
