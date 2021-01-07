@@ -126,7 +126,7 @@ async function initial(res, rej){
                 var oneRow = "<tr>" +
                                 "<td rowspan=\"2\" style=\"vertical-align: top;\">" +
                                 "<div class= \"head\" style=\"font-size: 15px; background-color: " + comments[i].color + ";\"> B" + comments[i].floor + "</div></td>" +
-                                "<td style=\"font-size: 15px;\">&nbsp;" + comments[i].nickname;
+                                "<td style=\"font-size: 15px;\">&nbsp;" + comments[i].nickname + "<span style='font-size: 10px; color: gray;'>" + comments[i].time+"</span>";
                 if(comments[i].isOwn== 1){ // 是自己的留言
                     oneRow+= "<button type=\"button\" class=\"btn btn-dark deleteComment\">"+
                             "<span class=\"glyphicon glyphicon-trash\"></span></button>"+
@@ -555,7 +555,11 @@ function leaveComment(){
     cmd["account"] = sessionStorage.getItem("Helen-account");
     cmd["articleID"] = sessionStorage.getItem("Helen-articleID");	
     cmd["content"] = inputComment;
-    
+    if ($("#anonymousCheckbox-comment").prop("checked")) {// 匿名留言
+        cmd['anonymous'] = 1;
+    } else {
+        cmd['anonymous'] = 0;
+    }
     $.post( "../index.php", cmd, function(dataDB){
         dataDB = JSON.parse( dataDB );
 

@@ -7,7 +7,8 @@
 	cmd["blockName"] ="美食";
 	cmd["title"] = "Title";
 	cmd["content"] = "Content"
-	cmd["picture"] = "Image"
+    cmd["picture"] = "Image"
+    cmd['video'] = "video";
     cmd["hashTag"] ="HashTag"
     cmd['anonymous'] = 0/ 1 (是否要匿名)
 	
@@ -40,16 +41,19 @@
 	    if(empty($input['picture'])){
             $input['picture'] = "";
         }
-        $sql="SELECT EXISTS(SELECT 1 FROM `Article` JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND`HashTag`= ? AND`BlockName`= ? LIMIT 1)";
-        $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName']);
+        if(empty($input['video'])){
+            $input['video'] = "";
+        }
+        $sql="SELECT EXISTS(SELECT 1 FROM `Article` JOIN `Users` ON Users.UserID=Article.AuthorID WHERE `AuthorID` = ? AND `Title`= ? AND`Content`= ? AND`Image`= ? AND `Video`=? AND`HashTag`= ? AND`BlockName`= ? LIMIT 1)";
+        $arr = array($user, $input['title'], $input['content'], $input['picture'],$input['video'], $hashTag, $input['blockName']);
         $result = query($conn,$sql,$arr,"SELECT");
         if($result[0][0]){
             errorCode("You have been already published this article before.");
         }
         else{
             ////
-            $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`HashTag`,`BlockName`,`Anonymous`) VALUES(?,?,?,?,?,?,?)";
-            $arr = array($user, $input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['anonymous']);
+            $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`Video`,`HashTag`,`BlockName`,`Anonymous`) VALUES(?,?,?,?,?,?,?,?)";
+            $arr = array($user, $input['title'], $input['content'], $input['picture'],$input['video'], $hashTag, $input['blockName'], $input['anonymous']);
             query($conn,$sql,$arr,"INSERT");
             // writeRecord($user,$userInfo["log"],"publish the articleID:".$input['articleID']);
             $rtn = successCode("Successfully new the Article.",array());
