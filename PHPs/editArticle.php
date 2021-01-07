@@ -9,6 +9,7 @@
 	cmd["title"] = "Title";
 	cmd["content"] = "Content";
 	cmd["picture"] = "Image";
+	cmd['video'] = "video";
 	cmd["hashTag"] ="HashTag"(array);
 	cmd['anonymous'] = 0/ 1 (是否要匿名)
 
@@ -46,21 +47,14 @@
 			if(empty($input['picture'])){
 				$input['picture'] = "";
 			}
-			///
-			$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`HashTag`=?,`BlockName`=?,`Anonymous`=? WHERE `ArticleID` = ? AND `AuthorID`=?";
-			$arr = array($input['title'], $input['content'], $input['picture'], $hashTag, $input['blockName'], $input['anonymous'],$input['articleID'], $user);
+			if(empty($input['video'])){
+				$input['video'] = "";
+			}
+			$sql="UPDATE `Article` SET `Title`=?,`Content`=?,`Image`=?,`Video`=?,`HashTag`=?,`BlockName`=?,`Anonymous`=? WHERE `ArticleID` = ? AND `AuthorID`=?";
+			$arr = array($input['title'], $input['content'], $input['picture'],$input['video'], $hashTag, $input['blockName'], $input['anonymous'],$input['articleID'], $user);
 			query($conn,$sql,$arr,"UPDATE");
-
-			$sql="SELECT EXISTS(SELECT 1 FROM `Article` JOIN`Users` ON Users.UserID=Article.AuthorID WHERE `Title`=? AND `Content`=? AND `Image`=? AND `HashTag`=? LIMIT 1)";//文章是否修改成功
-			$arr = array($input['title'], $input['content'], $input['picture'], $hashTag);
-			$result = query($conn,$sql,$arr,"SELECT");
-			if(!$result[0][0]){
-				errorCode("Failed to Update Article, Database exception.");
-			}
-			else{
-				// writeRecord($user,$userInfo["log"],"edit for articleID:".$input['articleID']);
-				$rtn = successCode("Successfully edited this article.", $result);
-			}
+			// writeRecord($user,$userInfo["log"],"edit for articleID:".$input['articleID']);
+			$rtn = successCode("Successfully edited this article.", $result);
 		}
 		echo json_encode($rtn);
 	}
