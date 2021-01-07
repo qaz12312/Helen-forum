@@ -650,6 +650,11 @@ $("#commentTable").on("click", ".editComment", function(){
             cmd["detail"] = result;
             cmd["articleID"] = sessionStorage.getItem("Helen-articleID");
             cmd["floors"] = commentIndex;
+            if ($("#anonymousCheckbox-comment").prop("checked")) {// 匿名留言
+                cmd['anonymous'] = 1;
+            } else {
+                cmd['anonymous'] = 0;
+            }
             $.post( "../index.php", cmd, function( dataDB ){
             dataDB = JSON.parse( dataDB );
                
