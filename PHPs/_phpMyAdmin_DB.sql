@@ -1,3 +1,5 @@
+SET time_zone = '+08:00';
+
 CREATE TABLE Users (
 	UserID varchar(101) NOT NULL,
 	Password varchar(12) NOT NULL,
@@ -9,12 +11,10 @@ CREATE TABLE Users (
 CREATE INDEX Users_index on Users(UserID);
 
 CREATE TABLE Board (
-	# BoardID tinyint(100) NOT NULL AUTO_INCREMENT,
 	BoardName varchar(255) NOT NULL UNIQUE,
 	UserID varchar(101) NOT NULL,
 	Rule mediumtext ,
 	TopArticleID bigint(255) ,
-	# PRIMARY KEY (BoardID),
 	PRIMARY KEY (BoardName),
 	FOREIGN KEY (UserID) REFERENCES Users (UserID) 
 ) CHARSET=utf8mb4 ;
@@ -27,11 +27,13 @@ CREATE TABLE Article (
 	Content text ,
 	Image longblob ,
 	HashTag varchar(255) ,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	BlockName varchar(255) NOT NULL,
-PRIMARY KEY (ArticleID),
-FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
-FOREIGN KEY (BlockName) REFERENCES Board (BoardName) ON UPDATE CASCADE  ON DELETE CASCADE
+    Anonymous boolean default false,
+    Video longblob,
+	PRIMARY KEY (ArticleID),
+	FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
+	FOREIGN KEY (BlockName) REFERENCES Board (BoardName) ON UPDATE CASCADE  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 CREATE INDEX ArticleID_index on Article(ArticleID);
 
@@ -39,7 +41,7 @@ CREATE TABLE Report (
 	UserID varchar(101) NOT NULL,
 	ArticleID bigint(255) NOT NULL,
 	Reason varchar(255) NOT NULL,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (UserID, ArticleID),
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID) ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
@@ -49,12 +51,11 @@ CREATE TABLE Comments (
 	AuthorID varchar(101) NOT NULL,
 	Content mediumtext NOT NULL,
 	ArticleID bigint(255) NOT NULL,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	Floor int(255) NOT NULL,
-	#TagFloor int(255),
 	PRIMARY KEY (ArticleID, Floor),
-FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
+	FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
+	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 CREATE TABLE KeepDir (
@@ -78,7 +79,7 @@ CREATE TABLE FollowKeep (
 	ArticleID bigint(255) NOT NULL,
 	UserID varchar(101) NOT NULL,
 	DirName varchar(255) NOT NULL,
-	AddTime datetime DEFAULT CURRENT_TIMESTAMP,
+	AddTime datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (ArticleID, UserID),
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)   ON DELETE CASCADE,
 	FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON UPDATE CASCADE ON DELETE CASCADE
@@ -87,7 +88,7 @@ CREATE INDEX FollowKeep_index on FollowKeep(ArticleID, UserID);
 
 CREATE TABLE Issue (
 	UserID varchar(101) NOT NULL,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	Content varchar(255) NOT NULL,
     Type int(2) NOT NULL,
     PRIMARY KEY (UserID, Times, Content, Type),
@@ -107,14 +108,14 @@ CREATE TABLE Calendars (
 )	CHARSET=utf8mb4 ;
 CREATE INDEX Calendars_index on Calendars(ID);
 
-CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntHeart`,`Times`, `Hashtag`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`, `AuthorID`, COUNT(FollowHeart.UserID),`Times`, `Hashtag`
+CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntHeart`,`Times`, `Hashtag`, `Image`,`Video`, `Anonymous`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`, `AuthorID`, COUNT(FollowHeart.UserID),`Times`, `Hashtag`, `Image`,`Video`, `Anonymous`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowHeart` ON Article.ArticleID = FollowHeart.ArticleID
 GROUP BY `ArticleID` ;
 
 # 總收藏數
-CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntKeep`,`Times`, `Hashtag`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,`AuthorID`,COUNT(FollowKeep.UserID),`Times`, `Hashtag`
+CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntKeep`,`Times`, `Hashtag`, `Image`,`Video`, `Anonymous`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,`AuthorID`,COUNT(FollowKeep.UserID),`Times`, `Hashtag`, `Image`,`Video`, `Anonymous`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
 GROUP BY `ArticleID` ;
 
