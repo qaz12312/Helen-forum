@@ -174,7 +174,8 @@ $( document ).ready(async function()
         
         if( $(this).text().trim() == "getValues")
         {
-           
+           if(values!=[])
+           {
             swal({
                 title: '你擁有的收藏目錄:',
                 type: 'success',
@@ -182,9 +183,21 @@ $( document ).ready(async function()
                 confirmButtonText: 'okay!',
                 confirmButtonColor: '#7a96a2'
             })
+           }
+           else
+           {
+            swal({
+                title: '你尚未有收藏目錄:',
+                type: 'warning',
+                confirmButtonText: 'okay!',
+                confirmButtonColor: '#7a96a2'
+            })
+           }
+            
             
             
         }
+
         if( $(this).text().trim() == "+ Add")
         {
             
