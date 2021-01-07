@@ -632,6 +632,7 @@ $("#commentTable").on("click", ".editComment", function(){
     let commentIndex= $(this).parent().prev().text().trim().substring(1);
     commentIndex= parseInt(commentIndex);
     let NowIndex = $("#commentTable tr" ).index( this.closest( "tr" ) );
+    console.log(NowIndex)
     console.log(comments[NowIndex].content)
     swal({
         title: "修改留言",
