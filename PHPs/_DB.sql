@@ -61,10 +61,9 @@ CREATE TABLE Comments (
 	ArticleID bigint(255) NOT NULL,
 	Times datetime DEFAULT CURRENT_TIMESTAMP,
 	Floor int(255) NOT NULL,
-	#TagFloor int(255),
 	PRIMARY KEY (ArticleID, Floor),
-FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
-FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
+	FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
+	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS FollowHeart;
