@@ -308,6 +308,7 @@ async function initial(res, rej){
                     $("#deletepic").hide();
                     $("#preview").hide();
                 }
+                console.log(article.video);
                 if(article.video){
                     $("#deletevideo").show();
                     video.src=article.video;
