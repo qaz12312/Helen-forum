@@ -53,6 +53,7 @@ CREATE TABLE Comments (
 	ArticleID bigint(255) NOT NULL,
 	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	Floor int(255) NOT NULL,
+	Anonymous boolean default false,
 	PRIMARY KEY (ArticleID, Floor),
 	FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
