@@ -635,7 +635,7 @@ $("#commentTable").on("click", ".editComment", function(){
     swal({
         title: "修改留言",
         input: "textarea",
-        inputPlaceholder: "請輸入文字...",
+        inputValue: ""+comments[commentIndex-1].content,
         showCancelButton: true,
         confirmButtonText: "確認",
         cancelButtonText: "取消",
