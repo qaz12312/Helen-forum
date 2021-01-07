@@ -631,7 +631,7 @@ $("#commentTable").on("click", ".deleteComment", function(){
 $("#commentTable").on("click", ".editComment", function(){
     let commentIndex= $(this).parent().prev().text().trim().substring(1);
     commentIndex= parseInt(commentIndex);
-    console.log("edit")
+    console.log(comments[commentIndex-1].content)
     swal({
         title: "修改留言",
         input: "textarea",
@@ -692,6 +692,7 @@ $("#commentTable").on("click", ".editComment", function(){
         
         }, ( dismiss ) => {} );           
 })
+
 
 // 點擊樓層tag
 $("#commentTable").on("click", "a", function() { 
