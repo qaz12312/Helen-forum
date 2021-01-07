@@ -35,13 +35,13 @@ $("#deletepic").on("click", function(){
     $("#deletepic").hide();	 
     $("#preview").hide();	
 });
-$("#deletevideo").on("click", function(){	
-    imagesrc="";	    
-    preview.removeAttribute('src');
-    $("#my-video").val('');
-    $("#deletevideo").hide();	 
-    $("#video").hide();	
-});
+// $("#deletevideo").on("click", function(){	
+//     imagesrc="";	    
+//     preview.removeAttribute('src');
+//     $("#my-video").val('');
+//     $("#deletevideo").hide();	 
+//     $("#video").hide();	
+// });
 fileInput.addEventListener( "change", function( event ) { 
     
     const file = event.target.files[0];
@@ -78,47 +78,47 @@ fileInput.addEventListener( "change", function( event ) {
     }
 });
 
-myFile.addEventListener('change', function(e) {
+// myFile.addEventListener('change', function(e) {
     
-    var  file = e.target.files[0];
-    if(file){
-        var validExts = new Array(".mp4", ".mov", ".mpg");
+//     var  file = e.target.files[0];
+//     if(file){
+//         var validExts = new Array(".mp4", ".mov", ".mpg");
 	
-        var fileExt = myFile.value;
-        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-    if (validExts.indexOf(fileExt) < 0) {
-        swal({
-            title: "檔案類型錯誤，可接受的副檔名有：" + validExts.toString(),
-            type: "warning",
-            // text: dataDB.errorCode
-        }).then(( result ) => {}, ( dismiss ) => {});
-        myFile.value = null;
-        return false;
-    }
-    else{
+//         var fileExt = myFile.value;
+//         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+//     if (validExts.indexOf(fileExt) < 0) {
+//         swal({
+//             title: "檔案類型錯誤，可接受的副檔名有：" + validExts.toString(),
+//             type: "warning",
+//             // text: dataDB.errorCode
+//         }).then(( result ) => {}, ( dismiss ) => {});
+//         myFile.value = null;
+//         return false;
+//     }
+//     else{
         
-	    var reader = new FileReader();
-	    reader.readAsDataURL(this.files[0]);
-		reader.onload = function(file){
-		    var fileContent = reader.result;
-		    if(fileContent){
-                $("#deletevideo").show();
-                $("#video").show();
-                video.src=fileContent;
-                videosrc=video.src;
-			}
-		    else{
-                swal({
-                    title: "檔案太大",
-                    type: "warning",
-                    // text: dataDB.errorCode
-                }).then(( result ) => {}, ( dismiss ) => {});
-		    }
-		}
-    }
-}
+// 	    var reader = new FileReader();
+// 	    reader.readAsDataURL(this.files[0]);
+// 		reader.onload = function(file){
+// 		    var fileContent = reader.result;
+// 		    if(fileContent){
+//                 $("#deletevideo").show();
+//                 $("#video").show();
+//                 video.src=fileContent;
+//                 videosrc=video.src;
+// 			}
+// 		    else{
+//                 swal({
+//                     title: "檔案太大",
+//                     type: "warning",
+//                     // text: dataDB.errorCode
+//                 }).then(( result ) => {}, ( dismiss ) => {});
+// 		    }
+// 		}
+//     }
+// }
 
-});
+// });
 
 $(document).ready(async function(){
     barInitial();
@@ -308,17 +308,17 @@ async function initial(res, rej){
                     $("#deletepic").hide();
                     $("#preview").hide();
                 }
-                console.log(article.video);
-                if(article.video){
-                    $("#deletevideo").show();
-                    video.src=article.video;
-                    videosrc=video.src;
-                    $("#video").show();
-                }
-                else{
-                    $("#deletevideo").hide();
-                    $("#video").hide();
-                }
+                //console.log(article.video);
+                // if(article.video){
+                //     $("#deletevideo").show();
+                //     video.src=article.video;
+                //     videosrc=video.src;
+                //     $("#video").show();
+                // }
+                // else{
+                //     $("#deletevideo").hide();
+                //     $("#video").hide();
+                // }
                 if(article.anonymous){
                     $("#anonymousCheckbox").prop("checked", true);
                 }  
