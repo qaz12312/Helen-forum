@@ -174,9 +174,9 @@ $( document ).ready(async function()
         
         if( $(this).text().trim() == "getValues")
         {
-           if(values!=[])
+           if(values.length!=0)
            {
-               console.log(values)
+               
             swal({
                 title: '你擁有的收藏目錄:',
                 type: 'success',
