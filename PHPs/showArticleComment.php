@@ -90,25 +90,25 @@
             }
             $arr = array("anonymous"=>$articleInfo[0][9],"isAuthor"=>$isAuthor,"boardName"=>$articleInfo[0][7],"title"=>$articleInfo[0][1],"content"=>$articleInfo[0][2],"like"=>$articleInfo[0][3],"keep"=>$articleInfo[0][4],"time"=>$articleInfo[0][5],"image"=>$articleInfo[0][8],"video"=>$articleInfo[0][9],"hashTag"=>$hashTag,"authorNickName"=>$authorNickname ,"authorColor"=>$authorColor, "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
             
-            $sql ="SELECT `UserID`, `Nickname`, `Color`,`Content`,`Floor`,`Times` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
+            $sql ="SELECT `UserID`, `Nickname`, `Color`,`Content`,`Floor`,`Times`,`Anonymous` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
             $comment = query($conn,$sql,array($articleID),"SELECT");
             $commentCount = count($comment);
             $commentArr = array();
             if($commentCount > 0){
-                if(isset($input['account'])){
-                    for($i=0;$i<$commentCount;$i++){
-                        $row = $comment[$i];
-                        $isUser = 0;
-                        if($row[0]==$user){
-                            $isUser = 1;
-                        }
-                        $commentArr[$i]=array("nickname"=>$row[1],"color"=>$row[2],"content"=>$row[3],"floor"=>$row[4],"time"=>$row[5],"isOwn"=>$isUser);
+                for($i=0;$i<$commentCount;$i++){
+                    $row = $comment[$i];
+                    $isUser = 0;//是不是本人寫的
+                    if(isset($input['account'])&&($row[0]==$user)){
+                        $isUser = 1;
                     }
-                }else{
-                    for($i=0;$i<$commentCount;$i++){
-                        $row = $comment[$i];
-                        $commentArr[$i]=array("nickname"=>$row[1],"color"=>$row[2],"content"=>$row[3],"floor"=>$row[4],"time"=>$row[5],"isOwn"=>0);
+                    if($row[6]){ // 要匿名
+                        $authorNickname = "匿名";
+                        $authorColor = "#708090";
+                    }else{
+                        $authorNickname = $row[1];
+                        $authorColor = $row[2];
                     }
+                    $commentArr[$i]=array("nickname"=>$authorNickname,"color"=>$authorColor,"content"=>$row[3],"floor"=>$row[4],"time"=>$row[5],"isOwn"=>$isUser);
                 }
             }
             $arr['comment']=$commentArr;

@@ -37,16 +37,7 @@
             $sql="DELETE FROM `Comments` WHERE  `AuthorID`=? AND`Floor`=?";
             $arr = array($user, $input['floors']);
             query($conn,$sql,$arr,"DELETE");
-            
-            $sql="SELECT EXISTS(SELECT 1 FROM `Comments` WHERE `AuthorID`=? AND`Floor`=? LIMIT 1)";
-            $arr = array($user, $input['floors']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            if($result[0][0]){
-                errorCode("Failed to delete,Database exception.");
-            }
-            else{
-                $rtn = successCode("Successfully deleted this comment.");
-            }
+            $rtn = successCode("Successfully deleted this comment.");
         }
         echo json_encode($rtn);
     }

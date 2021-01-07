@@ -6,6 +6,7 @@
 	cmd["account"] = "00857210"; //cmd["token"]
 	cmd["content"] = "Content";
 	cmd["articleID"] = 1;	
+	cmd['anonymous'] = 1/0
 	
 	後端 to 前端:
 	dataDB = JSON.parse(data);
@@ -40,19 +41,10 @@
 		else{
 			$rowcnt0=(int)$result[0][0]+1;
 		}
-		$sql="INSERT INTO `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`) VALUES(?,?,?,?)";
-		$arr = array($user,$input['content'], $input['articleID'], $rowcnt0);
+		$sql="INSERT INTO `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`,`Anonymous`) VALUES(?,?,?,?,?)";
+		$arr = array($user,$input['content'], $input['articleID'], $rowcnt0,$input['anonymous']);
 		query($conn,$sql,$arr,"INSERT");
-		
-		$sql="SELECT `AuthorID`,`Content`,`ArticleID`,`Times`,`Floor`,`Color` FROM `Comments` JOIN`Users` ON Users.UserID =Comments.AuthorID WHERE `ArticleID`=? AND`Floor`=?";
-		$result = query($conn,$sql,array($input['articleID'], $rowcnt0),"SELECT");
-		$resultCount = count($result);
-		if($resultCount <= 0){
-			errorCode("Failed to upload comment,Database exception.");
-		}
-		else{
-			$rtn = successCode("Successfully new this comment.",$result);
-		}
+		$rtn = successCode("Successfully new this comment.",$result);
 		echo json_encode($rtn);
 	}
     
