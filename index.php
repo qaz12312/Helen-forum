@@ -2,9 +2,12 @@
     require_once("./PHPs/connectDB.php");
     require_once("./PHPs/tools.php");
     require_once("./PHPs/sendNotification.php");
+    ini_set('display_errors','1');
+    error_reporting(E_ALL);
     $conn = connSql();
     $input = $_POST;
-    // session_start();
+
+    session_start();
     switch ($input["act"]) {
         case "sendMailPwd": // 【user】忘記密碼的寄送email
             require_once("./PHPs/sendMailPwd.php"); 
@@ -53,17 +56,21 @@
             require_once("./PHPs/toAllNotification.php");
             doToAllNotification($input);
             break;
+	/*	    
         case "searchBoard": //【訪客】看板內搜尋
             require_once("./PHPs/searchInBoard.php");
             doSearchBoard($input);
             break;
+	case "searchMenu": //【訪客】主頁搜尋
+            require_once("./PHPs/searchInMenu.php");
+            doSearchMenu($input);
+            break;*/
+	case "search": //【訪客】主頁/看板內 搜尋
+            require_once("./PHPs/search.php"); 
+            break;
         case "sortInBoard": // 【系統】版內排序
             require_once("./PHPs/sortInBoard.php");
             doSortBoard($input);
-            break;
-        case "searchMenu": //【訪客】主頁搜尋
-            require_once("./PHPs/searchInMenu.php");
-            doSearchMenu($input);
             break;
         case "sortInMenu": // 【系統】首頁排序
             require_once("./PHPs/sortInMenu.php");
@@ -173,42 +180,43 @@
             require_once("./PHPs/removeTopArticle.php");
             doRemoveTopArticle($input);
             break;
-        case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
-            require_once("./PHPs/showAllUser.php");
-            doShowAllUser($input);
-            break;
-        case "checkPassword": // 確認密碼是否正確	
-            require_once("./PHPs/checkPassword.php");
-            doCheckPassword($input);
-            break;
-        case "showApplyBoard":	
-            require_once("./PHPs/showApplyBoard.php");
-            doShowApplyBoard($input);
-            break;
-        case "newApplyBoard":	
-            require_once("./PHPs/newApplyBoard.php");
-            doNewApplyBoard($input);
-            break;
-        case "deleteApplyBoard":	
-            require_once("./PHPs/deleteApplyBoard.php");
-            doDeleteApplyBoard($input);
-            break;
-        case "newActivityInCanlendar":	
-            require_once("./PHPs/newActivityInCanlendar.php");
-            doNewActivityInCanlendar($input);
-            break;
-        case "checkInCanlendarList": //審核活動
-            require_once("./PHPs/checkInCanlendarList.php"); 
-            doCheckInCanlendarList($input);
-            break;
-        case "showUncheckCanlenderList": //顯示審核活動	
-            require_once("./PHPs/showUncheckCanlenderList.php"); 
-            doShowUncheckCanlenderList($input);
-            break;
-        case "showOnCalendar": //顯示審核活動	
-            require_once("./PHPs/showOnCalendar.php");
-            doShowOnCalendar($input);
-            break;
+	case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
+		require_once("./PHPs/showAllUser.php");
+		doShowAllUser($input);
+        break;
+    case "checkPassword":	
+        require_once("./PHPs/checkPassword.php");
+        doCheckPassword($input);
+        break;
+    case "showApplyBoard":	
+        require_once("./PHPs/showApply.php");
+        doShowApplyBoard($input);
+        break;
+    case "newApplyBoard":	
+        require_once("./PHPs/newApply.php");
+        doNewApplyBoard($input);
+        break;
+    case "deleteApplyBoard":	
+        require_once("./PHPs/deleteApply.php");
+        doDeleteApplyBoard($input);
+        break;
+    case "newActivityInCanlendar":	
+        require_once("./PHPs/newActivityInCanlendar.php");
+        doNewActivityInCanlendar($input);
+        break;
+    case "checkInCanlendarList":	
+        require_once("./PHPs/checkInCanlendarList.php"); //審核活動
+        doCheckInCanlendarList($input);
+        break;
+    case "showUncheckCanlenderList":	
+        require_once("./PHPs/showUncheckCanlenderList.php"); //顯示審核活動
+        doShowUncheckCanlenderList($input);
+        break;
+    case "showCalendar":	
+        require_once("./PHPs/showCalendar.php"); //顯示活動
+        doShowCalendar($input);
+        break;
+
     }
-    $conn = null;
+    $conn = NULL;
 ?>
