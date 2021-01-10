@@ -22,7 +22,7 @@ $(document).ready(function () {
                             type: "error",
                             text: dataDB.errorCode,
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 10000,
     
                         }).then(( result ) => {}, ( dismiss ) => {});
                     }
