@@ -49,7 +49,7 @@
                 $result = query($conn,"SELECT `UserID` FROM `Users` WHERE `UserID`=?",array($account),"SELECT");
                 $resultCount = count($result);
                 if($resultCount <= 0){
-                    errorCode("fail to verify.You need to go to forgetPassword Page again.");
+                    errorCode("You haven't registered yet.");
                 }
                 else{
                     $sql="UPDATE `Users` SET `Password`=? WHERE `UserID` =?";

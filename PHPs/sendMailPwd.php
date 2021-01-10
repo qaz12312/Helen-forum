@@ -12,9 +12,13 @@
         dataDB.info = "Message Sent! Thank you for contacting us."    
         dataDB.data = ""
     否則
-        dataDB.errorCode = "fail to find the password"
+        dataDB.errorCode = "You haven't registered." / "【sendMail】failed: ~."
         dataDB.data = ""
     */
+    $result = query($conn,"SELECT EXISTS(SELECT 1 FROM `Users` WHERE `UserID`=? LIMIT 1)",array($input['account']),"SELECT");
+    if(!$result[0][0]){
+        errorCode("You haven't registered.");
+    }
     use PHPMailer\PHPMailer\PHPMailer;
     require_once 'phpmailer/Exception.php';
     require_once 'phpmailer/PHPMailer.php';
@@ -48,7 +52,7 @@
         $alert = 'Message Sent! Thank you for contacting us.';
         $rtn = successCode($alert,$token);
     } catch (Exception $e){
-        errorCode("【sendMailPwd.php】failed: ". $e->getMessage());
+        errorCode("【sendMail】failed: ". $e->getMessage());
     }
     echo json_encode($rtn);
 ?>
