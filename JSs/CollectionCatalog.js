@@ -17,11 +17,11 @@ $( document ).ready(async function()
             title: "修改收藏目錄名稱",
             input: "textarea",
             input: "textarea",
-            inputPlaceholder: "請輸入文字...",
+           
             showCancelButton: true,
             confirmButtonText: "確認",
             cancelButtonText: "取消",
-            inputPlaceholder:$(this).parents('.Page').find("span").text(),
+            inputValue:$(this).parents('.Page').find("span").text(),
             animation: false
                 
             }).then(( result ) => {
