@@ -15,7 +15,7 @@
         dataDB.errorCode = "You haven't registered." / "【sendMail】failed: ~."
         dataDB.data = ""
     */
-    $result = query($conn,"SELECT EXISTS(SELECT 1 FROM `Users` WHERE `UserID`=? LIMIT 1)",array($account),"SELECT");
+    $result = query($conn,"SELECT EXISTS(SELECT 1 FROM `Users` WHERE `UserID`=? LIMIT 1)",array($input['account']),"SELECT");
     if(!$result[0][0]){
         errorCode("You haven't registered.");
     }
