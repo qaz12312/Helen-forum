@@ -30,7 +30,7 @@ $(document).ready(function () {
                         swal({
                             title: "寄送驗證信成功",
                             type: "success",
-                            text: dataDB.errorCode,
+                            text: dataDB.info,
                             showConfirmButton: false,
                             timer: 3000,
     
