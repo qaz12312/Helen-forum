@@ -22,7 +22,7 @@ $(document).ready(function () {
                             type: "error",
                             text: dataDB.errorCode,
                             showConfirmButton: false,
-                            timer: 1000,
+                            timer: 3000,
     
                         }).then(( result ) => {}, ( dismiss ) => {});
                     }
@@ -34,13 +34,13 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 3000,
     
-                        }).then(( result ) => {}, ( dismiss ) => {});
+                        }).then(( result ) => {}, ( dismiss ) => { time(btn);});
                         
                     }
                 
                     });
                 
-                time(btn);
+               
                 
             }
     }); 
