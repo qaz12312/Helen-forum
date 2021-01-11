@@ -73,7 +73,13 @@ $( document ).ready( async function()
                                 showConfirmButton: false,
                                 timer: 1000,
                                 
-                            }).then((result) => {}, ( dismiss ) => {});
+                            }).then(( result ) =>
+                            {
+                                location.reload();
+                    
+                            }, ( dismiss ) => {
+                                location.reload();
+                            });
     
                             $(chosen).closest( "tr" ).remove();
                             delete activity[ thisID ];
@@ -148,7 +154,7 @@ $( document ).ready( async function()
                         }
                     });
                 }
-            }, ( dismiss ) => {});
+            }, ( dismiss ) => {location.reload();});
         }
     });
 });

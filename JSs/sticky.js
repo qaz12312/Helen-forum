@@ -633,7 +633,7 @@ function forSearching( resolve, reject )
     else
     {
         cmd[ "searchWord" ] = thisSearching.hashtag;
-        cmd[ "option" ] = "hashtag";
+        cmd[ "option" ] = "hashTag";
     }
 
     $.post( "../index.php", cmd, function( dataDB )
@@ -788,7 +788,7 @@ function checkPermission( resolve, reject )
                 );
 
                 $( ".tabContent h2" ).prepend("&emsp;&emsp;");
-    
+                
                 let Trs = $( ".tabContent tbody tr" ).find( "td span:first" ).append(
                     "<button type='button' class='btn pushpinBtn'>" +
                         "<span class='glyphicon glyphicon-pushpin'></span>" +
