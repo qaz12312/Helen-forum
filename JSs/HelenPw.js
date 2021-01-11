@@ -154,19 +154,39 @@ function checkPermission(res, rej)
                     text: dataDB.errorCode,
         
                 }).then(( result ) => {
-                    if ( result )
-                    {
-                        $( ".tabContent" ).empty();
-                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                        $( ".tabContent" ).append( httpStatus );
+                    if (result) {
+                        swal({
+                            title: '請再點選一次驗證信箱',
+                            type: 'success',
+                            text: '本訊息1秒後自動關閉',
+                            showConfirmButton: false,
+                            timer: 1000,
+                        }).then(
+                            function () { },
+                            function (dismiss) {
+                                if (dismiss === 'timer') {
+                                    window.location.href = "../HTMLs/forgetPassword.html";
+                                }
+                            }
+                        );
                     }
         
                 }, ( dismiss ) => {
-                    if ( dismiss )
-                    {
-                        $( ".tabContent" ).empty();
-                        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>403 Forbidden</h1>";
-                        $( ".tabContent" ).append( httpStatus );
+                    if (dismiss === 'timer') {
+                        swal({
+                            title: '請再點選一次驗證信箱',
+                            type: 'success',
+                            text: '本訊息1秒後自動關閉',
+                            showConfirmButton: false,
+                            timer: 1000,
+                        }).then(
+                            function () { },
+                            function (dismiss) {
+                                if (dismiss === 'timer') {
+                                    window.location.href = "../HTMLs/forgetPassword.html";
+                                }
+                            }
+                        );
                     }
                 });
                 
