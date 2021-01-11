@@ -64,8 +64,8 @@ $( document ).ready( async function()
                         }).then(( result ) => {}, ( dismiss ) => {
                             if ( result ) 
                             {
-                                rule = escapeHtml(result).split("\n").join("<br/>");
-                                $( "#rule" ).html( "版規：" + rule );
+                                rule = result;
+                                $( "#rule" ).html( "版規：" + escapeHtml(result).split("\n").join("<br/>") );
                             }
                             else
                             {
@@ -539,9 +539,8 @@ function forNormal( resolve, reject )
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
             if( !rule ) rule = "無";
-            else rule = escapeHtml(rule).split("\n").join("<br/>");
 
-            $( "#rule" ).html( "版規：" + rule );
+            $( "#rule" ).html( "版規：" + escapeHtml(rule).split("\n").join("<br/>") );
 
             $( ".tabContent tbody" ).empty();
 
@@ -672,9 +671,8 @@ function forSearching( resolve, reject )
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
             if( !rule ) rule = "無";
-            else rule = escapeHtml(rule).split("\n").join("<br/>");
 
-            $( "#rule" ).html( "版規：" + rule );
+            $( "#rule" ).html( "版規：" + escapeHtml(rule).split("\n").join("<br/>") );
 
             $( ".tabContent tbody" ).empty();
 
