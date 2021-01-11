@@ -140,7 +140,7 @@ $(document).ready(function () {
                 swal({
                     title: 'ERROR',
                     type: 'error',
-                    text: "錯誤信箱格式",
+                    text: "此帳號已註冊",
                     animation: false,
                     customClass: 'animated rotateOutUpLeft',
                     confirmButtonText: 'okay!',
