@@ -29,16 +29,16 @@
 			errorCode("Could not find the user.");
 	    }
 	    else{
-			// token
-			// $date = date_create('now', new DateTimeZone('Asia/Taipei'));
-			// $time = date_format($date, 'Y-m-d H-i-s');
-			// writeRecord($row[0],$time,"---\nlog in");
-			// $str = $result[0]."010helen";
-			// $token = base64_encode($str);
-			// $per = showAuthority($row[0]);
-			// $ip = GetIP();
-			// $_SESSION[$token] = array("account"=>$row[0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
-			// $rtn = successCode(array("token"=>$token,"color"=>$row[1],"nickname"=>$row[2]));
+			token
+			$date = date_create('now', new DateTimeZone('Asia/Taipei'));
+			$time = date_format($date, 'Y-m-d H-i-s');
+			writeRecord($row[0],$time,"---\nlog in");
+			$str = $result[0]."010helen";
+			$token = base64_encode($str);
+			$per = showAuthority($row[0]);
+			$ip = GetIP();
+			$_SESSION[$token] = array("account"=>$row[0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
+			$rtn = successCode(array("token"=>$token,"color"=>$row[1],"nickname"=>$row[2]));
 			$rtn = successCode("Successfully log in.",$result[0]);
 		}
 		echo json_encode($rtn);
