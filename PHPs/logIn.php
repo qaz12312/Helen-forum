@@ -26,8 +26,9 @@
 		$result = query($conn,$sql,$arr,"SELECT");
 		$resultCount = count($result);
 	    if($resultCount <= 0){
-			errorCode("Could not find the user.");
 			echo base64_decode('MDA3NTcwMDM=');
+			errorCode("Could not find the user.");
+			
 	    }
 	    else{
 			//token
