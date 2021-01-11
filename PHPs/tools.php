@@ -46,12 +46,25 @@ function query($conn,$sql,$input,$option){
 ?>
 <?php
     /*
+    $infoU:account  // 資料夾名稱
+    $infoA:act      // 重要動作
+    $infoI:info     // 要 寫進檔案的內容
+    */
+    // log - db
+    function writeRecord($infoU,$infoA,$infoI){
+        $sql="INSERT INTO `Logs`(`UserID`,`Act`,`Info`) VALUES(?,?,?)";
+        $arr = array($infoU,$infoA,$infoI);
+        query($conn,$sql,$arr,"INSERT");
+    }
+?>
+<?php
+    /*
     $infoA:account // 資料夾名稱
     $infoT:time // 檔名(2020-12-21 22-15)
     $infoI:info // 要 寫進檔案的內容
     */
-    // log
-    function writeRecord($infoA,$infoT,$infoI){
+    // log - txt file
+    function writeRecordSTOP($infoA,$infoT,$infoI){
         $TxtFileName = "./Data/Record/".$infoA."/".$infoT.".txt";
         if( ($file=fopen($TxtFileName,"a")) === FALSE){
             return "建立可寫檔案：".$TxtFileName."失敗";

@@ -56,6 +56,7 @@
             $arr = array($user, $input['title'], $input['content'], $input['picture'],$input['video'], $hashTag, $input['blockName'], $input['anonymous']);
             query($conn,$sql,$arr,"INSERT");
             // writeRecord($user,$userInfo["log"],"publish the articleID:".$input['articleID']);
+            writeRecord($user,"New Article","articleID:".$input['articleID']);
             $rtn = successCode("Successfully new the Article.",array());
         }
             echo json_encode($rtn);

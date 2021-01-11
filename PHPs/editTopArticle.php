@@ -45,6 +45,7 @@
 			}
 			else{
             	// writeRecord($user,$userInfo["log"],"changed the 【".$input['boardName']."】's topArticle which topArticleID is ".$input['articleID'].".");
+            	writeRecord($user,"Edit TopArticle","changed the 【".$input['boardName']."】's topArticle which topArticleID is ".$input['articleID'].".");
 				$rtn = successCode("Successfully edited this topArticle.");
 			}
 		}

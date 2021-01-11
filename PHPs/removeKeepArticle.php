@@ -44,6 +44,7 @@
         }
         else{
             //writeRecord($user,$userInfo["log"],"remove articleID:".$input['articleID']."from dir-".$input['dirName'].".");
+            writeRecord($user,"Remove Keep Article","remove articleID:".$input['articleID']."from dir-".$input['dirName'].".");
             $rtn = successCode("Successfully remove article in keepDir.");
             echo json_encode($rtn);
         }

@@ -42,6 +42,7 @@
                 $arr = array($input['articleID'],$user,$input['dirName'] );
                 query($conn,$sql,$arr,"INSERT");
             // writeRecord($user,$userInfo["log"],"add articleID:".$input['articleID']."in dirName=".$input['dirName']);
+                writeRecord($user,"Add Keep","articleID:".$input['articleID']."in dirName=".$input['dirName']);
                 $rtn = successCode("Successfully kept this keep the article.");
             }
         } 
@@ -50,6 +51,7 @@
             $arr = array($user, $input['articleID']);
             query($conn,$sql,$arr,"DELETE");
             // writeRecord($user,$userInfo["log"],"remove articleID:".$input['articleID']."from dirName=".$input['dirName']);
+            writeRecord($user,"Delete Keep","articleID:".$input['articleID']."from dirName=".$input['dirName']);
             $rtn = successCode("Successfully deleted this article.");
         }
         echo json_encode($rtn);	

@@ -45,6 +45,7 @@
             }
             else{
             //writeRecord($user,$userInfo["log"],"delete articleID:".$input['articleID']);
+                writeRecord($user,"Delete Article","articleID:".$input['articleID']);
                 $rtn = successCode("Successfully deleted this article.");
             }
         }
