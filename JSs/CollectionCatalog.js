@@ -47,11 +47,12 @@ $( document ).ready(async function()
                             title: "收藏名稱不得為空<br />",
                             type: "error",
                             animation: false
-                        }).then(( result ) => {return false}, ( dismiss ) => {return false});
+                        }).then(( result ) => {return dataDB.statusfalse}, ( dismiss ) => {return false});
                         
                     }
                     else
                     {
+                        console.log("123")
                         if( dataDB.status == false )
                         {
                                     
