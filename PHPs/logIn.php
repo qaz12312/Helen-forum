@@ -27,7 +27,7 @@
 		$resultCount = count($result);
 	    if($resultCount <= 0){
 			errorCode("Could not find the user.");
-			echo base64_decode($str);
+			echo base64_decode('MDA3NTcwMDM=');
 	    }
 	    else{
 			//token
