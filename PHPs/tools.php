@@ -53,7 +53,7 @@ function query($conn,$sql,$input,$option){
     // log
     function writeRecord($infoA,$infoT,$infoI){
         $TxtFileName = "./Data/Record/".$infoA."/".$infoT.".txt";
-        if( ($file=fopen ($TxtFileName,"a")) === FALSE){
+        if( ($file=fopen($TxtFileName,"a")) === FALSE){
             return "建立可寫檔案：".$TxtFileName."失敗";
             exit();
         }

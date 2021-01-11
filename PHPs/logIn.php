@@ -32,10 +32,11 @@
 			//token
 			$date = date_create('now', new DateTimeZone('Asia/Taipei'));
 			$time = date_format($date, 'Y-m-d H-i-s');
+			newUserFolder($result[0][0]);
 			writeRecord($result[0][0],$time,"---\nlog in");
 			$str = $result[0][0]."010helen";
 			$token = base64_encode($str);
-			$per = showAuthority($row[0]);
+			$per = showAuthority($result[0][0]);
 			$ip = GetIP();
 			$_SESSION[$token] = array("account"=>$result[0][0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
 			// $rtn = successCode("Successfully log in.",array("token"=>$token,"color"=>$result[0][1],"nickname"=>$row[2]));
