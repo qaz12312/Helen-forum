@@ -198,45 +198,6 @@ $(document).ready(async function(){
                         else
                         {
                             keepMenu.push( dirName );
-                            let cmd = {};
-                            cmd[ "act" ] = "keep";
-                            cmd[ "account" ] = thisAccount;
-                            cmd[ "articleID" ] = thisArticle.articleID;
-                            cmd[ "dirName" ] =  dirName;
-
-                            $.post( "../index.php", cmd, function( dataDB )
-                            {
-                                dataDB = JSON.parse( dataDB );
-
-                                if( dataDB.status == false )
-                                {
-                                    swal({
-                                        title: "錯誤！",
-                                        type: "error",
-                                        text: dataDB.errorCode,
-                            
-                                    }).then(( result ) => {}, ( dismiss ) => {} );
-                                }
-                                else
-                                {
-                                    swal({
-                                        title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
-                                        type: "success",
-                                        showConfirmButton: false,
-                                        timer: 1000,
-                                
-                                    }).then(( result ) => {}, ( dismiss ) => {
-                                        $( chosen ).removeClass( "text-warning" );
-                                        $( chosen ).addClass( "text-light" );
-                                        $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
-                                        $( chosen ).closest( "button" ).addClass( "btn-warning" );
-                
-                                        thisArticle.keep = parseInt( thisArticle.keep ) + 1;
-                                        $( chosen ).eq(1).html( " " + thisArticle.keep );
-                                    });
-                                }
-                            });
-                            
                         }
                     });
 
