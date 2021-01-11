@@ -135,12 +135,10 @@ $(document).ready(function () {
         cmd["account"] = $('#email').val();
         cmd["option"] = "verify";
         $.post("../index.php", cmd, function (dataDB) {
-            console.log(dataDB);
             dataDB = JSON.parse(dataDB);
             if($('#email').val()!="")
             {
-                console.log($('#email').val())
-                document.getElementById('verify').disabled =!document.getElementById('verify').disabled;
+                
                 if (dataDB.status == false) {
                     swal({
                         title: 'ERROR',
@@ -203,6 +201,16 @@ $(document).ready(function () {
                     }, ( dismiss ) => {});
     
                 }
+            }
+            else
+            {
+                swal({
+                    title: "此欄不得為空",
+                    type: "warning",
+                    showConfirmButton: false,
+                    timer: 2000,
+
+                })
             }
             
 
