@@ -75,42 +75,42 @@ $( document ).ready( async function()
                                     }).then(( result ) => {}, ( dismiss ) => 
                                     {
                                         boardList.push({"boardName": cmd.boardName, "rule": cmd.rule});
+                          
+                                        cmd[ "act" ] = "deleteApplyBoard";
+                                        cmd[ "account" ] = thisApplicant;
+                                        cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
+                                        cmd[ "type" ] = "board";
+                
+                                        $.post( "../index.php", cmd, function( dataDB )
+                                        {
+                                            dataDB = JSON.parse( dataDB );
+                
+                                            if( dataDB.status == false )
+                                            {
+                                                swal({
+                                                    title: "移除申請失敗<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
+                                                    type: "error",
+                                                    text: dataDB.errorCode,
+                                                    confirmButtonText: "確定",
+                        
+                                                }).then((result) => {}, ( dismiss ) => {});
+                                            }
+                                            else
+                                            {
+                                                applications.splice( thisApplcationID, 1 );
+                                                thisTr.remove();
+                        
+                                                if( applications.length == 0 )
+                                                {
+                                                    let emptyMessage = "<tr>" + 
+                                                                            "<td colspan='4'>申請看板列表為空</td>" +
+                                                                        "</tr>";
+                                                                        
+                                                    $( ".tabContent tbody" ).append( emptyMessage );
+                                                }
+                                            }
+                                        });
                                     });
-                                }
-                            });
-                            
-                            cmd[ "act" ] = "deleteApplyBoard";
-                            cmd[ "account" ] = thisApplicant;
-                            cmd[ "content" ] = "看板" + thisBoardName + " " + thisContent;
-                            cmd[ "type" ] = "board";
-    
-                            $.post( "../index.php", cmd, function( dataDB )
-                            {
-                                dataDB = JSON.parse( dataDB );
-    
-                                if( dataDB.status == false )
-                                {
-                                    swal({
-                                        title: "移除申請失敗<br /><small>&lt;" + thisApplicant + ", " + thisBoardName + "&gt;</small>",
-                                        type: "error",
-                                        text: dataDB.errorCode,
-                                        confirmButtonText: "確定",
-            
-                                    }).then((result) => {}, ( dismiss ) => {});
-                                }
-                                else
-                                {
-                                    applications.splice( thisApplcationID, 1 );
-                                    thisTr.remove();
-            
-                                    if( applications.length == 0 )
-                                    {
-                                        let emptyMessage = "<tr>" + 
-                                                                "<td colspan='4'>申請看板列表為空</td>" +
-                                                            "</tr>";
-                                                            
-                                        $( ".tabContent tbody" ).append( emptyMessage );
-                                    }
                                 }
                             });
                         }, ( dismiss ) => {});
