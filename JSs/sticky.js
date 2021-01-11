@@ -26,7 +26,7 @@ $( document ).ready( async function()
         swal({
             title: "版規",
             input: "textarea",
-            inputPlaceholder: "請輸入版規...",
+            inputValue: rule,
             showCancelButton: true,
             confirmButtonText: "送出",
             cancelButtonText: "取消",
@@ -64,11 +64,13 @@ $( document ).ready( async function()
                         }).then(( result ) => {}, ( dismiss ) => {
                             if ( result ) 
                             {
-                                $( "#rule" ).html( "版規：" + escapeHtml(result).split("\n").join("<br/>") );
+                                rule = escapeHtml(result).split("\n").join("<br/>");
+                                $( "#rule" ).html( "版規：" + rule );
                             }
                             else
                             {
-                                $( "#rule" ).html( "版規： 無");
+                                rule = "無";
+                                $( "#rule" ).html( "版規：" + rule );
                             }
                         });
                     }
@@ -537,7 +539,9 @@ function forNormal( resolve, reject )
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
             if( !rule ) rule = "無";
-            $( "#rule" ).html( "版規：" + escapeHtml(rule).split("\n").join("<br/>") );
+            else rule = escapeHtml(rule).split("\n").join("<br/>");
+
+            $( "#rule" ).html( "版規：" + rule );
 
             $( ".tabContent tbody" ).empty();
 
@@ -668,7 +672,9 @@ function forSearching( resolve, reject )
             $( ".topnav a:contains(" + thisSort + ")" ).addClass( "active" );
 
             if( !rule ) rule = "無";
-            $( "#rule" ).html( "版規：" + escapeHtml(rule).split("\n").join("<br/>") );
+            else rule = escapeHtml(rule).split("\n").join("<br/>");
+
+            $( "#rule" ).html( "版規：" + rule );
 
             $( ".tabContent tbody" ).empty();
 
@@ -780,6 +786,8 @@ function checkPermission( resolve, reject )
                         "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
                     "</button>"
                 );
+
+                $( ".tabContent h2" ).prepend("&emsp;&emsp;");
     
                 let Trs = $( ".tabContent tbody tr" ).find( "td span:first" ).append(
                     "<button type='button' class='btn pushpinBtn'>" +
