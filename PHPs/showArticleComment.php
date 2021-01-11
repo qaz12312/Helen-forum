@@ -49,7 +49,7 @@
             errorCode("Article is disappear.");
         }
         else{
-            if($articleInfo[0][9]){ // 要匿名
+            if($articleInfo[0][10]){ // 要匿名
                 $authorNickname = "匿名";
                 $authorColor = "#708090";
             }else{
