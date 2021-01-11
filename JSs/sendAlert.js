@@ -71,8 +71,10 @@ $(document).ready(async function () {
             swal({
                 title: "通知內容不得為空!<br />" ,
                 showCancelButton: true,
-                confirmButtonText: "確定",
-                animation: false
+                animation: false,
+                customClass: 'animated rotateOutUpLeft',
+                confirmButtonText: 'okay!',
+                confirmButtonColor: '#eda2b6'
 
                 })
         }
