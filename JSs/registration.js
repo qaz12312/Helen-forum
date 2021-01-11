@@ -72,7 +72,7 @@ $(document).ready(function () {
         else {
             let cmd = {};
             cmd["act"] = "sendMailRegister";
-            cmd["account"] = $('#email').val();
+            cmd["account"] = Base64.encode($('#email').val());
             cmd["password"] = $("#password").val();
             cmd["option"] = "create";
             $.post("../index.php", cmd, function (dataDB) {

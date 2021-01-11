@@ -51,7 +51,7 @@ $(document).ready(function () {
             let cmd = {};
             cmd["act"] = "logIn";
             cmd["account"] = act;
-            cmd["password"] = pw;
+            cmd["password"] = Base64.encode(pw);
             $.post("../index.php", cmd, function (data) {
                 
                 dataDB = JSON.parse(data);
@@ -130,7 +130,7 @@ function initial() {
     let cmd = {};
     cmd["act"] = "logIn";
     cmd["account"] = $("#account").val();
-    cmd["password"] = $("#password").val();
+    cmd["password"] = Base64.encode($("#password").val());
     $("#account").val("");
     $("#password").val("");
 }

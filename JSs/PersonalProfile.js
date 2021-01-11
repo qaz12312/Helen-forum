@@ -86,8 +86,8 @@ $( document ).ready(function()
             }
             let cmd = {};
                 cmd["act"] = "checkPassword";
-                cmd[ "account" ] =sessionStorage.getItem("Helen-account");
-                cmd["password"] = value;
+                cmd[ "account" ] = Base64.encode(sessionStorage.getItem("Helen-account"));
+                cmd["password"] =  Base64.encode(value);
                
                 $.post( "../index.php", cmd, function( dataDB ){
                     dataDB = JSON.parse( dataDB );
@@ -150,7 +150,7 @@ $( document ).ready(function()
                                                     cmd["act"] = "editPersonalInfo";
                                                     cmd["option"] = "password";
                                                     cmd["account"] = sessionStorage.getItem("Helen-account");
-                                                    cmd["new"]=result[0];
+                                                    cmd["new"]=Base64.encode(result[0]);
                                                     $.post( "../index.php", cmd, function( dataDB )
                                                     {
                                                         dataDB = JSON.parse( dataDB );
