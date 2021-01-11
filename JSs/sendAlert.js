@@ -59,7 +59,7 @@ $(document).ready(async function () {
                             }).then((result) => {}, ( dismiss ) => {});
 
                             
-                            //location.reload();//重整
+                            location.reload();//重整
 
         
                         }
