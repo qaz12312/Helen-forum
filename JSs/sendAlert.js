@@ -68,15 +68,15 @@ $(document).ready(async function () {
             }, ( dismiss ) => {});
         }
         else{
-            swal({
-                title: "通知內容不得為空!<br />" ,
-                showCancelButton: true,
-                animation: false,
-                customClass: 'animated rotateOutUpLeft',
-                confirmButtonText: 'okay!',
-                confirmButtonColor: '#eda2b6'
-
-                })
+             swal({
+                        title: '通知內容不得為空!',
+                        type: 'warning',
+                        showConfirmButton: false,
+                        customClass: 'animated rotateOutUpLeft',
+                        confirmButtonText: 'okay!',
+                        confirmButtonColor: '#eda2b6',
+                        timer: 3000
+                    }).then(( result ) => {}, ( dismiss ) => {});
         }
         
 
