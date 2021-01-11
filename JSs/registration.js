@@ -136,68 +136,84 @@ $(document).ready(function () {
         cmd["option"] = "verify";
         $.post("../index.php", cmd, function (dataDB) {
             dataDB = JSON.parse(dataDB);
-            if (dataDB.status == false) {
-                swal({
-                    title: 'ERROR',
-                    type: 'error',
-                    text: "此帳號已註冊",
-                    animation: false,
-                    customClass: 'animated rotateOutUpLeft',
-                    confirmButtonText: 'okay!',
+            if($('#email').val()!="")
+            {
+                
+                if (dataDB.status == false) {
+                    swal({
+                        title: 'ERROR',
+                        type: 'error',
+                        text: "此帳號已註冊",
+                        animation: false,
+                        customClass: 'animated rotateOutUpLeft',
+                        confirmButtonText: 'okay!',
+                       
+                        confirmButtonColor: '#ff0000',
+    
+                    }).then((result) => {}, ( dismiss ) => {});
+                }
+                else {
                    
-                    confirmButtonColor: '#ff0000',
-
-                }).then((result) => {}, ( dismiss ) => {});
-            }
-            else {
-               
-                swal({
-                    title: "請輸入驗證碼\n<small>&lt;"
-                    + "若找不到，請至學校信箱的垃圾郵件查看，謝謝"
-                    + "&gt;</small>",
-                    input: "textarea",
-                    
-                    inputPlaceholder: "請輸入文字...",
-                    showCancelButton: true,
-                    confirmButtonText: "確認",
-                    cancelButtonText: "取消",
-                    inputPlaceholder: $(this).parents('.Page').find("span").text(),
-                    animation: false
-
-                }).then((result) => {
-                   
-                    if (result == dataDB.data) {
+                    swal({
+                        title: "請輸入驗證碼\n<small>&lt;"
+                        + "若找不到，請至學校信箱的垃圾郵件查看，謝謝"
+                        + "&gt;</small>",
+                        input: "textarea",
                         
-                        swal({
-                            title: "驗證成功",
-                            type: "success",
-                            showConfirmButton: false,
-                            timer: 1000,
-
-                        })
-                        document.getElementById('createBtn').disabled = !document.getElementById('createBtn').disabled;
-                    }
-                    else {
-
-                        swal({
-                            title: "驗證失敗",
-                            type: "warning",
-                            showConfirmButton: false,
-                            timer: 2000,
-
-                        }).then(
-                            function () { },
-                            function (dismiss) {
-                                if (dismiss === 'timer') {
-                                    window.location.href = "../HTMLs/registration.html";
+                        inputPlaceholder: "請輸入文字...",
+                        showCancelButton: true,
+                        confirmButtonText: "確認",
+                        cancelButtonText: "取消",
+                        inputPlaceholder: $(this).parents('.Page').find("span").text(),
+                        animation: false
+    
+                    }).then((result) => {
+                       
+                        if (result == dataDB.data) {
+                            
+                            swal({
+                                title: "驗證成功",
+                                type: "success",
+                                showConfirmButton: false,
+                                timer: 1000,
+    
+                            })
+                            document.getElementById('createBtn').disabled = !document.getElementById('createBtn').disabled;
+                        }
+                        else {
+    
+                            swal({
+                                title: "驗證失敗",
+                                type: "warning",
+                                showConfirmButton: false,
+                                timer: 2000,
+    
+                            }).then(
+                                function () { },
+                                function (dismiss) {
+                                    if (dismiss === 'timer') {
+                                        window.location.href = "../HTMLs/registration.html";
+                                    }
                                 }
-                            }
-                        )
-
-                    }
-                }, ( dismiss ) => {});
-
+                            )
+    
+                        }
+                    }, ( dismiss ) => {});
+    
+                }
             }
+            else
+            {
+                swal({
+                    title: "此欄不得為空",
+                    type: "warning",
+                    showConfirmButton: false,
+                    timer: 2000,
+
+                })
+            }
+            
+
 
         });
     });
