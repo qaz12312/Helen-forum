@@ -51,7 +51,7 @@ $("#newActivity").on("click", function(){
         }).then(( result ) => {}, ( dismiss ) => {});
         return;
     }
-    if(contentStr.length< 1){
+    if(contentStr.length< 10){
         //console.log("(Content) Too shor.")
         swal({
             title: "內容太少嘍！",
