@@ -36,7 +36,7 @@ $( document ).ready(async function()
                         }).then(( result ) => {location.reload()}, ( dismiss ) => {location.reload()});
                         
                     }
-                    else if($(this).parents('.Page').find("span").text()=="")
+                    else if(result=="")
                     {
                         swal({
                             title: "收藏名稱不得為空<br />",
