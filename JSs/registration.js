@@ -72,8 +72,8 @@ $(document).ready(function () {
         else {
             let cmd = {};
             cmd["act"] = "sendMailRegister";
-            cmd["account"] = Base64.encode($('#email').val());
-            cmd["password"] = $("#password").val();
+            cmd["account"] = window.btoa($('#email').val());
+            cmd["password"] = window.btoa($("#password").val());
             cmd["option"] = "create";
             $.post("../index.php", cmd, function (dataDB) {
                 dataDB = JSON.parse(dataDB);

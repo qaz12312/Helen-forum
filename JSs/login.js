@@ -50,8 +50,8 @@ $(document).ready(function () {
         else if (format) {
             let cmd = {};
             cmd["act"] = "logIn";
-            cmd["account"] = act;
-            cmd["password"] = Base64.encode(pw);
+            cmd["account"] = window.btoa(act);
+            cmd["password"] = window.btoa(pw);
             $.post("../index.php", cmd, function (data) {
                 
                 dataDB = JSON.parse(data);
@@ -129,8 +129,8 @@ $(document).ready(function () {
 function initial() {
     let cmd = {};
     cmd["act"] = "logIn";
-    cmd["account"] = $("#account").val();
-    cmd["password"] = Base64.encode($("#password").val());
+    cmd["account"] = window.btoa($("#account").val());
+    cmd["password"] = window.btoa($("#password").val());
     $("#account").val("");
     $("#password").val("");
 }

@@ -60,7 +60,7 @@ $(document).ready(async function () {
         cmd["act"] = "forgetPwd";
         cmd["option"] = "change";
         cmd["token"] = ans;
-        cmd["pwd"] = Base64.encode($('#validatePW').val());
+        cmd["pwd"] =window.btoa($('#validatePW').val());
         $.post("../index.php", cmd, function (dataDB) {
             dataDB = JSON.parse(dataDB);
             if (dataDB.status == false) {
