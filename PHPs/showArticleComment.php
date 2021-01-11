@@ -88,7 +88,7 @@
                 $hasKeep = "" ;
                 $isAuthor = 0 ;
             }
-            $arr = array("anonymous"=>$articleInfo[0][9],"isAuthor"=>$isAuthor,"boardName"=>$articleInfo[0][7],"title"=>$articleInfo[0][1],"content"=>$articleInfo[0][2],"like"=>$articleInfo[0][3],"keep"=>$articleInfo[0][4],"time"=>$articleInfo[0][5],"image"=>$articleInfo[0][8],"video"=>$articleInfo[0][9],"hashTag"=>$hashTag,"authorNickName"=>$authorNickname ,"authorColor"=>$authorColor, "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
+            $arr = array("anonymous"=>$articleInfo[0][10],"isAuthor"=>$isAuthor,"boardName"=>$articleInfo[0][7],"title"=>$articleInfo[0][1],"content"=>$articleInfo[0][2],"like"=>$articleInfo[0][3],"keep"=>$articleInfo[0][4],"time"=>$articleInfo[0][5],"image"=>$articleInfo[0][8],"video"=>$articleInfo[0][9],"hashTag"=>$hashTag,"authorNickName"=>$authorNickname ,"authorColor"=>$authorColor, "hasLike" => $hasLike, "hasKeep" =>$hasKeep);
             
             $sql ="SELECT `UserID`, `Nickname`, `Color`,`Content`,`Floor`,`Times`,`Anonymous` FROM Comments JOIN Users ON Users.UserID=Comments.AuthorID WHERE `ArticleID`=? order by Floor ASC " ; //留言 相關資訊 
             $comment = query($conn,$sql,array($articleID),"SELECT");
