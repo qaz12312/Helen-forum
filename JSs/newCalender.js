@@ -109,7 +109,7 @@ $("#newActivity").on("click", function(){
         var now=new Date();
         if(!(myStartDate <= myEndDate)||myEndDate<=now||myStartDate<=now){
             swal({
-                title: "日期或時間輸入錯誤<br>請重新輸入！",
+                title: "不能為過去時間<br>請重新輸入！",
                 type: "warning",
                 // text: dataDB.errorCode
             }).then(( result ) => {}, ( dismiss ) => {});
