@@ -21,14 +21,12 @@
     function doLogIn($input){
     	global $conn;
     	$sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`=? AND `Password`=?";
-		//$arr = array(base64_decode($input['account']),base64_decode($input['password']) );
-		$arr = array($input['account'],$input['password'] );
+		$arr = array(base64_decode($input['account']),base64_decode($input['password']) );
+		// $arr = array($input['account'],$input['password'] );
 		$result = query($conn,$sql,$arr,"SELECT");
 		$resultCount = count($result);
 	    if($resultCount <= 0){
-			echo base64_decode('MDA3NTcwMDM=');
 			errorCode("Could not find the user.");
-			
 	    }
 	    else{
 			//token
@@ -42,7 +40,6 @@
 			$_SESSION[$token] = array("account"=>$row[0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
 			$rtn = successCode(array("token"=>$token,"color"=>$row[1],"nickname"=>$row[2]));
 			$rtn = successCode("Successfully log in.",$result[0]);
-			echo base64_decode($str);
 		}
 		echo json_encode($rtn);
     }
