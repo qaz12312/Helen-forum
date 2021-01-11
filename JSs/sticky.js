@@ -629,7 +629,7 @@ function forSearching( resolve, reject )
     else
     {
         cmd[ "searchWord" ] = thisSearching.hashtag;
-        cmd[ "option" ] = "hashtag";
+        cmd[ "option" ] = "hashTag";
     }
 
     $.post( "../index.php", cmd, function( dataDB )
