@@ -39,16 +39,16 @@ $( document ).ready(async function()
                             title: "收藏目錄已存在<br />",
                             type: "error",
                             animation: false
-                        }).then(( result ) => {}, ( dismiss ) => {});
-                        return false
+                        }).then(( result ) => {return false}, ( dismiss ) => {return false});
+                        
                     }
                     else if(result==""){
                         swal({
                             title: "收藏名稱不得為空<br />",
                             type: "error",
                             animation: false
-                        }).then(( result ) => {}, ( dismiss ) => {});
-                        return false
+                        }).then(( result ) => {return false}, ( dismiss ) => {return false});
+                        
                     }
                     else
                     {
