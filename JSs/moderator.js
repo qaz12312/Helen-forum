@@ -101,7 +101,7 @@ $( document ).ready( async function()
             if( dataDB.status == false )
             {
                 swal({
-                    title: "修改看板失敗<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
+                    title: "新增看板失敗<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
                     type: "error",
                     text: dataDB.errorCode,
                     confirmButtonText: "確定",
@@ -111,7 +111,7 @@ $( document ).ready( async function()
             else
             {
                 swal({
-                    title: "修改看板成功<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
+                    title: "新增看板成功<br /><small>&lt;" + cmd.account + ", " + cmd.newBoardName +"版&gt;</small>",
                     type: "success",
                     showConfirmButton: false,
                     timer: 1000,
