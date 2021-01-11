@@ -184,7 +184,7 @@ $("#publishBtn").on("click", function(){
     }
     $.post("../index.php", cmd, function(dataDB){
         console.log(dataDB);
-        var dataDB= JSON.parse(dataDB);
+        dataDB= JSON.parse(dataDB);
         if(dataDB.status== false){
             swal({
                 title: "發佈文章失敗，請稍後重試！",
