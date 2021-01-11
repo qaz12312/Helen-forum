@@ -52,6 +52,7 @@ function query($conn,$sql,$input,$option){
     */
     // log - db
     function writeRecord($infoU,$infoA,$infoI){
+        global $conn;
         $sql="INSERT INTO `Logs`(`UserID`,`Act`,`Info`) VALUES(?,?,?)";
         $arr = array($infoU,$infoA,$infoI);
         query($conn,$sql,$arr,"INSERT");
