@@ -59,13 +59,24 @@ $(document).ready(async function () {
                             }).then((result) => {}, ( dismiss ) => {});
 
                             
-                            //location.reload();//重整
+                            location.reload();//重整
 
         
                         }
                     });
                 }
             }, ( dismiss ) => {});
+        }
+        else{
+             swal({
+                        title: '通知內容不得為空!',
+                        type: 'warning',
+                        showConfirmButton: false,
+                        customClass: 'animated rotateOutUpLeft',
+                        confirmButtonText: 'okay!',
+                        confirmButtonColor: '#eda2b6',
+                        timer: 3000
+                    }).then(( result ) => {}, ( dismiss ) => {});
         }
         
 
