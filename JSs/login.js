@@ -144,14 +144,14 @@ function Restrict() {
 
 
     if (pw.length > 20 || pw.length < 3) {
-        swal({
-            title: 'OOPS...',
-            type: 'error',
-            html: '密碼字數只能在3~20內!!!!',
-            confirmButtonText: 'okay!',
-            confirmButtonColor: '#7a96a2'
-        })
-            $("#password").focus();
+        // swal({
+        //     title: 'OOPS...',
+        //     type: 'error',
+        //     html: '密碼錯誤!!!!',
+        //     confirmButtonText: 'okay!',
+        //     confirmButtonColor: '#7a96a2'
+        // })
+        //     $("#password").focus();
        
         return false;
     }
