@@ -23,14 +23,10 @@
     require_once 'phpmailer/SMTP.php';
 
     $user = base64_decode($input['account']);
-        echo "1";
-
     // $user = $input['account'];
     switch($input['option']){
         case "verify": // 確認是否已有帳號
             haveAccount($user);
-        echo "2";
-
             break;
         case "create": // 新增帳號
             $pwd = base64_decode($input['password']);
@@ -42,14 +38,10 @@
     function haveAccount($user){
         global $conn;
         try {
-        echo "3";
-
             $sql="SELECT EXISTS(SELECT 1 FROM `Users` WHERE `UserID`=? LIMIT 1)";
             $result = query($conn,$sql,array($user),"SELECT");
             if($result[0][0]){
                 errorCode("Account has been registered.");
-        echo "A";
-
             }
             else{
                 // 驗證碼
@@ -58,13 +50,10 @@
                 $mailbody = "<div style='border-style:double;border-color:#0000C6;width:700px;'><h3>&nbsp;To whom it may concern,<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Your verification code: " .$str. "</h3></div>";
                 $rtn = successCode("send token.",$str);
                 sendEmail(new PHPMailer(true),$user , $mailbody);
-        echo "A";
-
             }
         } catch (Exception $e) {
             errorCode("【sendMailRegister.php】failed: ". $e->getMessage());
         }
-        echo "4";
         echo json_encode($rtn);
     }
 
