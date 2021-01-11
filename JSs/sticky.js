@@ -786,6 +786,8 @@ function checkPermission( resolve, reject )
                         "<span class='glyphicon glyphicon-pencil'> 編輯</span>" +
                     "</button>"
                 );
+
+                $( ".tabContent h2" ).prepend("&emsp;&emsp;");
     
                 let Trs = $( ".tabContent tbody tr" ).find( "td span:first" ).append(
                     "<button type='button' class='btn pushpinBtn'>" +
