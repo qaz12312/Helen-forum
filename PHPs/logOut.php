@@ -13,11 +13,10 @@
 	*/
     function doLogOut($input){
 		// $token =$input['token'];
-		$token =$input['account'];
-		$info = $_SESSION[$token];
+		// $info = $_SESSION[$token];
 		// writeRecord($info["account"],$info["log"],"log out");
-		writeRecord($info["account"],"Log Out","");
-        unset($_SESSION[$token]);
+		writeRecord($input['account'],"Log Out","");
+        // unset($_SESSION[$token]);
         session_destroy();
 		$rtn = successCode("Successfully log out!");
 		echo json_encode($rtn);

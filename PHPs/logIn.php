@@ -39,7 +39,7 @@
 			$token = base64_encode($str);
 			$per = showAuthority($result[0][0],1);
 			$ip = GetIP();
-			$_SESSION[$token] = array("account"=>$result[0][0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
+			// $_SESSION[$token] = array("account"=>$result[0][0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
 			// $rtn = successCode("Successfully log in.",array("token"=>$token,"color"=>$result[0][1],"nickname"=>$row[2]));
 			$rtn = successCode("Successfully log in.",$result[0]);
 		}
