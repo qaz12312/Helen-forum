@@ -67,6 +67,15 @@ $(document).ready(async function () {
                 }
             }, ( dismiss ) => {});
         }
+        else{
+            swal({
+                title: "通知內容不得為空!<br />" ,
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                animation: false
+
+                })
+        }
         
 
 
