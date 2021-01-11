@@ -39,7 +39,7 @@ $( document ).ready(async function()
                             title: "收藏目錄已存在<br />",
                             type: "error",
                             animation: false
-                        }).then(( result ) => {return false}, ( dismiss ) => {return false});
+                        }).then(( result ) => {location.reload()}, ( dismiss ) => {location.reload()});
                         
                     }
                     else if(result==""){
@@ -47,12 +47,12 @@ $( document ).ready(async function()
                             title: "收藏名稱不得為空<br />",
                             type: "error",
                             animation: false
-                        }).then(( result ) => {return dataDB.statusfalse}, ( dismiss ) => {return false});
+                        }).then(( result ) => {location.reload();}, ( dismiss ) => {location.reload()});
                         
                     }
                     else
                     {
-                        console.log("123")
+                        
                         if( dataDB.status == false )
                         {
                                     
