@@ -188,7 +188,7 @@ $( document ).ready(function()
                                                     swal({
                                                         title: 'OOPS...',
                                                         type: 'error',
-                                                        text: 'The New and Confirm passwords do not match ',
+                                                        text: 'The New and Confirm passwords do not match or password must be 2 - 20 characters',
                                                         animation: false,
                                                         customClass: 'animated rotateOutUpLeft',
                                                         confirmButtonText: 'okay!',

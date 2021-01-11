@@ -235,7 +235,7 @@ function Restrict() {
         swal({
             title: 'OOPS...',
             type: 'error',
-            html: '密碼字數只能在3~20內!!!!',
+            html: 'password must be 2 - 20 characters',
             confirmButtonText: 'okay!',
             confirmButtonColor: '#7a96a2'
         }).then(( result ) => {}, ( dismiss ) => {});
