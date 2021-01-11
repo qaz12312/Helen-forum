@@ -42,6 +42,14 @@ $( document ).ready(async function()
                         }).then(( result ) => {}, ( dismiss ) => {});
                         return false
                     }
+                    else if(result==""){
+                        swal({
+                            title: "收藏名稱不得為空<br />",
+                            type: "error",
+                            animation: false
+                        }).then(( result ) => {}, ( dismiss ) => {});
+                        return false
+                    }
                     else
                     {
                         if( dataDB.status == false )
