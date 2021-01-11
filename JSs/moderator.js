@@ -130,43 +130,55 @@ $( document ).ready( async function()
     $( ".btn-danger" ).click( function()
     {
         let chosen = $(this).closest( "td" ).prev().find( "div:last-child select" );
-
+                
         let cmd = {};
         cmd[ "act" ] = "editModerator";
         cmd[ "account" ] = ($(this).closest( "td" ).prev().prev().text()).split( "@" )[0];
         cmd[ "oldBoardName" ] = (chosen.val()).split( "版" )[0];
-
-        $.post( "../index.php", cmd, function( dataDB ) 
-        {
-            dataDB = JSON.parse( dataDB );
-
-            if( dataDB.status == false )
-            {
-                swal({
-                    title: "刪除看板失敗<br /><small>&lt;" + cmd.account + ", " + cmd.oldBoardName +"版&gt;</small>",
-                    type: "error",
-                    text: dataDB.errorCode,
-                    confirmButtonText: "確定",
-    
-                }).then(( result ) => {}, ( dismiss ) => {});
-            }
-            else
-            {
-                swal({
-                    title: "刪除看板成功<br /><small>&lt;" + cmd.account + ", " + cmd.oldBoardName +"版&gt;</small>",
-                    type: "success",
-                    showConfirmButton: false,
-                    timer: 1000,
-    
-                }).then(( result ) =>
-                {
-                    location.reload();
         
-                }, ( dismiss ) => {
-                    location.reload();
-                });
-            }
-        });
+        swal({
+            title: "確定要刪除此看板嗎？<br /><small>&lt;" + cmd.oldBoardName + "版&gt;</small>",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#F09900",
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            animation: false,
+
+        }).then(( result ) => {
+
+            $.post( "../index.php", cmd, function( dataDB ) 
+            {
+                dataDB = JSON.parse( dataDB );
+
+                if( dataDB.status == false )
+                {
+                    swal({
+                        title: "刪除看板失敗<br /><small>&lt;" + cmd.account + ", " + cmd.oldBoardName +"版&gt;</small>",
+                        type: "error",
+                        text: dataDB.errorCode,
+                        confirmButtonText: "確定",
+        
+                    }).then(( result ) => {}, ( dismiss ) => {});
+                }
+                else
+                {
+                    swal({
+                        title: "刪除看板成功<br /><small>&lt;" + cmd.account + ", " + cmd.oldBoardName +"版&gt;</small>",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 1000,
+        
+                    }).then(( result ) =>
+                    {
+                        location.reload();
+            
+                    }, ( dismiss ) => {
+                        location.reload();
+                    });
+                }
+            });
+        }, (dismiss) => {});
     });
 
     $( ".btn-success" ).click( function()
