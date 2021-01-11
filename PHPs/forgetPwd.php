@@ -21,7 +21,7 @@
             verifyPwd($input);
             break;
         case "change": // 修改密碼
-            // $input['pwd'] = base64_decode($input['pwd']);
+            $input['pwd'] = base64_decode($input['pwd']);
             changePwd($input);
             break;
     }
