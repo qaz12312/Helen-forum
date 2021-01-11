@@ -20,17 +20,17 @@
     function doDeleteApplyBoard($input){ //刪除 申請版或版主 的請求
         global $conn;
 		if ($input['type'] == "board" || $input['type'] == "moderator") {
-		    $sql="SELECT EXISTS(SELECT 1 FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=? LIMIT 1)"; //是否存在此Issue
+		    $sql="SELECT `Times` FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=?"; //是否存在此Issue
 			$arr = array($input['account'],$input['content'],($input['type'] == "board" ? 1 : 0 ));
 			$result = query($conn,$sql,$arr,"SELECT");
-			if(!$result[0][0]){
+			if(count($result)<=0){
 				errorCode("This user's application doesn't exit.");
 			}
 			else{
 				$sql="DELETE FROM `Issue` WHERE `UserID`=? AND`Content`=? AND `Type`=?";
 				$arr = array($input['account'],$input['content'],($input['type'] == "board" ? 1 : 0 ));
 				query($conn,$sql,$arr,"DELETE");
-				doSendNotification(array("recipient" => $input['account'], "content" => "Your application can't be added."),0);
+				doSendNotification(array("recipient" => $input['account'], "content" => "Your application : ".$input['content']." (applyed in ".$result[0][0].") can't be added."),0);
 				$rtn = successCode("Successfully deleted all this user's application.");
 			}
 		}
