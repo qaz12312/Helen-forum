@@ -132,7 +132,7 @@ $(document).ready(function () {
         $("#chkmsg").html("");
         let cmd = {};
         cmd["act"] = "sendMailRegister";
-        cmd["account"] = $('#email').val();
+        cmd["account"] =  window.btoa($('#email').val());
         cmd["option"] = "verify";
         $.post("../index.php", cmd, function (dataDB) {
             dataDB = JSON.parse(dataDB);

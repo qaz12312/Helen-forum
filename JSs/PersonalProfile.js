@@ -77,14 +77,15 @@ $( document ).ready(function()
                 swal({
                     title: 'OOPS...',
                     type: 'error',
-                    text: '密碼需大於3 ',
+                    text: '驗證失敗 ',
                     animation: false,
                     customClass: 'animated rotateOutUpLeft',
                     confirmButtonText: 'okay!',
                     confirmButtonColor: '#eda2b6'
                 })
             }
-            let cmd = {};
+            else{
+                let cmd = {};
                 cmd["act"] = "checkPassword";
                 cmd[ "account" ] = window.btoa(sessionStorage.getItem("Helen-account"));
                 cmd["password"] =  window.btoa(value);
@@ -208,6 +209,8 @@ $( document ).ready(function()
                             )
                         }
                     });
+            }
+
             }
         });
         $('#color').colpick({
