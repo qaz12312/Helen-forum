@@ -12,7 +12,8 @@
     dataDB.data = ""
 	*/
     function doLogOut($input){
-		$token =$input['token'];
+		// $token =$input['token'];
+		$token =$input['account'];
 		$info = $_SESSION[$token];
 		// writeRecord($info["account"],$info["log"],"log out");
 		writeRecord($info["account"],"Log Out","");
