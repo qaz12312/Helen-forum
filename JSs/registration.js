@@ -139,6 +139,7 @@ $(document).ready(function () {
             dataDB = JSON.parse(dataDB);
             if($('#email').val()!="")
             {
+                console.log($('#email').val())
                 document.getElementById('verify').disabled =!document.getElementById('verify').disabled;
                 if (dataDB.status == false) {
                     swal({
