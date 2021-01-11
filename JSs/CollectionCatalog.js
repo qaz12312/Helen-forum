@@ -25,13 +25,7 @@ $( document ).ready(async function()
             animation: false
                 
             }).then(( result ) => {
-                let cmd = {};
-                cmd["act"] = "editDir";
-                cmd["account"] = sessionStorage.getItem("Helen-account");
-                cmd["old"] =$(this).parents('.Page').find("span").text();
-                cmd["new"]=result
-                $.post( "../index.php", cmd, function( dataDB ){
-                dataDB = JSON.parse( dataDB );
+                
                     if(values.includes(result)==true)
                     {
     
@@ -39,11 +33,28 @@ $( document ).ready(async function()
                             title: "收藏目錄已存在<br />",
                             type: "error",
                             animation: false
-                        }).then(( result ) => {}, ( dismiss ) => {});
-                        return false
+                        }).then(( result ) => {location.reload()}, ( dismiss ) => {location.reload()});
+                        
+                    }
+                    else if($(this).parents('.Page').find("span").text()=="")
+                    {
+                        swal({
+                            title: "收藏名稱不得為空<br />",
+                            type: "error",
+                            animation: false
+                        }).then(( result ) => {location.reload()}, ( dismiss ) => {location.reload()});
+                        
                     }
                     else
                     {
+                        let cmd = {};
+                        cmd["act"] = "editDir";
+                        cmd["account"] = sessionStorage.getItem("Helen-account");
+                        cmd["old"] =$(this).parents('.Page').find("span").text();
+                        cmd["new"]=result
+                        $.post( "../index.php", cmd, function( dataDB ){
+                        dataDB = JSON.parse( dataDB );
+                        
                         if( dataDB.status == false )
                         {
                                     
@@ -83,8 +94,9 @@ $( document ).ready(async function()
                             });
 
                         }
+                     });
                     }
-                });
+               
             
             }, ( dismiss ) => {} );           
             
