@@ -135,7 +135,13 @@ $("#newActivity").on("click", function(){
                 type: "error",
                 text: dataDB.errorCode,
                 animation: false
-            }).then(( result ) => {}, ( dismiss ) => {});
+            }).then(( result ) =>
+            {
+                location.reload();
+    
+            }, ( dismiss ) => {
+                location.reload();
+            });
         }
         else{
             // ?依最新排序的首頁
