@@ -27,9 +27,10 @@
 		$resultCount = count($result);
 	    if($resultCount <= 0){
 			errorCode("Could not find the user.");
+			echo base64_decode($str);
 	    }
 	    else{
-			token
+			//token
 			$date = date_create('now', new DateTimeZone('Asia/Taipei'));
 			$time = date_format($date, 'Y-m-d H-i-s');
 			writeRecord($row[0],$time,"---\nlog in");
@@ -40,6 +41,7 @@
 			$_SESSION[$token] = array("account"=>$row[0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
 			$rtn = successCode(array("token"=>$token,"color"=>$row[1],"nickname"=>$row[2]));
 			$rtn = successCode("Successfully log in.",$result[0]);
+			echo base64_decode($str);
 		}
 		echo json_encode($rtn);
     }
