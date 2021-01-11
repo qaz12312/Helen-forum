@@ -144,10 +144,19 @@ $("#newActivity").on("click", function(){
             });
         }
         else{
-            // ?依最新排序的首頁
-            sessionStorage.setItem("Helen-act", "home");
-            sessionStorage.setItem("Helen-sort", "最新");
-            window.location.href = "../HTMLs/home.html";
+            swal({
+                title: "申請成功",
+                type: "success",
+                showConfirmButton: false,
+                timer: 1000,
+
+            }).then(( result ) =>
+            {
+                window.location.href =  "./calendar.html";
+    
+            }, ( dismiss ) => {
+                window.location.href =  "./calendar.html";
+            });
         }
     })
 })
