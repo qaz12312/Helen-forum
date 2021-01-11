@@ -33,7 +33,8 @@
 			$date = date_create('now', new DateTimeZone('Asia/Taipei'));
 			$time = date_format($date, 'Y-m-d H-i-s');
 			newUserFolder($result[0][0]);
-			writeRecord($result[0][0],$time,"---\nlog in");
+			// writeRecord($result[0][0],$time,"---\nlog in");
+			writeRecord($result[0][0],"Log In","");
 			$str = $result[0][0]."010helen";
 			$token = base64_encode($str);
 			$per = showAuthority($result[0][0],1);

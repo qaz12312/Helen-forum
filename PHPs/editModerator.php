@@ -55,6 +55,7 @@
 						errorCode("Failed to appoint moderator,Database exception.");
 					}
 					//writeRecord($user,$userInfo["log"],"Be a moderator in 【".$input['newBoardName']."】.");
+					writeRecord($user,"Moderator","Be a moderator in 【".$input['newBoardName']."】.");
 					$check=doSendNotification(array("recipient" =>$user, "content" => "Congratulation  - You are the moderator in 【".$input['newBoardName']."】 :)"),0);
 				}
 			}
@@ -80,6 +81,7 @@
 					errorCode("Failed to found the update Moderator.");
 				}
 				//writeRecord($user,$userInfo["log"],"No longer the moderator in 【".$input['oldBoardName']."】.");
+				writeRecord($user,"Moderator","No longer the moderator in 【".$input['oldBoardName']."】.");
 				$check=doSendNotification(array("recipient" =>$user, "content" => "Oops - You are no longer the moderator in 【".$input['oldBoardName']."】."),0);
 			}
 		}
