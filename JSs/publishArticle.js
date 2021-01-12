@@ -104,7 +104,7 @@ myFile.addEventListener('change', function(e) {
 		    if(fileContent){
                 $("#deletevideo").show();
                 $("#video").show();
-                //video.src=fileContent;
+                video.src=fileContent;
                 videosrc=fileContent;
                 console.log(videosrc);
 			}
