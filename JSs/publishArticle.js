@@ -312,6 +312,7 @@ async function initial(res, rej){
                 }
                 console.log(article.video);
                 if(article.video){
+                    swal("wait", "內涵檔案請稍等", "info");
                     $("#deletevideo").show();
                     video.src=article.video;
                     videosrc=video.src;
