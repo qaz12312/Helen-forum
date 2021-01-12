@@ -176,6 +176,7 @@ $("#publishBtn").on("click", function(){
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
     cmd["picture"]=  imagesrc; // no picture
+    console.log(videosrc);
     cmd["video"]=  videosrc; // no video
     if($("#anonymousCheckbox").prop("checked")){// 匿名
         cmd['anonymous'] = 1;
@@ -223,7 +224,7 @@ $("#inputHashtag").keypress(function (event){
             if(hashtagStr[0] == "#"){
                 hashtagStr= hashtagStr.substring(1, hashtagStr.length).trim();
             }
-            console.log(hashtagStr)
+            console.log(hashtagStr);
             hashtags.push(hashtagStr);
             $("#inputHashtag").val("#");
             printHashtag();
