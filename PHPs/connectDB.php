@@ -7,7 +7,7 @@
         $password = "ynVdCeYKBrDJ";
         $databaseName = "test";
 
-         助教的
+         //助教的
         //  $serverName = "140.121.197.130:55151";
         //  $userName = "root";
         //  $password = "admin";
