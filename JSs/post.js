@@ -70,11 +70,14 @@ async function initial(res, rej){
                 "\" frameborder=\"0\" allow=\"accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br />";
             });
             contentStr+= "<br/>";
-
+            if(article.video||article.image)
+            swal("wait", "內含檔案請稍等", "info");
             // 加上本地端圖片
             if(article.image)
                 contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
-		
+            
+            if(article.video)
+                contentStr+= "<iframe   width='580' height='500' src= \""+ article.video+ "\"></iframe>";
             if(article.hashTag){
                 contentStr+= "<br/>";
                 for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
