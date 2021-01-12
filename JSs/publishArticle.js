@@ -299,8 +299,8 @@ async function initial(res, rej){
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
                 console.log(article.image);
-                if(article.video)
-                    swal("wait", "內涵檔案請稍等", "info");
+                if(article.video||article.image)
+                    swal("wait", "內含檔案請稍等", "info");
                 if(article.image){
                     console.log(article.image);
                     $("#deletepic").show();
