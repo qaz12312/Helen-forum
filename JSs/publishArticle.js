@@ -299,6 +299,8 @@ async function initial(res, rej){
                 $("#articleTitle").val(article.title);
                 $("#articleContent").val(article.content);
                 console.log(article.image);
+                if(article.video)
+                    swal("wait", "內涵檔案請稍等", "info");
                 if(article.image){
                     console.log(article.image);
                     $("#deletepic").show();
@@ -312,7 +314,7 @@ async function initial(res, rej){
                 }
                 console.log(article.video);
                 if(article.video){
-                    swal("wait", "內涵檔案請稍等", "info");
+                    
                     $("#deletevideo").show();
                     video.src=article.video;
                     videosrc=video.src;
