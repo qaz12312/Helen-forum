@@ -33,7 +33,7 @@
         $mail->Host = 'ssl://smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'softwareengineeringhelen@gmail.com'; // Gmail address which you want to use as SMTP server
-        $mail->Password = 'soft123soft'; // Gmail address Password
+        $mail->Password = 'soft123456789soft'; // Gmail address Password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = '465';
         $mail->setFrom('softwareengineeringhelen@gmail.com'); // Gmail address which you used as SMTP server
