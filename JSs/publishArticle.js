@@ -82,7 +82,7 @@ myFile.addEventListener('change', function(e) {
     
     var  file = e.target.files[0];
     if(file){
-        var validExts = new Array(".mp4", ".mov", ".mpg");
+        var validExts = new Array(".pdf", ".mov", ".mpg");
 	
         var fileExt = myFile.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
