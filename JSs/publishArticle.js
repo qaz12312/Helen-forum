@@ -35,13 +35,13 @@ $("#deletepic").on("click", function(){
     $("#deletepic").hide();	 
     $("#preview").hide();	
 });
-// $("#deletevideo").on("click", function(){	
-//     imagesrc="";	    
-//     preview.removeAttribute('src');
-//     $("#my-video").val('');
-//     $("#deletevideo").hide();	 
-//     $("#video").hide();	
-// });
+ $("#deletevideo").on("click", function(){	
+     imagesrc="";	    
+     preview.removeAttribute('src');
+     $("#my-video").val('');
+     $("#deletevideo").hide();	 
+     $("#video").hide();	
+ });
 fileInput.addEventListener( "change", function( event ) { 
     
     const file = event.target.files[0];
