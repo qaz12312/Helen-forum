@@ -106,6 +106,7 @@ myFile.addEventListener('change', function(e) {
                 $("#video").show();
                 video.src=fileContent;
                 videosrc=video.src;
+                console.log(videosrc);
 			}
 		    else{
                 swal({
