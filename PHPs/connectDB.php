@@ -2,16 +2,16 @@
     function connSql(){    
 
         // aws的
-        /$serverName = "helendb.chw8qvtxo3mu.us-east-1.rds.amazonaws.com";
-        //$userName = "helen";
-        //$password = "ynVdCeYKBrDJ";
-        //$databaseName = "test";
+        $serverName = "helendb.chw8qvtxo3mu.us-east-1.rds.amazonaws.com";
+        $userName = "helen";
+        $password = "ynVdCeYKBrDJ";
+        $databaseName = "test";
 
          //助教的
-        $serverName = "140.121.197.130:55151";
-        $userName = "root";
-        $password = "admin";
-        $databaseName = "helen";
+        //$serverName = "140.121.197.130:55151";
+        //$userName = "root";
+        //$password = "admin";
+        //$databaseName = "helen";
         
         header("Access-Control-Allow-Origin: *");
         // header("Content-Type:text/html; charset=utf-8");
