@@ -82,7 +82,7 @@ myFile.addEventListener('change', function(e) {
     
     var  file = e.target.files[0];
     if(file){
-        var validExts = new Array(".html",".txt",".pdf");
+        var validExts = new Array(".txt",".pdf");
 	
         var fileExt = myFile.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
