@@ -35,13 +35,13 @@ $("#deletepic").on("click", function(){
     $("#deletepic").hide();	 
     $("#preview").hide();	
 });
-//  $("#deletevideo").on("click", function(){	
-//      imagesrc="";	    
-//      preview.removeAttribute('src');
-//      $("#my-video").val('');
-//      $("#deletevideo").hide();	 
-//      $("#video").hide();	
-//  });
+ $("#deletevideo").on("click", function(){	
+     imagesrc="";	    
+     preview.removeAttribute('src');
+     $("#my-video").val('');
+     $("#deletevideo").hide();	 
+     $("#video").hide();	
+ });
 fileInput.addEventListener( "change", function( event ) { 
     
     const file = event.target.files[0];
@@ -82,7 +82,7 @@ myFile.addEventListener('change', function(e) {
     
     var  file = e.target.files[0];
     if(file){
-        var validExts = new Array(".pdf", ".mov", ".mpg");
+        var validExts = new Array(".pdf");
 	
         var fileExt = myFile.value;
         fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
