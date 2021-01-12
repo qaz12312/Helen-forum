@@ -96,7 +96,7 @@ myFile.addEventListener('change', function(e) {
         return false;
     }
     else{
-        
+        swal("wait", "檔案上傳中，請稍等", "info");
 	    var reader = new FileReader();
 	    reader.readAsDataURL(this.files[0]);
 		reader.onload = function(file){
