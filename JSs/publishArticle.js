@@ -36,7 +36,7 @@ $("#deletepic").on("click", function(){
     $("#preview").hide();	
 });
  $("#deletevideo").on("click", function(){	
-     imagesrc="";	    
+    videosrc="";	    
      preview.removeAttribute('src');
      $("#my-video").val('');
      $("#deletevideo").hide();	 
