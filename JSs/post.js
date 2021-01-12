@@ -74,7 +74,9 @@ async function initial(res, rej){
             // 加上本地端圖片
             if(article.image)
                 contentStr+= "<img src= \""+ article.image+ "\" style='width: 45%;height: 45%;'>";
-		
+            
+            if(article.video)
+                contentStr+= "<iframe   width='320' height='240' src= \""+ article.image+ "\"></iframe>";
             if(article.hashTag){
                 contentStr+= "<br/>";
                 for(var h= 0; h< article.hashTag.length; h++){ // 加上hashtags
