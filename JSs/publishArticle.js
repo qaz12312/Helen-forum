@@ -176,7 +176,7 @@ $("#publishBtn").on("click", function(){
     cmd["content"]= contentStr;
     cmd["hashTag"]= hashtags;
     cmd["picture"]=  imagesrc; // no picture
-    cmd["video"]=  videosrc; // no picture
+    cmd["video"]=  videosrc; // no video
     if($("#anonymousCheckbox").prop("checked")){// 匿名
         cmd['anonymous'] = 1;
     }else{
@@ -308,17 +308,17 @@ async function initial(res, rej){
                     $("#deletepic").hide();
                     $("#preview").hide();
                 }
-                //console.log(article.video);
-                // if(article.video){
-                //     $("#deletevideo").show();
-                //     video.src=article.video;
-                //     videosrc=video.src;
-                //     $("#video").show();
-                // }
-                // else{
-                //     $("#deletevideo").hide();
-                //     $("#video").hide();
-                // }
+                console.log(article.video);
+                if(article.video){
+                    $("#deletevideo").show();
+                    video.src=article.video;
+                    videosrc=video.src;
+                    $("#video").show();
+                }
+                else{
+                    $("#deletevideo").hide();
+                    $("#video").hide();
+                }
                 if(article.anonymous){
                     $("#anonymousCheckbox").prop("checked", true);
                 }  
