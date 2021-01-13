@@ -48,7 +48,7 @@ CREATE TABLE Report (
 	UserID varchar(101) NOT NULL,
 	ArticleID bigint(255) NOT NULL,
 	Reason varchar(255) NOT NULL,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (UserID, ArticleID),
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID) ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
@@ -59,11 +59,13 @@ CREATE TABLE Comments (
 	AuthorID varchar(101) NOT NULL,
 	Content mediumtext NOT NULL,
 	ArticleID bigint(255) NOT NULL,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	Floor int(255) NOT NULL,
+    Anonymous boolean default false,
+	#TagFloor int(255),
 	PRIMARY KEY (ArticleID, Floor),
-	FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
-	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
+FOREIGN KEY (AuthorID) REFERENCES Users (UserID),
+FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)  ON DELETE CASCADE
 ) CHARSET=utf8mb4 ;
 
 DROP TABLE IF EXISTS FollowHeart;
@@ -81,7 +83,7 @@ CREATE TABLE FollowKeep (
 	ArticleID bigint(255) NOT NULL,
 	UserID varchar(101) NOT NULL,
 	DirName varchar(255) NOT NULL,
-	AddTime datetime DEFAULT CURRENT_TIMESTAMP,
+	AddTime datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (ArticleID, UserID),
 	FOREIGN KEY (ArticleID) REFERENCES Article (ArticleID)   ON DELETE CASCADE,
 	FOREIGN KEY (UserID, DirName) REFERENCES KeepDir (UserID, DirName)	ON UPDATE CASCADE ON DELETE CASCADE
@@ -91,7 +93,7 @@ CREATE INDEX FollowKeep_index on FollowKeep(ArticleID, UserID);
 DROP TABLE IF EXISTS Issue;
 CREATE TABLE Issue (
 	UserID varchar(101) NOT NULL,
-	Times datetime DEFAULT CURRENT_TIMESTAMP,
+	Times datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	Content varchar(255) NOT NULL,
     Type int(2) NOT NULL,
     PRIMARY KEY (UserID, Times, Content, Type),
@@ -121,16 +123,26 @@ CREATE TABLE Calendars (
 )	CHARSET=utf8mb4 ;
 CREATE INDEX Calendars_index on Calendars(ID);
 
+DROP TABLE IF EXISTS Logs;
+CREATE TABLE Logs (
+ UserID varchar(101) NOT NULL,
+ Time datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ Act varchar(255),
+ Info text,
+ FOREIGN KEY (UserID) REFERENCES Users (UserID) 
+) CHARSET=utf8mb4 ;
+CREATE INDEX Logs_index on Logs(UserID);
+
 DROP VIEW IF EXISTS HomeHeart;
-CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntHeart`,`Times`, `Hashtag`, `Image`,`Video`, `Anonymous`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`, `AuthorID`, COUNT(FollowHeart.UserID),`Times`, `Hashtag`, `Image`,`Video`, `Anonymous`
+CREATE VIEW HomeHeart (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntHeart`,`Times`, `Hashtag`, `Image`, `Video`, `Anonymous`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`, `AuthorID`, COUNT(FollowHeart.UserID),`Times`, `Hashtag`, `Image`, `Video`, `Anonymous`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowHeart` ON Article.ArticleID = FollowHeart.ArticleID
 GROUP BY `ArticleID` ;
 
 # 總收藏數
 DROP VIEW IF EXISTS HomeKeep;
-CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntKeep`,`Times`, `Hashtag`, `Image`,`Video`, `Anonymous`) AS 
-SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,`AuthorID`,COUNT(FollowKeep.UserID),`Times`, `Hashtag`, `Image`,`Video`, `Anonymous`
+CREATE VIEW HomeKeep (`BoardName`,`ArticleID`,`Title`,`Content`,`AuthorID`,`cntKeep`,`Times`, `Hashtag`, `Image`, `Video`, `Anonymous`) AS 
+SELECT `BoardName`,Article.ArticleID,`Title`,`Content`,`AuthorID`,COUNT(FollowKeep.UserID),`Times`, `Hashtag`, `Image`, `Video`,`Anonymous`
 FROM `Article` JOIN `Board` ON Article.BlockName = Board.BoardName LEFT JOIN `FollowKeep` ON Article.ArticleID = FollowKeep.ArticleID
 GROUP BY `ArticleID` ;
 
