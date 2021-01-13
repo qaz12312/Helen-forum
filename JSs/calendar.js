@@ -3,6 +3,9 @@ var thisAccount = sessionStorage.getItem( 'Helen-account' );
 
 $( document ).ready(async function() 
 {
+    $('.postContent').empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $('.postContent').append( httpStatus );
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
     
@@ -21,7 +24,7 @@ function initial(resolve, reject)
 
     $.post( "../index.php", cmd, function( dataDB )
     {
-        
+        $('.postContent').empty();
         dataDB = JSON.parse( dataDB );
         if( dataDB.status == false )
         {
