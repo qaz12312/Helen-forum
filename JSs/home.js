@@ -172,73 +172,76 @@ $(document).ready(async function(){
 
                         }, ( dismiss ) =>
                         {
-                            return true;
+                            return false;
                         });
 
                         if( dismissing ) break;
                     }
-
-                    let cmd = {};
-                    cmd[ "act" ] = "newDir";
-                    cmd[ "account" ] = thisAccount;
-                    cmd[ "dirName" ] = dirName;
-
-                    $.post( "../index.php", cmd, function( dataDB )
+                    if(dirName!="")
                     {
-                        dataDB = JSON.parse( dataDB );
-
-                        if( dataDB.status == false )
+                        let cmd = {};
+                        cmd[ "act" ] = "newDir";
+                        cmd[ "account" ] = thisAccount;
+                        cmd[ "dirName" ] = dirName;
+    
+                        $.post( "../index.php", cmd, function( dataDB )
                         {
-                            swal({
-                                title: "新增收藏分類失敗",
-                                type: "error",
-                                text: dataDB.errorCode,
-                                confirmButtonText: "確定",
-
-                            }).then(( result ) => {}, ( dismiss ) => {});
-                        }
-                        else
-                        {
-                            keepMenu.push( dirName );
-                            let cmd = {};
-                            cmd[ "act" ] = "keep";
-                            cmd[ "account" ] = thisAccount;
-                            cmd[ "articleID" ] = thisArticle.articleID;
-                            cmd[ "dirName" ] = dirName;
-                            $.post( "../index.php", cmd, function( dataDB )
+                            dataDB = JSON.parse( dataDB );
+    
+                            if( dataDB.status == false )
                             {
-                                dataDB = JSON.parse( dataDB );
-            
-                                if( dataDB.status == false )
+                                swal({
+                                    title: "新增收藏分類失敗",
+                                    type: "error",
+                                    text: dataDB.errorCode,
+                                    confirmButtonText: "確定",
+    
+                                }).then(( result ) => {}, ( dismiss ) => {});
+                            }
+                            else
+                            {
+                                keepMenu.push( dirName );
+                                let cmd = {};
+                                cmd[ "act" ] = "keep";
+                                cmd[ "account" ] = thisAccount;
+                                cmd[ "articleID" ] = thisArticle.articleID;
+                                cmd[ "dirName" ] = dirName;
+                                $.post( "../index.php", cmd, function( dataDB )
                                 {
-                                    swal({
-                                        title: "錯誤！",
-                                        type: "error",
-                                        text: dataDB.errorCode,
-                            
-                                    }).then(( result ) => {}, ( dismiss ) => {} );
-                                }
-                                else
-                                {
-                                    swal({
-                                        title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
-                                        type: "success",
-                                        showConfirmButton: false,
-                                        timer: 1000,
-                                
-                                    }).then(( result ) => {}, ( dismiss ) => {
-                                        $( chosen ).removeClass( "text-warning" );
-                                        $( chosen ).addClass( "text-light" );
-                                        $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
-                                        $( chosen ).closest( "button" ).addClass( "btn-warning" );
+                                    dataDB = JSON.parse( dataDB );
                 
-                                        thisArticle.keep = parseInt( thisArticle.keep ) + 1;
-                                        $( chosen ).eq(1).html( " " + thisArticle.keep );
-                                    });
-                                }
-                            });
+                                    if( dataDB.status == false )
+                                    {
+                                        swal({
+                                            title: "錯誤！",
+                                            type: "error",
+                                            text: dataDB.errorCode,
+                                
+                                        }).then(( result ) => {}, ( dismiss ) => {} );
                                     }
-                    });
+                                    else
+                                    {
+                                        swal({
+                                            title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
+                                            type: "success",
+                                            showConfirmButton: false,
+                                            timer: 1000,
+                                    
+                                        }).then(( result ) => {}, ( dismiss ) => {
+                                            $( chosen ).removeClass( "text-warning" );
+                                            $( chosen ).addClass( "text-light" );
+                                            $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
+                                            $( chosen ).closest( "button" ).addClass( "btn-warning" );
+                    
+                                            thisArticle.keep = parseInt( thisArticle.keep ) + 1;
+                                            $( chosen ).eq(1).html( " " + thisArticle.keep );
+                                        });
+                                    }
+                                });
+                                        }
+                        });
+                    }
+
 
                 }, ( dismiss ) => {});
                 
