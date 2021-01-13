@@ -14,7 +14,7 @@ $( document ).ready(async function()
 
 function initial(resolve, reject)
 {
-
+    
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
     cmd["type"]="calendar";

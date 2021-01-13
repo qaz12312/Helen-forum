@@ -197,6 +197,9 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
+    $( ".tabContent tbody" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".tabContent tbody" ).append( httpStatus );
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
         ( error ) => res(1)
     );
@@ -208,9 +211,7 @@ async function initial( res, rej )
             enableToNewModerator = false;
         }
     );
-    $( ".tabContent tbody" ).empty();
-        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
-    $( ".tabContent tbody" ).append( httpStatus );
+    
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
     cmd[ "type" ] = "moderator";
