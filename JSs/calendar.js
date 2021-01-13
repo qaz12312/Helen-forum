@@ -24,7 +24,7 @@ function initial(resolve, reject)
 
     $.post( "../index.php", cmd, function( dataDB )
     {
-        $('.postContent').empty();
+        
         dataDB = JSON.parse( dataDB );
         if( dataDB.status == false )
         {
