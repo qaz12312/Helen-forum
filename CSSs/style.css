@@ -67,13 +67,11 @@ body{
 	width: 40px;
   }
 .logo:hover {
-	border-color: rgb(230, 184, 36);
-	border-radius: 10%;
-	background-color: rgb(104, 127, 168);
+	background-color: #fff;
   }
-.logo{
+/* .logo{
 	width: 150px;
-}
+} */
 .head{
   background-color: #3c537c;
   color: white;
