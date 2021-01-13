@@ -3,6 +3,9 @@ var thisAccount = sessionStorage.getItem( 'Helen-account' );
 
 $( document ).ready(async function() 
 {
+    document.getElementById('calendar').empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    document.getElementById('calendar').append( httpStatus );
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
     
@@ -37,7 +40,7 @@ function initial(resolve, reject)
         {
             let activity= dataDB.data;
             var calendarEl = document.getElementById('calendar');
-
+            
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
