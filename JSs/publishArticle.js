@@ -100,8 +100,9 @@ myFile.addEventListener('change', function(e) {
             title: "檔案太大無法上傳" ,
             type: "warning",
             // text: dataDB.errorCode
-        }).then(( result ) => {}, ( dismiss ) => { this.value = "";});
-       
+        }).then(( result ) => {}, ( dismiss ) => { });
+        myFile.value = null;
+        return false;
     }
      else{
         swal("wait", "檔案上傳中，請稍等", "info");
