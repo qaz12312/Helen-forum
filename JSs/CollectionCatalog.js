@@ -333,7 +333,9 @@ async function initial(res, rej)
 
                 //$(".row").empty()
                 
-
+                $( ".title" ).empty();
+                    let httpStatus = "style='position: relative;'Personal Profile Form</div>";
+                $( ".title" ).append( httpStatus );
                 for( let i in CollectionCatalog )
                 {
                     values.push(CollectionCatalog[i])
