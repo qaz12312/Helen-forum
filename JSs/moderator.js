@@ -5,6 +5,9 @@ var thisAccount = sessionStorage.getItem( "Helen-account" );
 
 $( document ).ready( async function() 
 {
+    $( ".tabContent tbody" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".tabContent tbody" ).append( httpStatus );
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
     
@@ -317,7 +320,7 @@ function moderatorInitial( resolve, reject )
 {
     let cmd = {};
     cmd[ "act" ] = "showModerator";
-
+    
     $.post( "../index.php", cmd, function( dataDB )
     {   
         dataDB = JSON.parse( dataDB );

@@ -5,6 +5,9 @@ var thisAccount = sessionStorage.getItem( 'Helen-account' );
 
 $( document ).ready( async function() 
 {
+    $( ".tabContent tbody" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".tabContent tbody" ).append( httpStatus );
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
 
@@ -207,6 +210,7 @@ $( document ).ready( async function()
 
 async function initial( res, rej )
 {
+    
     await new Promise( ( resolve, reject ) => checkPermission( resolve, reject ) ).catch(
         ( error ) => res(1)
     );
@@ -218,7 +222,7 @@ async function initial( res, rej )
             enableToNewBoard = false;
         }
     );
-
+    
     let cmd = {};
     cmd[ "act" ] = "showApplyBoard";
     cmd[ "type" ] = "board";

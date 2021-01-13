@@ -3,6 +3,9 @@ var CollectionCatalog = [];
 var thisAccount = sessionStorage.getItem( "Helen-account" );
 $( document ).ready(async function() 
 {
+    $( ".title" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".title" ).append( httpStatus );
     barInitial();
     
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
@@ -315,6 +318,7 @@ async function initial(res, rej)
                 let content = $( ".row" );
                 let content2 = $( ".title" );
                 content.empty();
+                content2.empty();
                 CollectionCatalog=dataDB.data;
                 if( CollectionCatalog.length == 0 )
                 {
@@ -329,7 +333,9 @@ async function initial(res, rej)
 
                 //$(".row").empty()
                 
-
+                $( ".title" ).empty();
+                    let httpStatus = "style='position: relative;'Personal Profile Form</div>";
+                $( ".title" ).append( httpStatus );
                 for( let i in CollectionCatalog )
                 {
                     values.push(CollectionCatalog[i])
