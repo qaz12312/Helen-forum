@@ -95,7 +95,16 @@ myFile.addEventListener('change', function(e) {
         myFile.value = null;
         return false;
     }
-    else{
+    else if(this.files[0].size > 1000000){
+        swal({
+            title: "檔案太大無法上傳" ,
+            type: "warning",
+            // text: dataDB.errorCode
+        }).then(( result ) => {}, ( dismiss ) => { });
+        myFile.value = null;
+        return false;
+    }
+     else{
         swal("wait", "檔案上傳中，請稍等", "info");
 	    var reader = new FileReader();
 	    reader.readAsDataURL(this.files[0]);
