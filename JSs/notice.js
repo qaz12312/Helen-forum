@@ -3,6 +3,9 @@ var thisAccount = sessionStorage.getItem( 'Helen-account' );
 
 $( document ).ready( async function() 
 {
+    $( ".tabContent tbody" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".tabContent tbody" ).append( httpStatus );
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
     $( document ).on( "click", ".articleTitle", function()
@@ -75,9 +78,7 @@ async function initial( res, rej )
     {
         res(1);
     });
-    $( ".tabContent tbody" ).empty();
-    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
-$( ".tabContent tbody" ).append( httpStatus );
+   
     let cmd = {};
     cmd[ "act" ] = "showNotice";
     cmd["account"] = sessionStorage.getItem( 'Helen-account' );
