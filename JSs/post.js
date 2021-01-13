@@ -3,7 +3,8 @@ let comments= [];
 let keepMenu= [];
 
 $(document).ready(async function(){
-
+    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $(".tabContent").find("p").html(httpStatus)
     barInitial();
     await new Promise((resolve, reject) => initial(resolve, reject));
 });
@@ -93,6 +94,7 @@ async function initial(res, rej){
                                             "&emsp;"+ article.authorNickName); // 原po暱稱
             
             $("#authorDiv").css("background-color", article.authorColor); // 原po頭像
+            $(".tabContent").find("p").html("");
             $(".tabContent").find("p").html(contentStr); // 文章內容
             $("#getm").val(contentStr); // markdown
 
