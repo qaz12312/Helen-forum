@@ -66,7 +66,11 @@ body{
 	float: right;
 	width: 40px;
   }
-
+.logo:hover {
+	border-color: rgb(230, 184, 36);
+	border-radius: 10%;
+	background-color: rgb(104, 127, 168);
+  }
 .logo{
 	width: 150px;
 }
