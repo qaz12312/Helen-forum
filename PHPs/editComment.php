@@ -7,7 +7,7 @@
     cmd["detail"] = "Content";
     cmd["articleID"] = ArticleID;
     cmd["floors"] = "Floor";
-    cmd['anonymous'] = 1/0;
+    //cmd['anonymous'] = 1/0;
 
     後端 to 前端:
     dataDB = JSON.parse(data);
@@ -36,8 +36,8 @@
             errorCode("Update without permission.");
         }
         else{    
-            $sql="UPDATE `Comments` SET `Content`=?,`Anonymous`=? WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";
-            $arr = array($input['detail'],$input['anonymous'], $input['articleID'], $user, $input['floors']);
+            $sql="UPDATE `Comments` SET `Content`=? WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";
+            $arr = array($input['detail'], $input['articleID'], $user, $input['floors']);
             query($conn,$sql,$arr,"UPDATE");
             $rtn = successCode("Successfully edited this comment.");
         }
