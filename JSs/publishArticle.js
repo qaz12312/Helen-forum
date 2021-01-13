@@ -296,8 +296,6 @@ async function initial(res, rej){
             }
             else{
                 article= dataDB.data;
-                if(article.video||article.image)
-                    swal("wait", "內含檔案請稍等", "info");
                 $(".tabContent").find("h2").text("Helen－編輯文章");
                 $(".tabContent").find("p").text("Edit your post.");
                 //從後端拿資料
