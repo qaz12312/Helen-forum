@@ -5,8 +5,21 @@ var thisSearching = sessionStorage.getItem( "Helen-search" );
 var thisSort = sessionStorage.getItem( "Helen-sort" );
 sessionStorage.removeItem( "Helen-boardName" );
 var keepMenu;
+swal({
+    title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
+    type: "success",
+    showConfirmButton: false,
+    timer: 1000,
 
+})
 $(document).ready(async function(){
+    swal({
+        title: "LODDING<br/><small>&lt;" + dirName + "&gt;</small>",
+        type: "success",
+        showConfirmButton: false,
+        timer: 1000,
+
+    })
     barInitial();
 
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
