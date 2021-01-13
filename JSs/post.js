@@ -3,6 +3,9 @@ let comments= [];
 let keepMenu= [];
 
 $(document).ready(async function(){
+    $( ".content tbody" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".content tbody" ).append( httpStatus );
     barInitial();
     await new Promise((resolve, reject) => initial(resolve, reject));
 });
