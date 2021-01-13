@@ -166,7 +166,9 @@ async function initial( res, rej )
     {
        res(1);
     });
-
+    $( "#checklist tbody" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( "#checklist tbody" ).append( httpStatus );
     let cmd = {};
     cmd[ "act" ] = "showCalendar";
     cmd["type"]="list";

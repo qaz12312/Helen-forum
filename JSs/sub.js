@@ -77,7 +77,9 @@ async function initial(res, rej){
     // no Front Text
     // sessionStorage.setItem("Helen-keepDir", "尬意");
     // test End
-    
+    $( ".tabContent tbody" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".tabContent tbody" ).append( httpStatus );
     var keepDir= sessionStorage.getItem("Helen-keepDir");
     $(".tabContent").find("h2").text(keepDir);
     $(".tabContent").find("p").html("<a href= \"../HTMLs/CollectionCatalog.html\" style= \"text-decoration: none; color: #3c537c;\">收藏目錄</a> > "+ keepDir);

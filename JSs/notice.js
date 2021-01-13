@@ -75,7 +75,9 @@ async function initial( res, rej )
     {
         res(1);
     });
-
+    $( ".tabContent tbody" ).empty();
+    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+$( ".tabContent tbody" ).append( httpStatus );
     let cmd = {};
     cmd[ "act" ] = "showNotice";
     cmd["account"] = sessionStorage.getItem( 'Helen-account' );

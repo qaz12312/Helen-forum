@@ -255,6 +255,10 @@ async function initial( res, rej )
 
 function manageBoard( resolve, reject )
 {
+    
+    $( ".tabContent tbody" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".tabContent tbody" ).append( httpStatus );
     let cmd = {};
     cmd[ "act" ] = "showBoardList";
 

@@ -289,7 +289,9 @@ $( document ).ready(async function()
 });
 async function initial(res, rej)
 {
-    
+    $( ".title" ).empty();
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".title" ).append( httpStatus );
     values=[];
     console.log("initial")
      
@@ -315,6 +317,7 @@ async function initial(res, rej)
                 let content = $( ".row" );
                 let content2 = $( ".title" );
                 content.empty();
+                content2.empty();
                 CollectionCatalog=dataDB.data;
                 if( CollectionCatalog.length == 0 )
                 {

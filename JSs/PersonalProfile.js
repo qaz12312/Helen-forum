@@ -281,6 +281,7 @@ function ChangeDisabled(value){
 }
 function initiall(resolve, reject)
 {
+    
     checkPermission();
     let  color, nickname;
     
