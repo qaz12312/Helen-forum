@@ -386,7 +386,7 @@ async function initial(res, rej)
 function forNormal( res, rej )
 {
     swal({
-        title: "LODDING<br/><small>&lt;" + dirName + "&gt;</small>",
+        title: "LODDING<br/>",
         type: "success",
         showConfirmButton: false,
         timer: 1000,
