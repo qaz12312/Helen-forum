@@ -281,6 +281,7 @@ $( document ).ready( async function()
                 keepMenu = result;
         }
 
+
         if( keepMenu.length == 0 )
         {
             swal({
@@ -311,6 +312,7 @@ $( document ).ready( async function()
                             title: "請輸入收藏分類名稱",
                             type: "warning",
                             input: "text",
+                            inputPlaceholder: "不得為空",
                             showCancelButton: true,
                             confirmButtonText: "確定",
                             cancelButtonText: "取消",
@@ -322,36 +324,76 @@ $( document ).ready( async function()
 
                         }, ( dismiss ) =>
                         {
-                            return true;
+                            return false;
                         });
 
                         if( dismissing ) break;
                     }
-
-                    let cmd = {};
-                    cmd[ "act" ] = "newDir";
-                    cmd[ "account" ] = thisAccount;
-                    cmd[ "dirName" ] = dirName;
-
-                    $.post( "../index.php", cmd, function( dataDB )
+                    if(dirName!="")
                     {
-                        dataDB = JSON.parse( dataDB );
-
-                        if( dataDB.status == false )
+                        let cmd = {};
+                        cmd[ "act" ] = "newDir";
+                        cmd[ "account" ] = thisAccount;
+                        cmd[ "dirName" ] = dirName;
+    
+                        $.post( "../index.php", cmd, function( dataDB )
                         {
-                            swal({
-                                title: "新增收藏分類失敗",
-                                type: "error",
-                                text: dataDB.errorCode,
-                                confirmButtonText: "確定",
+                            dataDB = JSON.parse( dataDB );
+    
+                            if( dataDB.status == false )
+                            {
+                                swal({
+                                    title: "新增收藏分類失敗",
+                                    type: "error",
+                                    text: dataDB.errorCode,
+                                    confirmButtonText: "確定",
+    
+                                }).then(( result ) => {}, ( dismiss ) => {});
+                            }
+                            else
+                            {
+                                keepMenu.push( dirName );
+                                let cmd = {};
+                                cmd[ "act" ] = "keep";
+                                cmd[ "account" ] = thisAccount;
+                                cmd[ "articleID" ] = thisArticle.articleID;
+                                cmd[ "dirName" ] = dirName;
+                                $.post( "../index.php", cmd, function( dataDB )
+                                {
+                                    dataDB = JSON.parse( dataDB );
+                
+                                    if( dataDB.status == false )
+                                    {
+                                        swal({
+                                            title: "錯誤！",
+                                            type: "error",
+                                            text: dataDB.errorCode,
+                                
+                                        }).then(( result ) => {}, ( dismiss ) => {} );
+                                    }
+                                    else
+                                    {
+                                        swal({
+                                            title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
+                                            type: "success",
+                                            showConfirmButton: false,
+                                            timer: 1000,
+                                    
+                                        }).then(( result ) => {}, ( dismiss ) => {
+                                            $( chosen ).removeClass( "text-warning" );
+                                            $( chosen ).addClass( "text-light" );
+                                            $( chosen ).closest( "button" ).removeClass( "btn-secondary" );
+                                            $( chosen ).closest( "button" ).addClass( "btn-warning" );
+                    
+                                            thisArticle.keep = parseInt( thisArticle.keep ) + 1;
+                                            $( chosen ).eq(1).html( " " + thisArticle.keep );
+                                        });
+                                    }
+                                });
+                                        }
+                        });
+                    }
 
-                            }).then(( result ) => {}, ( dismiss ) => {});
-                        }
-                        else
-                        {
-                            keepMenu.push( dirName );
-                        }
-                    });
 
                 }, ( dismiss ) => {});
                 
