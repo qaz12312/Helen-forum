@@ -47,6 +47,7 @@ async function initial(res, rej){
             }).then(( result ) => {}, ( dismiss ) => {});
         }
         else{
+            $( ".content tbody" ).empty();
             let article= dataDB.data;
             comments= article.comment;
             // 如果是我的文章，就會出現 編輯文章button
