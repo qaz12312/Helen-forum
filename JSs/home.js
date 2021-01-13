@@ -385,13 +385,10 @@ async function initial(res, rej)
 }
 function forNormal( res, rej )
 {
-    swal({
-        title: "LODDING<br/>",
-        type: "success",
-        showConfirmButton: false,
-        timer: 1000,
-
-    })
+    
+    $( "body" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( "body" ).append( httpStatus );
     var thisSort = sessionStorage.getItem( "Helen-sort" );
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
@@ -503,7 +500,9 @@ function forNormal( res, rej )
 function forSearching( res, rej)
 {
    
-    
+    $( "body" ).empty();
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( "body" ).append( httpStatus );
     let cmd = {};
     cmd[ "act" ] = "search";
     cmd[ "account"] = sessionStorage.getItem( "Helen-account" );
