@@ -219,7 +219,7 @@ $(document).ready(async function(){
                                 else
                                 {
                                     swal({
-                                        title: "收藏成功<br/><small>&lt;" + keepMenu[result] + "&gt;</small>",
+                                        title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
                                         type: "success",
                                         showConfirmButton: false,
                                         timer: 1000,
