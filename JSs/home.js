@@ -5,21 +5,9 @@ var thisSearching = sessionStorage.getItem( "Helen-search" );
 var thisSort = sessionStorage.getItem( "Helen-sort" );
 sessionStorage.removeItem( "Helen-boardName" );
 var keepMenu;
-swal({
-    title: "收藏成功<br/><small>&lt;" + dirName + "&gt;</small>",
-    type: "success",
-    showConfirmButton: false,
-    timer: 1000,
 
-})
 $(document).ready(async function(){
-    swal({
-        title: "LODDING<br/><small>&lt;" + dirName + "&gt;</small>",
-        type: "success",
-        showConfirmButton: false,
-        timer: 1000,
 
-    })
     barInitial();
 
     await new Promise( ( resolve, reject ) => { initial( resolve, reject ); });
@@ -397,6 +385,13 @@ async function initial(res, rej)
 }
 function forNormal( res, rej )
 {
+    swal({
+        title: "LODDING<br/><small>&lt;" + dirName + "&gt;</small>",
+        type: "success",
+        showConfirmButton: false,
+        timer: 1000,
+
+    })
     var thisSort = sessionStorage.getItem( "Helen-sort" );
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";
@@ -430,7 +425,7 @@ function forNormal( res, rej )
             let content = $( ".tabContent tbody" );
             content.empty();
             articles = dataDB.data;
-            console.log(thisSort)
+            
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
@@ -442,7 +437,7 @@ function forNormal( res, rej )
             
             for( let i in articles )
             {
-                console.log("home2")
+                
                 let oneRow = "<tr>" +
                                 "<td>" +
                                     "<div class='card'>" +
@@ -515,7 +510,7 @@ function forSearching( res, rej)
     cmd[ "where" ] = ["home"];
     cmd[ "sort" ] = ( thisSort == "熱門") ? "hot":  (( thisSort == "最新" ) ? "time" : (( thisSort == "留言" ) ? "comment" : "collect" ) );
 
-        console.log(thisSearching)
+        
         if( thisSearching.content.length != 0 )
         {
             
@@ -529,7 +524,7 @@ function forSearching( res, rej)
         }
         else
         {
-            console.log(thisSearching)
+           
             cmd[ "searchWord" ] = thisSearching.button;
             cmd[ "option" ] = "button";
         }
@@ -563,7 +558,7 @@ function forSearching( res, rej)
             let content = $( ".tabContent tbody" );
             content.empty();
             articles = dataDB.data;
-            console.log(articles)
+           
             $( ".tabContent h2" ).html(  "Home"  +"</br>"+
             "<button class='addPost' id='addPost'>+ 發文</button>"
             
