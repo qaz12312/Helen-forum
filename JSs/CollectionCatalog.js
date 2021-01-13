@@ -322,7 +322,9 @@ async function initial(res, rej)
                 CollectionCatalog=dataDB.data;
                 if( CollectionCatalog.length == 0 )
                 {
-                    let emptyMessage = "<div class='title' style='position: relative;'>收藏目錄為空"+   
+                    let emptyMessage =  "<div class='title' style='position: relative;'>Personal Profile Form"+   
+                                        "</div>"+
+                                         "<div class='title' style='position: relative;'>收藏目錄為空"+   
                                         "</div>"+
                                         "<div class='title' style='position: relative;'>快來增加你的收藏"+   
                                         "</div>";

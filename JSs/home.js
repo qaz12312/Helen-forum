@@ -160,6 +160,7 @@ $(document).ready(async function(){
                             title: "請輸入收藏分類名稱",
                             type: "warning",
                             input: "text",
+                            inputPlaceholder: "不得為空",
                             showCancelButton: true,
                             confirmButtonText: "確定",
                             cancelButtonText: "取消",
