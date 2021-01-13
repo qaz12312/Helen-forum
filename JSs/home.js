@@ -172,7 +172,7 @@ $(document).ready(async function(){
 
                         }, ( dismiss ) =>
                         {
-                            break;
+                            return true;
                         });
 
                         if( dismissing ) break;
