@@ -95,7 +95,7 @@ myFile.addEventListener('change', function(e) {
         myFile.value = null;
         return false;
     }
-    else if(this.files[0].size > 1000000){
+    else if(this.files[0].size > 655360){
         swal({
             title: "檔案太大無法上傳" ,
             type: "warning",
