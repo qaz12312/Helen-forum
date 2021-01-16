@@ -15,7 +15,7 @@
 		// $token =$input['token'];
 		// $info = $_SESSION[$token];
 		// writeRecord($info["account"],$info["log"],"log out");
-		writeRecord($input['account'],"Log Out","");
+		writeRecord($input['account'],"Log Out");
         // unset($_SESSION[$token]);
         session_destroy();
 		$rtn = successCode("Successfully log out!");

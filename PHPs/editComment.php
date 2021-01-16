@@ -39,6 +39,7 @@
             $sql="UPDATE `Comments` SET `Content`=? WHERE `ArticleID`=? AND `AuthorID`=? AND`Floor`=?";
             $arr = array($input['detail'], $input['articleID'], $user, $input['floors']);
             query($conn,$sql,$arr,"UPDATE");
+            writeRecord($user,"Edit comment","in articleID : ".$input["articleID"]."which is floor:".$input['floors']);
             $rtn = successCode("Successfully edited this comment.");
         }
         echo json_encode($rtn);

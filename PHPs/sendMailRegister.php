@@ -14,7 +14,7 @@
         dataDB.info = "send token." / "Successfully sign up and send email to user."
         dataDB.data = 
     否則
-        dataDB.errorCode = "fail to find the password"
+        dataDB.errorCode = "fail to find the password" / "Failed to register,Database exception."
         dataDB.data = ""
     */
     use PHPMailer\PHPMailer\PHPMailer;
@@ -23,14 +23,12 @@
     require_once 'phpmailer/SMTP.php';
 
     $user = base64_decode($input['account']);
-    // $user = $input['account'];
     switch($input['option']){
         case "verify": // 確認是否已有帳號
             haveAccount($user);
             break;
         case "create": // 新增帳號
             $pwd = base64_decode($input['password']);
-            // $pwd = $input['password'];
             doCreateAccount($user,$pwd);
             break;
     }

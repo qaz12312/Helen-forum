@@ -14,7 +14,7 @@
         dataDB.info = "Successfully edited this board."
         dataDB.data = 更新後的版
     否則
-        dataDB.errorCode = "Failed to found the update board."/ "Delete without permission." 
+        dataDB.errorCode = "Failed to found the update board."/ "Edit without permission." 
         dataDB.data = ""
     */
     function doEditBoard($input){
@@ -31,22 +31,14 @@
         $arr = array($input['boardName'],$user);
 		$result = query($conn,$sql,$arr,"SELECT");
         if(!$result[0][0]){
-            errorCode("Delete without permission.");
+            errorCode("Edit without permission.");
         }
         else{
             $sql="UPDATE `Board` SET `Rule`=? where `BoardName`=? AND `UserID`=?";
             $arr = array($input['rule'], $input['boardName'],$user);
             query($conn,$sql,$arr,"UPDATE");
-            
-            $sql ="SELECT EXISTS(SELECT 1 FROM `Board` JOIN `Users` ON Board.UserID=Users.UserID WHERE `BoardName`=? AND Board.UserID=? AND `Rule`=? LIMIT 1)";
-            $arr = array($input['boardName'],$user, $input['rule']);
-            $result = query($conn,$sql,$arr,"SELECT");
-            if(!$result[0][0]){
-                errorCode("Failed to found the update board.");
-            }
-            else{ 
-                $rtn = successCode("Successfully edited this board.",$result);
-            }
+            writeRecord($user,"Edit board","edit rule about Board name : ".$input['boardName']);
+            $rtn = successCode("Successfully edited this board.",$result);
         }
         echo json_encode($rtn);
     }

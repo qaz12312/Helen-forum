@@ -47,15 +47,8 @@
 					//任命:newboardname的版主從admin改成user //切換:(user要從oldboardname版主 改成newboardname版主)
 					$sql="UPDATE `Board` SET `UserID`=? WHERE `BoardName` =?";
 					query($conn,$sql,array($user, $input['newBoardName']),"UPDATE");
-					
-					$sql ="SELECT EXISTS(SELECT 1 FROM `Board` NATURAL JOIN `Users` WHERE `BoardName` =? AND `UserID`=? LIMIT 1)";
-					$result = query($conn,$sql,array($input['newBoardName'], $user),"SELECT");
-					if(!$result[0][0]){
-						$check = false;
-						errorCode("Failed to appoint moderator,Database exception.");
-					}
 					//writeRecord($user,$userInfo["log"],"Be a moderator in 【".$input['newBoardName']."】.");
-					writeRecord($user,"Moderator","Be a moderator in 【".$input['newBoardName']."】.");
+					writeRecord($user,"Edit moderator","Be a moderator in 【".$input['newBoardName']."】.");
 					$check=doSendNotification(array("recipient" =>$user, "content" => "Congratulation  - You are the moderator in 【".$input['newBoardName']."】 :)"),0);
 				}
 			}
@@ -73,15 +66,8 @@
 				//刪除:把oldboard的版主給admin//切換:(user要從oldboardname版主 改成newboardname版主)
 				$sql="UPDATE `Board` SET `UserID`='admin' WHERE `BoardName` = ?";
 				query($conn,$sql,array($input['oldBoardName']),"UPDATE");
-
-				$sql ="SELECT EXISTS(SELECT 1 FROM `Board` NATURAL JOIN `Users` WHERE `BoardName`=? AND `UserID`='admin' LIMIT 1)";
-				$result = query($conn,$sql,array($input['oldBoardName']),"SELECT");
-				if(!$result[0][0]){
-					$check = false;
-					errorCode("Failed to found the update Moderator.");
-				}
 				//writeRecord($user,$userInfo["log"],"No longer the moderator in 【".$input['oldBoardName']."】.");
-				writeRecord($user,"Moderator","No longer the moderator in 【".$input['oldBoardName']."】.");
+				writeRecord($user,"Eidt moderator","No longer the moderator in 【".$input['oldBoardName']."】.");
 				$check=doSendNotification(array("recipient" =>$user, "content" => "Oops - You are no longer the moderator in 【".$input['oldBoardName']."】."),0);
 			}
 		}

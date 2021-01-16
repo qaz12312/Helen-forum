@@ -36,18 +36,9 @@
 			$sql="UPDATE `Board` SET `TopArticleID`=? WHERE `BoardName`=?";
 			$arr = array($input['articleID'], $input['boardName']);
 			query($conn,$sql,$arr,"UPDATE");
-
-			$sql="SELECT EXISTS(SELECT 1 FROM `Board` WHERE `TopArticleID`=? AND `BoardName`=? LIMIT 1)";
-			$arr = array($input['articleID'], $input['boardName']);
-			$result = query($conn,$sql,$arr,"SELECT");
-			if(!$result[0][0]){
-				errorCode("Failed to set Top article.");
-			}
-			else{
-            	// writeRecord($user,$userInfo["log"],"changed the 【".$input['boardName']."】's topArticle which topArticleID is ".$input['articleID'].".");
-            	writeRecord($user,"Edit TopArticle","changed the 【".$input['boardName']."】's topArticle which topArticleID is ".$input['articleID'].".");
-				$rtn = successCode("Successfully edited this topArticle.");
-			}
+            // writeRecord($user,$userInfo["log"],"changed the 【".$input['boardName']."】's topArticle which topArticleID is ".$input['articleID'].".");
+            writeRecord($user,"Edit TopArticle","changed the 【".$input['boardName']."】's topArticle which topArticleID is ".$input['articleID'].".");
+			$rtn = successCode("Successfully edited this topArticle.");
 		}
 		echo json_encode($rtn);
 	}

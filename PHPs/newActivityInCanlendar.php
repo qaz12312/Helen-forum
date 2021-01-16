@@ -16,7 +16,7 @@
 		dataDB.info = "Activity has been approved" / "Activity has not been approved yet." / "Successfully Apply the Board.";
 		dataDB.data = 空array;
 	否則
-		dataDB.errorCode = "Failed to Apply the Board,Database exception.";
+		dataDB.errorCode = "";
 		dataDB.data = "";
 	*/
     function doNewActivityInCanlendar($input){
@@ -43,7 +43,8 @@
 			$sql="INSERT INTO `Calendars`(`UserID`,`Title`,`Start`,`END`,`Text`) VALUES(?,?,?,?,?)";
         	$arr = array($user,$input['title'],$input['startTime'],$input['endTime'],$input['text']);
             query($conn,$sql,$arr,"INSERT");
-            $rtn = successCode("Successfully new the Article.",array());
+            writeRecord($user,"New activity","activity info :".$input['title']);
+            $rtn = successCode("Successfully new the Activity.",array());
 		}	
         echo json_encode($rtn);
     }

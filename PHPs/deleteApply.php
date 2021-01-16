@@ -31,6 +31,7 @@
 				$arr = array($input['account'],$input['content'],($input['type'] == "board" ? 1 : 0 ));
 				query($conn,$sql,$arr,"DELETE");
 				doSendNotification(array("recipient" => $input['account'], "content" => "Your application : ".$input['content']." (applyed in ".$result[0][0].") can't be added."),0);
+                writeRecord("admin","DELETE ".$input['type'],$input['content']);
 				$rtn = successCode("Successfully deleted all this user's application.");
 			}
 		}

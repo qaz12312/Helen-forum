@@ -13,7 +13,7 @@
         dataDB.info = "Successfully send the notice.";
         dataDB.data = "";
     否則
-        dataDB.errorCode = "Failed to send notification,Database exception."
+        dataDB.errorCode = ""
         dataDB.data = ""
     */
     function doSendNotification($input,$print=1){

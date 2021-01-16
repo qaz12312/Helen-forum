@@ -12,7 +12,7 @@
         dataDB.info = "Successfully deleted this board."
         dataDB.data = ""
     否則
-        dataDB.errorCode = "This board doesn't exist." / "Failed to delete,Database exception."
+        dataDB.errorCode = "This board doesn't exist."
         dataDB.data = ""
     */
     function doDeleteBoard($input)
@@ -27,16 +27,9 @@
         } else {
             $sql = "DELETE FROM `Board`  WHERE `BoardName`=?";
 			query($conn,$sql,array($board),"DELETE");
-
-            $sql = "SELECT EXISTS(SELECT 1 FROM `Board` WHERE `BoardName` = ? LIMIT 1)";
-		    $result = query($conn,$sql, array($board),"SELECT");     
-            if ($result[0][0]) {
-                errorCode("Failed to delete,Database exception.");
-            } 
-            else {
-                doToAllNotification(array("content" => "The board 【".$board."】 does not exit."),0);
-                $rtn = successCode("Successfully deleted this board.");
-            }
+            doToAllNotification(array("content" => "The board 【".$board."】 does not exit."),0);
+            writeRecord("admin","DELETE board","Board name : ".$board);
+            $rtn = successCode("Successfully deleted this board.");
         }
         echo json_encode($rtn);
     }

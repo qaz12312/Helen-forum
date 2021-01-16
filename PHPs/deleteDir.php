@@ -13,7 +13,7 @@
         dataDB.info = "Successfully deleted this folder."
         dataDB.data = ""
     否則
-        dataDB.errorCode = "This folder doesn't exit." / "Failed to delete,Database exception."
+        dataDB.errorCode = "This folder doesn't exit."
         dataDB.data = ""
     */
     function doDeleteDir($input)
@@ -36,15 +36,8 @@
             $sql = "DELETE FROM `KeepDir` WHERE `DirName`=? AND `UserID`=?";
             $arr = array($input['dirName'],$user);
             query($conn,$sql,$arr,"DELETE");
-            
-            $sql = "SELECT EXISTS(SELECT 1 FROM `KeepDir` WHERE `DirName`=? AND `UserID`=? LIMIT 1)";
-            $arr = array($input['dirName'],$user);
-            $result = query($conn,$sql,$arr,"SELECT");
-            if ($result[0][0]) {
-                errorCode("Failed to delete,Database exception.");
-            } else {
-                $rtn = successCode("Successfully deleted this folder.");
-            }
+            writeRecord($user,"DELETE Dir","Dir name : ".$input['dirName']);
+            $rtn = successCode("Successfully deleted this folder.");
         }
         echo json_encode($rtn);
     }

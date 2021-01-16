@@ -51,7 +51,7 @@ function query($conn,$sql,$input,$option){
     $infoI:info     // 要 寫進檔案的內容
     */
     // log - db
-    function writeRecord($infoU,$infoA,$infoI){
+    function writeRecord($infoU,$infoA,$infoI=""){
         global $conn;
         $sql="INSERT INTO `Logs`(`UserID`,`Act`,`Info`) VALUES(?,?,?)";
         $arr = array($infoU,$infoA,$infoI);

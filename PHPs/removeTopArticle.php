@@ -12,7 +12,7 @@
 		dataDB.info = "Successfully remove top article in board.";
 		dataDB.data = "";
 	否則
-		dataDB.errorCode = "Failed to remove top article in board,Database exception." 
+		dataDB.errorCode = "Has no top article." 
 		dataDB.data = "" 
 	*/
 	function doRemoveTopArticle($input){ //移除置頂文章

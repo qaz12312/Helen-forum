@@ -20,7 +20,7 @@
 		dataDB.info = "Successfully edited this article."
 		dataDB.data = ""
 	否則
-		dataDB.errorCode = "Update without permission."/"Failed to Update Article,Database exception."
+		dataDB.errorCode = "Update without permission."
 		dataDB.data = ""
 	*/
     function doEditArticle($input){ 

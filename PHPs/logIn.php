@@ -22,7 +22,6 @@
     	global $conn;
     	$sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`=? AND `Password`=?";
 		$arr = array(base64_decode($input['account']),base64_decode($input['password']) );
-		// $arr = array($input['account'],$input['password'] );
 		$result = query($conn,$sql,$arr,"SELECT");
 		$resultCount = count($result);
 	    if($resultCount <= 0){
@@ -34,7 +33,7 @@
 			$time = date_format($date, 'Y-m-d H-i-s');
 			newUserFolder($result[0][0]);
 			// writeRecord($result[0][0],$time,"---\nlog in");
-			writeRecord($result[0][0],"Log In","");
+			writeRecord($result[0][0],"Log In");
 			$str = $result[0][0]."010helen";
 			$token = base64_encode($str);
 			$per = showAuthority($result[0][0],1);

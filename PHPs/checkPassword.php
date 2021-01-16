@@ -19,7 +19,6 @@
         global $conn;
         $sql="SELECT EXISTS(SELECT 1 FROM `Users` WHERE `UserID`=? AND `Password`=? LIMIT 1)";
         $arr = array(base64_decode($input['account']),base64_decode($input['password']) );
-        // $arr = array($input['account'],$input['password']);
         $result = query($conn,$sql,$arr,"SELECT");
         if(!$result[0][0]){
             errorCode("Your password is wrong,you need to try again.");
