@@ -391,8 +391,8 @@ function forNormal( res, rej )
 {
     
     $( ".tabContent tbody" ).html("");
-    //                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
-    // $( ".tabContent tbody" ).append( httpStatus );
+                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".tabContent tbody" ).append( httpStatus );
     var thisSort = sessionStorage.getItem( "Helen-sort" );
     let cmd = {};
     cmd[ "act" ] = "sortInMenu";

@@ -4,8 +4,8 @@ var thisAccount = sessionStorage.getItem( 'Helen-account' );
 $( document ).ready( async function() 
 {
     $( ".tabContent tbody" ).empty();
-    //     let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
-    // $( ".tabContent tbody" ).append( httpStatus );
+        let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    $( ".tabContent tbody" ).append( httpStatus );
     barInitial();
     await new Promise( ( resolve, reject ) => initial( resolve, reject ) );
     $( document ).on( "click", ".articleTitle", function()
