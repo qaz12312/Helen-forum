@@ -390,7 +390,7 @@ async function initial(res, rej)
 function forNormal( res, rej )
 {
     
-    $( ".tabContent tbody" ).empty
+    $( ".tabContent tbody" ).html("");
     //                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
     // $( ".tabContent tbody" ).append( httpStatus );
     var thisSort = sessionStorage.getItem( "Helen-sort" );
