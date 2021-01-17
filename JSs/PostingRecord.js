@@ -89,8 +89,8 @@ async function initial(res, rej)
 {
 
     $( ".postContent tbody" ).empty();
-                    let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
-    $( ".postContent tbody" ).append( httpStatus );
+    //                 let httpStatus = "<h1 style='font-weight: bolder; font-family: Times, serif;'>LOADING...</h1>";
+    // $( ".postContent tbody" ).append( httpStatus );
     let cmd = {};
     cmd[ "act" ] = "showPostRecord";
     cmd["account"] = sessionStorage.getItem("Helen-account");
