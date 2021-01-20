@@ -48,7 +48,7 @@
             if(!$result[0][0]){//若issue不存在
                 doSendNotification(array("recipient" => $articleInfo[0][1], "content" => $content),0);
             }
-    		writeRecord($user,"Add report","articleID :":$input['articleID']."which reason is:".$input['reason']);
+    		writeRecord($user,"Add report","articleID :".$input['articleID']."which reason is:".$input['reason']);
             $rtn = successCode("Successfully send the report.");
             echo json_encode($rtn);
         }
