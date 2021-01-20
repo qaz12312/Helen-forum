@@ -44,7 +44,7 @@
 		$sql="INSERT INTO `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`,`Anonymous`) VALUES(?,?,?,?,?)";
 		$arr = array($user,$input['content'], $input['articleID'], $rowcnt0,$input['anonymous']);
 		query($conn,$sql,$arr,"INSERT");
-    	writeRecord($user,"New comment","in articleID :":$input['articleID']);
+    	writeRecord($user,"New comment","in articleID :".$input['articleID']);
 		$rtn = successCode("Successfully new this comment.",$result);
 		echo json_encode($rtn);
 	}
