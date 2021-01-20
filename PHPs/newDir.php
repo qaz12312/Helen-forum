@@ -36,7 +36,7 @@
         	$sql="INSERT INTO `KeepDir`(`UserID`,`DirName`) VALUES(?,?)";
         	$arr = array($user, $input['dirName']);
 			query($conn,$sql,$arr,"INSERT");
-    		writeRecord($user,"New Dir","Dir name :":$input['dirName']);
+    		writeRecord($user,"New Dir","Dir name :"$input['dirName']);
 			$rtn = successCode("Successfully new the dir.");
 		}
         echo json_encode($rtn);
