@@ -30,7 +30,7 @@
             $sql="INSERT INTO `Board`(`BoardName`,`UserID`,`Rule`,`TopArticleID`) VALUES(?,?,?,?)";
             $arr = array($input['boardName'],"admin",$input['rule'],NULL);
             query($conn,$sql,$arr,"INSERT");
-            writeRecord("admin","New board","board name :":$input['boardName']);
+            writeRecord("admin","New board","board name :".$input['boardName']);
             $rtn = successCode("Successfully new the board.",$result[0]);
         }
         echo json_encode($rtn);
