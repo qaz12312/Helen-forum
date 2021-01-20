@@ -38,7 +38,7 @@
 				$sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?,?)";
 				$arr = array($user, $input['content'],($input['type'] == "board" ? 1 : 0));
 				query($conn,$sql,$arr,"INSERT");
-            	writeRecord($user,"New board's Apply","content :":$input['content']);
+            	writeRecord($user,"New board's Apply","content :".$input['content']);
 				$rtn = successCode("Successfully Apply the Board.");
 		  	}
 		}
