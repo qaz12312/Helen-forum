@@ -6,7 +6,6 @@
     error_reporting(E_ALL);
     $conn = connSql();
     $input = $_POST;
-
     session_start();
     switch ($input["act"]) {
         case "sendMailPwd": // 【user】忘記密碼的寄送email
@@ -56,16 +55,7 @@
             require_once("./PHPs/toAllNotification.php");
             doToAllNotification($input);
             break;
-	/*	    
-        case "searchBoard": //【訪客】看板內搜尋
-            require_once("./PHPs/searchInBoard.php");
-            doSearchBoard($input);
-            break;
-	case "searchMenu": //【訪客】主頁搜尋
-            require_once("./PHPs/searchInMenu.php");
-            doSearchMenu($input);
-            break;*/
-	case "search": //【訪客】主頁/看板內 搜尋
+	    case "search": //【訪客】主頁/看板內 搜尋
             require_once("./PHPs/search.php"); 
             break;
         case "sortInBoard": // 【系統】版內排序
@@ -180,43 +170,42 @@
             require_once("./PHPs/removeTopArticle.php");
             doRemoveTopArticle($input);
             break;
-	case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
-		require_once("./PHPs/showAllUser.php");
-		doShowAllUser($input);
-        break;
-    case "checkPassword":	
-        require_once("./PHPs/checkPassword.php");
-        doCheckPassword($input);
-        break;
-    case "showApplyBoard":	
-        require_once("./PHPs/showApply.php");
-        doShowApplyBoard($input);
-        break;
-    case "newApplyBoard":	
-        require_once("./PHPs/newApply.php");
-        doNewApplyBoard($input);
-        break;
-    case "deleteApplyBoard":	
-        require_once("./PHPs/deleteApply.php");
-        doDeleteApplyBoard($input);
-        break;
-    case "newActivityInCanlendar":	
-        require_once("./PHPs/newActivityInCanlendar.php");
-        doNewActivityInCanlendar($input);
-        break;
-    case "checkInCanlendarList":	
-        require_once("./PHPs/checkInCanlendarList.php"); //審核活動
-        doCheckInCanlendarList($input);
-        break;
-    case "showUncheckCanlenderList":	
-        require_once("./PHPs/showUncheckCanlenderList.php"); //顯示審核活動
-        doShowUncheckCanlenderList($input);
-        break;
-    case "showCalendar":	
-        require_once("./PHPs/showCalendar.php"); //顯示活動
-        doShowCalendar($input);
-        break;
-
+        case "showAllUser":	//【版主】顯示非版主, 非Admin的使用者
+            require_once("./PHPs/showAllUser.php");
+            doShowAllUser($input);
+            break;
+        case "checkPassword":	
+            require_once("./PHPs/checkPassword.php");
+            doCheckPassword($input);
+            break;
+        case "showApplyBoard":	
+            require_once("./PHPs/showApply.php");
+            doShowApplyBoard($input);
+            break;
+        case "newApplyBoard":	
+            require_once("./PHPs/newApply.php");
+            doNewApplyBoard($input);
+            break;
+        case "deleteApplyBoard":	
+            require_once("./PHPs/deleteApply.php");
+            doDeleteApplyBoard($input);
+            break;
+        case "newActivityInCanlendar":	
+            require_once("./PHPs/newActivityInCanlendar.php");
+            doNewActivityInCanlendar($input);
+            break;
+        case "checkInCanlendarList":	
+            require_once("./PHPs/checkInCanlendarList.php"); //審核活動
+            doCheckInCanlendarList($input);
+            break;
+        case "showUncheckCanlenderList":	
+            require_once("./PHPs/showUncheckCanlenderList.php"); //顯示審核活動
+            doShowUncheckCanlenderList($input);
+            break;
+        case "showCalendar":	
+            require_once("./PHPs/showCalendar.php"); //顯示活動
+            doShowCalendar($input);
+            break;
     }
     $conn = NULL;
 ?>
