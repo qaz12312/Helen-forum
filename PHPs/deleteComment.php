@@ -14,7 +14,7 @@
         dataDB.info = "Successfully deleted this comment."
         dataDB.data = ""
     否則
-        dataDB.errorCode = "Comment doesn't exit." / "Failed to delete,Database exception."
+        dataDB.errorCode = "Comment doesn't exit."
         dataDB.data = ""
     */
     function doDeleteComment($input){//刪除留言
@@ -37,6 +37,7 @@
             $sql="DELETE FROM `Comments` WHERE  `AuthorID`=? AND`Floor`=?";
             $arr = array($user, $input['floors']);
             query($conn,$sql,$arr,"DELETE");
+            writeRecord($user,"DELETE comment","articleID : ".$input['articleID']."in floor: ".$input['floors']);
             $rtn = successCode("Successfully deleted this comment.");
         }
         echo json_encode($rtn);

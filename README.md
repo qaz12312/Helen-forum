@@ -10,9 +10,9 @@
 ### 有問題可以先上[Trello](https://trello.com/b/2amh64r0/helen)相關連結的`後端問題集`看~
 
 ### 紀錄dir
-+ old version 12-14 : 12/14日完成的
-+ PHPs 12-27 : 未加入token、加密，12/27
-+ add all : 目前在master的版本，加入token(account、permission、登入ip、操作紀錄檔) + (加解密account、password)
++ version1 12-14 : 非PDO，12/14日完成的
++ version2 12-27 : 未加入token、加密
++ PHPs : 目前在master的版本，加入token(account、permission、登入ip、操作紀錄檔) + (加解密account、password)
 
 ## 加密
 ```

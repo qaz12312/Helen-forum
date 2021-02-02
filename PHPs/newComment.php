@@ -20,7 +20,7 @@
 		dataDB.data[4]	// Floor
 		dataDB.data[5]	// Color
 	否則
-		dataDB.errorCode = "Failed to upload comment,Database exception."
+		dataDB.errorCode = ""
 		dataDB.data = ""
 */
 	function doNewComment($input){ 
@@ -44,6 +44,7 @@
 		$sql="INSERT INTO `Comments`(`AuthorID`,`Content`,`ArticleID`,`Floor`,`Anonymous`) VALUES(?,?,?,?,?)";
 		$arr = array($user,$input['content'], $input['articleID'], $rowcnt0,$input['anonymous']);
 		query($conn,$sql,$arr,"INSERT");
+    	writeRecord($user,"New comment","in articleID :".$input['articleID']);
 		$rtn = successCode("Successfully new this comment.",$result);
 		echo json_encode($rtn);
 	}

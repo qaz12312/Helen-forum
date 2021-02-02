@@ -179,6 +179,7 @@ function doSearch($where,$boardInfo,$sql,$orderWay,$search,$user){
                 $sql = "SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? LIMIT 1)";
                 $keep = query($conn, $sql, array($articleID, $user), "SELECT");
                 $hasKeep = $keep[0][0];
+                writeRecord($user,"Search","search in".$where." about: ".json_encode($search, JSON_UNESCAPED_UNICODE));
             } 
             else{
                 $hasLike = 0 ;

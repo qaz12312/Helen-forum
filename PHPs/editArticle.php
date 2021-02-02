@@ -20,7 +20,7 @@
 		dataDB.info = "Successfully edited this article."
 		dataDB.data = ""
 	否則
-		dataDB.errorCode = "Update without permission."/"Failed to Update Article,Database exception."
+		dataDB.errorCode = "Update without permission."
 		dataDB.data = ""
 	*/
     function doEditArticle($input){ 
@@ -54,6 +54,7 @@
 			$arr = array($input['title'], $input['content'], $input['picture'],$input['video'], $hashTag, $input['blockName'], $input['anonymous'],$input['articleID'], $user);
 			query($conn,$sql,$arr,"UPDATE");
 			// writeRecord($user,$userInfo["log"],"edit for articleID:".$input['articleID']);
+			writeRecord($user,"Edit Article","articleID:".$input['articleID']);
 			$rtn = successCode("Successfully edited this article.", $result);
 		}
 		echo json_encode($rtn);

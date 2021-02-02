@@ -14,7 +14,7 @@
 		dataDB.info = "Successfully Apply the Board.";
 		dataDB.data = "";
 	否則
-		dataDB.errorCode = "Failed to Apply the Board,Database exception.";
+		dataDB.errorCode = "You have already sent this message.";
 		dataDB.data = "";
 	*/
     function doNewApplyBoard($input){ // 申請版/版主
@@ -38,6 +38,7 @@
 				$sql="INSERT INTO `Issue`(`UserID`,`Content`,`Type`) VALUES(?,?,?)";
 				$arr = array($user, $input['content'],($input['type'] == "board" ? 1 : 0));
 				query($conn,$sql,$arr,"INSERT");
+            	writeRecord($user,"New board's Apply","content :".$input['content']);
 				$rtn = successCode("Successfully Apply the Board.");
 		  	}
 		}

@@ -21,10 +21,11 @@
             verifyPwd($input);
             break;
         case "change": // 修改密碼
-            // $input['pwd'] = base64_decode($input['pwd']);
+            $input['pwd'] = base64_decode($input['pwd']);
             changePwd($input);
             break;
     }
+
     function verifyPwd($input){
         if(isset($_SESSION[$input['token']])){
             $arr = $_SESSION[$input['token']];
@@ -44,17 +45,18 @@
         global $conn;
         if(isset($_SESSION[$input['token']])){
                 $arr = $_SESSION[$input['token']];
-                $account = $arr['account'];
+                $user = $arr['account'];
                 unset($_SESSION[$input['token']]);
-                $result = query($conn,"SELECT `UserID` FROM `Users` WHERE `UserID`=?",array($account),"SELECT");
+                $result = query($conn,"SELECT `UserID` FROM `Users` WHERE `UserID`=?",array($user),"SELECT");
                 $resultCount = count($result);
                 if($resultCount <= 0){
-                    errorCode("fail to verify.You need to go to forgetPassword Page again.");
+                    errorCode("You haven't registered yet.");
                 }
                 else{
                     $sql="UPDATE `Users` SET `Password`=? WHERE `UserID` =?";
-                    $arr = array($input['pwd'], $account);
+                    $arr = array($input['pwd'], $user);
                     query($conn,$sql,$arr,"UPDATE");
+                    writeRecord($user,"Edit password");
                     $rtn = successCode("Success to change the password.");
                     echo json_encode($rtn);
                 }

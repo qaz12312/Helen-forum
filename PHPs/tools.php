@@ -46,14 +46,28 @@ function query($conn,$sql,$input,$option){
 ?>
 <?php
     /*
+    $infoU:account  // 資料夾名稱
+    $infoA:act      // 重要動作
+    $infoI:info     // 要 寫進檔案的內容
+    */
+    // log - db
+    function writeRecord($infoU,$infoA,$infoI=""){
+        global $conn;
+        $sql="INSERT INTO `Logs`(`UserID`,`Act`,`Info`) VALUES(?,?,?)";
+        $arr = array($infoU,$infoA,$infoI);
+        query($conn,$sql,$arr,"INSERT");
+    }
+?>
+<?php
+    /*
     $infoA:account // 資料夾名稱
     $infoT:time // 檔名(2020-12-21 22-15)
     $infoI:info // 要 寫進檔案的內容
     */
-    // log
-    function writeRecord($infoA,$infoT,$infoI){
+    // log - txt file
+    function writeRecordSTOP($infoA,$infoT,$infoI){
         $TxtFileName = "./Data/Record/".$infoA."/".$infoT.".txt";
-        if( ($file=fopen ($TxtFileName,"a")) === FALSE){
+        if( ($file=fopen($TxtFileName,"a")) === FALSE){
             return "建立可寫檔案：".$TxtFileName."失敗";
             exit();
         }
@@ -82,7 +96,7 @@ function query($conn,$sql,$input,$option){
 	/*
     account = "00757007";
 	*/
-    function showAuthority($input){
+    function showAuthority($input,$option=0){
         global $conn;
         $sql="SELECT `BoardName` FROM `Board` WHERE `UserID`=? AND `UserID` not in ('admin')";
         $result = query($conn,$sql,array($input),"SELECT");
@@ -92,17 +106,22 @@ function query($conn,$sql,$input,$option){
             $result = query($conn,$sql,array($input),"SELECT");
             $resultCount = count($result);
             if($resultCount <= 0){
-                $rtn = successCode("",0);
+                $authority=0;
             }else if($result[0][0]){
-                $rtn = successCode("",3);
+                $authority=3;
             }else{
-                $rtn = successCode("",1);
+                $authority=1;
             }
         }
         else{
-            $rtn = successCode("",2);
+            $authority=2;
         }
-		echo json_encode($rtn);
+        if($option){
+            return $authority;
+        }else{
+            $rtn = successCode("Successfully show.",$authority);
+            echo json_encode($rtn);
+        }
     }
     function GetIP(){
         if(!empty($_SERVER["HTTP_CLIENT_IP"])){

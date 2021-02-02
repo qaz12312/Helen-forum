@@ -21,24 +21,25 @@
     function doLogIn($input){
     	global $conn;
     	$sql="SELECT `UserID`,`Color`,`Nickname` FROM `Users` WHERE `UserID`=? AND `Password`=?";
-		//$arr = array(base64_decode($input['account']),base64_decode($input['password']) );
-		$arr = array($input['account'],$input['password'] );
+		$arr = array(base64_decode($input['account']),base64_decode($input['password']) );
 		$result = query($conn,$sql,$arr,"SELECT");
 		$resultCount = count($result);
 	    if($resultCount <= 0){
 			errorCode("Could not find the user.");
 	    }
 	    else{
-			// token
-			// $date = date_create('now', new DateTimeZone('Asia/Taipei'));
-			// $time = date_format($date, 'Y-m-d H-i-s');
-			// writeRecord($row[0],$time,"---\nlog in");
-			// $str = $result[0]."010helen";
-			// $token = base64_encode($str);
-			// $per = showAuthority($row[0]);
-			// $ip = GetIP();
-			// $_SESSION[$token] = array("account"=>$row[0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
-			// $rtn = successCode(array("token"=>$token,"color"=>$row[1],"nickname"=>$row[2]));
+			//token
+			$date = date_create('now', new DateTimeZone('Asia/Taipei'));
+			$time = date_format($date, 'Y-m-d H-i-s');
+			newUserFolder($result[0][0]);
+			// writeRecord($result[0][0],$time,"---\nlog in");
+			writeRecord($result[0][0],"Log In");
+			$str = $result[0][0]."010helen";
+			$token = base64_encode($str);
+			$per = showAuthority($result[0][0],1);
+			$ip = GetIP();
+			// $_SESSION[$token] = array("account"=>$result[0][0],"permission"=>$per,"ip"=>$ip,"log"=>$time);
+			// $rtn = successCode("Successfully log in.",array("token"=>$token,"color"=>$result[0][1],"nickname"=>$row[2]));
 			$rtn = successCode("Successfully log in.",$result[0]);
 		}
 		echo json_encode($rtn);

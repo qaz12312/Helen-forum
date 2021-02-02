@@ -23,7 +23,6 @@
             $arr = array($input['articleID']);
             $result = query($conn,$sql,$arr,"SELECT");
             $resultCount = count($result);
-            
             if($resultCount <= 0){
                 errorCode("This article which you report doesn't exit.");
             }
@@ -31,17 +30,17 @@
                 $sql="DELETE FROM `Article` WHERE `ArticleID` = ?";//刪除此文章
                 $arr = array($input['articleID']);
                 query($conn,$sql,$arr,"DELETE");
-
                 doSendNotification(array("recipient" => $result[0][0], "content" => "Your post 【".$result[0][1]."】which is published in ".$result[0][2]." has been reported and deleted."),0);
+                writeRecord("admin","DELETE article","articleID : ".$input['articleID']);
                 $rtn = successCode("Successfully deleted the article which is reported.");
             }
         }else{
-		$rtn = successCode("Successfully canceled this report.");
-	}
+		    $rtn = successCode("Successfully canceled this report.");
+        }
         // 無論審核是否通過，刪除關於此文章的所有檢舉
-	$sql="DELETE FROM `Report` WHERE `ArticleID`= ?";
+        $sql="DELETE FROM `Report` WHERE `ArticleID`= ?";
         $arr = array($input['articleID']);
-	query($conn,$sql,$arr,"DELETE");
+        query($conn,$sql,$arr,"DELETE");
         echo json_encode($rtn);
     }
 ?>

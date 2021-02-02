@@ -34,12 +34,14 @@
             $arr = array($input['articleID'],$user);
             query($conn,$sql,$arr,"INSERT");
             // writeRecord($user,$userInfo["log"],"add heart for articleID:".$input['articleID']);
+            writeRecord($user,"Add Heart","articleID:".$input['articleID']);
             $rtn = successCode("Successfully added this heart.");
         } else {//DELETE HEART
             $sql = "DELETE FROM `FollowHeart` WHERE `UserID`=? AND `ArticleID`=?";
             $arr = array($user,$input['articleID']);
             query($conn,$sql,$arr,"DELETE");
             //writeRecord($user,$userInfo["log"],"cancel heart for articleID:".$input['articleID']);
+            writeRecord($user,"Delete Heart","articleID:".$input['articleID']);
             $rtn = successCode("Successfully deleted this heart.");
         }
         echo json_encode($rtn);

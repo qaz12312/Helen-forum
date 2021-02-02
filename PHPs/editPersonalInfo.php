@@ -20,7 +20,7 @@
 	*/
     switch($input["option"]){
         case "password": // 修改密碼
-            // $input['new'] = base64_decode($input['new']);
+            $input['new'] = base64_decode($input['new']);
             $optionAttr = "Password";
             break;
         case "nickname": // 修改暱稱
@@ -54,6 +54,7 @@
             $arr = array($input['new'],$user);
             query($conn,$sql,$arr,"UPDATE");
             // writeRecord($user,$userInfo["log"],"change the ".$input["option"]);
+            writeRecord($user,"Change UserInfo","change the ".$input["option"]);
             $rtn = successCode("Success to change the ".$input["option"]);
         }
         echo json_encode($rtn);

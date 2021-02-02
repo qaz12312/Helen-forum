@@ -12,7 +12,7 @@
 		dataDB.info = "Without any user." / "Successfully send notice to everyone.";
 		dataDB.data = "";
 	否則
-		dataDB.errorCode = "Failed to send Notification to everyone,Database exception."
+		dataDB.errorCode = ""
 		dataDB.data = ""
 	*/
     function doToAllNotification($input,$print=1){   // send Notification to everyone

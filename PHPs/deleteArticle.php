@@ -13,7 +13,7 @@
         dataDB.info = "Successfully deleted this article."   
         dataDB.data = ""
     否則
-        dataDB.errorCode = "The query failed,This article does not exist." / "Failed to delete,Database exception."
+        dataDB.errorCode = "The query failed,This article does not exist."
         dataDB.data = ""
     */
     function doDeleteArticle($input){
@@ -36,17 +36,9 @@
             $sql="DELETE FROM `Article` WHERE `ArticleID` =? AND  `AuthorID` =?";
             $arr = array($input['articleID'], $user);
             query($conn,$sql,$arr,"DELETE");
-            
-            $sql="SELECT EXISTS(SELECT 1 FROM `Article` WHERE `ArticleID` =? LIMIT 1)";
-            $arr = array($input['articleID']);
-            $result = query($conn,$sql,$arr,"SELECT");        
-            if($result[0][0]){
-                errorCode("Failed to delete,Database exception.");
-            }
-            else{
             //writeRecord($user,$userInfo["log"],"delete articleID:".$input['articleID']);
-                $rtn = successCode("Successfully deleted this article.");
-            }
+            writeRecord($user,"Delete Article","articleID:".$input['articleID']);
+            $rtn = successCode("Successfully deleted this article.");
         }
         echo json_encode($rtn);
     }

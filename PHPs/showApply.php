@@ -39,9 +39,9 @@
             	$rtn = successCode("Successfully show apply.",$arr);
           	}
         }
-		else 
+		else{
 		  	errorCode("Failed to show who is applying.");
-
-        echo json_encode($rtn);
+		}
+		echo json_encode($rtn);
     }
 ?>

@@ -37,16 +37,7 @@
             $sql="UPDATE `KeepDir` SET `DirName`=? WHERE `UserID`=? AND`DirName`=?";
             $arr = array($input['new'],$user,$input['old']);
             query($conn,$sql,$arr,"UPDATE");
-
-            $sql="SELECT EXISTS(SELECT 1 FROM `KeepDir` WHERE `UserID`=?  AND`DirName`=? LIMIT 1)";//收藏資料夾是否已改名
-            $arr = array($user,$input['new'] );
-            $result = query($conn,$sql,$arr,"SELECT");
-            if(!$result[0][0]){
-                errorCode("Failed to found the update folder.");
-            }
-            else{
-                $rtn = successCode("Successfully edited this dictionary.",$result);
-            }
+            $rtn = successCode("Successfully edited this dictionary.",$result);
         }
         echo json_encode($rtn);
     }

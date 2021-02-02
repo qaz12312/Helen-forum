@@ -14,7 +14,7 @@
 		dataDB.info = "Successfully remove article in keepDir."
 		dataDB.data = ""
 	否則
-		dataDB.errorCode = "Failed to remove article in keepDir,Database exception."
+		dataDB.errorCode = "Keep article not exist in /dirName/."
 		dataDB.data = "" 
      */
     function doRemoveKeepArticle($input){ // 將文章從收藏資料夾移除
@@ -33,19 +33,12 @@
         if(!$result[0][0]){
             errorCode("Keep article not exist in ".$input['dirName'].".");
         }
-        $sql="DELETE FROM `FollowKeep` WHERE  `DirName`=? AND`UserID`=? AND`ArticleID`=?";
+        $sql="DELETE FROM `FollowKeep` WHERE `DirName`=? AND`UserID`=? AND`ArticleID`=?";
         $arr = array($input['dirName'], $user, $input['articleID']);
         query($conn,$sql,$arr,"DELETE");   
-        $sql="SELECT EXISTS(SELECT 1 FROM `FollowKeep` WHERE `ArticleID`=? AND`UserID`=? AND`DirName`=? LIMIT 1)";
-        $arr = array($input['articleID'], $user, $input['dirName']);
-        $result = query($conn,$sql,$arr,"SELECT");
-        if($result[0][0]){
-            errorCode("Failed to remove article in keepDir,Database exception.");
-        }
-        else{
-            //writeRecord($user,$userInfo["log"],"remove articleID:".$input['articleID']."from dir-".$input['dirName'].".");
-            $rtn = successCode("Successfully remove article in keepDir.");
-            echo json_encode($rtn);
-        }
+        //writeRecord($user,$userInfo["log"],"remove articleID:".$input['articleID']."from dir-".$input['dirName'].".");
+        writeRecord($user,"Remove Keep Article","remove articleID:".$input['articleID']."from dir-".$input['dirName'].".");
+        $rtn = successCode("Successfully remove article in keepDir.");
+        echo json_encode($rtn);
     }
 ?>

@@ -19,7 +19,7 @@
 		dataDB.info = "Successfully new the Article."
 		dataDB.data = ""
     否則
-		dataDB.errorCode = "You have been already published this article before." / "Failed to upload article,Database exception."
+		dataDB.errorCode = "You have been already published this article before."
 		dataDB.data = ""
 	*/
     function doNewArticle($input){
@@ -51,11 +51,11 @@
             errorCode("You have been already published this article before.");
         }
         else{
-            ////
             $sql="INSERT INTO  `Article`(`AuthorID`,`Title`,`Content`,`Image`,`Video`,`HashTag`,`BlockName`,`Anonymous`) VALUES(?,?,?,?,?,?,?,?)";
             $arr = array($user, $input['title'], $input['content'], $input['picture'],$input['video'], $hashTag, $input['blockName'], $input['anonymous']);
             query($conn,$sql,$arr,"INSERT");
-            // writeRecord($user,$userInfo["log"],"publish the articleID:".$input['articleID']);
+            // writeRecord($user,$userInfo["log"],"publish the article Title:".$input['title']);
+            writeRecord($user,"New Article","article Title:【".$input['title']."】.");
             $rtn = successCode("Successfully new the Article.",array());
         }
             echo json_encode($rtn);

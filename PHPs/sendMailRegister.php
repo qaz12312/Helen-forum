@@ -14,7 +14,7 @@
         dataDB.info = "send token." / "Successfully sign up and send email to user."
         dataDB.data = 
     否則
-        dataDB.errorCode = "fail to find the password"
+        dataDB.errorCode = "fail to find the password" / "Failed to register,Database exception."
         dataDB.data = ""
     */
     use PHPMailer\PHPMailer\PHPMailer;
@@ -22,15 +22,13 @@
     require_once 'phpmailer/PHPMailer.php';
     require_once 'phpmailer/SMTP.php';
 
-    // $user = base64_decode($input['account']);
-    $user = $input['account'];
+    $user = base64_decode($input['account']);
     switch($input['option']){
         case "verify": // 確認是否已有帳號
             haveAccount($user);
             break;
         case "create": // 新增帳號
-            // $pwd = base64_decode($input['password']);
-            $pwd = $input['password'];
+            $pwd = base64_decode($input['password']);
             doCreateAccount($user,$pwd);
             break;
     }
@@ -83,7 +81,7 @@
         $mail->Host = 'ssl://smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'softwareengineeringhelen@gmail.com'; // Gmail address which you want to use as SMTP server
-        $mail->Password = 'soft123soft'; // Gmail address Password
+        $mail->Password = 'soft123456789soft'; // Gmail address Password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = '465';
         $mail->setFrom('softwareengineeringhelen@gmail.com'); // Gmail address which you used as SMTP server
