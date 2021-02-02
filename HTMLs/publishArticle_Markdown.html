@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>發表文章</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- w3school的搜尋圖示 -->
+
+    <!-- swal _ sweet alert -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+        type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+
+    <!--
+    <link rel="icon" href="./static/icon128.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+    -->
+    <meta name="description" content="Lightweight markdown viewer and editor">
+    <link rel="canonical" href="https://markdown-editor.kally.now.sh/" />
+
+    <meta itemprop="name" content="Marcdown">
+    <meta itemprop="description" content="Lightweight markdown viewer and editor">
+
+    <!-- See https://goo.gl/qRE0vM -->
+    <meta name="theme-color" content="#DAE5ED">
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Marcdown">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Marcdown">
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#DAE5ED">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- OpenGraph -->
+    <meta property="og:site_name" content="Marcdown">
+    <meta property="og:url" content="https://kallyasmedia.github.io/marcdown/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Marcdown">
+    <meta property="og:description" content="Lightweight markdown viewer and editor">
+    <meta property="og:image" content="icons/icon-144x144.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@kallyasl">
+    <meta name="twitter:creator" content="@kallyasl">
+    <meta name="twitter:url" content="https://kallyasmedia.github.io/marcdown/">
+    <meta name="twitter:title" content="Marcdown">
+    <meta name="twitter:description" content="Lightweight markdown viewer and editor">
+    <meta name="twitter:image" content="icons/icon-144x144.png">
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap" rel="stylesheet">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('../JSs/sw.js').then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }).catch(function (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+    </script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/dracula.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asvd/syncscroll/syncscroll.min.js"></script>
+
+    <!-- css file -->
+    <link rel="stylesheet" href="../CSSs/style.css">
+    <link rel="stylesheet" href="../CSSs/topnav.css">
+    <link rel="stylesheet" href="../CSSs/markdown.css">
+
+    <style>
+        .selectOption {
+            width: 100%;
+        }
+
+        .classification {
+            border: 0px;
+            width: 30%;
+            padding: 3px 7px 3px 7px;
+            margin-right: 5%;
+            margin-bottom: 2%;
+            font-size: inherit;
+        }
+
+        .input-file-container {
+            position: relative;
+        }
+
+        .js .input-file-trigger {
+            display: block;
+            padding: 10px 10px 10px 10px;
+            background: #7c838f;
+            color: whitesmoke;
+            font-size: 1em;
+            transition: all .4s;
+            cursor: pointer;
+        }
+
+        .js .input-file {
+            width: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            /*padding: 14px 0;*/
+            cursor: pointer;
+        }
+
+        .js .input-file:hover+.input-file-trigger,
+        .js .input-file:focus+.input-file-trigger,
+        .js .input-file-trigger:hover,
+        .js .input-file-trigger:focus {
+            background: #545871;
+            color: #e0d5d5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topMenu">
+        <!-- 中間 -->
+        <div class="brand-centered">
+            <div class="search-container">
+                <select id="searchOption">
+                    <option value="1">HashTag</option>
+                    <option value="2">Normal</option>
+                </select>
+                <input type="text" placeholder="Search..." name="search" id="searchInputText">
+                <button type="submit" id="searchBtn"><span class="glyphicon glyphicon-search"></span> </button>
+            </div>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <!-- 靠左 -->
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <div id="menuToggle">
+                        <input type="checkbox" />
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <ul id="menu">
+                            <!-- <a href="#"><li>美食版</li></a>
+                            <a href="#"><li>廢文版</li></a>
+                            <a href="#"><li>企鵝版</li></a>
+                            <a href="#"><li>漫威版</li></a>
+                            <a href="../HTMLs/manageBoard.html">
+                                <li><h3 class="glyphicon glyphicon-plus"> A D D</h3></li>
+                            </a> -->
+                        </ul>
+                    </div>
+                </li>
+                <li style="padding-left: 12px;">
+                    <a href="../HTMLs/home.html">
+                        <img class="barLogo" src="../Imgs/logo.png" alt="Helen">
+                        Helen
+                    </a>
+                </li>
+            </ul>
+            <!-- 靠右 -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button type="button" class="btn btn-primary" id="logInBtn">
+                        <span class="glyphicon glyphicon-log-in"></span> 登入
+                    </button>
+                    <button type="button" class="btn btn-warning" id="logOutBtn">
+                        <span class="glyphicon glyphicon-log-out"></span> 登出
+                    </button>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <span id="head">&emsp;</span>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul id="userDD" class="dropdown-menu" role="menu">
+                        <!-- <li class= "glyphicon glyphicon-user">
+                            <span> Cola</span></li>
+                        <li class="divider"></li>
+                        <li class= "glyphicon glyphicon-edit">
+                            <a href="../HTMLs/PersonalProfile.html"> 個人資料</a></li>
+                        <li class= "glyphicon glyphicon-pencil">
+                            <a href="../HTMLs/publishArticle.html"> 發佈新文章</a></li>
+                        <li class= "glyphicon glyphicon-star-empty">
+                            <a href="../HTMLs/CollectionCatalog.html"> 我的收藏</a></li>
+                        <li class= "glyphicon glyphicon-time">
+                            <a href="../HTMLs/PostingRecord.html"> 發文紀錄</a></li>
+                        <li class= "glyphicon glyphicon-alert">
+                            <a href="../HTMLs/report.html"> 檢舉區</a></li>
+                        <li class= "glyphicon glyphicon-th-list">
+                            <a href="../HTMLs/manageBoard.html"> 管理看版</a></li>
+                        <li class= "glyphicon glyphicon-king">
+                            <a href="../HTMLs/moderator.html"> 管理版主</a></li>
+                        <li class= "glyphicon glyphicon-bullhorn">
+                            <a href="../HTMLs/sendAlert.html"> 發送通知</a></li> -->
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tabContent">
+        <h2>Helen－發佈文章</h2>
+        <p>Publish your post.</p>
+        <div class="contentArea">
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>分類&nbsp;</td>
+                        <td style="text-align: left">
+                            <div class="selectOption">
+                                <select id="chooseBoard" class="classification">
+                                    <!-- <option value="food" selected>美食版</option>
+                            <option value="manwei">漫威版</option>
+                            <option value="penguin">企鵝版</option>
+                            <option value="trash">廢文版</option>
+                            <option value="eightGua">八卦版</option> -->
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>標題&nbsp;</td>
+                        <td>
+                            <input type="text" id="articleTitle" class="textInput" name="title"
+                                placeholder="Input title" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>內容&nbsp;</td>
+                        <td>
+
+                            <!-- <textarea type="text" id= "articleContent" style="height: 200px;"></textarea> -->
+                            <main role="main" class="container">
+                                <header>
+                                    <div class="tools">
+                                        <div>
+                                            <button onclick="apply('bold')" title="Bold">B</button>
+                                            <button onclick="apply('italic')" title="Italic"><i>I </button>
+                                            <button onclick="apply('strike')"
+                                                title="Strikethrough"><strike>S</strike></button>
+                                            <button onclick="apply('h1')" title="Header 1">H1</button>
+                                            <button onclick="apply('h2')" title="Header 2">H2</button>
+                                            <button onclick="apply('h3')" title="Header 3">H3</button>
+                                            <button onclick="apply('ul')" title="Unordered list">●</button>
+                                            <button onclick="apply('ol')" title="Ordered list">1.</button>
+                                            <button onclick="apply('check')" title="Check list">✔</button>
+                                            <button onclick="apply('bq')" title="Blockquote">””</button>
+                                            <button onclick="apply('ic')" title="Inline code">I&lt;></button>
+                                            <button onclick="apply('bc')" title="Block code">&lt;>B</button>
+                                            <button onclick="apply('link')" title="Link">Link</button>
+                                            <button onclick="apply('image')" title="Image">Image</button>
+                                            <button onclick="apply('hr')" title="Horizontal rule">——</button>
+                                            <button onclick="apply('table')" title="Table">⚏</button>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <label class="file" for="file">
+                                                    Open
+                                                    <input id="file" type='file'
+                                                        accept=".txt,.text,.md,.markdown,.markdn,.mdown,.htm,.html,.svg"
+                                                        onchange='openFile(event)'>
+                                                </label>
+                                            </span>
+                                            <button type="button" onclick="download();" id="save" disabled>Save</button>
+                                            🌗
+                                            <label class="theme-switch" for="checkbox" title="Night mode">
+                                                <input type="checkbox" id="checkbox">
+                                                <div class="slider round"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </header>
+                                <section class="sectionContent">
+                                    <div id="editor">
+                                        <textarea class="syncscroll" name="sync" id="getm"
+                                            placeholder="add markdown here ✨" onkeyup="Preview.Update()"
+                                            onmouseup="mouseUp()" autofocus></textarea>
+                                    </div>
+                                    <div class="markdown syncscroll" name="sync" id="viewer" style="display: none;">
+                                    </div>
+                                    <div class="markdown syncscroll" name="sync" id="buffer"></div>
+                                </section>
+                                <footer>
+                                    <div class="tools">
+                                        <span class="trigger">❓</span>
+                                        <div style="flex: 1 1 0;text-align: left;">
+                                            <span id="lineno"></span>
+                                            <span id="colno"></span>
+                                            <span id="charcount"></span>
+                                            <span id="wordcount"></span>
+                                        </div>
+                                        <div class="preview" style="position:absolute;margin-left: 500px;">
+                                            <button onclick="slide('nill')" title="Hide editor">←</button>
+                                            <button onclick="slide('half')" title="Side by side">●</button>
+                                        </div>
+                                        <!-- <div style="flex: 1 1 0; text-align: right;">
+                                </div> -->
+                                    </div>
+                                </footer>
+                                <div class="modal">
+                                    <div class="modal-content">
+                                        <span class="close-button">✖</span>
+                                        <h1>Helen</h1>
+                                        <h3>👻 Have a question ?? <a
+                                                href="mailto:softwareengineeringhelen@gmail.com">CLICK HERE!</a></h3>
+                                        <!--<h3>
+                                    <a href="https://github.com/kallyas/markdownEditor" target="_blank"><img src="icons/github.svg" style="margin-right: 8px;" alt="GitHub">GitHub</a>
+                                    <button id="installPWA" onclick="installPWA()"><img src="icons/pwalogo.svg" alt="PWA" style="height: 16px;"></button>
+                                </h3>-->
+                                    </div>
+                                </div>
+                            </main>
+                            <!--  -->
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <td></td>
+                        <td colspan="2" id="hashtags" style="text-align: right; color:navy"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-file-container">
+                                <input class="input-file" id="my-file" type="file" accept=".jpg, .jpeg, .png">
+                                <label tabindex="0" for="my-file" class="input-file-trigger"> <span
+                                        class="glyphicon glyphicon-open-file"></span> 插入圖片</label>
+                            </div>
+                        </td>
+                        <td class="file-return"></td>
+                        <td>
+                            <input type="text" id="inputHashtag" placeholder="#hashtag" value="#">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button type="button" class="btn" id="cancelPublish">
+                                <span class="glyphicon glyphicon-remove"></span> 取消
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" id="publishBtn">
+                                <span class="glyphicon glyphicon-open"></span> 發佈
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../JSs/markdown.js"></script>
+<script src="../JSs/publishArticle_markdown.js" type="text/javascript"></script>
+<script src="../JSs/bar.js"></script>
+
+</html>

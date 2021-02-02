@@ -1,0 +1,197 @@
+body{
+	background: #9da9be;
+}
+.tablink {
+	background-color: rgb(102, 97, 134);
+	color: white;
+	float: center;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding-left: 25px;
+	
+	font-size: 20px;
+	width: 32%;
+  }
+  
+.tablink:hover {
+	border-color: rgb(230, 184, 36);
+	border-radius: 10%;
+  }
+  #addPost {
+		width: 130px;
+		height: 40px;
+		font-size: 16px;
+		background-color: rgb(192, 142, 109);
+		color: white;
+		color: rgb(240, 234, 227);
+		border: none;
+		margin: 20px;
+	}
+ 
+.tabContent{
+	color:  #3c537c;
+	background: #9da9be;
+	text-align: center;
+	font-size: 20px;
+	font-family: poppins;/*字型*/
+	font-weight: bold;
+	padding: 10%;
+}
+.tabContent h2{
+	letter-spacing: 10px;
+	font-size: 50px;
+}
+.tabContent p{
+	padding: 2%;
+    line-height: 20px;/*每一行之間的空間*/
+    letter-spacing: 10px;
+}
+
+#commentTable a{
+  text-decoration: none;
+  /* color: #545871; */
+  letter-spacing: 0px;
+  
+}
+
+#commentTable a:hover{
+  cursor: pointer;
+}
+.deleteComment{
+  float: right;
+  width: 40px;
+}
+.editComment{
+	float: right;
+	width: 40px;
+  }
+.logo:hover {
+	background-color: #fff;
+  }
+/* .logo{
+	width: 150px;
+} */
+.head{
+  background-color: #3c537c;
+  color: white;
+  text-shadow: -2px 1px 0 #000, 1px 1px 0 #000,2px -1px 0 #000,-1px -1px 0 #000; 
+  width: 50px;
+  height: 50px;
+}
+.contentArea{
+	text-align: left;
+	border-radius: 10px;
+	background: #545871;
+	color:  #c0c6cc;
+	padding: 5%;
+}
+
+.content{
+	text-align: center;
+	border-radius: 10px;
+	background: #e0d4bc;
+	color: #545871;
+	letter-spacing: 2px;
+	padding: 5%;
+}
+
+.postContent{
+	border-radius: 10px;
+	background: #fff;
+	padding: 5%;
+}
+.postContent span{
+	letter-spacing: 0px;
+}
+.postContent h3{
+	color: #fff;
+	border-radius: 10px;
+	padding: 10%;
+}
+.postContent button{
+	width: 75px;
+	margin-right: 3%;
+}
+.glyphicon-pushpin{
+	color: whitesmoke;
+}
+.pushpinBtn {
+  border-radius: 30px; width:35px !important; background-color: gray;
+}
+.pushpinBtn.top { background-color: brown !important;}
+
+.textInput{
+	width: 100%;
+}
+textarea{
+	width: 100%;
+}
+
+.card{
+	position: relative;
+}
+.card:hover{
+	
+	background: glyphicon;
+	border-radius: 5px;
+	box-shadow: 3px 3px 10px;
+}
+.postTitle{
+	cursor: pointer;
+}
+table{
+	width: 100%;
+  word-break:break-all;
+  word-wrap:break-all;
+}
+td{
+  height: 50px;
+}
+
+button{
+	width: 125px;
+}
+.form-control{
+	font-size: 20px;
+}
+.content p{
+    letter-spacing: 0px;
+}
+
+	
+#commentTable tbody {
+	display: block;
+	height: 500px;
+	overflow-y: scroll;
+}
+
+#commentTable  thead,
+#commentTable tbody tr {
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+}
+/*关键设置：滚动条默认宽度是16px 将thead的宽度减16px*/
+#commentTable  thead {
+	width: calc( 100% - 1em)
+}
+/*清除button樣式*/
+.hashTagSearch{
+	margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    display: contents;
+}
+.hashTagSearch span:hover {/*滑鼠移動上去的CSS（對應css:hover）*/
+	background-color: #0C6;		/*PS：這裡可以改變背景顏色*/
+	color: #FFF;				/*PS：這裡可以修改字的顏色*/
+}
+#commentTable  thead th {
+	background: #ccc;
+}
+.tabContent img{
+	width: 360px;
+}
