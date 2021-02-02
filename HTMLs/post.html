@@ -2,39 +2,41 @@
 <html>
 
 <head>
-    <meta charset = "utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>文章</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	<!-- w3school的搜尋圖示 -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  
-  <!-- swal _ sweet alert -->
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- w3school的搜尋圖示 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  <!-- css file -->
-  <link rel= "stylesheet" href= "../CSSs/style.css">
-  <link rel= "stylesheet" href= "../CSSs/topnav.css">
+    <!-- swal _ sweet alert -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+        type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css" />
+
+    <!-- css file -->
+    <link rel="stylesheet" href="../CSSs/style.css">
+    <link rel="stylesheet" href="../CSSs/topnav.css">
 </head>
 
 <body>
-    <div class= "topMenu">
+    <div class="topMenu">
         <!-- 中間 -->
         <div class="brand-centered">
             <div class="search-container">
-				<select id="searchOption">
+                <select id="searchOption">
                     <option value="1">HashTag</option>
                     <option value="2">Normal</option>
                 </select>
-                <input type="text" placeholder="Search..." name="search" id= "searchInputText">
-                <button type="submit" id= "searchBtn"><span class="glyphicon glyphicon-search"></span></button>
+                <input type="text" placeholder="Search..." name="search" id="searchInputText">
+                <button type="submit" id="searchBtn"><span class="glyphicon glyphicon-search"></span></button>
             </div>
         </div>
-        
+
         <div class="navbar-collapse collapse">
             <!-- 靠左 -->
             <ul class="nav navbar-nav navbar-left">
@@ -44,13 +46,13 @@
                         <span></span>
                         <span></span>
                         <span></span>
-                        <ul id= "menu">
+                        <ul id="menu">
                         </ul>
                     </div>
                 </li>
-                <li style="padding-left: 12px;">    
+                <li style="padding-left: 12px;">
                     <a href="../HTMLs/home.html">
-                        <img class= "barLogo" src="../Imgs/logo.png" alt="Helen">
+                        <img class="barLogo" src="../Imgs/logo.png" alt="Helen">
                         Helen
                     </a>
                 </li>
@@ -58,7 +60,7 @@
             <!-- 靠右 -->
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                   <button type="button" class="btn btn-primary" id="logInBtn">
+                    <button type="button" class="btn btn-primary" id="logInBtn">
                         <span class="glyphicon glyphicon-log-in"></span> 登入
                     </button>
                     <button type="button" class="btn btn-warning" id="logOutBtn">
@@ -67,65 +69,68 @@
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        <span id= "head">&emsp;</span>
-                        <span class= "glyphicon glyphicon-chevron-down"></span>
+                        <span id="head">&emsp;</span>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
                     </a>
-                    <ul id= "userDD" class="dropdown-menu" role="menu">
+                    <ul id="userDD" class="dropdown-menu" role="menu">
                     </ul>
                 </li>
             </ul>
         </div>
-      </div>
+    </div>
 
-    <div class= "tabContent">
+    <div class="tabContent">
         <div class="contentArea">
             <h2>TITLE</h2>
-            <div class= "content">
-        <table>
-            <tr class="row" style="text-align:left; color:black;">
-                <td colspan="2" class="col-md-7 text-left">
-                    <div id= "authorDiv" class= "head" style="background-color: white; float:left;"></div>
-                    &emsp;Author
-                </td>
-                <td id="editArticle"><!-- edit article -->
-                </td>
-                <td class="col-md-1" rowspan="4"></td>
-                <td style="background-color: white;" class="col-md-4">
-                    <table style="border: 10px white solid">
-                        <tr>
-                            <td>
-                                <div class= "head" id= "myColor"></div>
-                            </td>
-                            <td>
-                                <input type="text" id= "inputComment" class="textInput" placeholder="請輸入留言...">
-                            </td>
-                            <td>
-                                <button type="button" id= "commentBtn" class="btn btn-success" style="width: 40px;">
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr style = "text-align:right">
-                            <td colspan="3" style="height: 0; font-size: small;">
-                                <input id="anonymousCheckbox-comment" type="checkbox" value="1" /> 匿名留言
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr class="row" style="text-align:left; color:black;">
-                <td colspan="3" class="col-md-7 text-left">
-                    <p style="overflow-X: hidden; overflow-y: scroll; max-height: 500px;">
-                        LOADING...
-                    <!-- 奇異博士已經確認演出，聽說最新消息是陶比麥奎爾與安德魯加菲爾德，也就是前兩代索尼版蜘蛛人也確認將會加入演出。<br>
+            <div class="content">
+                <table>
+                    <tr class="row" style="text-align:left; color:black;">
+                        <td colspan="2" class="col-md-7 text-left">
+                            <div id="authorDiv" class="head" style="background-color: white; float:left;"></div>
+                            &emsp;Author
+                        </td>
+                        <td id="editArticle">
+                            <!-- edit article -->
+                        </td>
+                        <td class="col-md-1" rowspan="4"></td>
+                        <td style="background-color: white;" class="col-md-4">
+                            <table style="border: 10px white solid">
+                                <tr>
+                                    <td>
+                                        <div class="head" id="myColor"></div>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="inputComment" class="textInput" placeholder="請輸入留言...">
+                                    </td>
+                                    <td>
+                                        <button type="button" id="commentBtn" class="btn btn-success"
+                                            style="width: 40px;">
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr style="text-align:right">
+                                    <td colspan="3" style="height: 0; font-size: small;">
+                                        <input id="anonymousCheckbox-comment" type="checkbox" value="1" /> 匿名留言
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="row" style="text-align:left; color:black;">
+                        <td colspan="3" class="col-md-7 text-left">
+                            <p style="overflow-X: hidden; overflow-y: scroll; max-height: 500px;">
+                                LOADING...
+                                <!-- 奇異博士已經確認演出，聽說最新消息是陶比麥奎爾與安德魯加菲爾德，也就是前兩代索尼版蜘蛛人也確認將會加入演出。<br>
                     也就是說，粉絲將有機會看到三代蜘蛛人出現在同一部電影！<br>
                     <br>PS:陶比版蜘蛛人真的是經典 -->
-                    </p>
-                </td>
-                <td class="col-md-4" rowspan='3' style="max-height: 500px;  vertical-align: top; background-color: white"> 
-                    <table id= "commentTable" style="width: 100%; border: 10px white solid">
-                        <tbody></tbody>
-                        <!-- <tr>
+                            </p>
+                        </td>
+                        <td class="col-md-4" rowspan='3'
+                            style="max-height: 500px;  vertical-align: top; background-color: white">
+                            <table id="commentTable" style="width: 100%; border: 10px white solid">
+                                <tbody></tbody>
+                                <!-- <tr>
                             <td rowspan="2" style="vertical-align: top;">
                                 <div class= "head" style="background-color: bisque;">B15</div>
                             </td>
@@ -158,32 +163,32 @@
                         <tr>
                             <td>索尼後來發聲明說此消息「未確認」，個人是覺得挺耐人尋味的用詞。</td>
                         </tr> -->
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td id="postTime" colspan="3" class="col-md-7 text-left">
-                    <!-- 2020/11/05 15:36 -->
-                </td>
-            </tr>
-            <tr class="row">
-                <td colspan="3" class="row col-md-7 text-center">
-                    <button type='button' class='btn btn-secondary col-md-3' id= "heartBtn">
-                        <span class='glyphicon glyphicon-heart text-danger'></span>
-                        <span class='text-danger heartaa'>0</span>
-                    </button>
-                    <span class='col-md-1'></span>
-                    <button type='button' class='btn btn-secondary col-md-3' id= "keepBtn">
-                        <span class='glyphicon glyphicon-star text-warning'></span>
-                        <span class='text-warning heartaa'>0</span>
-                    </button>
-                    <span class='col-md-1'></span>
-                    <button type="button" class="btn col-md-3" id= "reportBtn">
-                        <span class="glyphicon glyphicon-alert"></span> 檢舉
-                    </button>
-                </td>
-            </tr>
-        </table>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="postTime" colspan="3" class="col-md-7 text-left">
+                            <!-- 2020/11/05 15:36 -->
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <td colspan="3" class="row col-md-7 text-center">
+                            <button type='button' class='btn btn-secondary col-md-3' id="heartBtn">
+                                <span class='glyphicon glyphicon-heart text-danger'></span>
+                                <span class='text-danger heartaa'>0</span>
+                            </button>
+                            <span class='col-md-1'></span>
+                            <button type='button' class='btn btn-secondary col-md-3' id="keepBtn">
+                                <span class='glyphicon glyphicon-star text-warning'></span>
+                                <span class='text-warning heartaa'>0</span>
+                            </button>
+                            <span class='col-md-1'></span>
+                            <button type="button" class="btn col-md-3" id="reportBtn">
+                                <span class="glyphicon glyphicon-alert"></span> 檢舉
+                            </button>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
@@ -191,4 +196,5 @@
 </body>
 <script src="../JSs/post.js"></script>
 <script src="../JSs/bar.js"></script>
+
 </html>
