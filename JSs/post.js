@@ -9,22 +9,6 @@ $(document).ready(async function(){
     await new Promise((resolve, reject) => initial(resolve, reject));
 });
 
-//test
-// let dataDB= {data: {title: "蜘蛛人2情報", 
-//                     content: "奇異博士已經確認演出，聽說最新消息是陶比麥奎爾與安德魯加菲爾德，也就是前兩代索尼版蜘蛛人也確認將會加入演出。也就是說，粉絲將有機會看到三代蜘蛛人出現在同一部電影！PS:陶比版蜘蛛人真的是經典", 
-//                     like: 520, 
-//                     keep: 11, 
-//                     nickname: "Apple", 
-//                     color: "#ff0012",
-//                     time: "2020/12/21 07:06 p.m.",  
-//                     comment: [{content: "@B3 喜歡@B2", floor: 1, nickname: "aaa", color: "#f0f0f0"},
-//                             {content: "跟大家說， @B1 是醜男", floor: 2, nickname: "bbb", color: "#abcda0"},
-//                             {content: "我不喜歡 @B2 辣", floor: 4, nickname: "ccc", color: "#123355"},
-//                             {content: "哈哈哈嫁給我吧 @B7", floor: 6, nickname: "ddd", color: "#343434"},
-//                             {content: "@B6才不要", floor: 7, nickname: "eee", color: "#5f4bec"},
-//                             {content: "@B1 @B2 @B4 @B6 @B7 你們這群擊敗人", floor: 9, nickname: "fff", color: "#f0f0f0"}]}};
-//test end
-
 async function initial(res, rej){
     let articleID= sessionStorage.getItem("Helen-articleID");
     let cmd = {};
