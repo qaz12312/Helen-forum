@@ -1,6 +1,6 @@
 # Helen
 
-## [PPT介紹](https://slides.com/chuchun/deck)
+## [PPT介紹](https://slides.com/chuchun/helen)
 
 ## 作品展示
 + Server 網址: [Heroku](https://helen-ntou.herokuapp.com/HTMLs/home.html)
